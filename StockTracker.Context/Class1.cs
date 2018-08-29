@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTracker
+namespace StockTracker.Context
 {
     public class Class1
     {
