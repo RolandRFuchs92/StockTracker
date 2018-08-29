@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockTracker.Interface.User;
+using StockTracker.Interface.Models.User;
 
-namespace StockTracker.Interface
+namespace StockTracker.Interface.Models.Shopping
 {
     public interface IShoppingList
     {

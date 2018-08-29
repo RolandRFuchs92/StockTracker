@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StockTracker.Interface
+namespace StockTracker.Interface.Models.Stock
 {
 	public interface IStockPar
 	{
