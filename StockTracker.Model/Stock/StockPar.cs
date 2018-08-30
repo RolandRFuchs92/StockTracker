@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using StockTracker.Interface.Models.Stock;
+
+namespace StockTracker.Model.Stock
+{
+    public class StockPar : IStockPar
+    {
+	    public int StockParId { get; set; }
+	    public int StockId { get; set; }
+	    public int MaxStock { get; set; }
+	    public int MinStock { get; set; }
+	    public DateTime DateSet { get; set; }
+	    public List<IStock> Stocks { get; set; }
+    }
+}

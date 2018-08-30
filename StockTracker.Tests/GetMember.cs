@@ -3,47 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Interface.BusinessLogic;
 using StockTracker.Interface.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
-using IStockTrackerContext = StockTracker.Interface.Models.User.IStockTrackerContext;
 
 namespace StockTracker.Test
 {
 	[TestClass]
     public class GetMember
     {
-		private readonly Mock<IGetMember> _getMember;
+		private readonly IStockTrackerContext _db;
 
 
 
-		public GetMember()
-	    {
-		    _getMember = new Mock<IGetMember>().SetupAllProperties();
-		    SetupMocks();
+		public GetMember(IStockTrackerContext db)
+		{
+			_db = SetupMocks();
 		}
 
-	    private void SetupMocks()
+	    private IStockTrackerContext SetupMocks()
 	    {
-		    _getMember.Setup(i => i.GetMemberByMemberId(It.IsAny<int>())).Returns(new Mock<IMember>().Object);
-		    _getMember.Setup(i => i.GetMemberByPersonId(It.IsAny<int>())).Returns(new Mock<IMember>().Object);
+		    var moq = new Mock<IStockTrackerContext>();
+
+		    moq.SetupAllProperties();
+			
+		    return moq.Object;
 	    }
 
 	    [TestMethod]
 	    public void GetMemberByMemberId_Passed1_ReturnMember()
 	    {
-		    var result = _getMember.Object.GetMemberByMemberId(1);
+		    var result = _db.Persons.Where(i=>i.PersonId == 1).ToList();
 
-			Assert.IsInstanceOfType(result, typeof(IMember),"A Member was returned!");
+			
 	    }
 
-		[TestMethod]
-		public void GetMemberByMemberId_Passed0_ReturnNull()
-		{
-
-		}
     }
 }

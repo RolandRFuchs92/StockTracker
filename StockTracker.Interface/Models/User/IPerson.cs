@@ -1,6 +1,6 @@
 ﻿namespace StockTracker.Interface.Models.User
 {
-    public interface IStockTrackerContext
+    public interface IPerson
     {
         int PersonId { get; set; }
 	    string PersonName { get; set; }

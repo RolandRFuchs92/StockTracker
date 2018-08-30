@@ -12,7 +12,7 @@ namespace StockTracker.Interface.Context
 {
     public interface IStockTrackerContext : IDisposable
     {
-        DbSet<Models.User.IStockTrackerContext> Persons { get; set; }
+        DbSet<IPerson> Persons { get; set; }
 		DbSet<IMember> Members { get; set; }
 		DbSet<IMemberRole> MemberRoles { get; set; }
 		DbSet<IStock> Stocks { get; set; }
