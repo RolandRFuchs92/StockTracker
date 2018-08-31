@@ -10,7 +10,7 @@ namespace StockTracker.Interface.Models.User
 		int IsActive { get; set; }
 		DateTime LastActiveDate { get; set; }
 
-		IPerson StockTrackerContext { get; set; }
+		IPerson Person { get; set; }
 		IMemberRole MemberRole { get; set; }
     }
 }

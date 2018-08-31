@@ -15,7 +15,7 @@ namespace StockTracker.Model
 		public int MemberRoleId { get; set; }
 		public int IsActive { get; set; }
 		public DateTime LastActiveDate { get; set; }
-		public IPerson StockTrackerContext { get; set; }
+		public IPerson Person { get; set; }
 		public IMemberRole MemberRole { get; set; }
 	}
 }
