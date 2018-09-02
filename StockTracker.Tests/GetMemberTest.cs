@@ -31,55 +31,24 @@ namespace StockTracker.Test
 			builder.UseInMemoryDatabase();
 
 			_db = new StockTrackerContext(builder.Options);
-			var member = DefaultMember();
 			_db.Members.AddRange(SetupSeedMembers());
 			_db.SaveChanges();
 
 			_member = new GetMembers(_db);
 		}
 
-		private Member DefaultMember()
-		{
-			return new Member()
-			{
-				IsActive = false,
-				PersonId = 1,
-				LastActiveDate = DateTime.Now,
-				MemberRoleId = 1,
-				MemberId = 1
-			};
-		}
-
-		private List<Member> SetupSeedMembers()
-		{
-			var members = new List<Member>();
-			var rnd = new Random();
-
-			for (var inc = 1; inc < 100; inc++)
-			{
-				members.Add(new Member
-				{ 
-					PersonId = inc,
-					IsActive = (rnd.Next(0,1) > 0),
-					MemberRoleId = rnd.Next(1,5),
-					LastActiveDate = DateTime.Now,
-					MemberId = inc
-				});
-			}
-			return members;
-		}
-
-
+		
 		[TestMethod]
 		public void GetMemberByMemberId_Passed1_ReturnMember()
 		{
 			//Arrange
+			var searchId = 1;
 
 			//Act
-			var result = _member.GetMemberByMemberId(1);
+			var result = _member.GetMemberByMemberId(searchId);
 
 			//Assert
-			Assert.AreEqual(DefaultMember().PersonId, result.PersonId, "Result from Db was not the same as the result.");
+			Assert.AreEqual(searchId, result.MemberId, "Result from Db was not the same as the result.");
 
 		}
 
@@ -87,9 +56,10 @@ namespace StockTracker.Test
 		public void GetMemberById_Passed0_ReturnEmpty()
 		{
 			//Arrange
+			var searchId = 0;
 
 			//Act
-			var result = _member.GetMemberByMemberId(0);
+			var result = _member.GetMemberByMemberId(searchId);
 
 			//Assert
 			Assert.AreSame(null, result);
