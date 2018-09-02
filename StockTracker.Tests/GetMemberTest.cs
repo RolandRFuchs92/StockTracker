@@ -31,8 +31,6 @@ namespace StockTracker.Test
 			builder.UseInMemoryDatabase();
 
 			_db = new StockTrackerContext(builder.Options);
-			_db.Members.AddRange(SetupSeedMembers());
-			_db.SaveChanges();
 
 			_member = new GetMembers(_db);
 		}
