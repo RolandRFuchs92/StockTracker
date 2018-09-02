@@ -1,14 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 
-namespace StockTracker.Interface.Context
+namespace StockTracker.Context.Interface
 {
     public interface IStockTrackerContext
     {

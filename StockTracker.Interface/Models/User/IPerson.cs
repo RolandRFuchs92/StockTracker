@@ -1,7 +1,10 @@
-﻿namespace StockTracker.Interface.Models.User
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StockTracker.Interface.Models.User
 {
     public interface IPerson
     {
+		[Key]
         int PersonId { get; set; }
 	    string PersonName { get; set; }
 	    string PersonSurname { get; set; }

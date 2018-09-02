@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace StockTracker.Model
 {
     public class Person : IPerson
     {
+		[Key]
 	    public int PersonId { get; set; }
 	    public string PersonName { get; set; }
 	    public string PersonSurname { get; set; }

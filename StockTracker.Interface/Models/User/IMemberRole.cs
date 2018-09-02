@@ -1,8 +1,11 @@
-﻿namespace StockTracker.Interface.Models.User
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StockTracker.Interface.Models.User
 {
     public interface IMemberRole
     {
+		[Key]
         int MemberRoleId { get; set; }
-		int MemberRoleName { get; set; }
+		string MemberRoleName { get; set; }
     }
 }

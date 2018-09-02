@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace StockTracker.Model.Shopping
 {
     public class ShoppingListItems : IShoppingListItems
     {
+		[Key]
 	    public int ShoppingListItemId { get; set; }
 	    public int StockId { get; set; }
 	    public int Quantity { get; set; }
