@@ -9,7 +9,5 @@ namespace StockTracker.Interface.Models.Shopping
 		int MemberId { get; set; }
 		bool HasNotified { get; set; }
 		DateTime DateCreated { get; set; }
-
-		IMember Member { get; set; }
     }
 }

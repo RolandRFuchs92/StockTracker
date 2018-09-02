@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using StockTracker.Interface.Context;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
-using IStockTrackerContext = StockTracker.Context.Interface.IStockTrackerContext;
+using StockTracker.Model;
+using StockTracker.Model.Shopping;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.Context
 {
@@ -19,14 +22,14 @@ namespace StockTracker.Context
 	    {
 	    }
 
-		public virtual DbSet<IPerson> Persons { get; set; }
-	    public virtual DbSet<IMember> Members { get; set; }
-	    public virtual DbSet<IMemberRole> MemberRoles { get; set; }
-	    public virtual DbSet<IStock> Stocks { get; set; }
-	    public virtual DbSet<IStockLevel> StockLevels { get; set; }
-	    public virtual DbSet<IStockPar> StockPars { get; set; }
-	    public virtual DbSet<IShoppingListItems> ShoppingListItemses { get; set; }
-	    public virtual DbSet<IShoppingList> ShoppingLists { get; set; }
+		public virtual DbSet<Person> Persons { get; set; }
+	    public virtual DbSet<Member> Members { get; set; }
+	    public virtual DbSet<MemberRole> MemberRoles { get; set; }
+	    public virtual DbSet<Stock> Stocks { get; set; }
+	    public virtual DbSet<StockLevel> StockLevels { get; set; }
+	    public virtual DbSet<StockPar> StockPars { get; set; }
+	    public virtual DbSet<ShoppingListItems> ShoppingListItemses { get; set; }
+	    public virtual DbSet<ShoppingList> ShoppingLists { get; set; }
     }
 }
  

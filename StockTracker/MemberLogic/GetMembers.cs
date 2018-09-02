@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Context;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.User;
 
 namespace StockTracker.BusinessLogic.MemberLogic

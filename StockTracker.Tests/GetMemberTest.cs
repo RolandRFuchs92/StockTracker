@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,6 @@ using Moq;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
 using StockTracker.Interface.BusinessLogic;
-using StockTracker.Interface.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
@@ -32,9 +32,10 @@ namespace StockTracker.Test
 
 			_db = new StockTrackerContext(builder.Options);
 			var member = DefaultMember();
-			_db.Members.Add(member);
+			_db.Members.AddRange(SetupSeedMembers());
+			_db.SaveChanges();
 
-			//_member = new GetMembers(_db);
+			_member = new GetMembers(_db);
 		}
 
 		private Member DefaultMember()
@@ -45,10 +46,27 @@ namespace StockTracker.Test
 				PersonId = 1,
 				LastActiveDate = DateTime.Now,
 				MemberRoleId = 1,
-				MemberId = 1,
-				//MemberRole = new MemberRole { MemberRoleId = 1,MemberRoleName = "Camel"},
-				//Person = new Person { PersonId = 1,Mobile = "1234567890",Email = "1@2.3",PersonSurname ="Surname",WhatsApp = "1234567890",PersonName = "Name"}
+				MemberId = 1
 			};
+		}
+
+		private List<Member> SetupSeedMembers()
+		{
+			var members = new List<Member>();
+			var rnd = new Random();
+
+			for (var inc = 1; inc < 100; inc++)
+			{
+				members.Add(new Member
+				{ 
+					PersonId = inc,
+					IsActive = (rnd.Next(0,1) > 0),
+					MemberRoleId = rnd.Next(1,5),
+					LastActiveDate = DateTime.Now,
+					MemberId = inc
+				});
+			}
+			return members;
 		}
 
 
@@ -56,13 +74,12 @@ namespace StockTracker.Test
 		public void GetMemberByMemberId_Passed1_ReturnMember()
 		{
 			//Arrange
-			var getMembers = new GetMembers(_db);
 
 			//Act
 			var result = _member.GetMemberByMemberId(1);
 
 			//Assert
-			Assert.AreSame(DefaultMember(), result);
+			Assert.AreEqual(DefaultMember().PersonId, result.PersonId, "Result from Db was not the same as the result.");
 
 		}
 
@@ -70,13 +87,12 @@ namespace StockTracker.Test
 		public void GetMemberById_Passed0_ReturnEmpty()
 		{
 			//Arrange
-			//var getMembers = new GetMembers(_db);
 
 			//Act
 			var result = _member.GetMemberByMemberId(0);
 
 			//Assert
-			Assert.AreSame(result, new Member());
+			Assert.AreSame(null, result);
 		}
 
 	}

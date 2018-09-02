@@ -16,6 +16,6 @@ namespace StockTracker.Model.Shopping
 	    public int MemberId { get; set; }
 	    public bool HasNotified { get; set; }
 	    public DateTime DateCreated { get; set; }
-	    public IMember Member { get; set; }
-    }
+		public Member Member { get; set; }
+	}
 }

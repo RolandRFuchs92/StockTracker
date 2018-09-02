@@ -16,6 +16,6 @@ namespace StockTracker.Model.Shopping
 	    public int StockId { get; set; }
 	    public int Quantity { get; set; }
 	    public bool IsCollected { get; set; }
-	    public List<IStock> Stocks { get; set; }
+	    //public List<IStock> Stocks { get; set; }
     }
 }

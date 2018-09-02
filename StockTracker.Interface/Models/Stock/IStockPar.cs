@@ -10,7 +10,5 @@ namespace StockTracker.Interface.Models.Stock
 		int MaxStock { get; set; }
 		int MinStock { get; set; }
 		DateTime DateSet { get; set; }
-
-		List<IStock> Stocks { get; set; }
 	}
 }

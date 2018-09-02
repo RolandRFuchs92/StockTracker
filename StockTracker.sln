@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.BusinessLogic", "StockTracker\StockTracker.BusinessLogic.csproj", "{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic", "StockTracker\StockTracker.BusinessLogic.csproj", "{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Test", "StockTracker.Tests\StockTracker.Test.csproj", "{78828F3A-0EA1-4CDE-AB2E-D70513CB3E2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Test", "StockTracker.Tests\StockTracker.Test.csproj", "{78828F3A-0EA1-4CDE-AB2E-D70513CB3E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Interface", "StockTracker.Interface\StockTracker.Interface.csproj", "{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Interface", "StockTracker.Interface\StockTracker.Interface.csproj", "{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Context", "StockTracker.Context\StockTracker.Context.csproj", "{1A609AE0-4E53-4C7C-BBC4-4F603E1D7DCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Context", "StockTracker.Context\StockTracker.Context.csproj", "{1A609AE0-4E53-4C7C-BBC4-4F603E1D7DCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Model", "StockTracker.Model\StockTracker.Model.csproj", "{A1146CB2-C46C-4EDD-A295-054DAA6B4320}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Model", "StockTracker.Model\StockTracker.Model.csproj", "{A1146CB2-C46C-4EDD-A295-054DAA6B4320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Seed", "StockTracker.Seed\StockTracker.Seed.csproj", "{20B020AD-7782-4F4C-BF36-85A3155AE5A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A1146CB2-C46C-4EDD-A295-054DAA6B4320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1146CB2-C46C-4EDD-A295-054DAA6B4320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1146CB2-C46C-4EDD-A295-054DAA6B4320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B020AD-7782-4F4C-BF36-85A3155AE5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B020AD-7782-4F4C-BF36-85A3155AE5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B020AD-7782-4F4C-BF36-85A3155AE5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B020AD-7782-4F4C-BF36-85A3155AE5A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

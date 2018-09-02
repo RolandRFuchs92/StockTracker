@@ -2,18 +2,21 @@
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model;
+using StockTracker.Model.Shopping;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.Context.Interface
 {
     public interface IStockTrackerContext
     {
-        DbSet<IPerson> Persons { get; set; }
-		DbSet<IMember> Members { get; set; }
-		DbSet<IMemberRole> MemberRoles { get; set; }
-		DbSet<IStock> Stocks { get; set; }
-		DbSet<IStockLevel> StockLevels { get; set; }
-		DbSet<IStockPar> StockPars { get; set; }
-		DbSet<IShoppingListItems> ShoppingListItemses { get; set; }
-		DbSet<IShoppingList> ShoppingLists { get; set; }
+        DbSet<Person> Persons { get; set; }
+		DbSet<Member> Members { get; set; }
+		DbSet<MemberRole> MemberRoles { get; set; }
+		DbSet<Stock> Stocks { get; set; }
+		DbSet<StockLevel> StockLevels { get; set; }
+		DbSet<StockPar> StockPars { get; set; }
+		DbSet<ShoppingListItems> ShoppingListItemses { get; set; }
+		DbSet<ShoppingList> ShoppingLists { get; set; }
     }
 }

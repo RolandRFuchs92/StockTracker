@@ -20,8 +20,8 @@ namespace StockTracker.Model
 		public DateTime LastActiveDate { get; set; }
 
 		[ForeignKey("PersonId")]
-		public IPerson Person { get; set; }
+		public Person Person { get; set; }
 		[ForeignKey("MemberRoleId")]
-		public IMemberRole MemberRole { get; set; }
+		public MemberRole MemberRole { get; set; }
 	}
 }
