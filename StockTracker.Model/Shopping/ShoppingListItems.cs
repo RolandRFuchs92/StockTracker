@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace StockTracker.Model.Shopping
 	    public int StockId { get; set; }
 	    public int Quantity { get; set; }
 	    public bool IsCollected { get; set; }
-	    //public List<IStock> Stocks { get; set; }
+
+		[ForeignKey("StockId")]
+		public virtual List<IStock> Stocks { get; set; }
     }
 }

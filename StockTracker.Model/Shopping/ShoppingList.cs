@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace StockTracker.Model.Shopping
 	    public int MemberId { get; set; }
 	    public bool HasNotified { get; set; }
 	    public DateTime DateCreated { get; set; }
-		public Member Member { get; set; }
+
+		[ForeignKey("MemberId")]
+		public virtual Member Member { get; set; }
 	}
 }
