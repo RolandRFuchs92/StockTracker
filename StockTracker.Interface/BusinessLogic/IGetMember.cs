@@ -7,7 +7,7 @@ using StockTracker.Interface.Models.User;
 
 namespace StockTracker.Interface.BusinessLogic
 {
-    public interface IGetMember
+    public interface IGetMembers
     {
 	    IMember GetMemberByMemberId(int memberId);
 	    IMember GetMemberByPersonId(int personId);

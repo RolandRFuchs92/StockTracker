@@ -11,10 +11,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Interface.BusinessLogic;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
+using StockTracker.Seed;
 
 namespace StockTracker.Test
 {
@@ -22,7 +24,7 @@ namespace StockTracker.Test
 	public class GetMemberTest
 	{
 		private readonly IGetMember _member;
-		private StockTrackerContext _db;
+		private IStockTrackerContext _db;
 
 
 		public GetMemberTest()
@@ -31,6 +33,7 @@ namespace StockTracker.Test
 			builder.UseInMemoryDatabase();
 
 			_db = new StockTrackerContext(builder.Options);
+			new PopulateDb(_db);
 
 			_member = new GetMembers(_db);
 		}

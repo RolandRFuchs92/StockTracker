@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.Model.Shopping
 {
@@ -19,6 +20,6 @@ namespace StockTracker.Model.Shopping
 	    public bool IsCollected { get; set; }
 
 		[ForeignKey("StockItemId")]
-		public virtual List<IStockItem> StockItems { get; set; }
+		public virtual StockItem StockItem { get; set; }
     }
 }

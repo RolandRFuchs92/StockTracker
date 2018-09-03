@@ -10,7 +10,7 @@ using StockTracker.Interface.Models.User;
 
 namespace StockTracker.BusinessLogic.MemberLogic
 {
-    public class GetMembers : IGetMember
+    public class GetMembers : IGetMembers
     {
 	    private readonly IStockTrackerContext _db;
 

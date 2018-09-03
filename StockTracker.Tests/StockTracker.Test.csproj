@@ -18,6 +18,7 @@
     <ProjectReference Include="..\StockTracker.Context\StockTracker.Context.csproj" />
     <ProjectReference Include="..\StockTracker.Interface\StockTracker.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
+    <ProjectReference Include="..\StockTracker.Seed\StockTracker.Seed.csproj" />
     <ProjectReference Include="..\StockTracker\StockTracker.BusinessLogic.csproj" />
   </ItemGroup>
 
