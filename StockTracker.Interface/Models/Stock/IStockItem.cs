@@ -2,11 +2,11 @@
 
 namespace StockTracker.Interface.Models.Stock
 {
-    public interface IStock
+    public interface IStockItem
     {
-	    int StockId { get; set; }
-	    string StockName { get; set; }
-		float StockPrice { get; set; }
+	    int StockItemId { get; set; }
+	    string StockItemName { get; set; }
+		float StockItemPrice { get; set; }
 		DateTime DateCreated { get; set; }
 		bool IsActive { get; set; }
     }

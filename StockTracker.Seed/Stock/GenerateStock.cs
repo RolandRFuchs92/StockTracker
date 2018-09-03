@@ -13,23 +13,23 @@ namespace StockTracker.Seed.Stock
 	    private readonly List<string> _stockName;
 	    private readonly Random _rng;
 
-	    public List<IStock> GetStocks()
+	    public List<IStockItem> GetStocks()
 	    {
 		    return GenerateStockList();
 	    }
 
-	    private List<IStock> GenerateStockList()
+	    private List<IStockItem> GenerateStockList()
 	    {
-		    var stocks = new List<IStock>();
+		    var stocks = new List<IStockItem>();
 
 			foreach(var stockItem in _stockName)
 		    {
-				stocks.Add(new Model.Stock.Stock
+				stocks.Add(new StockItem()
 				{
 					IsActive = _rng.Next(0,1) > 0,
 					DateCreated =  DateTime.Now,
-					StockName = stockItem,
-					StockPrice = _rng.Next(1,250)
+					StockItemName = stockItem,
+					StockItemPrice = _rng.Next(1,250)
 				});
 		    }
 

@@ -8,12 +8,12 @@ using StockTracker.Interface.Models.Stock;
 
 namespace StockTracker.Model.Stock
 {
-    public class Stock : IStock
+    public class StockItem : IStockItem
     {
 		[Key]
-	    public int StockId { get; set; }
-	    public string StockName { get; set; }
-	    public float StockPrice { get; set; }
+	    public int StockItemId { get; set; }
+	    public string StockItemName { get; set; }
+	    public float StockItemPrice { get; set; }
 	    public DateTime DateCreated { get; set; }
 	    public bool IsActive { get; set; }
     }

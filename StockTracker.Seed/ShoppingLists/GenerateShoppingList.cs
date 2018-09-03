@@ -36,7 +36,7 @@ namespace StockTracker.Seed.ShoppingLists
 				shoppingList.Add(new ShoppingList
 				{
 					DateCreated = DateTime.Now.AddDays(_rng.Next(1, 5) * -1),
-					HasNotified = isNotificationRandom ? false : (_rng.Next(0,1)> 0),
+					HasNotified = !isNotificationRandom && (_rng.Next(0,1)> 0),
 					MemberId = _rng.Next(1,3)
 				});
 			}

@@ -12,7 +12,7 @@ namespace StockTracker.Model.Stock
     {
 		[Key]
 	    public int StockLevelId { get; set; }
-	    public int StockId { get; set; }
+	    public int StockItemId { get; set; }
 	    public int Quantity { get; set; }
 	    public DateTime DateChecked { get; set; }
 	    public int MemberId { get; set; }

@@ -12,7 +12,7 @@ namespace StockTracker.Model.Stock
     {
 		[Key]
 	    public int StockParId { get; set; }
-	    public int StockId { get; set; }
+	    public int StockItemId { get; set; }
 	    public int MaxStock { get; set; }
 	    public int MinStock { get; set; }
 	    public DateTime DateSet { get; set; }

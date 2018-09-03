@@ -17,12 +17,12 @@ namespace StockTracker.Seed.Stock
 			_rng = new Random();
 		}
 
-		public List<IStockPar> GetStockPars(List<IStock> stocks)
+		public List<IStockPar> GetStockPars(List<IStockItem> stocks)
 		{
 			return GenerateStockPars(stocks);
 		}
 
-		List<IStockPar> GenerateStockPars(List<IStock> stocks)
+		List<IStockPar> GenerateStockPars(List<IStockItem> stocks)
 		{
 			var pars = new List<IStockPar>();
 

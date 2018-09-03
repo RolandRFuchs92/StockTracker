@@ -19,12 +19,12 @@ namespace StockTracker.Seed.Stock
 		    _memberMaxCount = memberCount;
 	    }
 
-	    public List<IStockLevel> GetStockLevels(List<IStock> stocks)
+	    public List<IStockLevel> GetStockLevels(List<IStockItem> stocks)
 	    {
 		    return GenerateStockLevels(stocks);
 	    }
 
-	    private List<IStockLevel> GenerateStockLevels(List<IStock> stocks)
+	    private List<IStockLevel> GenerateStockLevels(List<IStockItem> stocks)
 	    {
 		    var stockLevels = new List<IStockLevel>();
 		    foreach (var stock in stocks)
@@ -34,7 +34,7 @@ namespace StockTracker.Seed.Stock
 					DateChecked = DateTime.Now.AddDays(_rng.Next(0,3)),
 					MemberId = _rng.Next(1,_memberMaxCount),
 					Quantity = _rng.Next(1,10),
-					StockId = stock.StockId
+					StockItemId = stock.StockItemId
 			    });
 		    }
 

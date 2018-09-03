@@ -14,11 +14,11 @@ namespace StockTracker.Model.Shopping
     {
 		[Key]
 	    public int ShoppingListItemId { get; set; }
-	    public int StockId { get; set; }
+	    public int StockItemId { get; set; }
 	    public int Quantity { get; set; }
 	    public bool IsCollected { get; set; }
 
-		[ForeignKey("StockId")]
-		public virtual List<IStock> Stocks { get; set; }
+		[ForeignKey("StockItemId")]
+		public virtual List<IStockItem> StockItems { get; set; }
     }
 }
