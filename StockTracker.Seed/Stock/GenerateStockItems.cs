@@ -8,19 +8,20 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.Seed.Stock
 {
-    public class GenerateStock
+    public class GenerateStockItems
     {
 	    private readonly List<string> _stockName;
 	    private readonly Random _rng;
 
-	    public List<IStockItem> GetStocks()
+	    public List<StockItem> GetStocks()
 	    {
-		    return GenerateStockList();
+		    ApplyStocks();
+			return GenerateStockList();
 	    }
 
-	    private List<IStockItem> GenerateStockList()
+	    private List<StockItem> GenerateStockList()
 	    {
-		    var stocks = new List<IStockItem>();
+		    var stocks = new List<StockItem>();
 
 			foreach(var stockItem in _stockName)
 		    {

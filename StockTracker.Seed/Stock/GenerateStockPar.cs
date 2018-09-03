@@ -17,14 +17,14 @@ namespace StockTracker.Seed.Stock
 			_rng = new Random();
 		}
 
-		public List<IStockPar> GetStockPars(List<IStockItem> stocks)
+		public List<StockPar> GetStockPars(List<StockItem> stocks)
 		{
 			return GenerateStockPars(stocks);
 		}
 
-		List<IStockPar> GenerateStockPars(List<IStockItem> stocks)
+		List<StockPar> GenerateStockPars(List<StockItem> stocks)
 		{
-			var pars = new List<IStockPar>();
+			var pars = new List<StockPar>();
 
 			foreach(var item in stocks)
 			{
@@ -32,7 +32,7 @@ namespace StockTracker.Seed.Stock
 					DateSet = DateTime.Now.AddDays(_rng.Next(1, 10) * -1),
 					MaxStock = _rng.Next(5, 10),
 					MinStock = _rng.Next(1, 5),
-					StockId = item.StockId
+					StockItemId = item.StockItemId
 				});
 			}
 

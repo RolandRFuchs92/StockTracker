@@ -25,10 +25,10 @@ namespace StockTracker.Context
 		public virtual DbSet<Person> Persons { get; set; }
 	    public virtual DbSet<Member> Members { get; set; }
 	    public virtual DbSet<MemberRole> MemberRoles { get; set; }
-	    public virtual DbSet<Stock> Stocks { get; set; }
+	    public virtual DbSet<StockItem> StockItems { get; set; }
 	    public virtual DbSet<StockLevel> StockLevels { get; set; }
 	    public virtual DbSet<StockPar> StockPars { get; set; }
-	    public virtual DbSet<ShoppingListItems> ShoppingListItemses { get; set; }
+	    public virtual DbSet<ShoppingListItems> ShoppingListItems { get; set; }
 	    public virtual DbSet<ShoppingList> ShoppingLists { get; set; }
     }
 }

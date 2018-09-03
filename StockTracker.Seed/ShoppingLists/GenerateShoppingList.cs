@@ -22,14 +22,14 @@ namespace StockTracker.Seed.ShoppingLists
 			isNotificationRandom = true;
 		}
 
-		public List<IShoppingList> GenerateShoppingLists()
+		public List<ShoppingList> GenerateShoppingLists()
 		{
 			return GetShoppingLists();
 		}
 
-		private List<IShoppingList> GetShoppingLists()
+		private List<ShoppingList> GetShoppingLists()
 		{
-			var shoppingList = new List<IShoppingList>();
+			var shoppingList = new List<ShoppingList>();
 
 			for(var inc = 1; inc < _totalShoppingLists; inc++)
 			{

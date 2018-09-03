@@ -7,9 +7,9 @@ namespace StockTracker.Seed
 {
     public class GenerateMemberRoles
     {
-	    public IList<IMemberRole> GenerateMemberRole()
+	    public List<MemberRole> GenerateMemberRole()
 	    {
-		    return new List<IMemberRole>
+		    return new List<MemberRole>
 		    {
 				new MemberRole{ MemberRoleId = 1, MemberRoleName = "Manager" },
 				new MemberRole{ MemberRoleId = 2, MemberRoleName = "Waiter" },

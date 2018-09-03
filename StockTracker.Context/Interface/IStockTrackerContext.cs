@@ -13,10 +13,10 @@ namespace StockTracker.Context.Interface
         DbSet<Person> Persons { get; set; }
 		DbSet<Member> Members { get; set; }
 		DbSet<MemberRole> MemberRoles { get; set; }
-		DbSet<Stock> Stocks { get; set; }
+		DbSet<StockItem> StockItems { get; set; }
 		DbSet<StockLevel> StockLevels { get; set; }
 		DbSet<StockPar> StockPars { get; set; }
-		DbSet<ShoppingListItems> ShoppingListItemses { get; set; }
+		DbSet<ShoppingListItems> ShoppingListItems { get; set; }
 		DbSet<ShoppingList> ShoppingLists { get; set; }
     }
 }

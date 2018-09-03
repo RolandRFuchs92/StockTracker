@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model;
 
 namespace StockTracker.Seed.Member
 {
@@ -13,12 +14,12 @@ namespace StockTracker.Seed.Member
 
 	    public GenerateFakeMembers()
 	    {
-			_memberRoleCount = new GenerateMemberRoles().GenerateMemberRole().Count;
+			_memberRoleCount = new GenerateMemberRoles().GenerateMemberRole().Count();
 	    }
 
-		public List<IMember> SetupSeedMembers(List<IPerson> people)
+		public List<Model.Member> SetupSeedMembers(List<Person> people)
 		{
-			var members = new List<IMember>();
+			var members = new List<Model.Member>();
 			var rnd = new Random();
 
 			foreach (var person in people)

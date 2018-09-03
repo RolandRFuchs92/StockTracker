@@ -18,9 +18,9 @@ namespace StockTracker.Seed.Member
 		    GenerateName();
 	    }
 
-	    public List<IPerson> GeneratePersonList(int maxMembers)
+	    public List<Person> GeneratePersonList(int maxMembers)
 	    {
-		    var people = new List<IPerson>();
+		    var people = new List<Person>();
 		    var maxNames = _name.Count();
 
 		    for (var inc = 1; inc < maxMembers + 1; inc++)
