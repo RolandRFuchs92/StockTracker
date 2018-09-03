@@ -23,8 +23,8 @@ namespace StockTracker.Test
 	[TestClass]
 	public class GetMemberTest
 	{
-		private readonly IGetMember _member;
-		private IStockTrackerContext _db;
+		private readonly IGetMembers _member;
+		private StockTrackerContext _db;
 
 
 		public GetMemberTest()
@@ -33,7 +33,9 @@ namespace StockTracker.Test
 			builder.UseInMemoryDatabase();
 
 			_db = new StockTrackerContext(builder.Options);
-			new PopulateDb(_db);
+			new PopulateDb(_db).Populate();
+
+			var data = _db.Members.Count();
 
 			_member = new GetMembers(_db);
 		}

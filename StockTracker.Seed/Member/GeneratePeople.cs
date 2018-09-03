@@ -15,6 +15,7 @@ namespace StockTracker.Seed.Member
 
 	    public GeneratePeople()
 	    {
+			_name = new List<string>();
 		    GenerateName();
 	    }
 

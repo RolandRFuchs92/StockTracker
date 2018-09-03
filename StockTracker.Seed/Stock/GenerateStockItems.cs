@@ -13,6 +13,12 @@ namespace StockTracker.Seed.Stock
 	    private readonly List<string> _stockName;
 	    private readonly Random _rng;
 
+	    public GenerateStockItems()
+	    {
+			_stockName = new List<string>();
+		    _rng = new Random();
+		}
+
 	    public List<StockItem> GetStocks()
 	    {
 		    ApplyStocks();
