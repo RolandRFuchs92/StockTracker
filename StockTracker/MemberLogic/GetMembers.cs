@@ -1,12 +1,13 @@
-﻿using StockTracker.Interface.BusinessLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model;
 
 namespace StockTracker.BusinessLogic.MemberLogic
 {
@@ -19,17 +20,17 @@ namespace StockTracker.BusinessLogic.MemberLogic
 		    _db = db;
 	    }
 
-	    public IMember GetMemberByMemberId(int memberId)
+	    public Member GetMemberByMemberId(int memberId)
 	    {
 		    return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
 	    }
 
-	    public IMember GetMemberByPersonId(int personId)
+	    public Member GetMemberByPersonId(int personId)
 	    {
 		    throw new NotImplementedException();
 	    }
 
-	    public List<IMember> GetMembersByMemberRoleId(int memberRoleId)
+	    public List<Member> GetMembersByMemberRoleId(int memberRoleId)
 	    {
 		    throw new NotImplementedException();
 	    }

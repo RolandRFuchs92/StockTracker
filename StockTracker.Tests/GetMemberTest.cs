@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
-using StockTracker.Interface.BusinessLogic;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
@@ -26,17 +26,9 @@ namespace StockTracker.Test
 		private readonly IGetMembers _member;
 		private StockTrackerContext _db;
 
-
 		public GetMemberTest()
 		{
-			var builder = new DbContextOptionsBuilder<StockTrackerContext>();
-			builder.UseInMemoryDatabase();
-
-			_db = new StockTrackerContext(builder.Options);
-			new PopulateDb(_db).Populate();
-
-			var data = _db.Members.Count();
-
+			_db = TestDb.db;
 			_member = new GetMembers(_db);
 		}
 
@@ -45,28 +37,40 @@ namespace StockTracker.Test
 		public void GetMemberByMemberId_Passed1_ReturnMember()
 		{
 			//Arrange
-			var searchId = 1;
+			var memberId = 1;
 
 			//Act
-			var result = _member.GetMemberByMemberId(searchId);
+			var result = _member.GetMemberByMemberId(memberId);
 
 			//Assert
-			Assert.AreEqual(searchId, result.MemberId, "Result from Db was not the same as the result.");
+			Assert.AreEqual(memberId, result.MemberId, "Result from Db was not the same as the result.");
 
 		}
 
 		[TestMethod]
-		public void GetMemberById_Passed0_ReturnEmpty()
+		public void GetMemberById_Passed0_ReturnNull()
 		{
 			//Arrange
-			var searchId = 0;
+			var memberId= 0;
 
 			//Act
-			var result = _member.GetMemberByMemberId(searchId);
+			var result = _member.GetMemberByMemberId(memberId);
 
 			//Assert
 			Assert.AreSame(null, result);
 		}
 
+		[TestMethod]
+		public void GetMemberById_Passed10_DoesNotContainPersonobject()
+		{
+			//Arrange
+			var memberId = 10;
+
+			//Act
+			var result = _member.GetMemberByMemberId(memberId);
+
+			//Assert
+			Assert.AreSame(null, result.Person);
+		}
 	}
 }
