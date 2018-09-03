@@ -61,7 +61,7 @@ namespace StockTracker.Test
 		}
 
 		[TestMethod]
-		public void GetMemberById_Passed10_DoesNotContainPersonobject()
+		public void GetMemberById_Passed10_ContainsAValidPersonObject()
 		{
 			//Arrange
 			var memberId = 10;
@@ -70,7 +70,7 @@ namespace StockTracker.Test
 			var result = _member.GetMemberByMemberId(memberId);
 
 			//Assert
-			Assert.AreSame(null, result.Person);
+			Assert.IsInstanceOfType(result.Person, typeof(IPerson));
 		}
 	}
 }
