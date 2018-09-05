@@ -14,8 +14,8 @@ namespace StockTracker.Model
 	{
 		[Key]
 		public int MemberId { get; set; }
-		public int? PersonId { get; set; }
-		public int? MemberRoleId { get; set; }
+		public int PersonId { get; set; }
+		public int MemberRoleId { get; set; }
 		public bool IsActive { get; set; }
 		public DateTime LastActiveDate { get; set; }
 
