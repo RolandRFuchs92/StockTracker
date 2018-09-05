@@ -8,6 +8,9 @@ namespace StockTracker.Interface.Models.Stock
 {
     public interface IStockCategory
     {
-        
+		/*Is it meat, beer, liquor, sweet, hot drink, soda, veggie, fruit*/
+        int StockCategoryId { get; set; }
+		int StockTypeId { get; set; }
+		string StockCategoryName { get; set; }
     }
 }
