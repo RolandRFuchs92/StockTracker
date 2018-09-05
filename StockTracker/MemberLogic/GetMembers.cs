@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Member;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
+using StockTracker.Model.User;
 
 namespace StockTracker.BusinessLogic.MemberLogic
 {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model.User;
 
 namespace StockTracker.Model.Shopping
 {

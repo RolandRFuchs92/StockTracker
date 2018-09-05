@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using StockTracker.Interface.Models.User;
-using StockTracker.Model;
+﻿using System.Collections.Generic;
+using StockTracker.Model.User;
 
-namespace StockTracker.Seed
+namespace StockTracker.Seed.Member
 {
     public class GenerateMemberRoles
     {

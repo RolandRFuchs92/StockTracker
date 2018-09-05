@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
+using StockTracker.Model.User;
 
 namespace StockTracker.Seed.Member
 {

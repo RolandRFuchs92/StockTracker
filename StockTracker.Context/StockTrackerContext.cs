@@ -12,6 +12,7 @@ using StockTracker.Interface.Models.User;
 using StockTracker.Model;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
+using StockTracker.Model.User;
 
 namespace StockTracker.Context
 {

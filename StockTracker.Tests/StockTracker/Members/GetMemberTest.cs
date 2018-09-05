@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using StockTracker.BusinessLogic.Interface.BusinessLogic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Member;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
-using StockTracker.Context.Interface;
-using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
-using StockTracker.Model;
-using StockTracker.Seed;
 
-namespace StockTracker.Test
+namespace StockTracker.Test.StockTracker.Members
 {
 	[TestClass]
 	public class GetMemberTest

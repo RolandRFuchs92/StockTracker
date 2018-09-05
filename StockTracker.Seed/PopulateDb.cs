@@ -8,6 +8,7 @@ using StockTracker.Context.Interface;
 using StockTracker.Model;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
+using StockTracker.Model.User;
 using StockTracker.Seed.Member;
 using StockTracker.Seed.ShoppingLists;
 using StockTracker.Seed.Stock;
@@ -20,7 +21,7 @@ namespace StockTracker.Seed
 		private List<MemberRole> _memberRoles;
 		private List<Person> _people;
 		private List<StockItem> _stockItems;
-		private List<Model.Member> _members;
+		private List<Model.User.Member> _members;
 		private List<ShoppingList> _shoppingList;
 
 		public PopulateDb(StockTrackerContext db)

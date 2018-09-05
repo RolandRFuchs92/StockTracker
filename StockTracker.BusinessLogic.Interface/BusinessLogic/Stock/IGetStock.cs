@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StockTracker.Interface.Models.Stock;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic
+namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 {
     public interface IGetStock
     {

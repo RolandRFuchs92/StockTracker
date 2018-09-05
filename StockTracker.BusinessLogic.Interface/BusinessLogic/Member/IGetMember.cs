@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using StockTracker.Model;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic
+namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Member
 {
     public interface IGetMembers
     {
-	    Member GetMemberByMemberId(int memberId);
-	    Member GetMemberByPersonId(int personId);
-	    List<Member> GetMembersByMemberRoleId(int memberRoleId);
+	    Model.User.Member GetMemberByMemberId(int memberId);
+	    Model.User.Member GetMemberByPersonId(int personId);
+	    List<Model.User.Member> GetMembersByMemberRoleId(int memberRoleId);
     }
 }

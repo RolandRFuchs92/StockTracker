@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
+namespace StockTracker.Interface.Models.Stock
 {
-    public interface IDeleteStock
+    public interface IStockCategory
     {
         
     }

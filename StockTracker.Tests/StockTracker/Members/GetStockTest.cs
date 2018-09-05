@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 

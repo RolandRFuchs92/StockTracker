@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.User;
 
 namespace StockTracker.Model.Stock
 {

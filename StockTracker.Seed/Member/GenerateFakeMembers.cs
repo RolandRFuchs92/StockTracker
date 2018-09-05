@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
+using StockTracker.Model.User;
 
 namespace StockTracker.Seed.Member
 {
@@ -17,14 +18,14 @@ namespace StockTracker.Seed.Member
 			_memberRoleCount = new GenerateMemberRoles().GenerateMemberRole().Count();
 	    }
 
-		public List<Model.Member> SetupSeedMembers(List<Person> people)
+		public List<Model.User.Member> SetupSeedMembers(List<Person> people)
 		{
-			var members = new List<Model.Member>();
+			var members = new List<Model.User.Member>();
 			var rnd = new Random();
 
 			foreach (var person in people)
 			{
-				members.Add(new Model.Member
+				members.Add(new Model.User.Member
 				{
 					PersonId = person.PersonId,
 					IsActive = (rnd.Next(0, 1) > 0),
