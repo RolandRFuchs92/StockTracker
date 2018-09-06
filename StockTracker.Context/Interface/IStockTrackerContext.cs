@@ -3,6 +3,8 @@ using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
+using StockTracker.Model.Client;
+using StockTracker.Model.Settings;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
 using StockTracker.Model.User;
@@ -19,5 +21,9 @@ namespace StockTracker.Context.Interface
 		DbSet<StockPar> StockPars { get; set; }
 		DbSet<ShoppingListItems> ShoppingListItems { get; set; }
 		DbSet<ShoppingList> ShoppingLists { get; set; }
+		DbSet<StockType> StockTypes { get; set; }
+		DbSet<StockCategory> StpCategories { get; set; }
+		DbSet<ClientSettings> ClientSettings { get; set; }
+		DbSet<Client> Clients { get; set; }
     }
 }
