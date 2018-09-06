@@ -17,5 +17,6 @@ namespace StockTracker.Model.Stock
 	    public float StockItemPrice { get; set; }
 	    public DateTime DateCreated { get; set; }
 	    public bool IsActive { get; set; }
+
     }
 }

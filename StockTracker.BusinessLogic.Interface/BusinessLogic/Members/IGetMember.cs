@@ -7,7 +7,6 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Members
     {
 	    Member GetMemberByMemberId(int memberId);
 	    Member GetMemberByPersonId(int personId);
-	    List<Member> GetMembersByMemberRoleId(int memberRoleId);
 	    List<Member> Get(int clientId);
 	    List<Member> Get(int clientId, int memberRoleId);
 	    List<Member> GetAllMembers(int clientId);

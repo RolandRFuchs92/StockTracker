@@ -29,22 +29,18 @@ namespace StockTracker.BusinessLogic.MemberLogic
 
 	    public Member GetMemberByPersonId(int personId)
 	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public List<Member> GetMembersByMemberRoleId(int memberRoleId)
-	    {
-		    throw new NotImplementedException();
+		    return _db.Members.FirstOrDefault(i => i.PersonId == personId);
 	    }
 
 	    public List<Member> Get(int clientId)
 	    {
+		
 		    throw new NotImplementedException();
 	    }
 
-	    public List<Member> Get(int clientId, int memberRoleId)
+		public List<Member> Get(int clientId, int memberRoleId)
 	    {
-		    throw new NotImplementedException();
+		    return _db.Members.Where(i => i.MemberRoleId == memberRoleId).ToList();
 	    }
 
 	    public List<Member> GetAllMembers(int clientId)

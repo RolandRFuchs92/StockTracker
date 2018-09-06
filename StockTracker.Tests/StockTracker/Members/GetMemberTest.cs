@@ -110,36 +110,6 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 		#endregion
 
-		#region GetMemberByMemberRoleId
-		[TestMethod]
-		public void GetMembersByMemberRoleId_Passed1_ShouldGetAListOfMembers()
-		{
-			//Arrange
-			var roleId = 1;
-
-			//Act
-			var result = _member.GetMembersByMemberRoleId(roleId);
-
-			//Assert
-			Assert.IsTrue(result.Count > 1);
-			Assert.IsNotNull(result);
-			Assert.IsInstanceOfType(result, typeof(IMember));
-		}
-
-		[TestMethod]
-		public void GetMembersByMemberRoleId_Passed0_ShouldReturnNull()
-		{
-			//Arrange
-			var memberRoleId = 0;
-
-			//Act
-			var result = _member.GetMembersByMemberRoleId(memberRoleId);
-
-			//Assert
-			Assert.IsNull(result);
-		}
-		#endregion
-
 		#region Get
 		[TestMethod]
 		public void Get_PassedClientId_ShouldGetAListOfMembers()
