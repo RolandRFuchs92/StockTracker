@@ -37,7 +37,7 @@ namespace StockTracker.BusinessLogic.MemberLogic
 		    throw new NotImplementedException();
 	    }
 
-	    public List<Member> Gets(int clientId)
+	    public List<Member> Get(int clientId)
 	    {
 		    throw new NotImplementedException();
 	    }

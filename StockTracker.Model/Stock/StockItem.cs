@@ -12,6 +12,7 @@ namespace StockTracker.Model.Stock
     {
 		[Key]
 	    public int StockItemId { get; set; }
+	    public int StockCategoryId { get; set; }
 	    public string StockItemName { get; set; }
 	    public float StockItemPrice { get; set; }
 	    public DateTime DateCreated { get; set; }

@@ -35,7 +35,8 @@ namespace StockTracker.Test.StockTracker.Members
 
 			//Assert
 			Assert.AreEqual(memberId, result.MemberId, "Result from Db was not the same as the result.");
-
+			Assert.IsTrue(result.IsActive);
+			Assert.IsInstanceOfType(result.Person, typeof(IMember));
 		}
 
 		[TestMethod]
@@ -48,7 +49,7 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.GetMemberByMemberId(memberId);
 
 			//Assert
-			Assert.AreSame(null, result);
+			Assert.IsNull(result);
 		}
 
 		[TestMethod]
@@ -64,19 +65,9 @@ namespace StockTracker.Test.StockTracker.Members
 			Assert.IsNull(result);
 		}
 
-		[TestMethod]
-		public void GGetMemberByMemberId_Passed10_ContainsAValidPersonObject()
-		{
-			//Arrange
-			var memberId = 10;
+		#endregion
 
-			//Act
-			var result = _member.GetMemberByMemberId(memberId);
-
-			//Assert
-			Assert.IsInstanceOfType(result.Person, typeof(IPerson));
-		}
-
+		#region GetMemberByPersonId
 		[TestMethod]
 		public void GetMemberByPersonId_Passed1_ShouldGetAMemberWithPersonIdOf1()
 		{
@@ -87,11 +78,11 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.GetMemberByPersonId(personId);
 
 			//Assert
+			Assert.IsNotNull(result);
 			Assert.AreEqual(personId, result.PersonId);
+			Assert.IsInstanceOfType(result, typeof(IMember));
 		}
-		#endregion
 
-		#region GetMemberByPersonId
 		[TestMethod]
 		public void GetMemberByPersonId_Passed0_ShouldGetNull()
 		{
@@ -102,20 +93,7 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.GetMemberByPersonId(personId);
 
 			//Assert
-			Assert.AreEqual(null, result?.Person ?? null);
-		}
-
-		[TestMethod]
-		public void GetMemberByPersonId_Passed10_ShouldGetAMemberWithPersonId10()
-		{
-			//Arrange
-			var personId = 10;
-
-			//Act
-			var result = _member.GetMemberByPersonId(personId);
-
-			//Assert
-			Assert.AreEqual(personId, result.PersonId);
+			Assert.IsNull(result);
 		}
 
 		[TestMethod]
@@ -146,19 +124,6 @@ namespace StockTracker.Test.StockTracker.Members
 			Assert.IsTrue(result.Count > 1);
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IMember));
-		}
-
-		[TestMethod]
-		public void GetMembersByMemberRoleId_Passed120_ShouldReturnNull()
-		{
-			//Arrange
-			var memberRoleId = 120;
-
-			//Act
-			var _result = _member.GetMembersByMemberRoleId(memberRoleId);
-
-			//Assert
-			Assert.IsNull(_result);
 		}
 
 		[TestMethod]
