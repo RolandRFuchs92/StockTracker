@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Member;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.User;

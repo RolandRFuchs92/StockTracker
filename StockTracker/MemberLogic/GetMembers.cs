@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Member;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.User;
@@ -33,6 +33,26 @@ namespace StockTracker.BusinessLogic.MemberLogic
 	    }
 
 	    public List<Member> GetMembersByMemberRoleId(int memberRoleId)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public List<Member> GetMembers(int clientId)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public List<Member> GetMembers(int clientId, int memberRoleId)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public List<Member> GetAllMembers(int clientId)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public List<Member> GetAllMembers(int clientId, int memberRoleId)
 	    {
 		    throw new NotImplementedException();
 	    }
