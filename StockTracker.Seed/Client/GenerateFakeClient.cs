@@ -16,6 +16,7 @@ namespace StockTracker.Seed.Client
 
 		public GenerateFakeClient()
 		{
+			_clientNames = new List<string>();
 			AddClientNames();
 			_rng = new Random();
 		}

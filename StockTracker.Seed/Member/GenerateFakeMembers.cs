@@ -28,13 +28,27 @@ namespace StockTracker.Seed.Member
 				members.Add(new Model.User.Member
 				{
 					PersonId = person.PersonId,
-					IsActive = (rnd.Next(0, 1) > 0),
+					IsActive = true,
 					MemberRoleId = rnd.Next(1, _memberRoleCount),
-					LastActiveDate = DateTime.Now
+					LastActiveDate = DateTime.Now,
+					ClientId = rnd.Next(1,5)
 				});
 			}
 
+			members.Add(AddUseCaseMember());
 			return members;
 		}
+
+	    public Model.User.Member AddUseCaseMember()
+	    {
+		    return new Model.User.Member
+		    {
+				ClientId = 1,
+				IsActive = false,
+				MemberRoleId = 1,
+				PersonId =  1,
+				LastActiveDate =  DateTime.Now
+		    };
+	    }
 	}
 }

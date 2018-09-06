@@ -8,6 +8,7 @@ using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model.User;
 
 namespace StockTracker.Test.StockTracker.Members
 {
@@ -123,7 +124,8 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.Count > 0);
-			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsTrue(result.FirstOrDefault().IsActive);
+			Assert.IsInstanceOfType(result, typeof(List<Member>));
 			
 		}
 
@@ -137,7 +139,7 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.Get(clientId);
 
 			//Assert
-			Assert.IsNull(result);
+			Assert.IsTrue(result.Count == 0, "Returned a list... shoulda been null!");
 		}
 
 		[TestMethod]
@@ -152,7 +154,7 @@ namespace StockTracker.Test.StockTracker.Members
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsInstanceOfType(result, typeof(List<Member>));
 			Assert.IsTrue(result.Count > 0);
 		}
 
@@ -175,9 +177,9 @@ namespace StockTracker.Test.StockTracker.Members
 			var result3 = _member.Get(clientId3, memberId3);
 
 			//Assert
-			Assert.IsNull(result1);
-			Assert.IsNull(result2);
-			Assert.IsNull(result3);
+			Assert.IsTrue(result1.Count == 0);
+			Assert.IsTrue(result2.Count == 0);
+			Assert.IsTrue(result3.Count == 0);
 		}
 		#endregion
 
@@ -194,7 +196,7 @@ namespace StockTracker.Test.StockTracker.Members
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsInstanceOfType(result, typeof(List<Member>));
 			Assert.IsTrue(result.Count > 0);
 		}
 
@@ -208,7 +210,7 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.GetAllMembers(clientId);
 
 			//Assert
-			Assert.IsNull(result);
+			Assert.IsTrue(result.Count == 0);
 		}
 
 		[TestMethod]
@@ -224,8 +226,8 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.Count > 0);
-			Assert.IsInstanceOfType(result, typeof(List<IMember>));
-			Assert.IsTrue(result.FirstOrDefault().MemberId == memberRoleId);
+			Assert.IsInstanceOfType(result, typeof(List<Member>));
+			Assert.IsTrue(result.FirstOrDefault().MemberRoleId == memberRoleId);
 		}
 
 
@@ -248,9 +250,9 @@ namespace StockTracker.Test.StockTracker.Members
 			var result3 = _member.GetAllMembers(clientId3, memberRoleId3);
 
 			//Assert
-			Assert.IsNull(result1);
-			Assert.IsNull(result2);
-			Assert.IsNull(result3);
+			Assert.IsTrue(result1.Count == 0);
+			Assert.IsTrue(result2.Count == 0);
+			Assert.IsTrue(result3.Count == 0);
 		}
 		#endregion
 

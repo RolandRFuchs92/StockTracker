@@ -9,6 +9,7 @@ using StockTracker.Model;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
 using StockTracker.Model.User;
+using StockTracker.Seed.Client;
 using StockTracker.Seed.Member;
 using StockTracker.Seed.ShoppingLists;
 using StockTracker.Seed.Stock;
@@ -23,6 +24,7 @@ namespace StockTracker.Seed
 		private List<StockItem> _stockItems;
 		private List<Model.User.Member> _members;
 		private List<ShoppingList> _shoppingList;
+		private List<Model.Client.Client> _clients;
 
 		public PopulateDb(StockTrackerContext db)
 		{
@@ -86,10 +88,12 @@ namespace StockTracker.Seed
 		    _memberRoles = new GenerateMemberRoles().GenerateMemberRole();
 		    _people = new GeneratePeople().GeneratePersonList(10);
 		    _stockItems = new GenerateStockItems().GetStocks();
+		    _clients = new GenerateFakeClient().GenerateClientList();
 
 			_db.MemberRoles.AddRange(_memberRoles);
 			_db.Persons.AddRange(_people);
 			_db.StockItems.AddRange(_stockItems);
+			_db.Clients.AddRange(_clients);
 
 		    _db.SaveChanges();
 	    }

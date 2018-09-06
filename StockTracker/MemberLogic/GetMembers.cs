@@ -35,10 +35,7 @@ namespace StockTracker.BusinessLogic.MemberLogic
 
 	    public List<Member> Get(int clientId)
 	    {
-			return (from member in _db.Members
-					join client in _db.Clients
-						on member.ClientId equals client.ClientId
-					select member).ToList();
+		    return _db.Members.Where(i => i.ClientId == clientId && i.IsActive).ToList();
 	    }
 
 		public List<Member> Get(int clientId, int memberRoleId)
