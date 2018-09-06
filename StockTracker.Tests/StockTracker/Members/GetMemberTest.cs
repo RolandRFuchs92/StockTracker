@@ -35,8 +35,8 @@ namespace StockTracker.Test.StockTracker.Members
 
 			//Assert
 			Assert.AreEqual(memberId, result.MemberId, "Result from Db was not the same as the result.");
-			Assert.IsTrue(result.IsActive);
-			Assert.IsInstanceOfType(result.Person, typeof(IMember));
+			Assert.IsInstanceOfType(result, typeof(IMember));
+			Assert.IsNotNull(result.Person);
 		}
 
 		[TestMethod]
@@ -121,11 +121,10 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.Get(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(result.Count > 0);
-				Assert.IsInstanceOfType(result, typeof(List<IMember>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			
 		}
 
 		[TestMethod]
