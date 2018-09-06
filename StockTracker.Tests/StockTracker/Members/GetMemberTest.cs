@@ -1,4 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
 using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
@@ -169,5 +174,151 @@ namespace StockTracker.Test.StockTracker.Members
 			Assert.IsNull(result);
 		}
 		#endregion
+
+		#region GetMembers
+		[TestMethod]
+		public void GetMembers_PassedClientId_ShouldGetAListOfMembers()
+		{
+			//Arrange
+			int clientId = 1;
+
+			//Act
+			var result = _member.GetMembers(clientId);
+
+			//Assert
+			if (result != null)
+			{
+				Assert.IsTrue(result.Count > 0);
+				Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			}
+		}
+
+		[TestMethod]
+		public void GetMembers_Passed0_ShouldNotThrowAndShouldReturnNull()
+		{
+			//Arrange
+			var clientId = 0;
+
+			//Act
+			var result = _member.GetMembers(clientId);
+
+			//Assert
+			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void GetMembers_PassedClientIdAndRoleId_ShouldGetAListOfMembers()
+		{
+			//Arrange
+			var clientId = 1;
+			var memberRoleId = 1;
+
+			//Act
+			var result = _member.GetMembers(clientId, memberRoleId);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsTrue(result.Count > 0);
+		}
+
+		[TestMethod]
+		public void GetMember_PassedClientIdAndRoleId_ShouldNotThrow()
+		{
+			//Arrange
+			var clientId = 0;
+			var memberId = 0;
+
+			var clientId2 = 1;
+			var memberId2 = 0;
+
+			var clientId3 = 0;
+			var memberId3 = 1;
+
+			//Act
+			var result1 = _member.GetMembers(clientId, memberId);
+			var result2 = _member.GetMembers(clientId2, memberId2);
+			var result3 = _member.GetMembers(clientId3, memberId3);
+
+			//Assert
+			Assert.IsNull(result1);
+			Assert.IsNull(result2);
+			Assert.IsNull(result3);
+		}
+		#endregion
+
+		#region GetAllMembers
+
+		[TestMethod]
+		public void GetAllMembers_PassedInClientId_GetAListOFMember()
+		{
+			//Arrange
+			var clientId = 1;
+
+			//Act
+			var result = _member.GetAllMembers(clientId);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsTrue(result.Count > 0);
+		}
+
+		[TestMethod]
+		public void GetAllMembers_PassedInvalidClientId_ReturnNullNoError()
+		{
+			//Arrange
+			var clientId = 0;
+
+			//Act
+			var result = _member.GetAllMembers(clientId);
+
+			//Assert
+			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void GetAllMembers_PassedClientAndMemberRole_ReturnAListOfMembersInRoll()
+		{
+			//Arrange
+			var clientId = 1;
+			var memberRoleId = 1;
+
+			//Act
+			var result = _member.GetAllMembers(clientId, memberRoleId);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+			Assert.IsInstanceOfType(result, typeof(List<IMember>));
+			Assert.IsTrue(result.FirstOrDefault().MemberId == memberRoleId);
+		}
+
+
+		[TestMethod]
+		public void GetAllMembers_PassedInvalidValues_ReturnNull()
+		{
+			//Arrange
+			var clientId1 = 0;
+			var memberRoleId1 = 0;
+
+			var clientId2 = 0;
+			var memberRoleId2 = 0;
+
+			var clientId3 = 0;
+			var memberRoleId3 = 0;
+
+			//Act
+			var result1 = _member.GetAllMembers(clientId1, memberRoleId1);
+			var result2 = _member.GetAllMembers(clientId2, memberRoleId2);
+			var result3 = _member.GetAllMembers(clientId3, memberRoleId3);
+
+			//Assert
+			Assert.IsNull(result1);
+			Assert.IsNull(result2);
+			Assert.IsNull(result3);
+		}
+		#endregion
+
 	}
 }
