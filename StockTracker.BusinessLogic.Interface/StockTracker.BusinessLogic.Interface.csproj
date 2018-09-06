@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="BusinessLogic\Reporting\" />
-    <Folder Include="BusinessLogic\Shopping\" />
   </ItemGroup>
 
 </Project>
