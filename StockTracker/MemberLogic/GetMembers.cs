@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
 using StockTracker.Context;
@@ -34,8 +35,10 @@ namespace StockTracker.BusinessLogic.MemberLogic
 
 	    public List<Member> Get(int clientId)
 	    {
-		
-		    throw new NotImplementedException();
+			return (from member in _db.Members
+					join client in _db.Clients
+						on member.ClientId equals client.ClientId
+					select member).ToList();
 	    }
 
 		public List<Member> Get(int clientId, int memberRoleId)
@@ -45,12 +48,12 @@ namespace StockTracker.BusinessLogic.MemberLogic
 
 	    public List<Member> GetAllMembers(int clientId)
 	    {
-		    throw new NotImplementedException();
+		    return _db.Members.Where(i => i.ClientId == clientId && i.IsActive).ToList();
 	    }
 
 	    public List<Member> GetAllMembers(int clientId, int memberRoleId)
 	    {
-		    throw new NotImplementedException();
+		    return _db.Members.Where(i => i.MemberRoleId == memberRoleId && i.ClientId == clientId && i.IsActive).ToList();
 	    }
     }
 }

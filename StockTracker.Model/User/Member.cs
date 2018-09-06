@@ -10,12 +10,17 @@ namespace StockTracker.Model.User
 		[Key]
 		public int MemberId { get; set; }
 		public int PersonId { get; set; }
+		public int ClientId { get; set; }
 		public int MemberRoleId { get; set; }
 		public bool IsActive { get; set; }
 		public DateTime LastActiveDate { get; set; }
 
 		[ForeignKey("PersonId")]
 		public virtual Person Person { get; set; }
+
+		[ForeignKey("ClientId")]
+		public virtual Client.Client Client { get; set; }
+
 		[ForeignKey("MemberRoleId")]
 		public virtual MemberRole MemberRole { get; set; }
 	}

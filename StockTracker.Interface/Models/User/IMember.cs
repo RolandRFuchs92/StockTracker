@@ -10,6 +10,7 @@ namespace StockTracker.Interface.Models.User
 		[Key]
         int MemberId { get; set; }
 		int PersonId { get; set; }
+		int ClientId { get; set; }
 		int MemberRoleId { get; set; }
 		bool IsActive { get; set; }
 		DateTime LastActiveDate { get; set; }
