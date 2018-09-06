@@ -175,15 +175,15 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 		#endregion
 
-		#region GetMembers
+		#region Get
 		[TestMethod]
-		public void GetMembers_PassedClientId_ShouldGetAListOfMembers()
+		public void Get_PassedClientId_ShouldGetAListOfMembers()
 		{
 			//Arrange
 			int clientId = 1;
 
 			//Act
-			var result = _member.GetMembers(clientId);
+			var result = _member.Get(clientId);
 
 			//Assert
 			if (result != null)
@@ -194,27 +194,27 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 
 		[TestMethod]
-		public void GetMembers_Passed0_ShouldNotThrowAndShouldReturnNull()
+		public void Get_Passed0_ShouldNotThrowAndShouldReturnNull()
 		{
 			//Arrange
 			var clientId = 0;
 
 			//Act
-			var result = _member.GetMembers(clientId);
+			var result = _member.Get(clientId);
 
 			//Assert
 			Assert.IsNull(result);
 		}
 
 		[TestMethod]
-		public void GetMembers_PassedClientIdAndRoleId_ShouldGetAListOfMembers()
+		public void Get_PassedClientIdAndRoleId_ShouldGetAListOfMembers()
 		{
 			//Arrange
 			var clientId = 1;
 			var memberRoleId = 1;
 
 			//Act
-			var result = _member.GetMembers(clientId, memberRoleId);
+			var result = _member.Get(clientId, memberRoleId);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -223,7 +223,7 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 
 		[TestMethod]
-		public void GetMember_PassedClientIdAndRoleId_ShouldNotThrow()
+		public void Get_PassedClientIdAndRoleId_ShouldNotThrow()
 		{
 			//Arrange
 			var clientId = 0;
@@ -236,9 +236,9 @@ namespace StockTracker.Test.StockTracker.Members
 			var memberId3 = 1;
 
 			//Act
-			var result1 = _member.GetMembers(clientId, memberId);
-			var result2 = _member.GetMembers(clientId2, memberId2);
-			var result3 = _member.GetMembers(clientId3, memberId3);
+			var result1 = _member.Get(clientId, memberId);
+			var result2 = _member.Get(clientId2, memberId2);
+			var result3 = _member.Get(clientId3, memberId3);
 
 			//Assert
 			Assert.IsNull(result1);
