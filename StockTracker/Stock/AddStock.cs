@@ -38,7 +38,7 @@ namespace StockTracker.BusinessLogic.Stock
 			}
 		}
 
-		public bool AddNew(List<INewstockItem> stockItems)
+		public int AddNew(List<IStockItem> stockItems)
 		{
 			throw new NotImplementedException();
 		}

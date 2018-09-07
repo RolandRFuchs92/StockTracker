@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using StockTracker.Context;
+﻿using Microsoft.EntityFrameworkCore;
 using StockTracker.Context.Interface;
-using StockTracker.Interface.Models.Shopping;
-using StockTracker.Interface.Models.Stock;
-using StockTracker.Interface.Models.User;
-using StockTracker.Model;
 using StockTracker.Model.Clients;
 using StockTracker.Model.Settings;
 using StockTracker.Model.Shopping;
@@ -29,18 +19,18 @@ namespace StockTracker.Context
 	    {
 	    }
 
-		public DbSet<Person> Persons { get; set; }
-	    public DbSet<Member> Members { get; set; }
-	    public DbSet<MemberRole> MemberRoles { get; set; }
+		public virtual DbSet<Person> Persons { get; set; }
+	    public virtual DbSet<Member> Members { get; set; }
+	    public virtual DbSet<MemberRole> MemberRoles { get; set; }
 	    public virtual DbSet<StockItem> StockItems { get; set; }
-	    public DbSet<StockLevel> StockLevels { get; set; }
-	    public DbSet<StockPar> StockPars { get; set; }
-	    public DbSet<ShoppingListItems> ShoppingListItems { get; set; }
-	    public DbSet<ShoppingList> ShoppingLists { get; set; }
-	    public DbSet<StockType> StockTypes { get; set; }
-	    public DbSet<StockCategory> StockCategories { get; set; }
-	    public DbSet<ClientSettings> ClientSettings { get; set; }
-	    public DbSet<Client> Clients { get; set; }
+	    public virtual DbSet<StockLevel> StockLevels { get; set; }
+	    public virtual DbSet<StockPar> StockPars { get; set; }
+	    public virtual DbSet<ShoppingListItems> ShoppingListItems { get; set; }
+	    public virtual DbSet<ShoppingList> ShoppingLists { get; set; }
+	    public virtual DbSet<StockType> StockTypes { get; set; }
+	    public virtual DbSet<StockCategory> StockCategories { get; set; }
+	    public virtual DbSet<ClientSettings> ClientSettings { get; set; }
+	    public virtual DbSet<Client> Clients { get; set; }
     }
 }
  
