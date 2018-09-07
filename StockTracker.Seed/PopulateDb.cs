@@ -38,6 +38,7 @@ namespace StockTracker.Seed
 			PopulateClientSettings();
 			PopulateClients();
 			PopulateMembers();
+			PopulateClientSettings();
 			PopulateStock();
 			PopulateStockPars();
 			PopulateShoppingLists();
@@ -62,8 +63,7 @@ namespace StockTracker.Seed
 
 		private void PopulateShoppingListItems()
 		{
-			var gen = new GenerateShoppingItem();
-			gen._maxStockItems = _shoppingList.Count;
+			var gen = new GenerateShoppingItem {_maxStockItems = _shoppingList.Count};
 			var shoppingItems = gen.GetShoppingItems();
 			
 			_db.ShoppingListItems.AddRange(shoppingItems);

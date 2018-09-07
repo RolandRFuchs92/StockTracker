@@ -34,7 +34,7 @@ namespace StockTracker.Context
 	    public DbSet<ShoppingListItems> ShoppingListItems { get; set; }
 	    public DbSet<ShoppingList> ShoppingLists { get; set; }
 	    public DbSet<StockType> StockTypes { get; set; }
-	    public DbSet<StockCategory> StpCategories { get; set; }
+	    public DbSet<StockCategory> StockCategories { get; set; }
 	    public DbSet<ClientSettings> ClientSettings { get; set; }
 	    public DbSet<Client> Clients { get; set; }
     }

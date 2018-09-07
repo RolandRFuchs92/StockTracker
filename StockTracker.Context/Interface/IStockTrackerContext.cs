@@ -18,11 +18,11 @@ namespace StockTracker.Context.Interface
 		DbSet<MemberRole> MemberRoles { get; set; }
 		DbSet<StockItem> StockItems { get; set; }
 		DbSet<StockLevel> StockLevels { get; set; }
+		DbSet<StockCategory> StockCategories { get; set; }
 		DbSet<StockPar> StockPars { get; set; }
+		DbSet<StockType> StockTypes { get; set; }
 		DbSet<ShoppingListItems> ShoppingListItems { get; set; }
 		DbSet<ShoppingList> ShoppingLists { get; set; }
-		DbSet<StockType> StockTypes { get; set; }
-		DbSet<StockCategory> StpCategories { get; set; }
 		DbSet<ClientSettings> ClientSettings { get; set; }
 		DbSet<Client> Clients { get; set; }
     }
