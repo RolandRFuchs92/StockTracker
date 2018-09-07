@@ -21,14 +21,14 @@ namespace StockTracker.Seed.Client
 			_rng = new Random();
 		}
 
-		public List<Model.Client.Client> GenerateClientList()
+		public List<Model.Clients.Client> GenerateClientList()
 		{
-			var clientList = new List<Model.Client.Client>();
+			var clientList = new List<Model.Clients.Client>();
 
 			for (var inc = 0; inc < maxClients; inc++)
 			{
 				var clientName = _clientNames[_rng.Next(0, 6)];
-				clientList.Add(new Model.Client.Client
+				clientList.Add(new Model.Clients.Client
 				{
 					IsActive = inc == 1 || _rng.Next(0, 1) > 0,
 					Address = GenerateAddress(),

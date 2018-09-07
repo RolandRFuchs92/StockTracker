@@ -25,7 +25,7 @@ namespace StockTracker.Seed
 		private List<StockItem> _stockItems;
 		private List<Model.User.Member> _members;
 		private List<ShoppingList> _shoppingList;
-		private List<Model.Client.Client> _clients;
+		private List<Model.Clients.Client> _clients;
 
 		public PopulateDb(StockTrackerContext db)
 		{

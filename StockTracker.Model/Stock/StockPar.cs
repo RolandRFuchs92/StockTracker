@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.Model.Stock
 {
@@ -15,11 +16,14 @@ namespace StockTracker.Model.Stock
 		[Key]
 	    public int StockParId { get; set; }
 	    public int StockItemId { get; set; }
+	    public int ClientId { get; set; }
 	    public int? MaxStock { get; set; }
 	    public int MinStock { get; set; }
 	    public DateTime DateSet { get; set; }
 
 		[ForeignKey("StockItemId")]
 		public StockItem StockItem { get; set; }
+		[ForeignKey("ClientId")] 
+	    public Client Clients { get; set; }
     }
 }

@@ -10,11 +10,10 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 {
     public interface IAddStock
     {
-	    bool AddNew(IStockItem stockItem, int minStock);
+	    bool AddNew(IStockItem stockItem);
 	    bool AddNew(List<INewstockItem> stockItems);
-	    bool Add(int stockItemId, int clientId);
-	    bool Add(List<int> stockItemIds, int clinetId);
-	    bool Add(List<IStockItem> stockItems, int clinetId);
+	    bool Add(IStockItem stockItemId, int clientId, int minPar);
+	    bool Add(List<IStockItem> stockItems, int clinetId, int minPar);
 	    bool AddCategory(int categoryId, int clientId);
 	    bool AddCategory(List<int> categoryIds, int clientId);
 	    bool CopyFromClient(int fromClientId, int toClientId);

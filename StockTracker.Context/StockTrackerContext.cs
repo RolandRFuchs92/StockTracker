@@ -10,7 +10,7 @@ using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model;
-using StockTracker.Model.Client;
+using StockTracker.Model.Clients;
 using StockTracker.Model.Settings;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;

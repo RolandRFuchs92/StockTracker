@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models;
 
-namespace StockTracker.Model.Client
+namespace StockTracker.Model.Clients
 {
     public class Client : IClient
     {

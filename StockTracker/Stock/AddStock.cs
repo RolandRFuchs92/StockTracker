@@ -11,17 +11,22 @@ namespace StockTracker.BusinessLogic.Stock
 {
 	public class AddStock : IAddStock
 	{
-		public bool Add(int stockItemId, int clientId)
+		public bool AddNew(IStockItem stockItem)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool Add(List<int> stockItemIds, int clinetId)
+		public bool AddNew(List<INewstockItem> stockItems)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool Add(List<IStockItem> stockItems, int clinetId)
+		public bool Add(IStockItem stockItemId, int clientId, int minPar)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Add(List<IStockItem> stockItems, int clinetId, int minPar)
 		{
 			throw new NotImplementedException();
 		}
@@ -32,16 +37,6 @@ namespace StockTracker.BusinessLogic.Stock
 		}
 
 		public bool AddCategory(List<int> categoryIds, int clientId)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool AddNew(IStockItem stockItem, int minStock)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool AddNew(List<INewstockItem> stockItems)
 		{
 			throw new NotImplementedException();
 		}

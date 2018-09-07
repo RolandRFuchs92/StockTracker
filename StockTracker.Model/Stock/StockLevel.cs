@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Clients;
 using StockTracker.Model.User;
 
 namespace StockTracker.Model.Stock
@@ -16,11 +13,14 @@ namespace StockTracker.Model.Stock
 		[Key]
 	    public int StockLevelId { get; set; }
 	    public int StockItemId { get; set; }
+		public int ClientId { get; set; }
 	    public int Quantity { get; set; }
 	    public DateTime DateChecked { get; set; }
 	    public int MemberId { get; set; }
 
 		[ForeignKey("MemberId")]
 		public Member Member { get; set; }
+		[ForeignKey("ClientId")]
+		public Client Client { get; set; }
     }
 }
