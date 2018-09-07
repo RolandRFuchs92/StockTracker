@@ -15,7 +15,7 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 	    bool Add(IStockLevel stockItemId);
 	    int Add(List<IStockLevel> stockLevels);
 	    bool AddCategory(int categoryId, int clientId);
-	    int AddCategory(List<int> categoryIds, int clientId);
+	    bool AddCategory(List<int> categoryIds, int clientId);
 	    bool CopyFromClient(int fromClientId, int toClientId);
 	    int CopyFromClient(int fromClientId, List<int> toClientIds);
 	    bool EnableAllOldStock(int clientId);

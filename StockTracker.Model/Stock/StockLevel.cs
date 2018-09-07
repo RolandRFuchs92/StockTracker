@@ -22,5 +22,7 @@ namespace StockTracker.Model.Stock
 		public Member Member { get; set; }
 		[ForeignKey("ClientId")]
 		public Client Client { get; set; }
+		[ForeignKey("StockItemId")]
+		public StockItem StockItem { get; set; }
     }
 }

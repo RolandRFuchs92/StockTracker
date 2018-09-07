@@ -77,12 +77,55 @@ namespace StockTracker.BusinessLogic.Stock
 
 		public bool AddCategory(int categoryId, int clientId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var categorys = _db.
+					StockPars.
+					Where(i => i.StockItem.StockCategoryId == categoryId)
+					.Select(i => new StockPar
+					{
+						ClientId = clientId,
+						DateSet = DateTime.Now,
+						MaxStock =  i.MaxStock,
+						MinStock = i.MinStock,
+						StockItemId = i.StockItemId
+					}).ToList();
+
+				_db.StockPars.AddRange(categorys);
+				_db.SaveChanges();
+
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
-		public int AddCategory(List<int> categoryIds, int clientId)
+		public bool AddCategory(List<int> categoryIds, int clientId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var categorys = _db
+					.StockPars
+					.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId))
+					.Select(i => new StockPar
+					{
+						ClientId = clientId,
+						DateSet = DateTime.Now,
+						MaxStock = i.MaxStock,
+						MinStock = i.MinStock,
+						StockItemId = i.StockItemId
+					}).ToList();
+
+				_db.StockPars.AddRange(categorys);
+				_db.SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
 		public bool CopyFromClient(int fromClientId, int toClientId)
