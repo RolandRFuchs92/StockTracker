@@ -40,17 +40,39 @@ namespace StockTracker.BusinessLogic.Stock
 
 		public int AddNew(List<IStockItem> stockItems)
 		{
-			throw new NotImplementedException();
+			var fails = 0;
+
+			foreach (var stock in stockItems)
+				if (!AddNew(stock))
+					fails++;
+
+			return fails;
 		}
 
-		public bool Add(IStockItem stockItemId, int clientId, int minPar)
+		public bool Add(IStockLevel stockLevel)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var stock = _map.Map<StockLevel>(stockLevel);
+				_db.StockLevels.Add(stock);
+				_db.SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
-		public int Add(List<IStockItem> stockItems, int clinetId, int minPar)
+		public int Add(List<IStockLevel> stockLevels)
 		{
-			throw new NotImplementedException();
+			var fails = 0;
+
+			foreach (var stock in stockLevels)
+				if (!Add(stock))
+					fails++;
+
+			return fails;
 		}
 
 		public bool AddCategory(int categoryId, int clientId)

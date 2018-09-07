@@ -14,6 +14,7 @@ namespace StockTracker.BusinessLogic.AutoMapper
 	    public AutoMapperProfile()
 	    {
 		    CreateMap<IStockItem, StockItem>();
+		    CreateMap<IStockLevel, StockLevel>();
 	    }
     }
 }

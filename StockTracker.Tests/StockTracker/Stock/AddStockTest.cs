@@ -93,7 +93,7 @@ namespace StockTracker.Test.StockTracker.Stock
 
 			//Act
 			var addStock = new AddStock(moq.Object, _map);
-			var result = addStock.Add(SingleStockItem(), 1, 10);
+			var result = addStock.Add(singleStockLevel());
 
 			//Assert
 			moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
@@ -118,7 +118,7 @@ namespace StockTracker.Test.StockTracker.Stock
 
 		    //Act
 		    var addStock = new AddStock(moq.Object, _map);
-		    var result = addStock.Add(SmallListOfStockItems(), 1, 10);
+		    var result = addStock.Add(SmallListOfStockLevels());
 
 		    //Assert
 		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
@@ -281,6 +281,35 @@ namespace StockTracker.Test.StockTracker.Stock
 		    });
 
 		    return stockItems;
+	    }
+
+	    private IStockLevel singleStockLevel()
+	    {
+		    return new StockLevel
+		    {
+				ClientId = 1,
+				DateChecked = DateTime.Now,
+				MemberId = 1,
+				Quantity = 100,
+				StockItemId = 1
+		    };
+	    }
+
+	    private List<IStockLevel> SmallListOfStockLevels()
+	    {
+		    var stockLevels = new List<IStockLevel>();
+
+			stockLevels.Add(singleStockLevel());
+		    stockLevels.Add(new StockLevel
+		    {
+				MemberId = 2,
+				ClientId = 2,
+				DateChecked = DateTime.Now,
+				Quantity = 5,
+				StockItemId = 2
+		    });
+
+		    return stockLevels;
 	    }
 	}
 }
