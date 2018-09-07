@@ -34,11 +34,13 @@ namespace StockTracker.Seed
 		public void Populate()
 		{
 			PopulateLeaves();
+			PopulateClients();
 			PopulateMembers();
 			PopulateStock();
 			PopulateStockPars();
 			PopulateShoppingLists();
 			PopulateShoppingListItems();
+			
 		}
 
 		private void PopulateShoppingLists()
@@ -82,6 +84,13 @@ namespace StockTracker.Seed
 		    _db.AddRange(_members);
 		    _db.SaveChanges();
 	    }
+
+		private void PopulateClients()
+		{
+			_db.Clients.AddRange(new GenerateFakeClient().GenerateClientList());
+
+			_db.SaveChanges();
+		}
 
 		private void PopulateLeaves()
 	    {

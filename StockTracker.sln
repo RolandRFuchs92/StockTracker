@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Context", "Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Model", "StockTracker.Model\StockTracker.Model.csproj", "{A1146CB2-C46C-4EDD-A295-054DAA6B4320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Seed", "StockTracker.Seed\StockTracker.Seed.csproj", "{20B020AD-7782-4F4C-BF36-85A3155AE5A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Seed", "StockTracker.Seed\StockTracker.Seed.csproj", "{20B020AD-7782-4F4C-BF36-85A3155AE5A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.BusinessLogic.Interface", "StockTracker.BusinessLogic.Interface\StockTracker.BusinessLogic.Interface.csproj", "{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic.Interface", "StockTracker.BusinessLogic.Interface\StockTracker.BusinessLogic.Interface.csproj", "{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Extensions", "StockTracker.Extensions\StockTracker.Extensions.csproj", "{8D20887C-373B-4967-9901-84AD25B76D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D20887C-373B-4967-9901-84AD25B76D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D20887C-373B-4967-9901-84AD25B76D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D20887C-373B-4967-9901-84AD25B76D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D20887C-373B-4967-9901-84AD25B76D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

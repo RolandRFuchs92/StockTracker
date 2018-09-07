@@ -12,6 +12,7 @@ namespace StockTracker.Seed.Member
     public class GenerateFakeMembers
     {
 	    private readonly int _memberRoleCount;
+	    private const int _maxClients = 5;
 
 	    public GenerateFakeMembers()
 	    {
@@ -31,7 +32,7 @@ namespace StockTracker.Seed.Member
 					IsActive = true,
 					MemberRoleId = rnd.Next(1, _memberRoleCount),
 					LastActiveDate = DateTime.Now,
-					ClientId = rnd.Next(1,5)
+					ClientId = rnd.Next(1, _maxClients)
 				});
 			}
 

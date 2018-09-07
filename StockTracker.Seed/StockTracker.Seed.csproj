@@ -6,12 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.Context\StockTracker.Context.csproj" />
+    <ProjectReference Include="..\StockTracker.Extensions\StockTracker.Extensions.csproj" />
     <ProjectReference Include="..\StockTracker.Interface\StockTracker.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>

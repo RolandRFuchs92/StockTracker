@@ -20,11 +20,8 @@ namespace StockTracker.Model.Settings
 	    public DateTime OpenTime { get; set; }
 	    public DateTime CloseTime { get; set; }
 	    public int TotalUsers { get; set; }
-	    public int MemberId { get; set; }
 
-		[ForeignKey("MemberId")]
-		public virtual Member Owner { get; set; }
-		[ForeignKey("ClientId")]
+	    [ForeignKey("ClientId")]
 		public virtual Client.Client Client { get; set; }
     }
 }
