@@ -6,14 +6,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using StockTracker.Context;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.BusinessLogic.Stock
 {
 	public class AddStock : IAddStock
 	{
+		private StockTrackerContext _db;
+		private readonly IMapper _map;
+
+		public AddStock(StockTrackerContext db, IMapper map)
+		{
+			_db = db;
+			this._map = map;
+		}
+
 		public bool AddNew(IStockItem stockItem)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var stock = _map.Map<StockItem>(stockItem);
+				_db.StockItems.Add(stock);
+				return _db.SaveChanges() > 0;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
 		public bool AddNew(List<INewstockItem> stockItems)

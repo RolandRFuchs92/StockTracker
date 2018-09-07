@@ -12,7 +12,6 @@ using StockTracker.Interface.Models.Stock;
 
 namespace StockTracker.Test.StockTracker.Members
 {
-	[TestClass]
 	public class GetStockTest
 	{
 		private readonly IGetStock _getStock;
