@@ -19,7 +19,7 @@ namespace StockTracker.Model.User
 		public virtual Person Person { get; set; }
 
 		[ForeignKey("ClientId")]
-		public virtual Client.Client Client { get; set; }
+		public virtual Clients.Client Client { get; set; }
 
 		[ForeignKey("MemberRoleId")]
 		public virtual MemberRole MemberRole { get; set; }

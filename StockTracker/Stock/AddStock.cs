@@ -29,7 +29,8 @@ namespace StockTracker.BusinessLogic.Stock
 			{
 				var stock = _map.Map<StockItem>(stockItem);
 				_db.StockItems.Add(stock);
-				return _db.SaveChanges() > 0;
+				_db.SaveChanges();
+				return true;
 			}
 			catch (Exception e)
 			{

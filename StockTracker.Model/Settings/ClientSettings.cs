@@ -22,6 +22,6 @@ namespace StockTracker.Model.Settings
 	    public int TotalUsers { get; set; }
 
 	    [ForeignKey("ClientId")]
-		public virtual Client.Client Client { get; set; }
+		public virtual Clients.Client Client { get; set; }
     }
 }

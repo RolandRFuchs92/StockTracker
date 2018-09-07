@@ -20,6 +20,10 @@ namespace StockTracker.Context
 {
     public class StockTrackerContext: DbContext, IStockTrackerContext 
     {
+	    public StockTrackerContext()
+	    {
+	    }
+
 	    public StockTrackerContext(DbContextOptions options)
 		    : base(options)
 	    {
@@ -28,7 +32,7 @@ namespace StockTracker.Context
 		public DbSet<Person> Persons { get; set; }
 	    public DbSet<Member> Members { get; set; }
 	    public DbSet<MemberRole> MemberRoles { get; set; }
-	    public DbSet<StockItem> StockItems { get; set; }
+	    public virtual DbSet<StockItem> StockItems { get; set; }
 	    public DbSet<StockLevel> StockLevels { get; set; }
 	    public DbSet<StockPar> StockPars { get; set; }
 	    public DbSet<ShoppingListItems> ShoppingListItems { get; set; }
