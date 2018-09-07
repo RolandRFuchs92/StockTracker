@@ -11,6 +11,7 @@ using StockTracker.Model.Stock;
 using StockTracker.Model.User;
 using StockTracker.Seed.Client;
 using StockTracker.Seed.Member;
+using StockTracker.Seed.Settings;
 using StockTracker.Seed.ShoppingLists;
 using StockTracker.Seed.Stock;
 
@@ -34,6 +35,7 @@ namespace StockTracker.Seed
 		public void Populate()
 		{
 			PopulateLeaves();
+			PopulateClientSettings();
 			PopulateClients();
 			PopulateMembers();
 			PopulateStock();
@@ -41,6 +43,13 @@ namespace StockTracker.Seed
 			PopulateShoppingLists();
 			PopulateShoppingListItems();
 			
+		}
+
+		private void PopulateClientSettings()
+		{
+			var clienSettings = new GenerateClientSettings().Generate();
+			_db.ClientSettings.AddRange(clienSettings);
+			_db.SaveChanges();
 		}
 
 		private void PopulateShoppingLists()

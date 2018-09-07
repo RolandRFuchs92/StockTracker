@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
+using StockTracker.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 
 namespace StockTracker.Test.StockTracker.Members
 {
+	[TestClass]
 	public class GetStockTest
 	{
 		private readonly IGetStock _getStock;
@@ -19,6 +21,7 @@ namespace StockTracker.Test.StockTracker.Members
 		public GetStockTest()
 		{
 			_db = TestDb.db;
+			_getStock = new GetStock(_db);
 		}
 
 		#region GetStockByStockItem
@@ -30,11 +33,11 @@ namespace StockTracker.Test.StockTracker.Members
 			var stockItemid = 1;
 
 			//Act
-			var result = _getStock.GetStockByStockItem(stockItemid);
+			//var result = _getStock.GetStockByStockItem(stockItemid);
 
-			//Assert
-			Assert.IsNotNull(result);
-			Assert.IsInstanceOfType(result, typeof(IStockItem));
+			////Assert
+			//Assert.IsNotNull(result);
+			//Assert.IsInstanceOfType(result, typeof(IStockItem));
 		}
 
 		[TestMethod]
@@ -44,29 +47,14 @@ namespace StockTracker.Test.StockTracker.Members
 			var stockItemId = 0;
 
 			//Act
-			var result = _getStock.GetStockByStockItem(stockItemId);
+			//var result = _getStock.GetStockByStockItem(stockItemId);
 
 			//Assert
-			Assert.IsNull(result);
+			//Assert.IsNull(result);
 		}
-
-		[TestMethod]
-		public void GetStockByStockItem_Passed10000000_ReturnNull()
-		{
-			//Arrange
-			var stockitemId = 10000000;
-
-			//Act
-			var result = _getStock.GetStockByStockItem(stockitemId);
-
-			//Assert
-			Assert.IsNull(result);
-		}
-
 		#endregion
 
 		#region GetStockCheckedToday
-
 		[TestMethod]
 		public void GetStockCheckedToday_NothingToPass_ShouldReturnAList()
 		{
@@ -77,14 +65,12 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _getStock.GetStockCheckedToday();
 
 			//Assert
-
 			if (result != null)
 			{
 				Assert.IsInstanceOfType(result, typeof(List<IStockLevel>));
 				Assert.IsTrue(result.Count > 0);
 			}
 		}
-
 		#endregion
 
 		#region GetStockNotCheckedToDay
@@ -119,11 +105,10 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _getStock.GetStockBelowPar();
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(result.Count > 0);
-				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+			Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
+			
 		}
 
 		[TestMethod]
@@ -138,7 +123,7 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			if (result != null)
 			{
-				Assert.IsTrue(DoesStockMeetRequireMent(result, IsBelow));
+				Assert.IsTrue(DoesStockMeetRequirement(result, IsBelow));
 				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
 			}
 		}
@@ -157,7 +142,7 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			if (result != null)
 			{
-				Assert.IsTrue(DoesStockMeetRequireMent(result, IsAbove));
+				Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove));
 				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
 			}
 		}
@@ -180,7 +165,7 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 		#endregion
 
-		private bool DoesStockMeetRequireMent(List<IStockItem> stockItems, Func<bool, int, int, bool> check)
+		private bool DoesStockMeetRequirement(List<IStockItem> stockItems, Func<bool, int, int, bool> check)
 		{
 			var stockItemList = stockItems.Select(stockItem => stockItem.StockItemId);
 			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockItemId)).ToList();

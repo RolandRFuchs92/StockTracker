@@ -34,8 +34,5 @@ namespace StockTracker.Seed.Settings
 				OpenTime = DateTime.Now.Time(_rng.Next(6,10))
 			};
 		}
-
-
-
 	}
 }

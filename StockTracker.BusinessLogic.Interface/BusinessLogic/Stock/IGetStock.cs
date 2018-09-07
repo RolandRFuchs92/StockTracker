@@ -5,7 +5,7 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 {
     public interface IGetStock
     {
-		IStockItem GetStockByStockItem(int stockId);
+		IStockItem GetStockByStockItem(int stockId, int clientId);
 	    List<IStockItem> GetStockCheckedToday();
 	    List<IStockItem> GetStockNotCheckedToday();
 	    List<IStockItem> GetStockBelowPar();
