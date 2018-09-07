@@ -48,7 +48,7 @@ namespace StockTracker.BusinessLogic.Stock
 			throw new NotImplementedException();
 		}
 
-		public bool Add(List<IStockItem> stockItems, int clinetId, int minPar)
+		public int Add(List<IStockItem> stockItems, int clinetId, int minPar)
 		{
 			throw new NotImplementedException();
 		}
@@ -58,7 +58,7 @@ namespace StockTracker.BusinessLogic.Stock
 			throw new NotImplementedException();
 		}
 
-		public bool AddCategory(List<int> categoryIds, int clientId)
+		public int AddCategory(List<int> categoryIds, int clientId)
 		{
 			throw new NotImplementedException();
 		}
@@ -68,7 +68,7 @@ namespace StockTracker.BusinessLogic.Stock
 			throw new NotImplementedException();
 		}
 
-		public bool CopyFromClient(int fromClientId, List<int> toClientIds)
+		public int CopyFromClient(int fromClientId, List<int> toClientIds)
 		{
 			throw new NotImplementedException();
 		}

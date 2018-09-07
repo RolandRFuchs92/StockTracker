@@ -30,7 +30,7 @@ namespace StockTracker.Test.StockTracker.Stock
 	    }
 
 		[TestMethod]
-		public void AddStock_PassedValidStockItem_ReturnTrue()
+		public void AddNew_PassedValidStockItem_ReturnTrue()
 		{
 			//Arrange
 			var addStockCount = 0;
@@ -79,10 +79,182 @@ namespace StockTracker.Test.StockTracker.Stock
 			Assert.AreEqual(saveChangesCount, 2);
 		}
 
+		[TestMethod]
+		public void Add_AddedNewSingleItem_ReturnTrueAndSaveChangesWasSuccess()
+		{
+			//Arrange
+			var addStockCount = 0;
+			var saveChangesCount = 0;
 
+			var moq = new Mock<StockTrackerContext>();
 
+			moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+			moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
 
-	    private IStockItem SingleStockItem()
+			//Act
+			var addStock = new AddStock(moq.Object, _map);
+			var result = addStock.Add(SingleStockItem(), 1, 10);
+
+			//Assert
+			moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+			moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+			Assert.IsTrue(result);
+			Assert.AreEqual(addStockCount, 2);
+			Assert.AreEqual(saveChangesCount, 2);
+		}
+
+	    [TestMethod]
+	    public void Add_AddedNewList_ReturnTrueAndSaveChangesWasSuccess()
+	    {
+		    //Arrange
+		    var addStockCount = 0;
+		    var saveChangesCount = 0;
+
+		    var moq = new Mock<StockTrackerContext>();
+
+		    moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+		    moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+		    //Act
+		    var addStock = new AddStock(moq.Object, _map);
+		    var result = addStock.Add(SmallListOfStockItems(), 1, 10);
+
+		    //Assert
+		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+		    moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+		    Assert.IsTrue(result == 0);
+		    Assert.AreEqual(addStockCount, 2);
+		    Assert.AreEqual(saveChangesCount, 2);
+	    }
+
+		[TestMethod]
+		public void AddCategory_AddedSingleCategoryToClient_ReturnTrue()
+		{
+			//Arrange
+			var addStockCount = 0;
+			var saveChangesCount = 0;
+
+			var moq = new Mock<StockTrackerContext>();
+
+			moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+			moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+			//Act
+			var addStock = new AddStock(moq.Object, _map);
+			var result = addStock.AddCategory(1, 1);
+
+			//Assert
+			moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+			moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+			Assert.IsTrue(result);
+			Assert.AreEqual(addStockCount, 2);
+			Assert.AreEqual(saveChangesCount, 2);
+		}
+
+	    [TestMethod]
+	    public void AddCategory_AddedListOfCategoryToClient_ReturnTrue()
+	    {
+		    //Arrange
+		    var addCount = 0;
+		    var saveChangesCount = 0;
+
+		    var moq = new Mock<StockTrackerContext>();
+
+		    moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addCount++);
+		    moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+		    //Act
+		    var addStock = new AddStock(moq.Object, _map);
+		    var result = addStock.AddCategory(new List<int> { 1, 2, 3 }, 1);
+
+		    //Assert
+		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+		    moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+		    Assert.IsTrue(result == 0);
+		    Assert.AreEqual(addCount, 3);
+		    Assert.AreEqual(saveChangesCount, 3);
+	    }
+
+	    [TestMethod]
+	    public void CopyFromClient_client1To2_ShouldReturnTrue()
+	    {
+		    //Arrange
+		    var addStockCount = 0;
+		    var saveChangesCount = 0;
+
+		    var moq = new Mock<StockTrackerContext>();
+
+		    moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+		    moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+		    //Act
+		    var addStock = new AddStock(moq.Object, _map);
+		    var result = addStock.CopyFromClient(1, 2);
+
+		    //Assert
+		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+		    moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+		    Assert.IsTrue(result);
+		    Assert.AreEqual(addStockCount, 1);
+		    Assert.AreEqual(saveChangesCount, 1);
+	    }
+
+		[TestMethod]
+		public void CopyFromClient_client1To2List_ShouldReturnTrue()
+		{
+			//Arrange
+			var addStockCount = 0;
+			var saveChangesCount = 0;
+
+			var moq = new Mock<StockTrackerContext>();
+
+			moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+			moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+			//Act
+			var addStock = new AddStock(moq.Object, _map);
+			var result = addStock.CopyFromClient(1, new List<int> { 1, 2, 3 });
+
+			//Assert
+			moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+			moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+			Assert.IsTrue(result == 0);
+			Assert.AreEqual(addStockCount, 3);
+			Assert.AreEqual(saveChangesCount, 3);
+		}
+
+	    [TestMethod]
+	    public void EnableAllOldStock_PassedClientId_ShouldReturnTrue()
+	    {
+		    //Arrange
+		    var addStockCount = 0;
+		    var saveChangesCount = 0;
+
+		    var moq = new Mock<StockTrackerContext>();
+
+		    moq.Setup(stock => stock.StockItems.Add(It.IsAny<StockItem>())).Callback(() => addStockCount++);
+		    moq.Setup(stock => stock.SaveChanges()).Callback(() => saveChangesCount++);
+
+		    //Act
+		    var addStock = new AddStock(moq.Object, _map);
+		    var result = addStock.EnableAllOldStock(1);
+
+		    //Assert
+		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
+		    moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
+
+		    Assert.IsTrue(result);
+		    Assert.AreEqual(addStockCount, 1);
+		    Assert.AreEqual(saveChangesCount, 1);
+	    }
+
+		private IStockItem SingleStockItem()
 	    {
 		    return new StockItem
 		    {
