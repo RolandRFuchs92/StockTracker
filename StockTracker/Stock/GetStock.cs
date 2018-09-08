@@ -27,18 +27,19 @@ namespace StockTracker.BusinessLogic.Stock
 
 		public List<StockItem> GetStockAbovePar(int clientId)
 		{
-			return (from stock in StockQuery(clientId)
-					where stock.Quantity > stock.MaxStock
-						  && stock.DateSet > DateTime.Today
-					select new StockItem
-					{
-						StockItemId = stock.StockItemId,
-						IsActive = stock.IsActive,
-						StockCategoryId = stock.StockCategoryId,
-						StockItemPrice = stock.StockItemPrice,
-						StockItemName = stock.StockItemName,
-						DateCreated = stock.DateCreated
-					}).Distinct().ToList();
+			var results = (from stock in StockQuery(clientId)
+				where stock.Quantity > stock.MaxStock
+				      && stock.DateSet > DateTime.Today
+				select new StockItem
+				{
+					StockItemId = stock.StockItemId,
+					IsActive = stock.IsActive,
+					StockCategoryId = stock.StockCategoryId,
+					StockItemPrice = stock.StockItemPrice,
+					StockItemName = stock.StockItemName,
+					DateCreated = stock.DateCreated
+				}).Distinct().ToList();
+			return results;
 		}
 
 		public StockItem GetStockByStockItem(int stockItemId, int clientId)

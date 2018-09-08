@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Extensions;
 
 namespace StockTracker.Seed.Stock
 {
@@ -32,7 +33,9 @@ namespace StockTracker.Seed.Stock
 					DateSet = DateTime.Now.AddDays(_rng.Next(1, 10) * -1),
 					MaxStock = _rng.Next(5, 10),
 					MinStock = _rng.Next(1, 5),
-					StockItemId = item.StockItemId
+					StockItemId = item.StockItemId,
+					IsActive = _rng.IsTrue(),
+					ClientId = _rng.Next(1,3)
 				});
 			}
 

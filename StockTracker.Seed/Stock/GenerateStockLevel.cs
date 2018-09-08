@@ -34,7 +34,8 @@ namespace StockTracker.Seed.Stock
 					DateChecked = DateTime.Now.AddDays(_rng.Next(0,3)),
 					MemberId = _rng.Next(1,_memberMaxCount),
 					Quantity = _rng.Next(1,10),
-					StockItemId = stock.StockItemId
+					StockItemId = stock.StockItemId,
+					ClientId = _rng.Next(1,5)
 			    });
 		    }
 

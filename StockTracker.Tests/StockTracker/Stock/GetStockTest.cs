@@ -26,7 +26,6 @@ namespace StockTracker.Test.StockTracker.Stock
 		}
 
 		#region GetStockByStockItem
-
 		[TestMethod]
 		public void GetStockByStockItem_Passed1_GetSingleItem()
 		{
@@ -107,8 +106,8 @@ namespace StockTracker.Test.StockTracker.Stock
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(result.Count > 0);
-			Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
+			Assert.IsTrue(result.Count >= 0);
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
 			
 		}
 
@@ -122,11 +121,10 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _getStock.GetStockBelowPar(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(DoesStockMeetRequirement(result, IsBelow));
-				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsBelow));
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
+			
 		}
 		#endregion
 
@@ -141,11 +139,9 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _getStock.GetStockAbovePar(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove));
-				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove));
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
 		}
 
 		[TestMethod]
@@ -158,11 +154,10 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _getStock.GetStockAbovePar(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(result.Count > 0);
-				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count >= 0);
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
+			
 		}
 		#endregion
 
