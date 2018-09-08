@@ -74,9 +74,23 @@ namespace StockTracker.BusinessLogic.Stock
 
 		public List<StockItem> GetStockNotCheckedToday(int clientId)
 		{
-			throw new NotImplementedException();
+			return (from stockItem in _db.StockItems
+					join stockPar in _db.StockPars
+						on stockItem.StockItemId equals stockPar.StockItemId into stocks
+					from stockLevel in _db.StockLevels.DefaultIfEmpty() 
+						where  stockItem.StockItemId == stockLevel.StockItemId
+							   && stockLevel != null
+					select new StockItem
+					{
+						StockItemId = stockItem.StockItemId,
+						IsActive = stockItem.IsActive,
+						StockCategoryId = stockItem.StockCategoryId,
+						StockItemPrice = stockItem.StockItemPrice,
+						StockItemName = stockItem.StockItemName,
+						DateCreated = stockItem.DateCreated
+					}).ToList();
 		}
-
+			
 		public List<StockItem> GetStockBelowPar(int clientId)
 		{
 			return (from stock in StockQuery(clientId)

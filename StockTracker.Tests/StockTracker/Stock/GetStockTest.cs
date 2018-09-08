@@ -10,9 +10,11 @@ using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
 using StockTracker.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.Test.StockTracker.Members
 {
+	[TestClass]
 	public class GetStockTest
 	{
 		private readonly IGetStock _getStock;
@@ -61,10 +63,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockCheckedToday_NothingToPass_ShouldReturnAList()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockCheckedToday();
+			var result = _getStock.GetStockCheckedToday(clientId);
 
 			//Assert
 			if (result != null)
@@ -81,10 +83,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockNotCheckedToday_NoParametersPassed_ReturnsAList()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockNotCheckedToday();
+			var result = _getStock.GetStockNotCheckedToday(clientId);
 
 			//Assert
 			if (result != null)
@@ -101,10 +103,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockBelowPar_NotParametersPassed_ShouldReturnAList()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockBelowPar();
+			var result = _getStock.GetStockBelowPar(clientId);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -117,10 +119,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockBelowPar_NoParametersPassed_ShouldReturnAListWithItemsBelowPar()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockBelowPar();
+			var result = _getStock.GetStockBelowPar(clientId);
 
 			//Assert
 			if (result != null)
@@ -136,10 +138,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockAbovePar_CantPassParams_ShouldReturnAListWithItemsAbovePar()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockAbovePar();
+			var result = _getStock.GetStockAbovePar(clientId);
 
 			//Assert
 			if (result != null)
@@ -153,10 +155,10 @@ namespace StockTracker.Test.StockTracker.Members
 		public void GetStockAbovePar_CantPassParams_ShouldReturnAList()
 		{
 			//Arrange
-
+			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockAbovePar();
+			var result = _getStock.GetStockAbovePar(clientId);
 
 			//Assert
 			if (result != null)
@@ -167,7 +169,7 @@ namespace StockTracker.Test.StockTracker.Members
 		}
 		#endregion
 
-		private bool DoesStockMeetRequirement(List<IStockItem> stockItems, Func<bool, int, int, bool> check)
+		private bool DoesStockMeetRequirement(List<StockItem> stockItems, Func<bool, int, int, bool> check)
 		{
 			var stockItemList = stockItems.Select(stockItem => stockItem.StockItemId);
 			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
