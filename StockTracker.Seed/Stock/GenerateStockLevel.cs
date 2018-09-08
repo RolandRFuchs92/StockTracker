@@ -38,8 +38,19 @@ namespace StockTracker.Seed.Stock
 					ClientId = _rng.Next(1,5)
 			    });
 		    }
-
+			stockLevels.AddRange(GenerateGenericStocks());
 		    return stockLevels;
+	    }
+
+	    private List<StockLevel> GenerateGenericStocks()
+	    {
+		    return new List<StockLevel>
+		    {
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1}
+			};
 	    }
     }
 }

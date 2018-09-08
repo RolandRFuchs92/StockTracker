@@ -224,10 +224,10 @@ namespace StockTracker.Test.StockTracker.Members
 			var result = _member.GetAllMembers(clientId, memberRoleId);
 
 			//Assert
-			Assert.IsNotNull(result);
-			Assert.IsTrue(result.Count > 0);
+			Assert.IsNotNull(result, "Result was null.");
+			Assert.IsTrue(result.Count > 0, "There were no members returned.");
 			Assert.IsInstanceOfType(result, typeof(List<Member>));
-			Assert.IsTrue(result.FirstOrDefault().MemberRoleId == memberRoleId);
+			Assert.IsTrue(result.FirstOrDefault().MemberRoleId == memberRoleId, "MemberrRole does not match the request.");
 		}
 
 

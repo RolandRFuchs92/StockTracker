@@ -11,5 +11,6 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 	    List<StockItem> GetStockNotCheckedToday(int clientId);
 	    List<StockItem> GetStockBelowPar(int clientId);
 	    List<StockItem> GetStockAbovePar(int clientId);
+	    List<StockItem> GetAcceptableStock(int clientId);
     }
 }

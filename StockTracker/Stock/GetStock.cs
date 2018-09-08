@@ -29,7 +29,7 @@ namespace StockTracker.BusinessLogic.Stock
 		{
 			var results = (from stock in StockQuery(clientId)
 				where stock.Quantity > stock.MaxStock
-				      && stock.DateSet > DateTime.Today
+				      && stock.DateChecked > DateTime.Today
 				select new StockItem
 				{
 					StockItemId = stock.StockItemId,
@@ -40,6 +40,23 @@ namespace StockTracker.BusinessLogic.Stock
 					DateCreated = stock.DateCreated
 				}).Distinct().ToList();
 			return results;
+		}
+
+		public List<StockItem> GetAcceptableStock(int clientId)
+		{
+			return (from stock in StockQuery(clientId)
+					where stock.Quantity > stock.MinStock
+						  && stock.Quantity < stock.MaxStock
+						  && stock.DateChecked > DateTime.Today
+					select new StockItem
+					{
+						StockItemId = stock.StockItemId,
+						IsActive = stock.IsActive,
+						StockCategoryId = stock.StockCategoryId,
+						StockItemPrice = stock.StockItemPrice,
+						StockItemName = stock.StockItemName,
+						DateCreated = stock.DateCreated
+					}).Distinct().ToList();
 		}
 
 		public StockItem GetStockByStockItem(int stockItemId, int clientId)
@@ -61,7 +78,7 @@ namespace StockTracker.BusinessLogic.Stock
 		public List<StockItem> GetStockCheckedToday(int clientId)
 		{
 			return (from stock in StockQuery(clientId)
-					where stock.DateSet > DateTime.Today
+					where stock.DateChecked > DateTime.Today
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,
@@ -95,8 +112,8 @@ namespace StockTracker.BusinessLogic.Stock
 		public List<StockItem> GetStockBelowPar(int clientId)
 		{
 			return (from stock in StockQuery(clientId)
-					where stock.DateSet > DateTime.Today
-					      && stock.Quantity > stock.MinStock
+					where stock.DateChecked > DateTime.Today
+					      && stock.Quantity < stock.MinStock
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,

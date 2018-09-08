@@ -18,41 +18,13 @@ namespace StockTracker.Test.StockTracker.Stock
 		private StockTrackerContext _db;
 		private Mapper _map;
 
+
 		public GetStockTest()
 		{
 			_db = TestDb.db;
 			_map = AutoMapperConfig.Get();
 			_getStock = new GetStock(_db, _map);
 		}
-
-		#region GetStockByStockItem
-		[TestMethod]
-		public void GetStockByStockItem_Passed1_GetSingleItem()
-		{
-			//Arrange
-			var stockItemid = 1;
-
-			//Act
-			//var result = _getStock.GetStockByStockItem(stockItemid);
-
-			////Assert
-			//Assert.IsNotNull(result);
-			//Assert.IsInstanceOfType(result, typeof(IStockItem));
-		}
-
-		[TestMethod]
-		public void GetStockByStockItem_Passed0_ShouldReturnNull()
-		{
-			//Arrange
-			var stockItemId = 0;
-
-			//Act
-			//var result = _getStock.GetStockByStockItem(stockItemId);
-
-			//Assert
-			//Assert.IsNull(result);
-		}
-		#endregion
 
 		#region GetStockCheckedToday
 		[TestMethod]
@@ -65,11 +37,9 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _getStock.GetStockCheckedToday(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsInstanceOfType(result, typeof(List<IStockLevel>));
-				Assert.IsTrue(result.Count > 0);
-			}
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
+			Assert.IsTrue(result.Count > 0);
 		}
 		#endregion
 
@@ -85,32 +55,15 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _getStock.GetStockNotCheckedToday(clientId);
 
 			//Assert
-			if (result != null)
-			{
-				Assert.IsTrue(result.Count > 0);
-				Assert.IsInstanceOfType(result, typeof(List<IStockItem>));
-			}
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
+
 		}
 
 		#endregion
 
 		#region GetStockBelowPar
-		[TestMethod]
-		public void GetStockBelowPar_NotParametersPassed_ShouldReturnAList()
-		{
-			//Arrange
-			var clientId = 1;
-
-			//Act
-			var result = _getStock.GetStockBelowPar(clientId);
-
-			//Assert
-			Assert.IsNotNull(result);
-			Assert.IsTrue(result.Count >= 0);
-			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
-			
-		}
-
 		[TestMethod]
 		public void GetStockBelowPar_NoParametersPassed_ShouldReturnAListWithItemsBelowPar()
 		{
@@ -122,9 +75,9 @@ namespace StockTracker.Test.StockTracker.Stock
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(DoesStockMeetRequirement(result, IsBelow));
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsBelow, false));
 			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
-			
+
 		}
 		#endregion
 
@@ -140,28 +93,27 @@ namespace StockTracker.Test.StockTracker.Stock
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove));
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove, true));
 			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
 		}
+		#endregion
 
 		[TestMethod]
-		public void GetStockAbovePar_CantPassParams_ShouldReturnAList()
+		public void GetAcceptableStock_PassClientId_ShouldReturnAValidList()
 		{
 			//Arrange
 			var clientId = 1;
 
 			//Act
-			var result = _getStock.GetStockAbovePar(clientId);
+			var result = _getStock.GetAcceptableStock(clientId);
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(result.Count >= 0);
+			Assert.IsTrue(result.Count > 0);
 			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
-			
 		}
-		#endregion
 
-		private bool DoesStockMeetRequirement(List<StockItem> stockItems, Func<bool, int, int, bool> check)
+		private bool DoesStockMeetRequirement(List<StockItem> stockItems, Func<bool, int, int, bool> check, bool isAbove)
 		{
 			var stockItemList = stockItems.Select(stockItem => stockItem.StockItemId);
 			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
@@ -171,10 +123,15 @@ namespace StockTracker.Test.StockTracker.Stock
 			{
 				var stockId = stockItem.StockItemId;
 				var isToday = stockItem.DateCreated.ToString("d") == DateTime.Now.ToString("d");
-				var goalPar = stockPars.FirstOrDefault(i => i.StockItemId == stockId).MinStock;
+				var goalPar = 0;
+				if(isAbove)
+					goalPar = stockPars.FirstOrDefault(i => i.StockItemId == stockId).MinStock;
+				else 
+					goalPar = (int)stockPars.FirstOrDefault(i => i.StockItemId == stockId).MaxStock;
+
 				var currentPar = stockItemParLevels.FirstOrDefault(i => i.StockItemId == stockId).Quantity;
 
-				if (!check(isToday, goalPar, currentPar))
+				if (!check(isToday, currentPar, goalPar))
 					return false;
 			}
 

@@ -24,6 +24,7 @@ namespace StockTracker.Seed.Member
 			var members = new List<Model.User.Member>();
 			var rnd = new Random();
 
+			members.Add(AddUseCaseMember());
 			foreach (var person in people)
 			{
 				members.Add(new Model.User.Member
@@ -36,7 +37,6 @@ namespace StockTracker.Seed.Member
 				});
 			}
 
-			members.Add(AddUseCaseMember());
 			return members;
 		}
 
