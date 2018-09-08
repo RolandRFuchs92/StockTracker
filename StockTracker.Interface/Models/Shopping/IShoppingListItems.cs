@@ -9,5 +9,6 @@ namespace StockTracker.Interface.Models.Shopping
 		int StockItemId { get; set; }
 		int Quantity { get; set; }
 	    bool IsCollected { get; set; }
-    }
+        int ShoppingListId { get; set; }
+	}
 }

@@ -18,8 +18,11 @@ namespace StockTracker.Model.Shopping
 	    public int StockItemId { get; set; }
 	    public int Quantity { get; set; }
 	    public bool IsCollected { get; set; }
+	    public int ShoppingListId { get; set; }
 
-		[ForeignKey("StockItemId")]
+	    [ForeignKey("StockItemId")]
 		public virtual StockItem StockItem { get; set; }
+	    [ForeignKey("ShoppingListId")]
+		public virtual ShoppingList ShoppingList { get; set; }
     }
 }

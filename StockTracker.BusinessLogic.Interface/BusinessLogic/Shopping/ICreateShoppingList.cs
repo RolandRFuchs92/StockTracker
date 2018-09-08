@@ -9,7 +9,7 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
 {
     public interface ICreateShoppingList
     {
-	    IShoppingList GenerateShiShoppingList(int clientId);
+	    IShoppingList GenerateShoppingList(int clientId);
 		
     }
 }
