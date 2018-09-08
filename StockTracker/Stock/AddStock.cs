@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using StockTracker.Context;
 using StockTracker.Model.Stock;
 
@@ -130,17 +132,99 @@ namespace StockTracker.BusinessLogic.Stock
 
 		public bool CopyFromClient(int fromClientId, int toClientId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var currentStocks = _db
+									.StockPars
+									.Where(i => i.ClientId == toClientId);
+
+				var fromClientStocks = _db
+									.StockPars
+									.Where(i => i.ClientId == fromClientId 
+									        && !currentStocks
+											.Select(stocks => stocks.StockItemId)
+											.Contains(i.StockItemId)
+									).ToList();
+
+				fromClientStocks = fromClientStocks.Select(i => new StockPar
+				{
+					ClientId = toClientId,
+					DateSet = DateTime.Now,
+					MaxStock = i.MaxStock,
+					StockItemId = i.StockItemId,
+					MinStock = i.MinStock
+				}).ToList();
+
+				_db.StockPars.AddRange(fromClientStocks);
+				_db.SaveChanges();
+
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
 		public int CopyFromClient(int fromClientId, List<int> toClientIds)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var stockPars = _db.StockPars.Where(i => i.ClientId == fromClientId && i.IsActive).ToList();
+				var currentStocks = _db.StockPars.Where(i => toClientIds.Contains(i.ClientId));
+				var addedStocks = 0;
+
+				foreach (var stockPar in stockPars)
+				{
+					var clientsWithStock = currentStocks.Where(i => i.StockItemId == stockPar.StockItemId).Select(i => i.ClientId).ToList();
+					var clientsToGetStock = toClientIds.Where(i => !clientsWithStock.Contains(i)).ToList();
+
+					foreach (var clientId in clientsToGetStock)
+					{
+						_db.StockPars.Add(BuildStockPar(stockPar, clientId));
+						addedStocks++;
+					}
+				}
+
+				return addedStocks;
+			}
+			catch (Exception e)
+			{
+				return -1;
+			}
 		}
 
 		public bool EnableAllOldStock(int clientId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var clientStock = _db.StockPars.Where(i => i.ClientId == clientId && !i.IsActive).ToList();
+
+				foreach (var stockPar in clientStock)
+				{
+					stockPar.IsActive = true;
+				}
+
+				_db.SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
+
+		private StockPar BuildStockPar(StockPar stockItem, int toClientId)
+		{
+			return new StockPar
+			{
+				StockItemId = stockItem.StockItemId,
+				ClientId = toClientId,
+				IsActive = true,
+				DateSet = DateTime.Now,
+				MaxStock = stockItem.MaxStock,
+				MinStock = stockItem.MinStock
+			};
 		}
 	}
 }

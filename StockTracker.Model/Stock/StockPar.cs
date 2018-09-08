@@ -20,6 +20,7 @@ namespace StockTracker.Model.Stock
 	    public int? MaxStock { get; set; }
 	    public int MinStock { get; set; }
 	    public DateTime DateSet { get; set; }
+	    public bool IsActive { get; set; }
 
 		[ForeignKey("StockItemId")]
 		public StockItem StockItem { get; set; }

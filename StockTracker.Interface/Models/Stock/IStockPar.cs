@@ -12,6 +12,7 @@ namespace StockTracker.Interface.Models.Stock
 		int ClientId { get; set; }
 		int? MaxStock { get; set; }
 		int MinStock { get; set; }
+		bool IsActive { get; set; }
 		DateTime DateSet { get; set; }
 	}
 }

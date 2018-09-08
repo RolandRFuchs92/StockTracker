@@ -174,7 +174,7 @@ namespace StockTracker.Test.StockTracker.Stock
 		    moq.Verify(x => x.StockItems.Add(It.IsAny<StockItem>()), Times.Exactly(2));
 		    moq.Verify(x => x.SaveChanges(), Times.Exactly(2));
 
-		    Assert.IsTrue(result == 0);
+		    Assert.IsTrue(result);
 		    Assert.AreEqual(addCount, 3);
 		    Assert.AreEqual(saveChangesCount, 3);
 	    }
