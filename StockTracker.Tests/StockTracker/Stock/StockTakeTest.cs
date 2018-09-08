@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockTracker.Context;
+﻿using StockTracker.Context;
 
-namespace StockTracker.Test.StockTracker.Members
+namespace StockTracker.Test.StockTracker.Stock
 {
     public class StockTakeTest
     {

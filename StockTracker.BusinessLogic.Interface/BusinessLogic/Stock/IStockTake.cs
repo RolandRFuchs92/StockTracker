@@ -1,7 +1,7 @@
 ﻿using StockTracker.Interface.Models.Stock;
 using StockTracker.Interface.Models.User;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic
+namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 {
     public interface IStockTake
     {

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
 using StockTracker.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
 
-namespace StockTracker.Test.StockTracker.Members
+namespace StockTracker.Test.StockTracker.Stock
 {
 	[TestClass]
 	public class GetStockTest
