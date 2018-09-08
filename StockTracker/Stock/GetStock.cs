@@ -6,52 +6,119 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Clauses;
+using StockTracker.Model.Stock;
+using StockTracker.Model.Stock.DTO;
 
 namespace StockTracker.BusinessLogic.Stock
 {
 	public class GetStock : IGetStock
 	{
 		private StockTrackerContext _db;
+		private IMapper _map;
 
-		public GetStock(StockTrackerContext db)
+		public GetStock(StockTrackerContext db, IMapper map)
 		{
 			_db = db;
+			_map = map;
 		}
 
-		public List<IStockItem> GetStockAbovePar(int stockId, int clientId)
+		public List<StockItem> GetStockAbovePar(int clientId)
 		{
-			//_db.StockItems.Where
+			return (from stock in StockQuery(clientId)
+					where stock.Quantity > stock.MaxStock
+						  && stock.DateSet > DateTime.Today
+					select new StockItem
+					{
+						StockItemId = stock.StockItemId,
+						IsActive = stock.IsActive,
+						StockCategoryId = stock.StockCategoryId,
+						StockItemPrice = stock.StockItemPrice,
+						StockItemName = stock.StockItemName,
+						DateCreated = stock.DateCreated
+					}).Distinct().ToList();
+		}
+
+		public StockItem GetStockByStockItem(int stockItemId, int clientId)
+		{
+			return (from stock in StockQuery(clientId)
+					where stock.StockItemId == stockItemId
+					orderby stock.DateSet descending 
+					select new StockItem
+					{
+						StockItemId = stock.StockItemId,
+						IsActive = stock.IsActive,
+						StockCategoryId = stock.StockCategoryId,
+						StockItemPrice = stock.StockItemPrice,
+						StockItemName = stock.StockItemName,
+						DateCreated = stock.DateCreated
+					}).FirstOrDefault();
+		}
+
+		public List<StockItem> GetStockCheckedToday(int clientId)
+		{
+			return (from stock in StockQuery(clientId)
+					where stock.DateSet > DateTime.Today
+					select new StockItem
+					{
+						StockItemId = stock.StockItemId,
+						IsActive = stock.IsActive,
+						StockCategoryId = stock.StockCategoryId,
+						StockItemPrice = stock.StockItemPrice,
+						StockItemName = stock.StockItemName,
+						DateCreated = stock.DateCreated
+					}).ToList();
+		}
+
+		public List<StockItem> GetStockNotCheckedToday(int clientId)
+		{
 			throw new NotImplementedException();
 		}
 
-		public List<IStockItem> GetStockAbovePar()
+		public List<StockItem> GetStockBelowPar(int clientId)
 		{
-			throw new NotImplementedException();
+			return (from stock in StockQuery(clientId)
+					where stock.DateSet > DateTime.Today
+					      && stock.Quantity > stock.MinStock
+					select new StockItem
+					{
+						StockItemId = stock.StockItemId,
+						IsActive = stock.IsActive,
+						StockCategoryId = stock.StockCategoryId,
+						StockItemPrice = stock.StockItemPrice,
+						StockItemName = stock.StockItemName,
+						DateCreated = stock.DateCreated
+					}).ToList();
 		}
 
-		public List<IStockItem> GetStockBelowPar()
+		private IQueryable<StockDTO> StockQuery(int clientId)
 		{
-			throw new NotImplementedException();
-		}
-
-		public IStockItem GetStockByStockItem(int stockId)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IStockItem GetStockByStockItem(int stockId, int clientId)
-		{
-			throw new NotImplementedException();
-		}
-
-		public List<IStockItem> GetStockCheckedToday()
-		{
-			throw new NotImplementedException();
-		}
-
-		public List<IStockItem> GetStockNotCheckedToday()
-		{
-			throw new NotImplementedException();
+			return from stockItem in _db.StockItems
+				   join stockPar in _db.StockPars
+					   on stockItem.StockItemId equals stockPar.StockItemId
+				   join stockLevel in _db.StockLevels
+					   on stockItem.StockItemId equals stockLevel.StockItemId
+				   where stockPar.ClientId == clientId
+				   select new StockDTO
+				   {
+					   StockItemId = stockItem.StockItemId,
+					   ClientId = stockLevel.ClientId,
+					   IsActive = stockPar.IsActive,
+					   MemberId = stockLevel.MemberId,
+					   MinStock = stockPar.MinStock,
+					   MaxStock = stockPar.MaxStock,
+					   Quantity = stockLevel.Quantity,
+					   DateSet = stockPar.DateSet,
+					   DateChecked = stockLevel.DateChecked,
+					   StockParId = stockPar.StockParId,
+					   StockLevelId = stockLevel.StockLevelId,
+					   StockCategoryId = stockItem.StockCategoryId,
+					   DateCreated = stockItem.DateCreated,
+					   StockItemName = stockItem.StockItemName,
+					   StockItemPrice = stockItem.StockItemPrice
+				   };
 		}
 	}
 }

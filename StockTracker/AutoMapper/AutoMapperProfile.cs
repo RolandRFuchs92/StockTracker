@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
+using StockTracker.Model.Stock.DTO;
 
 namespace StockTracker.BusinessLogic.AutoMapper
 {
@@ -15,6 +16,7 @@ namespace StockTracker.BusinessLogic.AutoMapper
 	    {
 		    CreateMap<IStockItem, StockItem>();
 		    CreateMap<IStockLevel, StockLevel>();
+		    CreateMap<StockDTO, StockItem>();
 	    }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
@@ -16,11 +17,13 @@ namespace StockTracker.Test.StockTracker.Members
 	{
 		private readonly IGetStock _getStock;
 		private StockTrackerContext _db;
+		private Mapper _map;
 
 		public GetStockTest()
 		{
 			_db = TestDb.db;
-			_getStock = new GetStock(_db);
+			_map = AutoMapperConfig.Get();
+			_getStock = new GetStock(_db, _map);
 		}
 
 		#region GetStockByStockItem
