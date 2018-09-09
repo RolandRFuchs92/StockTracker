@@ -4,7 +4,7 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
 {
-    public interface IGetStock
+    public interface IGetStockItem
     {
 	    StockItem GetStockByStockItem(int stockItemId, int clientId);
 	    List<StockItem> GetStockCheckedToday(int clientId);

@@ -23,7 +23,7 @@ namespace StockTracker.Test.StockTracker.Stock
 		{
 			_db = TestDb.db;
 			_map = AutoMapperConfig.Get();
-			_getStock = new GetStock(_db, _map);
+			_getStock = new GetStockItem(_db, _map);
 		}
 
 		#region GetStockCheckedToday

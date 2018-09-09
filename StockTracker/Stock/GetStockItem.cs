@@ -14,12 +14,12 @@ using StockTracker.Model.Stock.DTO;
 
 namespace StockTracker.BusinessLogic.Stock
 {
-	public class GetStock : IGetStock
+	public class GetStockItem : IGetStockItem
 	{
 		private StockTrackerContext _db;
 		private IMapper _map;
 
-		public GetStock(StockTrackerContext db, IMapper map)
+		public GetStockItem(StockTrackerContext db, IMapper map)
 		{
 			_db = db;
 			_map = map;
