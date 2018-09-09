@@ -11,7 +11,7 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.Model.Shopping
 {
-    public class ShoppingListItems : IShoppingListItems
+    public class ShoppingListItem : IShoppingListItem
     {
 		[Key]
 	    public int ShoppingListItemId { get; set; }

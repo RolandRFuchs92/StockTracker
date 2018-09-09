@@ -9,7 +9,8 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
 {
     public interface ICreateShoppingList
     {
-	    IShoppingList GenerateShoppingList(int clientId);
-		
+	    IShoppingList HighPriorityList(int clientId);
+	    IShoppingList LowPriorityList(int clientId);
+	    IShoppingList OutStandingShoppingList(int clientId);
     }
 }

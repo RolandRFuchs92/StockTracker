@@ -3,7 +3,7 @@ using StockTracker.Interface.Models.Stock;
 
 namespace StockTracker.Interface.Models.Shopping
 {
-    public interface IShoppingListItems
+    public interface IShoppingListItem
     {
         int ShoppingListItemId { get; set; }
 		int StockItemId { get; set; }
