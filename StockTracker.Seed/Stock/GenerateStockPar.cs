@@ -30,7 +30,7 @@ namespace StockTracker.Seed.Stock
 			foreach(var item in stocks)
 			{
 				pars.Add(new StockPar {
-					DateSet = DateTime.Now.AddDays(_rng.Next(1, 10) * -1),
+					DateSet = DateTime.Now.AddDays(_rng.Next(0, 10) * -1),
 					MaxStock = _rng.Next(6, 10),
 					MinStock = _rng.Next(4, 6),
 					StockItemId = item.StockItemId,

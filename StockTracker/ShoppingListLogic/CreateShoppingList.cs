@@ -39,7 +39,7 @@ namespace StockTracker.BusinessLogic.ShoppingList
 				var shoppingListId = shoppingList.ShoppingListId;
 				var query = StockQuery(memberId);
 				var shoppingItemList = (from stock in query
-										where stock.MinStock < stock.Quantity
+										where stock.MinStock > stock.Quantity
 										select new ShoppingListItem
 										{
 											StockItemId = stock.StockItemId,
@@ -67,12 +67,12 @@ namespace StockTracker.BusinessLogic.ShoppingList
 				var shoppingList = GetShoppingList(memberId);
 				var query = StockQuery(memberId);
 				var shoppingListItemList = (from stock in query
-											where stock.MaxStock < stock.Quantity
+											where stock.MaxStock > stock.Quantity
 											select new ShoppingListItem
 											{
 												StockItemId = stock.StockItemId,
 												IsCollected = false,
-												Quantity = stock.MinStock - stock.Quantity,
+												Quantity = stock.MaxStock - stock.Quantity,
 												ShoppingListId = shoppingList.ShoppingListId
 											}).ToList();
 

@@ -116,7 +116,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 		    return _db.StockPars.Where(i => stockIdList.Contains(i.StockItemId)).ToList<IStockPar>();
 	    }
 
-	    private bool MeetsRequirements(IShoppingList listRef, bool isAboveMin)
+	    private bool MeetsRequirements(IShoppingList listRef, bool isBelowMin)
 	    {
 		    var shoppingList = GetShoppingList(listRef);
 		    var stockLevls = GetStockLevels(shoppingList);
@@ -127,9 +127,9 @@ namespace StockTracker.Test.StockTracker.Shopping
 			    var stockLevel = stockLevls.FirstOrDefault(i => i.StockItemId == item.StockItemId);
 			    var stockPar = stockPars.FirstOrDefault(i => i.StockItemId == item.StockItemId);
 
-			    if (isAboveMin && stockLevel.Quantity > stockPar.MinStock)
+			    if (isBelowMin && stockLevel.Quantity > stockPar.MinStock)
 				    return false;
-				if (!isAboveMin && stockLevel.Quantity < stockPar.MaxStock)
+				if (!isBelowMin && stockLevel.Quantity > stockPar.MaxStock)
 				    return false;
 		    }
 
