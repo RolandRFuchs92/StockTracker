@@ -34,16 +34,16 @@ namespace StockTracker.Test.StockTracker.Shopping
 			var shoppingListId = 1;
 
 			//Act
-			var result = _getShoppingList.Get(1);
+			var result = _getShoppingList.Get(shoppingListId);
 
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(List<IShoppingListItem>));
-			Assert.IsTrue(result.Count > 0);
+			Assert.IsTrue(result.Count > 0,"Returned 0, should be more.");
 		}
 
 		[TestMethod]
-		public void GetMember_PassedClientIdAndDate_GetAListOfShoppingListItems()
+		public void Get_PassedClientIdAndDate_GetAListOfShoppingListItems()
 		{
 			//Arrange
 			var clientId = 1;

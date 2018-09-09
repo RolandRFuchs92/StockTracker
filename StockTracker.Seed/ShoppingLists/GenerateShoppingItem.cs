@@ -22,6 +22,7 @@ namespace StockTracker.Seed.ShoppingLists
 			_rng = new Random();
 			_minListSize = 10;
 			_maxListSize = 25;
+			_numberOfShoppingListsToCreate = 1;
 			_isCollectedRandom = false;
 		}
 
@@ -29,7 +30,7 @@ namespace StockTracker.Seed.ShoppingLists
 		{
 			var totalShoppingLists = new List<ShoppingListItem>();
 
-			for(var inc = 1; inc < _numberOfShoppingListsToCreate; inc++)
+			for(var inc = 0; inc < _numberOfShoppingListsToCreate; inc++)
 			{
 				totalShoppingLists.AddRange(GetSingleShippingList(inc));
 			}
@@ -47,7 +48,8 @@ namespace StockTracker.Seed.ShoppingLists
 				{
 					IsCollected = _isCollectedRandom ? _rng.Next(0,1) > 0 : false,
 					Quantity = _rng.Next(1,5),
-					StockItemId = _rng.Next(1, _maxStockItems)
+					StockItemId = _rng.Next(1, _maxStockItems),
+					ShoppingListId = 1
 				});
 			}
 
