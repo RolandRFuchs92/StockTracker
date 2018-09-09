@@ -9,8 +9,8 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
 {
     public interface IGetShoppingList
     {
-	    IShoppingList Get(int shoppingListId);
-	    IShoppingList Get(int clientId, DateTime date);
-	    IShoppingList GetMemberShoppingList(int memberId, DateTime date);
+	    List<IShoppingListItem> Get(int shoppingListId);
+	    List<IShoppingListItem> Get(int clientId, DateTime date);
+	    List<IShoppingListItem> GetMemberShoppingList(int memberId, DateTime date);
     }
 }

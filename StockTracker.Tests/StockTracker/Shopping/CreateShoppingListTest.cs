@@ -83,7 +83,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			Assert.IsTrue(isBelowMax);
 		}
 
-		[TestMethod]
+		//[TestMethod]
 		public void OutStandingShoppingList_PassedClientId1_ListOfOutstandingStockItemsNoOlderThan1Week()
 		{
 			//Arrange

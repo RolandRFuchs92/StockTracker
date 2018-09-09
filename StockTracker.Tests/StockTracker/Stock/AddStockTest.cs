@@ -176,7 +176,7 @@ namespace StockTracker.Test.StockTracker.Stock
 			var result = _addStock.CopyFromClient(1, new List<int> { 1, 2, 3 });
 
 			//Assert
-			Assert.IsTrue(result == 0);
+			Assert.IsTrue(result > 0);
 		}
 
 	    [TestMethod]
