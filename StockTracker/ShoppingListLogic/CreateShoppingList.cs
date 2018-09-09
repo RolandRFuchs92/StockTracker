@@ -14,6 +14,7 @@ using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
+using StockTracker.Model.Stock.DTO;
 
 namespace StockTracker.BusinessLogic.ShoppingList
 {
@@ -31,29 +32,20 @@ namespace StockTracker.BusinessLogic.ShoppingList
 
 		public IShoppingList HighPriorityList(int memberId)
 		{
-			var clientId = _client.GetClientByMember(memberId).ClientId;
 			var shoppingList = GetShoppingList(memberId);
 
 			try
 			{
 				var shoppingListId = shoppingList.ShoppingListId;
-				var today = DateTime.Today;
-
-				var shoppingItemList = (from stockItem in _db.StockItems
-										join stockPar in _db.StockPars
-											on stockItem.StockItemId equals stockPar.StockItemId
-										join stockLevel in _db.StockLevels
-											on stockItem.StockItemId equals stockLevel.StockItemId
-										where stockLevel.DateChecked > today
-											  && stockLevel.ClientId == clientId
-											  && stockLevel.Quantity < stockPar.MinStock
-											  && stockPar.IsActive
+				var query = StockQuery(memberId);
+				var shoppingItemList = (from stock in query
+										where stock.MinStock < stock.Quantity
 										select new ShoppingListItem
 										{
-											StockItemId = stockItem.StockItemId,
+											StockItemId = stock.StockItemId,
 											IsCollected = false,
 											ShoppingListId = shoppingListId,
-											Quantity = stockPar.MinStock - stockLevel.Quantity
+											Quantity = stock.MinStock - stock.Quantity
 										}).ToList();
 
 				_db.ShoppingListItems.AddRange(shoppingItemList);
@@ -68,9 +60,31 @@ namespace StockTracker.BusinessLogic.ShoppingList
 
 		}
 
-		public IShoppingList LowPriorityList(int clientId)
+		public IShoppingList LowPriorityList(int memberId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var shoppingList = GetShoppingList(memberId);
+				var query = StockQuery(memberId);
+				var shoppingListItemList = (from stock in query
+											where stock.MaxStock < stock.Quantity
+											select new ShoppingListItem
+											{
+												StockItemId = stock.StockItemId,
+												IsCollected = false,
+												Quantity = stock.MinStock - stock.Quantity,
+												ShoppingListId = shoppingList.ShoppingListId
+											}).ToList();
+
+				_db.ShoppingListItems.AddRange(shoppingListItemList);
+				_db.SaveChanges();
+
+				return shoppingList;
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
 		}
 
 		public IShoppingList OutStandingShoppingList(int clientId)
@@ -96,6 +110,39 @@ namespace StockTracker.BusinessLogic.ShoppingList
 			_db.SaveChanges();
 
 			return shoppingList;
+		}
+
+		private IQueryable<StockDTO> StockQuery(int memberId)
+		{
+			var clientId = _client.GetClientByMember(memberId).ClientId;
+			var today = DateTime.Today;
+
+			return from stockItem in _db.StockItems
+					join stockPar in _db.StockPars
+						on stockItem.StockItemId equals stockPar.StockItemId
+					join stockLevel in _db.StockLevels
+						on stockItem.StockItemId equals stockLevel.StockItemId
+					where stockLevel.DateChecked > today
+						  && stockLevel.ClientId == clientId
+						  && stockPar.IsActive
+					select new StockDTO
+					{
+						StockItemId = stockItem.StockItemId,
+						IsActive = stockItem.IsActive,
+						ClientId = stockLevel.ClientId,
+						MemberId = stockLevel.MemberId,
+						MinStock = stockPar.MinStock,
+						MaxStock = stockPar.MaxStock,
+						Quantity = stockLevel.Quantity,
+						DateSet = stockPar.DateSet,
+						DateChecked = stockLevel.DateChecked,
+						StockCategoryId = stockItem.StockCategoryId,
+						DateCreated = stockItem.DateCreated,
+						StockItemName = stockItem.StockItemName,
+						StockItemPrice = stockItem.StockItemPrice,
+						StockLevelId = stockLevel.StockLevelId,
+						StockParId = stockPar.StockParId
+					};
 		}
     }
 }

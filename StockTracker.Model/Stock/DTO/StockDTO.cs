@@ -17,7 +17,7 @@ namespace StockTracker.Model.Stock.DTO
 	    public float StockItemPrice { get; set; }
 	    public DateTime DateCreated { get; set; }
 	    public int ClientId { get; set; }
-	    public int? MaxStock { get; set; }
+	    public int MaxStock { get; set; }
 	    public int MinStock { get; set; }
 	    public bool IsActive { get; set; }
 	    public DateTime DateSet { get; set; }

@@ -74,7 +74,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			var clientId = 1;
 
 			//Act
-			var result = _createShoppingList.HighPriorityList(clientId);
+			var result = _createShoppingList.LowPriorityList(clientId);
 			var isBelowMax = MeetsRequirements(result, false);
 
 			//Assert
