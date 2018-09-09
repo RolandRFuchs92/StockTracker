@@ -19,7 +19,7 @@ namespace StockTracker.Context.Interface
 	    DbSet<StockItem> StockItems { get; set; }
 	    DbSet<StockLevel> StockLevels { get; set; }
 	    DbSet<StockPar> StockPars { get; set; }
-	    DbSet<ShoppingListItems> ShoppingListItems { get; set; }
+	    DbSet<ShoppingListItem> ShoppingListItems { get; set; }
 	    DbSet<ShoppingList> ShoppingLists { get; set; }
 	    DbSet<StockType> StockTypes { get; set; }
 	    DbSet<StockCategory> StockCategories { get; set; }

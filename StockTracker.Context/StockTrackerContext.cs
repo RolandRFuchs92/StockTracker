@@ -25,7 +25,7 @@ namespace StockTracker.Context
 	    public virtual DbSet<StockItem> StockItems { get; set; }
 	    public virtual DbSet<StockLevel> StockLevels { get; set; }
 	    public virtual DbSet<StockPar> StockPars { get; set; }
-	    public virtual DbSet<ShoppingListItems> ShoppingListItems { get; set; }
+	    public virtual DbSet<ShoppingListItem> ShoppingListItems { get; set; }
 	    public virtual DbSet<ShoppingList> ShoppingLists { get; set; }
 	    public virtual DbSet<StockType> StockTypes { get; set; }
 	    public virtual DbSet<StockCategory> StockCategories { get; set; }

@@ -12,6 +12,7 @@ using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Shopping;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.BusinessLogic.ShoppingList
 {
@@ -19,35 +20,55 @@ namespace StockTracker.BusinessLogic.ShoppingList
     {
 	    private StockTrackerContext _db;
 	    private IMapper _map;
-	    private IGetStock _stock;
+	    private IGetStockItem _stock;
 	    private IGetClient _client;
+	    private IGetStockLevel _stockLevel;
 
-	    public CreateShoppingList(StockTrackerContext db, IMapper map, IGetStock stock, IGetClient client)
+	    public CreateShoppingList(StockTrackerContext db, IMapper map, IGetStockItem stock, IGetClient client, IGetStockLevel stockLevel)
 	    {
 		    _map = map;
 		    _db = db;
 		    _stock = stock;
 		    _client = client;
+		    _stockLevel = stockLevel;
 	    }
 
 
 	    public IShoppingList HighPriorityList(int memberId)
 	    {
 		    var clientId = _client.GetClientByMember(memberId).ClientId;
-		    var stockList = _stock.GetStockBelowPar(clientId);
+		    var shoppingList = GetShoppingList(memberId);
+
+			var stockBlowPar = _stock.GetStockBelowPar(clientId);
+		    var stockLevels = _stockLevel.Get(stockBlowPar.ToList<IStockItem>());
+			//var stockPars = _stock
+		    var shoppingItemList = new List<ShoppingListItem>();
 
 
-		    var shoppingList = _db.ShoppingLists.Add(BuildShoppingList(memberId));
-
-		    foreach (var stockItem in stockList)
+		    try
 		    {
-			    var shoppingListItem = BuildShoppingListItem(stockItem);
+			    foreach (var stockItem in stockBlowPar)
+			    {
+				    var stockItemLevel = stockLevels.FirstOrDefault(i => i.StockItemId == stockItem.StockItemId);
+				
+				    var shoppingItem = BuildShoppingListItem(stockItemLevel, shoppingList.ShoppingListId);
 
+				    shoppingItemList.Add(shoppingItem);
+			    }
+
+			    _db.ShoppingListItems.AddRange(shoppingItemList);
+			    _db.SaveChanges();
+
+			    return shoppingList;
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
 		    }
 
 	    }
 
-	    public IShoppingList LowPriorityList(int clientId)
+		public IShoppingList LowPriorityList(int clientId)
 	    {
 		    throw new NotImplementedException();
 	    }
@@ -67,13 +88,23 @@ namespace StockTracker.BusinessLogic.ShoppingList
 		    };
 	    }
 
-	    private ShoppingListItem BuildShoppingListItem(IStockLevel stock, int stockListId)
+	    private Model.Shopping.ShoppingList GetShoppingList(int memberId)
+	    {
+		    var shoppingList = BuildShoppingList(memberId);
+
+			_db.ShoppingLists.Add(shoppingList);
+		    _db.SaveChanges();
+
+		    return shoppingList;
+	    }
+
+		private ShoppingListItem BuildShoppingListItem(IStockLevel stock, int stockListId)
 	    {
 			return new ShoppingListItem
 			{
 				StockItemId = stock.StockItemId,
 				IsCollected = false,
-				Quantity = stock.Quantity,
+				Quantity =  stock.Quantity,
 				ShoppingListId = stockListId
 		    };
 	    }

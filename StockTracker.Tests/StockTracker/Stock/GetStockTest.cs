@@ -14,7 +14,7 @@ namespace StockTracker.Test.StockTracker.Stock
 	[TestClass]
 	public class GetStockTest
 	{
-		private readonly IGetStock _getStock;
+		private readonly IGetStockItem _getStock;
 		private StockTrackerContext _db;
 		private Mapper _map;
 
