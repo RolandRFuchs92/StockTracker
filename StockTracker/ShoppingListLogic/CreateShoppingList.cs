@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,97 +17,85 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.BusinessLogic.ShoppingList
 {
-    public class CreateShoppingList : ICreateShoppingList
-    {
-	    private StockTrackerContext _db;
-	    private IMapper _map;
-	    private IGetStockItem _stock;
-	    private IGetClient _client;
-	    private IGetStockLevel _stockLevel;
+	public class CreateShoppingList : ICreateShoppingList
+	{
+		private StockTrackerContext _db;
+		private IGetClient _client;
 
-	    public CreateShoppingList(StockTrackerContext db, IMapper map, IGetStockItem stock, IGetClient client, IGetStockLevel stockLevel)
-	    {
-		    _map = map;
-		    _db = db;
-		    _stock = stock;
-		    _client = client;
-		    _stockLevel = stockLevel;
-	    }
+		public CreateShoppingList(StockTrackerContext db,  IGetClient client)
+		{
+			_db = db;
+			_client = client;
+		}
 
 
-	    public IShoppingList HighPriorityList(int memberId)
-	    {
-		    var clientId = _client.GetClientByMember(memberId).ClientId;
-		    var shoppingList = GetShoppingList(memberId);
+		public IShoppingList HighPriorityList(int memberId)
+		{
+			var clientId = _client.GetClientByMember(memberId).ClientId;
+			var shoppingList = GetShoppingList(memberId);
 
-			var stockBlowPar = _stock.GetStockBelowPar(clientId);
-		    var stockLevels = _stockLevel.Get(stockBlowPar.ToList<IStockItem>());
-			//var stockPars = _stock
-		    var shoppingItemList = new List<ShoppingListItem>();
+			try
+			{
+				var shoppingListId = shoppingList.ShoppingListId;
+				var today = DateTime.Today;
 
+				var shoppingItemList = (from stockItem in _db.StockItems
+										join stockPar in _db.StockPars
+											on stockItem.StockItemId equals stockPar.StockItemId
+										join stockLevel in _db.StockLevels
+											on stockItem.StockItemId equals stockLevel.StockItemId
+										where stockLevel.DateChecked > today
+											  && stockLevel.ClientId == clientId
+											  && stockLevel.Quantity < stockPar.MinStock
+											  && stockPar.IsActive
+										select new ShoppingListItem
+										{
+											StockItemId = stockItem.StockItemId,
+											IsCollected = false,
+											ShoppingListId = shoppingListId,
+											Quantity = stockLevel.Quantity - stockPar.MinStock
+										}).ToList();
 
-		    try
-		    {
-			    foreach (var stockItem in stockBlowPar)
-			    {
-				    var stockItemLevel = stockLevels.FirstOrDefault(i => i.StockItemId == stockItem.StockItemId);
-				
-				    var shoppingItem = BuildShoppingListItem(stockItemLevel, shoppingList.ShoppingListId);
+				_db.ShoppingListItems.AddRange(shoppingItemList);
+				_db.SaveChanges();
 
-				    shoppingItemList.Add(shoppingItem);
-			    }
+				return shoppingList;
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
 
-			    _db.ShoppingListItems.AddRange(shoppingItemList);
-			    _db.SaveChanges();
-
-			    return shoppingList;
-		    }
-		    catch (Exception e)
-		    {
-			    return null;
-		    }
-
-	    }
+		}
 
 		public IShoppingList LowPriorityList(int clientId)
-	    {
-		    throw new NotImplementedException();
-	    }
+		{
+			throw new NotImplementedException();
+		}
 
-	    public IShoppingList OutStandingShoppingList(int clientId)
-	    {
-		    throw new NotImplementedException();
-	    }
+		public IShoppingList OutStandingShoppingList(int clientId)
+		{
+			throw new NotImplementedException();
+		}
 
-	    private Model.Shopping.ShoppingList BuildShoppingList(int memberId)
-	    {
-		    return new Model.Shopping.ShoppingList
-		    {
+		private Model.Shopping.ShoppingList BuildShoppingList(int memberId)
+		{
+			return new Model.Shopping.ShoppingList
+			{
 				MemberId = memberId,
 				DateCreated = DateTime.Now,
 				HasNotified = false,
-		    };
-	    }
+			};
+		}
 
-	    private Model.Shopping.ShoppingList GetShoppingList(int memberId)
-	    {
-		    var shoppingList = BuildShoppingList(memberId);
+		private Model.Shopping.ShoppingList GetShoppingList(int memberId)
+		{
+			var shoppingList = BuildShoppingList(memberId);
 
 			_db.ShoppingLists.Add(shoppingList);
-		    _db.SaveChanges();
+			_db.SaveChanges();
 
-		    return shoppingList;
-	    }
-
-		private ShoppingListItem BuildShoppingListItem(IStockLevel stock, int stockListId)
-	    {
-			return new ShoppingListItem
-			{
-				StockItemId = stock.StockItemId,
-				IsCollected = false,
-				Quantity =  stock.Quantity,
-				ShoppingListId = stockListId
-		    };
-	    }
+			return shoppingList;
+		}
     }
 }

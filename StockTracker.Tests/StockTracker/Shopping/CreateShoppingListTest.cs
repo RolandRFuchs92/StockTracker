@@ -5,10 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using StockTracker.BusinessLogic.Interface.BusinessLogic.Clients;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
+using StockTracker.BusinessLogic.ShoppingList;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Clients;
 using StockTracker.Model.Shopping;
 
 namespace StockTracker.Test.StockTracker.Shopping
@@ -24,6 +28,26 @@ namespace StockTracker.Test.StockTracker.Shopping
 	    {
 		    _db = TestDb.db;
 		    _map = AutoMapperConfig.Get();
+		    var client = Client();
+			_createShoppingList = new CreateShoppingList(_db, client);
+	    }
+
+	    private IGetClient Client()
+	    {
+		    var moqClient = new Mock<IGetClient>();
+		    moqClient.Setup(i => i.GetClientByMember(It.IsAny<int>())).Returns(new Client
+		    {
+				ClientId = 1,
+				IsActive = true,
+				Address = "2 moo cow paddock",
+				ClientName = "Dairy Bell",
+				ContactNumber = "123",
+				CreatedOn = DateTime.Now,
+				LastCheckup = DateTime.Now,
+				email = "cow@moo.com"
+		    });
+
+		    return moqClient.Object;
 	    }
 
 		[TestMethod]

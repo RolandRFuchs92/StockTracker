@@ -25,9 +25,9 @@ namespace StockTracker.Seed.ShoppingLists
 			_isCollectedRandom = false;
 		}
 
-		public List<ShoppingListItems> GetShoppingItems()
+		public List<ShoppingListItem> GetShoppingItems()
 		{
-			var totalShoppingLists = new List<ShoppingListItems>();
+			var totalShoppingLists = new List<ShoppingListItem>();
 
 			for(var inc = 1; inc < _numberOfShoppingListsToCreate; inc++)
 			{
@@ -37,13 +37,13 @@ namespace StockTracker.Seed.ShoppingLists
 			return totalShoppingLists;
 		}
 
-		private List<ShoppingListItems> GetSingleShippingList(int currentShoppingListIndex)
+		private List<ShoppingListItem> GetSingleShippingList(int currentShoppingListIndex)
 		{
 			var listSize = _rng.Next(_minListSize, _maxListSize);
-			var shoppingList = new List<ShoppingListItems>();
+			var shoppingList = new List<ShoppingListItem>();
 			for(var itemIndex = 1; itemIndex < listSize; itemIndex++)
 			{
-				shoppingList.Add(new ShoppingListItems
+				shoppingList.Add(new ShoppingListItem
 				{
 					IsCollected = _isCollectedRandom ? _rng.Next(0,1) > 0 : false,
 					Quantity = _rng.Next(1,5),
