@@ -123,8 +123,8 @@ namespace StockTracker.Test.StockTracker.Members
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(result.Count > 0);
-			Assert.IsTrue(result.FirstOrDefault().IsActive);
+			Assert.IsTrue(result.Count > 0, "Returned zero members. Should have been at least 1.");
+			Assert.IsTrue(result.FirstOrDefault().IsActive, "First record was inactive, should have been active.");
 			Assert.IsInstanceOfType(result, typeof(List<Member>));
 			
 		}
@@ -155,7 +155,7 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(List<Member>));
-			Assert.IsTrue(result.Count > 0);
+			Assert.IsTrue(result.Count > 0, "Result was 0, should have been more.");
 		}
 
 		[TestMethod]
@@ -197,7 +197,7 @@ namespace StockTracker.Test.StockTracker.Members
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(List<Member>));
-			Assert.IsTrue(result.Count > 0);
+			Assert.IsTrue(result.Count > 0, "Result returned 0, should be more.");
 		}
 
 		[TestMethod]

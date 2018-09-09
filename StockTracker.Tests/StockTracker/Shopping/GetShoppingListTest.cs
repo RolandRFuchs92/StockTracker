@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
+using StockTracker.BusinessLogic.ShoppingListLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 
@@ -22,6 +23,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 	    {
 		    _db = TestDb.db;
 		    _map = AutoMapperConfig.Get();
+			_getShoppingList = new GetShoppingList(_db);
 	    }
 
 

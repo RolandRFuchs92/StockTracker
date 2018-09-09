@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
 using StockTracker.Context;
+using StockTracker.Extensions;
 using StockTracker.Interface.Models.Shopping;
 
 namespace StockTracker.BusinessLogic.ShoppingListLogic
@@ -27,19 +28,26 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 
 		public List<IShoppingListItem> Get(int clientId, DateTime date)
 		{
-			//var midnightDate = date.
+			var midnightDate = date.Time(0, 0, 1);
 			return (from item in _db.ShoppingListItems
 				join shoppingList in _db.ShoppingLists
 					on item.ShoppingListId equals shoppingList.ShoppingListId
 				join member in _db.Members
 					on shoppingList.MemberId equals member.MemberId
 				where member.ClientId == clientId
+					  && shoppingList.DateCreated > midnightDate
 				select item).ToList<IShoppingListItem>();
 		}
 
 		public List<IShoppingListItem> GetMemberShoppingList(int memberId, DateTime date)
 		{
-			throw new NotImplementedException();
+			var midnightDate = date.Time(0, 0, 1);
+			return (from item in _db.ShoppingListItems
+				join shoppingList in _db.ShoppingLists
+					on item.ShoppingListId equals shoppingList.ShoppingListId
+				where shoppingList.MemberId == memberId
+				      && shoppingList.DateCreated > midnightDate
+				select item).ToList<IShoppingListItem>();
 		}
 	}
 }
