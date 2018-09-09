@@ -53,7 +53,7 @@ namespace StockTracker.BusinessLogic.ShoppingList
 											StockItemId = stockItem.StockItemId,
 											IsCollected = false,
 											ShoppingListId = shoppingListId,
-											Quantity = stockLevel.Quantity - stockPar.MinStock
+											Quantity = stockPar.MinStock - stockLevel.Quantity
 										}).ToList();
 
 				_db.ShoppingListItems.AddRange(shoppingItemList);

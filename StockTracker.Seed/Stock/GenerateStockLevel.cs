@@ -31,7 +31,7 @@ namespace StockTracker.Seed.Stock
 		    {
 			    stockLevels.Add(new StockLevel
 			    {
-					DateChecked = DateTime.Now.AddDays(_rng.Next(0,3)),
+					DateChecked = DateTime.Now,
 					MemberId = _rng.Next(1,_memberMaxCount),
 					Quantity = _rng.Next(1,10),
 					StockItemId = stock.StockItemId,

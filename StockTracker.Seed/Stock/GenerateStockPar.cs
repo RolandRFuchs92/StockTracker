@@ -31,10 +31,10 @@ namespace StockTracker.Seed.Stock
 			{
 				pars.Add(new StockPar {
 					DateSet = DateTime.Now.AddDays(_rng.Next(1, 10) * -1),
-					MaxStock = _rng.Next(5, 10),
-					MinStock = _rng.Next(1, 5),
+					MaxStock = _rng.Next(6, 10),
+					MinStock = _rng.Next(4, 6),
 					StockItemId = item.StockItemId,
-					IsActive = _rng.IsTrue(),
+					IsActive = true,
 					ClientId = _rng.Next(1,3)
 				});
 			}
