@@ -10,11 +10,10 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
 {
     public interface IUpdateShoppingList
     {
-	    IShoppingList Add(int shoppingListId, IStockItem stock);
-	    IShoppingList Add(int shoppingListId, List<IStockItem> stockList);
-	    IShoppingList Remove(int shoppingListId, IStockItem stock);
+	    IShoppingList Add(int shoppingListId, int stockItemId);
+	    IShoppingList Add(int shoppingListId, List<int> stockItemIdList);
 	    IShoppingList Remove(int shoppingListId, int stockItemId);
-	    IShoppingList Remove(int shoppingListId, List<IStockItem> stockList);
+	    IShoppingList Remove(int shoppingListId, List<int> stockIdList);
 	    IShoppingList Update(int ShoppingListId, int stockItemId, int quantity);
     }
 }
