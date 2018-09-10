@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Model.Shopping;
-using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.BusinessLogic.Shopping;
 using StockTracker.Repository.ShoppingListLogic;
 
-namespace StockTracker.Test.StockTracker.Shopping
+namespace StockTracker.Repository.Test.StockTracker.Shopping
 {
 	[TestClass]
 	public class UpdateShoppingListTests

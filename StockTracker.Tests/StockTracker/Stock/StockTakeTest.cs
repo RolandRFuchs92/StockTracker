@@ -1,6 +1,6 @@
 ﻿using StockTracker.Context;
 
-namespace StockTracker.Test.StockTracker.Stock
+namespace StockTracker.Repository.Test.StockTracker.Stock
 {
     public class StockTakeTest
     {

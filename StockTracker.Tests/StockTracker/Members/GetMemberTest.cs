@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
 using StockTracker.Interface.Models.User;
@@ -10,7 +7,7 @@ using StockTracker.Model.User;
 using StockTracker.Repository.Interface.BusinessLogic.Members;
 using StockTracker.Repository.MemberLogic;
 
-namespace StockTracker.Test.StockTracker.Members
+namespace StockTracker.Repository.Test.StockTracker.Members
 {
 	[TestClass]
 	public class GetMemberTest

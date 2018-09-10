@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using StockTracker.Repository.AutoMapper;
 
-namespace StockTracker.Test
+namespace StockTracker.Repository.Test
 {
     public static class AutoMapperConfig
     {
