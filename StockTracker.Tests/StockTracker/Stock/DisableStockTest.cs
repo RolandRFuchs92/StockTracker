@@ -39,16 +39,35 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 
 		[TestMethod]
-		public void UoW_InitialCondition_ExpectedResult()
+		public void Disable_PassedAListOfStockItems_ShouldHaveDisabledAllItemsSpecified()
 		{
 			//Arrange
+			var clientId = 1;
+			var listOfStockIds = _db.StockLevels.Where(i => i.ClientId == clientId).ToList();
 
 
 			//Act
-
+			var result = _disable.Disable(listOfStockIds.Select(i => i.StockItemId).ToList(), clientId);
 
 			//Assert
-
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result);
 		}
+
+
+	    [TestMethod]
+	    public void DisableByCategory_PassedAcategoryId_ResultListIsSetToInactive()
+	    {
+		    //Arrange
+		    var clientId = 1;
+		    var categoryId = 1;
+
+		    //Act
+		    var result = _disable.DisableByCategory(categoryId, clientId);
+
+		    //Assert
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result);
+	    }
     }
 }
