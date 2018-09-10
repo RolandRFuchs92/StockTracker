@@ -19,7 +19,6 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 		    _db = db;
 	    }
 
-
 	    public IShoppingList Add(int shoppingListId, int stockItemId, int quantity)
 	    {
 		    try

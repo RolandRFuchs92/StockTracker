@@ -46,10 +46,9 @@ namespace StockTracker.Test.StockTracker.Shopping
 		public void Add_PassedListOfItemsReffedSingleItem_ReturnShoppingListRef()
 		{
 			//Arrange
-			var shoppingListItemIds = new List<int> {1, 2, 3, 4};
 			var shoppingListId = 1;
 			var quantity = 1000;
-			var currentShoppingList = _db.ShoppingListItems.Where(i => i.ShoppingListItemId == shoppingListId);
+			var currentShoppingList = _db.ShoppingListItems.Where(i => i.ShoppingListItemId == shoppingListId).ToList();
 
 			var newShoppingItems = GenerateNewShoppingListTuple(currentShoppingList.Select(i => i.ShoppingListItemId).ToList());
 
