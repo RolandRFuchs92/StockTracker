@@ -51,17 +51,55 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 
 	    public IShoppingList Remove(int shoppingListId, int stockItemId)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var deletedStockItem = _db.ShoppingListItems.FirstOrDefault(i => i.ShoppingListId == shoppingListId && i.StockItemId == stockItemId);
+			    _db.ShoppingListItems.Remove(deletedStockItem);
+			    _db.SaveChanges();
+			    return _db.ShoppingLists.FirstOrDefault(i => i.ShoppingListId == shoppingListId);
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
+		    }
 	    }
 
 	    public IShoppingList Remove(int shoppingListId, List<int> stockIdList)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+				var itemsToRemove = _db.ShoppingListItems.Where(i =>
+											i.ShoppingListId == shoppingListId
+											&& stockIdList.Contains(i.ShoppingListItemId))
+											.ToList();
+
+			    _db.ShoppingListItems.RemoveRange(itemsToRemove);
+			    _db.SaveChanges();
+
+			    return _db.ShoppingLists.FirstOrDefault(i => i.ShoppingListId == shoppingListId);
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
+		    }
 	    }
 
 	    public IShoppingList Update(int ShoppingListId, int stockItemId, int quantity)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var shoppingItem = _db.ShoppingListItems.FirstOrDefault(i => i.ShoppingListId == ShoppingListId && i.StockItemId == stockItemId);
+			    shoppingItem.Quantity = quantity;
+
+				_db.ShoppingListItems.Attach(shoppingItem);
+			    _db.SaveChanges();
+
+			    return _db.ShoppingLists.FirstOrDefault(i => i.ShoppingListId == ShoppingListId);
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
+		    }
 	    }
 
 	    private ShoppingListItem BuildNewShoppingListItem(int shoppingListId,int stockItemId , int quantity)

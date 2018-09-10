@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
+using StockTracker.BusinessLogic.ShoppingListLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Model.Shopping;
@@ -12,6 +13,7 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.Test.StockTracker.Shopping
 {
+	[TestClass]
 	public class UpdateShoppingListTests
 	{
 		private StockTrackerContext _db;
@@ -20,9 +22,8 @@ namespace StockTracker.Test.StockTracker.Shopping
 		public UpdateShoppingListTests()
 		{
 			_db = TestDb.db;
+			_updateShoppingList = new UpdateShoppingList(_db);
 		}
-
-
 		//BusinesRule: If only items that the client is connected to can be added to their list... we need to implement this.
 
 		[TestMethod]
