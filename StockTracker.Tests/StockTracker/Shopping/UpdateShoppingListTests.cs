@@ -31,6 +31,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			//Arrange
 			var shoppingListId = 1;
 			var stockItemId = 1;
+			var quantity = 1000;
 
 			//Act
 			var result = _updateShoppingList.Add(shoppingListId, stockItemId);
@@ -111,7 +112,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IShoppingList));
-			Assert.IsTrue(CompareLists(originalList, newShoppingList));
+			Assert.IsTrue(IsIdenticalLists(originalList, newShoppingList));
 		}
 
 		private int GetNewShoppingListId(List<int> originalShoppingListId)
@@ -125,7 +126,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			return newShoppingItemId;
 		}
 
-		private bool CompareLists(List<ShoppingListItem> originalList, List<ShoppingListItem> updateList)
+		private bool IsIdenticalLists(List<ShoppingListItem> originalList, List<ShoppingListItem> updateList)
 		{
 			var difference = originalList.Except(updateList).Count();
 			if (difference == 0)
