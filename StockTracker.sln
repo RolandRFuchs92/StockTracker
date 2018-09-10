@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic", "StockTracker\StockTracker.BusinessLogic.csproj", "{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository", "StockTracker\StockTracker.Repository.csproj", "{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Test", "StockTracker.Tests\StockTracker.Test.csproj", "{78828F3A-0EA1-4CDE-AB2E-D70513CB3E2B}"
 EndProject
@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Model", "Stock
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Seed", "StockTracker.Seed\StockTracker.Seed.csproj", "{20B020AD-7782-4F4C-BF36-85A3155AE5A0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic.Interface", "StockTracker.BusinessLogic.Interface\StockTracker.BusinessLogic.Interface.csproj", "{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository.Interface", "StockTracker.BusinessLogic.Interface\StockTracker.Repository.Interface.csproj", "{4C34BC3E-ABF5-4180-AE43-03B2931ED4B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Extensions", "StockTracker.Extensions\StockTracker.Extensions.csproj", "{8D20887C-373B-4967-9901-84AD25B76D16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Extensions", "StockTracker.Extensions\StockTracker.Extensions.csproj", "{8D20887C-373B-4967-9901-84AD25B76D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
