@@ -18,7 +18,6 @@ namespace StockTracker.Model.Stock
 	    public string StockItemName { get; set; }
 	    public float StockItemPrice { get; set; }
 	    public DateTime DateCreated { get; set; }
-	    public bool IsActive { get; set; }
 
 		[ForeignKey("StockCategoryId")]
 		public StockCategory StockCategory { get; set; }

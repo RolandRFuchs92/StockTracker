@@ -17,6 +17,7 @@ namespace StockTracker.Model.Stock
 	    public int Quantity { get; set; }
 	    public DateTime DateChecked { get; set; }
 	    public int MemberId { get; set; }
+	    public bool IsActive { get; set; }
 
 		[ForeignKey("MemberId")]
 		public Member Member { get; set; }

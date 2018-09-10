@@ -10,6 +10,7 @@ namespace StockTracker.Interface.Models.Stock
 		int StockItemId { get; set; }
 		int ClientId { get; set; }
 		int Quantity { get; set; }
+		bool IsActive { get; set; }
 		DateTime DateChecked { get; set; }
 		int MemberId { get; set; }
     }
