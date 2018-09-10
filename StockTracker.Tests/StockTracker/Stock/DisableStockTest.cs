@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
+using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.BusinessLogic.Stock;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
@@ -28,7 +29,23 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			var originalActiveItem = _db.StockLevels.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
 
 			//Act
-			var resut = _disable.Disable(stockItemId, clientId);
+			var result = _disable.Disable(stockItemId, clientId);
+			var updateItem = _db.StockLevels.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(StockLevel));
+			Assert.IsTrue(result);
+		}
+
+		[TestMethod]
+		public void UoW_InitialCondition_ExpectedResult()
+		{
+			//Arrange
+
+
+			//Act
+
 
 			//Assert
 

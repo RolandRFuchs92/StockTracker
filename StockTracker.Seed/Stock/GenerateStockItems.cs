@@ -33,7 +33,6 @@ namespace StockTracker.Seed.Stock
 		    {
 				stocks.Add(new StockItem()
 				{
-					IsActive = _rng.Next(0,1) > 0,
 					DateCreated =  DateTime.Now,
 					StockItemName = stockItem,
 					StockItemPrice = _rng.Next(1,250),

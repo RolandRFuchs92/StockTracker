@@ -12,13 +12,13 @@ using StockTracker.Repository.Stock;
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
 	[TestClass]
-    public class AddStockTest
+    public class AddStockItemTest
     {
 	    private StockTrackerContext _db;
 	    private IMapper _map;
 	    private IAddStock _addStock;
 
-	    public AddStockTest()
+	    public AddStockItemTest()
 	    {
 		    _db = TestDb.db;
 		    _map = AutoMapperConfig.Get();
@@ -192,7 +192,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 	    {
 		    return new StockItem
 		    {
-			    IsActive = true,
 			    DateCreated = DateTime.Now,
 			    StockCategoryId = 1,
 			    StockItemName = "Moon Juice",
@@ -207,7 +206,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			stockItems.Add(SingleStockItem());
 		    stockItems.Add(new StockItem
 		    {
-				IsActive = true,
 				DateCreated = DateTime.Now,
 				StockCategoryId = 2,
 				StockItemName = "Camel Pie",
