@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Clients;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
-using StockTracker.BusinessLogic.ShoppingList;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Clients;
 using StockTracker.Model.Shopping;
+using StockTracker.Repository.Interface.BusinessLogic.Clients;
+using StockTracker.Repository.Interface.BusinessLogic.Shopping;
+using StockTracker.Repository.ShoppingListLogic;
 
 namespace StockTracker.Test.StockTracker.Shopping
 {

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using StockTracker.BusinessLogic.Interface.BusinessLogic;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
-using StockTracker.Context;
 using StockTracker.Context.Interface;
-using StockTracker.Interface.Models.User;
-using StockTracker.Model;
 using StockTracker.Model.User;
+using StockTracker.Repository.Interface.BusinessLogic.Members;
 
-namespace StockTracker.BusinessLogic.MemberLogic
+namespace StockTracker.Repository.MemberLogic
 {
     public class GetMembers : IGetMembers
     {

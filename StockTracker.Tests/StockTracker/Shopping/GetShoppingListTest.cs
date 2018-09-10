@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
-using StockTracker.BusinessLogic.ShoppingListLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
+using StockTracker.Repository.Interface.BusinessLogic.Shopping;
+using StockTracker.Repository.ShoppingListLogic;
 
 namespace StockTracker.Test.StockTracker.Shopping
 {

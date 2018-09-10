@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Members
+﻿namespace StockTracker.Repository.Interface.BusinessLogic.Members
 {
     public interface IAddMember
     {

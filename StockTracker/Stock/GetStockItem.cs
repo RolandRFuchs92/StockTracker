@@ -1,18 +1,13 @@
-﻿using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
-using StockTracker.Context;
-using StockTracker.Interface.Models.Stock;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Remotion.Linq.Clauses;
+using StockTracker.Context;
 using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.DTO;
+using StockTracker.Repository.Interface.BusinessLogic.Stock;
 
-namespace StockTracker.BusinessLogic.Stock
+namespace StockTracker.Repository.Stock
 {
 	public class GetStockItem : IGetStockItem
 	{

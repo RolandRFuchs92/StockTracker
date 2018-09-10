@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using StockTracker.Interface.Models.Stock;
-using StockTracker.Interface.ViewModels;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Stock
+namespace StockTracker.Repository.Interface.BusinessLogic.Stock
 {
     public interface IAddStock
     {

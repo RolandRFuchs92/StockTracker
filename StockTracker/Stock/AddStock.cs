@@ -1,18 +1,13 @@
-﻿using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
-using StockTracker.Interface.Models.Stock;
-using StockTracker.Interface.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using StockTracker.Context;
+using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
+using StockTracker.Repository.Interface.BusinessLogic.Stock;
 
-namespace StockTracker.BusinessLogic.Stock
+namespace StockTracker.Repository.Stock
 {
 	public class AddStock : IAddStock
 	{

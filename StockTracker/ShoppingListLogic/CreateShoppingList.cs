@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Clients;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
-using StockTracker.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
-using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Shopping;
-using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.DTO;
+using StockTracker.Repository.Interface.BusinessLogic.Clients;
+using StockTracker.Repository.Interface.BusinessLogic.Shopping;
 
-namespace StockTracker.BusinessLogic.ShoppingList
+namespace StockTracker.Repository.ShoppingListLogic
 {
 	public class CreateShoppingList : ICreateShoppingList
 	{

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
-using StockTracker.BusinessLogic.Stock;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
+using StockTracker.Repository.Interface.BusinessLogic.Stock;
+using StockTracker.Repository.Stock;
 
 namespace StockTracker.Test.StockTracker.Stock
 {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockTracker.Interface.Models.Shopping;
+﻿using StockTracker.Interface.Models.Shopping;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
+namespace StockTracker.Repository.Interface.BusinessLogic.Shopping
 {
     public interface ICreateShoppingList
     {

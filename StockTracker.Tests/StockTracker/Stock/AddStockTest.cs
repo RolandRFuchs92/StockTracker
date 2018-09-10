@@ -8,10 +8,9 @@ using StockTracker.Context;
 using StockTracker.Model.Stock;
 using AutoMapper;
 using Moq;
-using StockTracker.BusinessLogic.AutoMapper;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Stock;
-using StockTracker.BusinessLogic.Stock;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Repository.Interface.BusinessLogic.Stock;
+using StockTracker.Repository.Stock;
 
 namespace StockTracker.Test.StockTracker.Stock
 {

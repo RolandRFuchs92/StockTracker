@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StockTracker.Model.User;
 
-namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Members
+namespace StockTracker.Repository.Interface.BusinessLogic.Members
 {
     public interface IGetMembers
     {

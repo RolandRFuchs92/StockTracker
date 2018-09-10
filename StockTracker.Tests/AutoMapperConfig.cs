@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using StockTracker.BusinessLogic.AutoMapper;
+using StockTracker.Repository.AutoMapper;
 
 namespace StockTracker.Test
 {

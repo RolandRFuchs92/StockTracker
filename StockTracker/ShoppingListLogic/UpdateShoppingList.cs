@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Model.Shopping;
+using StockTracker.Repository.Interface.BusinessLogic.Shopping;
 
-namespace StockTracker.BusinessLogic.ShoppingListLogic
+namespace StockTracker.Repository.ShoppingListLogic
 {
     public class UpdateShoppingList : IUpdateShoppingList
     {

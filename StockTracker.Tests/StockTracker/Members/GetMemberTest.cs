@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StockTracker.BusinessLogic.Interface.BusinessLogic.Members;
-using StockTracker.BusinessLogic.MemberLogic;
 using StockTracker.Context;
 using StockTracker.Interface.Models.User;
 using StockTracker.Model.User;
+using StockTracker.Repository.Interface.BusinessLogic.Members;
+using StockTracker.Repository.MemberLogic;
 
 namespace StockTracker.Test.StockTracker.Members
 {
