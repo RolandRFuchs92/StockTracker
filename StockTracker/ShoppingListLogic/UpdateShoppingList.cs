@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
+using StockTracker.Model.Shopping;
 
 namespace StockTracker.BusinessLogic.ShoppingListLogic
 {
@@ -19,13 +20,13 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 	    }
 
 
-	    public IShoppingList Add(int shoppingListId, int stockItemId)
+	    public IShoppingList Add(int shoppingListId, int stockItemId, int quantity)
 	    {
 		    try
 		    {
-				
-
-
+			    _db.ShoppingListItems.Add(BuildNewShoppingListItem(shoppingListId, stockItemId, quantity));
+			    _db.SaveChanges();
+			    return _db.ShoppingLists.FirstOrDefault(i => i.ShoppingListId == shoppingListId);
 		    }
 		    catch (Exception e)
 		    {
@@ -33,9 +34,19 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 		    }
 	    }
 
-	    public IShoppingList Add(int shoppingListId, List<int> stockItemIdList)
+	    public IShoppingList Add(int shoppingListId, List<Tuple<int,int>> newShoppingItem)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+				_db.ShoppingListItems.AddRange(GenerateShoppingList(shoppingListId,newShoppingItem));
+			    _db.SaveChanges();
+			    return _db.ShoppingLists.FirstOrDefault(i => i.ShoppingListId == shoppingListId);
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
+		    }
+
 	    }
 
 	    public IShoppingList Remove(int shoppingListId, int stockItemId)
@@ -53,7 +64,27 @@ namespace StockTracker.BusinessLogic.ShoppingListLogic
 		    throw new NotImplementedException();
 	    }
 
+	    private ShoppingListItem BuildNewShoppingListItem(int shoppingListId,int stockItemId , int quantity)
+	    {
+		    return new ShoppingListItem
+		    {
+				IsCollected = false,
+				Quantity = quantity,
+				ShoppingListId = shoppingListId,
+				StockItemId = stockItemId
+		    };
+	    }
 
+	    private List<ShoppingListItem> GenerateShoppingList(int shoppingListId, List<Tuple<int, int>> newShoppingItemsList)
+	    {
+		    var shoppingList = new List<ShoppingListItem>();
 
+		    foreach (var shoppingListItem in newShoppingItemsList)
+		    {
+			    shoppingList.Add(BuildNewShoppingListItem(shoppingListId, shoppingListItem.Item1, shoppingListItem.Item2));
+		    }
+
+		    return shoppingList;
+	    }
     }
 }

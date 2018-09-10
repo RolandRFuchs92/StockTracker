@@ -12,7 +12,7 @@ namespace StockTracker.BusinessLogic.Interface.BusinessLogic.Shopping
     {
 	    IShoppingList Add(int shoppingListId, int stockItemId, int quantity);
 	    IShoppingList Add(int shoppingListId, List<Tuple<int,int>> newShoppingItem);
-	    IShoppingList Remove(int shoppingListId, int stockItemId, int quantity);
+	    IShoppingList Remove(int shoppingListId, int stockItemId);
 	    IShoppingList Remove(int shoppingListId, List<int> stockIdList);
 	    IShoppingList Update(int ShoppingListId, int stockItemId, int quantity);
     }

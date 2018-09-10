@@ -34,7 +34,7 @@ namespace StockTracker.Test.StockTracker.Shopping
 			var quantity = 1000;
 
 			//Act
-			var result = _updateShoppingList.Add(shoppingListId, stockItemId);
+			var result = _updateShoppingList.Add(shoppingListId, stockItemId, quantity);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -47,13 +47,19 @@ namespace StockTracker.Test.StockTracker.Shopping
 			//Arrange
 			var shoppingListItemIds = new List<int> {1, 2, 3, 4};
 			var shoppingListId = 1;
+			var quantity = 1000;
+			var currentShoppingList = _db.ShoppingListItems.Where(i => i.ShoppingListItemId == shoppingListId);
+
+			var newShoppingItems = GenerateNewShoppingListTuple(currentShoppingList.Select(i => i.ShoppingListItemId).ToList());
 
 			//Act
-			var result = _updateShoppingList.Add(shoppingListId, shoppingListItemIds);
+			var result = _updateShoppingList.Add(shoppingListId, newShoppingItems);
+			var added = _db.ShoppingListItems.FirstOrDefault(i => i.ShoppingListId == shoppingListId && i.Quantity == quantity);
 
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IShoppingList));
+			Assert.IsTrue(added != null);
 		}
 
 		[TestMethod]
@@ -132,6 +138,19 @@ namespace StockTracker.Test.StockTracker.Shopping
 			if (difference == 0)
 				return true;
 			return false;
+		}
+
+		private List<Tuple<int, int>> GenerateNewShoppingListTuple(List<int> CurrentShoppingList)
+		{
+			var newShoppingList = new List<int>(); 
+			newShoppingList = CurrentShoppingList;
+
+			var newTuppleList = new List<Tuple<int, int>>();
+			newTuppleList.Add(new Tuple<int, int>(GetNewShoppingListId(newShoppingList),100));
+			newTuppleList.Add(new Tuple<int, int>(GetNewShoppingListId(newShoppingList),100));
+			newTuppleList.Add(new Tuple<int, int>(GetNewShoppingListId(newShoppingList),100));
+
+			return newTuppleList;
 		}
 	}
 }
