@@ -47,10 +47,10 @@ namespace StockTracker.Seed.Stock
 	    {
 		    return new List<StockLevel>
 		    {
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1}
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100, StockItemId = 2, IsActive = true},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100, StockItemId = 3, IsActive = true},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1, StockItemId = 4, IsActive = true},
+			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1, StockItemId = 1, IsActive = true}
 			};
 	    }
     }

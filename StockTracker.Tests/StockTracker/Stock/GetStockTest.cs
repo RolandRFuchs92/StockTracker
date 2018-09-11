@@ -92,7 +92,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove, true));
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove, true),"Stock was Possibly note above par.");
 			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
 		}
 		#endregion

@@ -7,9 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Repository.Interface.BusinessLogic.Stock;
+using StockTracker.Repository.Stock;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
+	[TestClass]
     public class GetStockLevelTests
     {
 	    private IGetStockLevel _stocklevel;
@@ -18,6 +20,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 	    public GetStockLevelTests()
 	    {
 		    _db = TestDb.db;
+		    _stocklevel = new GetStockLevel(_db);
 	    }
 
 
@@ -27,7 +30,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			//Arrange
 			var stockItemid = 1;
 			var clientId = 1;
-
 
 			//Act
 			var result = _stocklevel.Get(stockItemid, clientId);

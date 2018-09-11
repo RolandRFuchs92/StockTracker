@@ -60,7 +60,7 @@ namespace StockTracker.Repository.Test.StockTracker.Shopping
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IShoppingList));
-			Assert.IsTrue(isBelowMin);
+			Assert.IsTrue(isBelowMin, "Result may note have been below the minimum");
 		}
 
 
