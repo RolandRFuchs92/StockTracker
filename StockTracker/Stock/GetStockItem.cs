@@ -28,7 +28,6 @@ namespace StockTracker.Repository.Stock
 				select new StockItem
 				{
 					StockItemId = stock.StockItemId,
-					IsActive = stock.IsActive,
 					StockCategoryId = stock.StockCategoryId,
 					StockItemPrice = stock.StockItemPrice,
 					StockItemName = stock.StockItemName,
@@ -46,7 +45,6 @@ namespace StockTracker.Repository.Stock
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,
-						IsActive = stock.IsActive,
 						StockCategoryId = stock.StockCategoryId,
 						StockItemPrice = stock.StockItemPrice,
 						StockItemName = stock.StockItemName,
@@ -62,7 +60,6 @@ namespace StockTracker.Repository.Stock
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,
-						IsActive = stock.IsActive,
 						StockCategoryId = stock.StockCategoryId,
 						StockItemPrice = stock.StockItemPrice,
 						StockItemName = stock.StockItemName,
@@ -77,7 +74,6 @@ namespace StockTracker.Repository.Stock
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,
-						IsActive = stock.IsActive,
 						StockCategoryId = stock.StockCategoryId,
 						StockItemPrice = stock.StockItemPrice,
 						StockItemName = stock.StockItemName,
@@ -96,7 +92,6 @@ namespace StockTracker.Repository.Stock
 					select new StockItem
 					{
 						StockItemId = stockItem.StockItemId,
-						IsActive = stockItem.IsActive,
 						StockCategoryId = stockItem.StockCategoryId,
 						StockItemPrice = stockItem.StockItemPrice,
 						StockItemName = stockItem.StockItemName,
@@ -112,7 +107,6 @@ namespace StockTracker.Repository.Stock
 					select new StockItem
 					{
 						StockItemId = stock.StockItemId,
-						IsActive = stock.IsActive,
 						StockCategoryId = stock.StockCategoryId,
 						StockItemPrice = stock.StockItemPrice,
 						StockItemName = stock.StockItemName,

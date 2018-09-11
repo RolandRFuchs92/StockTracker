@@ -83,9 +83,9 @@ namespace StockTracker.Repository.ShoppingListLogic
 			throw new NotImplementedException();
 		}
 
-		private Model.Shopping.ShoppingList BuildShoppingList(int memberId)
+		private ShoppingList BuildShoppingList(int memberId)
 		{
-			return new Model.Shopping.ShoppingList
+			return new ShoppingList
 			{
 				MemberId = memberId,
 				DateCreated = DateTime.Now,
@@ -93,7 +93,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 			};
 		}
 
-		private Model.Shopping.ShoppingList GetShoppingList(int memberId)
+		private ShoppingList GetShoppingList(int memberId)
 		{
 			var shoppingList = BuildShoppingList(memberId);
 
@@ -119,7 +119,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 					select new StockDTO
 					{
 						StockItemId = stockItem.StockItemId,
-						IsActive = stockItem.IsActive,
+						IsActive = stockPar.IsActive,
 						ClientId = stockLevel.ClientId,
 						MemberId = stockLevel.MemberId,
 						MinStock = stockPar.MinStock,
