@@ -96,5 +96,37 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			Assert.IsTrue(result);
 			Assert.IsNull(updatedList.FirstOrDefault());
 		}
+
+		[TestMethod]
+		public void DisableAll_PassedInASingleClientId_ResultShouldBeTrueAndDbTohaveAllClientRelatedStockitemsDisabled()
+		{
+			//Arrange
+			var clientId = 1;
+
+			//Act
+			var result = _disable.DisableAll(clientId);
+			var updatedList = _db.StockPars.Where(i => i.ClientId == clientId).ToList();
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result);
+			Assert.IsNull(updatedList.FirstOrDefault(i => i.IsActive));
+		}
+
+		[TestMethod]
+		public void DisableAll_PassListOfClientIds_AllShouldHaveAllStockParsDisabled()
+		{
+			//Arrange
+			var clientIds = new List<int> {1, 2, 3};
+
+			//Act
+			var result = _disable.DisableAll(clientIds);
+			var updatedList = _db.StockPars.Where(i => clientIds.Contains(i.ClientId)).Select(i => i.IsActive).ToList();
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result);
+			Assert.IsNull(updatedList);
+		}
     }
 }
