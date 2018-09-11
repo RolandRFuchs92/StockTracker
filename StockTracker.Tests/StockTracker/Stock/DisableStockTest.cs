@@ -9,6 +9,7 @@ using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.BusinessLogic.Stock;
+using StockTracker.Repository.Stock;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
@@ -19,6 +20,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 	    public DisableStockTest(StockTrackerContext db)
 	    {
 		    _db = db;
+		    _disable = new DisableStock(_db);
 	    }
 
 		[TestMethod]

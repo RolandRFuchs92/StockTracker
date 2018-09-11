@@ -8,6 +8,6 @@ namespace StockTracker.Repository.Interface.BusinessLogic.Stock
 	    IStockLevel Get(int stockItemId, int clientId);
 	    List<IStockLevel> Get(List<int> stockItemId, int clientId);
 	    List<IStockLevel> GetByCategoryId(int categoryId, int clientId);
-	    List<IStockLevel> GetByCategoryId(List<int> categoryId, int clinetiD);
+	    List<IStockLevel> GetByCategoryId(List<int> categoryId, int clientId);
     }
 }
