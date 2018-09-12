@@ -32,7 +32,7 @@ namespace StockTracker.Seed
 			_db = db;
 		}
 
-		public void Populate()
+		public StockTrackerContext Populate()
 		{
 			PopulateLeaves();
 			PopulateClientSettings();
@@ -43,7 +43,8 @@ namespace StockTracker.Seed
 			PopulateStockPars();
 			PopulateShoppingLists();
 			PopulateShoppingListItems();
-			
+			return _db;
+
 		}
 
 		private void PopulateClientSettings()
