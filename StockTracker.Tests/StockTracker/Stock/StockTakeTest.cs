@@ -8,7 +8,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 	    public StockTakeTest()
 	    {
-		    _db = TestDb.db;
+		    //_db = TestDb.db;
 	    }
 
 

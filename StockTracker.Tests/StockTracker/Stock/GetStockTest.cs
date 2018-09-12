@@ -20,7 +20,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 		public GetStockTest()
 		{
-			_db = TestDb.db;
+			_db = new TestDb().db;
 			_map = AutoMapperConfig.Get();
 			_getStock = new GetStockItem(_db, _map);
 		}
@@ -86,13 +86,21 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			//Arrange
 			var clientId = 1;
+			var stockLevels = _db.StockLevels.Where(i => i.ClientId == clientId).ToList();
+			foreach (var stock in stockLevels)
+			{
+				stock.Quantity = 100;
+			}
+
+			_db.SaveChanges();
+			var newLevel = _db.StockLevels.Where(i => i.ClientId == clientId).ToList();
 
 			//Act
 			var result = _getStock.GetStockAbovePar(clientId);
 
 			//Assert
 			Assert.IsNotNull(result);
-			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove, true),"Stock was Possibly note above par.");
+			Assert.IsTrue(DoesStockMeetRequirement(result, IsAbove, true), "Stock was Possibly note above par.");
 			Assert.IsInstanceOfType(result, typeof(List<StockItem>));
 		}
 		#endregion
@@ -146,5 +154,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			return currentPar >= maxPar && isToday;
 		}
+
+
 	}
 }

@@ -4,12 +4,12 @@ using StockTracker.Seed;
 
 namespace StockTracker.Repository.Test
 {
-    public static class TestDb
+    public class TestDb
     {
-	    public static StockTrackerContext db { get; }
+	    public StockTrackerContext db { get; }
 		public static bool isActive { get; set; }
 
-	    static TestDb()
+	    public TestDb()
 	    {
 			if (isActive) return;
 
