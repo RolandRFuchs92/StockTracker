@@ -18,7 +18,7 @@ namespace StockTracker.Repository.Test.StockTracker.Shopping
 
 		public UpdateShoppingListTests()
 		{
-			_db = new TestDb().db;
+			_db = new TestDb().Db;
 			_updateShoppingList = new UpdateShoppingList(_db);
 		}
 		//BusinesRule: If only items that the client is connected to can be added to their list... we need to implement this.

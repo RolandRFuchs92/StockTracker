@@ -20,7 +20,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 	    public AddStockItemTest()
 	    {
-		    _db = new TestDb().db;
+		    _db = new TestDb().Db;
 		    _map = AutoMapperConfig.Get();
 		    _addStock = new AddStock(_db, _map);
 	    }

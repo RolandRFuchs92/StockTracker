@@ -19,7 +19,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 	    public GetStockLevelTests()
 	    {
-			_db = new TestDb().db;
+			_db = new TestDb().Db;
 			_stocklevel = new GetStockLevel(_db);
 	    }
 

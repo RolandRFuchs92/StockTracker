@@ -17,7 +17,7 @@ namespace StockTracker.Repository.Test.StockTracker.Members
 
 		public GetMemberTest()
 		{
-			_db = new TestDb().db;
+			_db = new TestDb().Db;
 			_member = new GetMembers(_db);
 		}
 

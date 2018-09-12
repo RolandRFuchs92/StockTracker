@@ -23,7 +23,7 @@ namespace StockTracker.Repository.Test.StockTracker.Shopping
 
 	    public CreateShoppingListTest()
 	    {
-			_db = new TestDb().db;
+			_db = new TestDb().Db;
 			_map = AutoMapperConfig.Get();
 		    var client = Client();
 			_createShoppingList = new CreateShoppingList(_db, client);
