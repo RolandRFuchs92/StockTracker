@@ -87,7 +87,7 @@ namespace StockTracker.Repository.Stock
 					join stockPar in _db.StockPars
 						on stockItem.StockItemId equals stockPar.StockItemId into stocks
 					from stockLevel in _db.StockLevels.DefaultIfEmpty() 
-						where  stockItem.StockItemId == stockLevel.StockItemId
+						where stocks.Select(i => i.StockParId).Contains(stockLevel.StockParId)
 							   && stockLevel != null
 					select new StockItem
 					{
@@ -120,12 +120,12 @@ namespace StockTracker.Repository.Stock
 				   join stockPar in _db.StockPars
 					   on stockItem.StockItemId equals stockPar.StockItemId
 				   join stockLevel in _db.StockLevels
-					   on stockItem.StockItemId equals stockLevel.StockItemId
+					   on stockPar.StockParId equals stockLevel.StockParId
 				   where stockPar.ClientId == clientId
 				   select new StockDTO
 				   {
 					   StockItemId = stockItem.StockItemId,
-					   ClientId = stockLevel.ClientId,
+					   ClientId = stockPar.ClientId,
 					   IsActive = stockPar.IsActive,
 					   MemberId = stockLevel.MemberId,
 					   MinStock = stockPar.MinStock,

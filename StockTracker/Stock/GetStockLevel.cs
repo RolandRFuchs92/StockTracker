@@ -20,24 +20,24 @@ namespace StockTracker.Repository.Stock
 
 	    public IStockLevel Get(int stockItemId, int clientId)
 	    {
-		    return _db.StockLevels.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
+		    return _db.StockLevels.FirstOrDefault(i => i.StockPar.StockItemId == stockItemId && i.StockPar.ClientId == clientId);
 	    }
 
 	    public List<IStockLevel> Get(List<int> stockItemIds, int clientId)
 	    {
-		    return _db.StockLevels.Where(i => stockItemIds.Contains(i.StockItemId) && i.ClientId == clientId).ToList<IStockLevel>();
+		    return _db.StockLevels.Where(i => stockItemIds.Contains(i.StockPar.StockItemId) && i.StockPar.ClientId == clientId).ToList<IStockLevel>();
 
 	    }
 
 	    public List<IStockLevel> GetByCategoryId(int categoryId, int clientId)
 	    {
-		    return _db.StockLevels.Where(i => i.StockItem.StockCategoryId == categoryId && i.ClientId == clientId)
+		    return _db.StockLevels.Where(i => i.StockPar.StockItem.StockCategoryId == categoryId && i.StockPar.ClientId == clientId)
 			    .ToList<IStockLevel>();
 	    }
 
 	    public List<IStockLevel> GetByCategoryId(List<int> categoryIds, int clientId)
 	    {
-		    return _db.StockLevels.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId)
+		    return _db.StockLevels.Where(i => categoryIds.Contains(i.StockPar.StockItem.StockCategoryId) && i.StockPar.ClientId == clientId)
 			    .ToList<IStockLevel>();
 	    }
     }

@@ -19,24 +19,22 @@ namespace StockTracker.Seed.Stock
 		    _memberMaxCount = memberCount;
 	    }
 
-	    public List<StockLevel> GetStockLevels(List<StockItem> stocks)
+	    public List<StockLevel> GetStockLevels(List<StockPar> stockPars)
 	    {
-		    return GenerateStockLevels(stocks);
+		    return GenerateStockLevels(stockPars);
 	    }
 
-	    private List<StockLevel> GenerateStockLevels(List<StockItem> stocks)
+	    private List<StockLevel> GenerateStockLevels(List<StockPar> stockPars)
 	    {
 		    var stockLevels = new List<StockLevel>();
-		    foreach (var stock in stocks)
+		    foreach (var stock in stockPars)
 		    {
 			    stockLevels.Add(new StockLevel
 			    {
 					DateChecked = DateTime.Now,
-					MemberId = _rng.Next(1,_memberMaxCount),
 					Quantity = _rng.Next(1,10),
-					StockItemId = stock.StockItemId,
-					ClientId = _rng.Next(1,5),
-					IsActive = true
+					IsActive = true,
+					StockParId = stock.StockParId
 			    });
 		    }
 			stockLevels.AddRange(GenerateGenericStocks());
@@ -47,10 +45,10 @@ namespace StockTracker.Seed.Stock
 	    {
 		    return new List<StockLevel>
 		    {
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100, StockItemId = 2, IsActive = true},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 100, StockItemId = 3, IsActive = true},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1, StockItemId = 4, IsActive = true},
-			    new StockLevel {ClientId = 1, DateChecked = DateTime.Now, MemberId = 1, Quantity = 1, StockItemId = 1, IsActive = true}
+			    new StockLevel { IsActive = true, DateChecked =  DateTime.Now, Quantity = 100, StockParId = 1 },
+			    new StockLevel { IsActive = true, DateChecked =  DateTime.Now, Quantity = 100, StockParId = 1 },
+			    new StockLevel { IsActive = true, DateChecked =  DateTime.Now, Quantity = 100, StockParId = 1 },
+			    new StockLevel { IsActive = true, DateChecked =  DateTime.Now, Quantity = 100, StockParId = 1 }
 			};
 	    }
     }

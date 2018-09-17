@@ -3,6 +3,7 @@ using System.Linq;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Shopping;
 using StockTracker.Model.Shopping;
+using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.DTO;
 using StockTracker.Repository.Interface.BusinessLogic.Clients;
 using StockTracker.Repository.Interface.BusinessLogic.Shopping;
@@ -112,15 +113,15 @@ namespace StockTracker.Repository.ShoppingListLogic
 					join stockPar in _db.StockPars
 						on stockItem.StockItemId equals stockPar.StockItemId
 					join stockLevel in _db.StockLevels
-						on stockItem.StockItemId equals stockLevel.StockItemId
+						on stockPar.StockParId equals stockLevel.StockParId 
 					where stockLevel.DateChecked > today
-						  && stockLevel.ClientId == clientId
+						  && stockPar.ClientId == clientId
 						  && stockPar.IsActive
 					select new StockDTO
 					{
 						StockItemId = stockItem.StockItemId,
 						IsActive = stockPar.IsActive,
-						ClientId = stockLevel.ClientId,
+						ClientId = stockPar.ClientId,
 						MemberId = stockLevel.MemberId,
 						MinStock = stockPar.MinStock,
 						MaxStock = stockPar.MaxStock,

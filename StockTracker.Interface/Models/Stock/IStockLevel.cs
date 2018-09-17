@@ -8,6 +8,7 @@ namespace StockTracker.Interface.Models.Stock
 		[Key]
         int StockLevelId { get; set; }
 		int StockParId { get; set; }
+		int MemberId { get; set; }
 		int Quantity { get; set; }
 		bool IsActive { get; set; }
 		DateTime DateChecked { get; set; }

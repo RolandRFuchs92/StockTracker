@@ -13,11 +13,14 @@ namespace StockTracker.Model.Stock
 		[Key]
 	    public int StockLevelId { get; set; }
 	    public int StockParId { get; set; }
+	    public int MemberId { get; set; }
 	    public int Quantity { get; set; }
 	    public DateTime DateChecked { get; set; }
 	    public bool IsActive { get; set; }
 
 		[ForeignKey("StockParId")]
-		public List<int> StockPars { get; set; }
+		public StockPar StockPar { get; set; }
+		[ForeignKey("MemberId")]
+		public Member Member { get; set; }
     }
 }
