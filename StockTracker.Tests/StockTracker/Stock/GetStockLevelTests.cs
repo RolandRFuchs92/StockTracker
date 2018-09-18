@@ -37,7 +37,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IStockLevel));
-			Assert.IsTrue(result.ClientId == clientId && result.StockItemId == stockItemid);
+			Assert.IsTrue(result.StockPar.ClientId == clientId && result.StockPar.StockItemId == stockItemid);
 		}
 
 		[TestMethod]
@@ -49,7 +49,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Act
 			var result = _stocklevel.Get(stockItemIds, clientId);
-			var compareListLength = _db.StockLevels.Count(i => stockItemIds.Contains(i.StockItemId) && i.ClientId == clientId);
+			var compareListLength = _db.StockLevels.Count(i => stockItemIds.Contains(i.StockPar.StockItemId) && i.StockPar.ClientId == clientId);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -66,7 +66,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Act
 			var result = _stocklevel.GetByCategoryId(categoryId, clientId);
-			var length = _db.StockLevels.Count(i => i.ClientId == clientId && categoryId == i.StockItem.StockCategoryId);
+			var length = _db.StockLevels.Count(i => i.StockPar.ClientId == clientId && categoryId == i.StockPar.StockItem.StockCategoryId);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -83,7 +83,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Act
 			var result = _stocklevel.GetByCategoryId(categoryIds, clientId);
-			var length = _db.StockLevels.Count(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId);
+			var length = _db.StockLevels.Count(i => categoryIds.Contains(i.StockPar.StockItem.StockCategoryId) && i.StockPar.ClientId == clientId);
 
 			//Assert
 			Assert.IsNotNull(result);

@@ -219,11 +219,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 	    {
 		    return new StockLevel
 		    {
-				ClientId = 1,
 				DateChecked = DateTime.Now,
 				MemberId = 1,
 				Quantity = 100,
-				StockItemId = 1
+				IsActive = true,
+				StockLevelId = 1
 		    };
 	    }
 
@@ -235,10 +235,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		    stockLevels.Add(new StockLevel
 		    {
 				MemberId = 2,
-				ClientId = 2,
 				DateChecked = DateTime.Now,
 				Quantity = 5,
-				StockItemId = 2
+				IsActive = true,
+				StockLevelId = 2
 		    });
 
 		    return stockLevels;

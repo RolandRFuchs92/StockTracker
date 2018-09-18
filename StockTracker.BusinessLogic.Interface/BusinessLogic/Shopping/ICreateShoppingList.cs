@@ -1,11 +1,12 @@
 ﻿using StockTracker.Interface.Models.Shopping;
+using StockTracker.Model.Shopping;
 
 namespace StockTracker.Repository.Interface.BusinessLogic.Shopping
 {
     public interface ICreateShoppingList
     {
-	    IShoppingList HighPriorityList(int clientId);
-	    IShoppingList LowPriorityList(int clientId);
-	    IShoppingList OutStandingShoppingList(int clientId);
+	    ShoppingList HighPriorityList(int clientId);
+	    ShoppingList LowPriorityList(int clientId);
+	    ShoppingList OutStandingShoppingList(int clientId);
     }
 }

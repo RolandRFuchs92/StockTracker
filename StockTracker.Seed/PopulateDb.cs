@@ -26,6 +26,7 @@ namespace StockTracker.Seed
 		private List<Model.User.Member> _members;
 		private List<ShoppingList> _shoppingList;
 		private List<Model.Clients.Client> _clients;
+		private List<StockPar> _stockPars;
 
 		public PopulateDb(StockTrackerContext db)
 		{
@@ -73,15 +74,15 @@ namespace StockTracker.Seed
 
 		private void PopulateStockPars()
 		{
-			var stockpars = new GenerateStockPar().GetStockPars(_stockItems);
+			_stockPars = new GenerateStockPar().GetStockPars(_stockItems);
 
-			_db.StockPars.AddRange(stockpars);
+			_db.StockPars.AddRange(_stockPars);
 			_db.SaveChanges();
 		}
 
 		private void PopulateStock()
 		{
-			var stockLevels = new GenerateStockLevel(_members.Count).GetStockLevels(_stockItems);
+			var stockLevels = new GenerateStockLevel(_members.Count).GetStockLevels(_stockPars);
 
 			_db.AddRange(stockLevels);
 			_db.SaveChanges();
