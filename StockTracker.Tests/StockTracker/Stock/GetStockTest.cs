@@ -86,14 +86,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			//Arrange
 			var clientId = 1;
-			var stockLevels = _db.StockLevels.Where(i => i.ClientId == clientId).ToList();
+			var stockLevels = _db.StockLevels.Where(i => i.StockPar.ClientId == clientId).ToList();
 			foreach (var stock in stockLevels)
 			{
 				stock.Quantity = 100;
 			}
 
 			_db.SaveChanges();
-			var newLevel = _db.StockLevels.Where(i => i.ClientId == clientId).ToList();
+			var newLevel = _db.StockLevels.Where(i => i.StockPar.ClientId == clientId).ToList();
 
 			//Act
 			var result = _getStock.GetStockAbovePar(clientId);
@@ -123,7 +123,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		private bool DoesStockMeetRequirement(List<StockItem> stockItems, Func<bool, int, int, bool> check, bool isAbove)
 		{
 			var stockItemList = stockItems.Select(stockItem => stockItem.StockItemId);
-			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
+			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockPar.StockItemId)).ToList();
 			var stockPars = _db.StockPars.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
 
 			foreach (var stockItem in stockItems)
@@ -136,7 +136,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 				else 
 					goalPar = (int)stockPars.FirstOrDefault(i => i.StockItemId == stockId).MaxStock;
 
-				var currentPar = stockItemParLevels.FirstOrDefault(i => i.StockItemId == stockId).Quantity;
+				var currentPar = stockItemParLevels.FirstOrDefault(i => i.StockPar.StockItemId == stockId).Quantity;
 
 				if (!check(isToday, currentPar, goalPar))
 					return false;
@@ -154,7 +154,5 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			return currentPar >= maxPar && isToday;
 		}
-
-
 	}
 }

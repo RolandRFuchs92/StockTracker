@@ -40,8 +40,8 @@ namespace StockTracker.Seed
 			PopulateClients();
 			PopulateMembers();
 			PopulateClientSettings();
-			PopulateStock();
 			PopulateStockPars();
+			PopulateStock();
 			PopulateShoppingLists();
 			PopulateShoppingListItems();
 			return _db;

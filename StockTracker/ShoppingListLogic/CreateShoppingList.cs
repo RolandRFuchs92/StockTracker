@@ -22,7 +22,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 		}
 
 
-		public IShoppingList HighPriorityList(int memberId)
+		public ShoppingList HighPriorityList(int memberId)
 		{
 			var shoppingList = GetShoppingList(memberId);
 
@@ -52,7 +52,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 
 		}
 
-		public IShoppingList LowPriorityList(int memberId)
+		public ShoppingList LowPriorityList(int memberId)
 		{
 			try
 			{
@@ -79,7 +79,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 			}
 		}
 
-		public IShoppingList OutStandingShoppingList(int clientId)
+		public ShoppingList OutStandingShoppingList(int clientId)
 		{
 			throw new NotImplementedException();
 		}
