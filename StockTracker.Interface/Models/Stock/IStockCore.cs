@@ -6,10 +6,11 @@ namespace StockTracker.Interface.Models.Stock
     public interface IStockItem
     {
 		[Key]
-	    int StockItemId { get; set; }
+	    int StockCoreId { get; set; }
 		int StockCategoryId { get; set; }
+		int StockSupplierDetailId { get; set; }
+		int StockTypeId { get; set; }
 	    string StockItemName { get; set; }
-		float StockItemPrice { get; set; }
-		DateTime DateCreated { get; set; }
+		DateTime CreatedOn { get; set; }
     }
 }

@@ -13,13 +13,18 @@ namespace StockTracker.Model.Stock
     public class StockItem : IStockItem
     {
 		[Key]
-	    public int StockItemId { get; set; }
+	    public int StockCoreId { get; set; }
 	    public int StockCategoryId { get; set; }
+	    public int StockSupplierDetailId { get; set; }
+	    public int StockTypeId { get; set; }
 	    public string StockItemName { get; set; }
-	    public float StockItemPrice { get; set; }
-	    public DateTime DateCreated { get; set; }
+	    public DateTime CreatedOn { get; set; }
 
 		[ForeignKey("StockCategoryId")]
 		public StockCategory StockCategory { get; set; }
+		//[ForeignKey("StockSupplierDetailId")]
+		//public StockSupplierDetail StockSupplierDetail { get; set; }
+	    [ForeignKey("StockTypeId")]
+	    public virtual StockType StockType { get; set; }
     }
 }

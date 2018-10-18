@@ -13,10 +13,6 @@ namespace StockTracker.Model.Stock
 	{
 		[Key]
 		public int StockCategoryId { get; set; }
-		public int StockTypeId { get; set; }
 		public string StockCategoryName { get; set; }
-
-		[ForeignKey("StockTypeId")]
-		public virtual StockType StockType { get; set; }
 	}
 }
