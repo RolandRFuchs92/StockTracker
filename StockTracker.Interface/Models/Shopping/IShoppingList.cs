@@ -8,6 +8,6 @@ namespace StockTracker.Interface.Models.Shopping
         int ShoppingListId { get; set; }
 		int MemberId { get; set; }
 		bool HasNotified { get; set; }
-		DateTime DateCreated { get; set; }
+		DateTime CreatedOn { get; set; }
     }
 }
