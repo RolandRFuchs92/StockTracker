@@ -15,10 +15,11 @@ namespace StockTracker.Model.Shopping
     {
 		[Key]
 	    public int ShoppingListItemId { get; set; }
-	    public int StockItemId { get; set; }
-	    public int Quantity { get; set; }
-	    public bool IsCollected { get; set; }
 	    public int ShoppingListId { get; set; }
+	    public int StockCoreId { get; set; }
+		public int Quantity { get; set; }
+		public bool IsCollected { get; set; }
+	    public DateTime CreatedOn { get; set; }
 
 	    [ForeignKey("StockItemId")]
 		public virtual StockItem StockItem { get; set; }
