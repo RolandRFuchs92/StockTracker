@@ -13,7 +13,9 @@ namespace StockTracker.Seed.Stock
 	    {
 			return new List<StockCategory>
 			{
-				
+				new StockCategory { 1, "Food", null, 1 },
+				new StockCategory { 1, "Drink", null, 1 },
+				new StockCategory { 1, "Desert", null, 1 }
 			};
 	    }
     }

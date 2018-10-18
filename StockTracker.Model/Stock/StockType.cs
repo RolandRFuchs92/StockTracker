@@ -5,7 +5,8 @@ namespace StockTracker.Model.Stock
 {
 	public class StockType : IStockType
 	{
-		[Key] public int StockTypeId { get; set; }
+		[Key]
+		public int StockTypeId { get; set; }
 		public string StockTypeName { get; set; }
 	}
 }

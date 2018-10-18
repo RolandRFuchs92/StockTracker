@@ -11,7 +11,8 @@ namespace StockTracker.Model.Stock
 {
 	public class StockCategory : IStockCategory
 	{
-		[Key] public int StockCategoryId { get; set; }
+		[Key]
+		public int StockCategoryId { get; set; }
 		public int StockTypeId { get; set; }
 		public string StockCategoryName { get; set; }
 
