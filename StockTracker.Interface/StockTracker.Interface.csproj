@@ -8,4 +8,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ClientStock\" />
+    <Folder Include="Models\Comm\" />
+    <Folder Include="Models\Member\" />
+    <Folder Include="Models\Supplier\" />
+    <Folder Include="Models\Unit\" />
+  </ItemGroup>
+
 </Project>

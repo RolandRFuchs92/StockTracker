@@ -8,4 +8,12 @@
     <ProjectReference Include="..\StockTracker.Interface\StockTracker.Interface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientStock\" />
+    <Folder Include="Comm\" />
+    <Folder Include="Member\" />
+    <Folder Include="Supplier\" />
+    <Folder Include="Unit\" />
+  </ItemGroup>
+
 </Project>
