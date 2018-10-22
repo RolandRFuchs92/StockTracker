@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Comm\" />
-    <Folder Include="Models\Settings\" />
     <Folder Include="Models\User\" />
   </ItemGroup>
 
