@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StockTracker.Interface.Models.Supplier
 {
-    public class SupplierType
-    {
-	    public int SupplierTypeId { get; set; }
-	    public string SupplierTypeName { get; set; }
-    }
+	public interface ISupplierType
+	{
+		int SupplierTypeId { get; set; }
+		string SupplierTypeName { get; set; }
+	}
 }
