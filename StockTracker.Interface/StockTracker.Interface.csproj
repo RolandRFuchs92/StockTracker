@@ -11,7 +11,7 @@
   <ItemGroup>
     <Folder Include="Models\ClientStock\" />
     <Folder Include="Models\Comm\" />
-    <Folder Include="Models\Member\" />
+    <Folder Include="Models\User\" />
   </ItemGroup>
 
 </Project>
