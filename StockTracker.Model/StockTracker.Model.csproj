@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Comm\" />
     <Folder Include="Member\" />
     <Folder Include="Settings\" />
     <Folder Include="Supplier\" />
