@@ -9,6 +9,6 @@ namespace StockTracker.Interface.Models.Comm
     public interface IComnSendStatusType
     {
 	    int CommSendStatusTypeId { get; set; }
-		string COmmSendStatusName { get; set; }
+		string CommSendStatusName { get; set; }
     }
 }

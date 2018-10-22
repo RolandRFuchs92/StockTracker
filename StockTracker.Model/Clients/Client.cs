@@ -14,7 +14,7 @@ namespace StockTracker.Model.Clients
 		[Key]
 	    public int ClientId { get; set; }
 	    public string ClientName { get; set; }
-	    public string email { get; set; }
+	    public string Email { get; set; }
 	    public string ContactNumber { get; set; }
 	    public string Address { get; set; }
 	    public DateTime LastCheckup { get; set; }

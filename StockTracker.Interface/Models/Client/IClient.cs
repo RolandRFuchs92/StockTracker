@@ -6,7 +6,7 @@ namespace StockTracker.Interface.Models.Client
     {
 		int ClientId { get; set; }
 		string ClientName { get; set; }
-		string email { get; set; }
+		string Email { get; set; }
 		string ContactNumber { get; set; }
 		string Address { get; set; }
 		DateTime LastCheckup { get; set; }

@@ -9,7 +9,7 @@ namespace StockTracker.Interface.Models.Comm
     public interface ICommCore
     {
         int CommTypeId { get; set; }
-		int CommSendStatusTypeOd { get; set;}
+		int CommSendStatusTypeId { get; set;}
 		int CommDetailId { get; set; }
 		DateTime ChangedOn { get; set; }
 		DateTime CreatedOn { get; set; }
