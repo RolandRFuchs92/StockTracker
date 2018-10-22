@@ -1,6 +1,5 @@
 ﻿using System;
 using StockTracker.Interface.Models.Client;
-using StockTracker.Interface.Models.Settings;
 
 namespace StockTracker.Repository.Interface.BusinessLogic.Settings
 {

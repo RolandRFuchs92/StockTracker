@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using StockTracker.Interface.Models.Member;
 using StockTracker.Interface.Models.User;
 
 namespace StockTracker.Model.User

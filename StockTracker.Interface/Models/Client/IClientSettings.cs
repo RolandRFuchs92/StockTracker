@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StockTracker.Interface.Models.Settings
+namespace StockTracker.Interface.Models.Client
 {
     public interface IClientSettings
     {

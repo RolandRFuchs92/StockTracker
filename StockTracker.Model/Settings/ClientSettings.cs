@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Models.Settings;
+using StockTracker.Interface.Models.Client;
 using StockTracker.Model.User;
 
 namespace StockTracker.Model.Settings

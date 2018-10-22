@@ -1,4 +1,5 @@
 ﻿using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Person;
 using StockTracker.Interface.Models.User;
 
 namespace StockTracker.Repository.Interface.BusinessLogic.Clients
