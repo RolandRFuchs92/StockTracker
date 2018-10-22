@@ -8,7 +8,7 @@ namespace StockTracker.Interface.Models.StockSupplier
 {
     public interface IStockStupplierDetail
     {
-		int StockSupplierDetail { get; set; }
+		int StockSupplierDetailId { get; set; }
 		int SupplierId { get; set; }
 		int MemberId { get; set; }
 		float Price { get; set; }

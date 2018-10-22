@@ -9,10 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Member\" />
-    <Folder Include="Settings\" />
-    <Folder Include="Supplier\" />
-    <Folder Include="Unit\" />
+    <Folder Include="User\" />
   </ItemGroup>
 
 </Project>

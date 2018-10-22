@@ -8,7 +8,7 @@ namespace StockTracker.Interface.Models.Unit
 {
 	public interface IUnitType
 	{
-		int UnitType { get; set; }
+		int UnitTypeId { get; set; }
 		string Name { get; set; }
 		string Symbol { get; set; }
 	}
