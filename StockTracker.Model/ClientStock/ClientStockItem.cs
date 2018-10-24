@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.ClientStock;
+using StockTracker.Model.Clients;
 using StockTracker.Model.Stock;
 
 namespace StockTracker.Model.ClientStock
@@ -21,6 +22,8 @@ namespace StockTracker.Model.ClientStock
 	    public bool IsActive { get; set; }
 
 		[ForeignKey("StockCoreId")]
-		public StockCore StockCore { get; set; }
+		public virtual StockCore StockCore { get; set; }
+		[ForeignKey("ClientId")]
+		public virtual Client Client { get; set; }
     }
 }

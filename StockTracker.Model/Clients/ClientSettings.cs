@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StockTracker.Interface.Models.Client;
-using StockTracker.Model.User;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.Model.Settings
 {
@@ -22,6 +18,6 @@ namespace StockTracker.Model.Settings
 	    public int TotalUsers { get; set; }
 
 	    [ForeignKey("ClientId")]
-		public virtual Clients.Client Client { get; set; }
+		public virtual Client Client { get; set; }
     }
 }

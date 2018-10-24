@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using StockTracker.Interface.Models.User;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.Model.User
 {
@@ -19,7 +20,7 @@ namespace StockTracker.Model.User
 		public virtual Person Person { get; set; }
 
 		[ForeignKey("ClientId")]
-		public virtual Clients.Client Client { get; set; }
+		public virtual Client Client { get; set; }
 
 		[ForeignKey("MemberRoleId")]
 		public virtual MemberRole MemberRole { get; set; }

@@ -10,7 +10,7 @@ namespace StockTracker.Interface.Models.Stock
 		int StockCategoryId { get; set; }
 		int StockSupplierDetailId { get; set; }
 		int StockTypeId { get; set; }
-	    string StockItemName { get; set; }
+	    string StockCoreName { get; set; }
 		DateTime CreatedOn { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace StockTracker.Model.Stock
 	    public int StockCategoryId { get; set; }
 	    public int StockSupplierDetailId { get; set; }
 	    public int StockTypeId { get; set; }
-	    public string StockItemName { get; set; }
+	    public string StockCoreName { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
 		[ForeignKey("StockCategoryId")]
