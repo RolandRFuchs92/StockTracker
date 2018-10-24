@@ -34,7 +34,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 										where stock.MinStock > stock.Quantity
 										select new ShoppingListItem
 										{
-											StockItemId = stock.StockItemId,
+											StockCoreId = stock.StockItemId,
 											IsCollected = false,
 											ShoppingListId = shoppingListId,
 											Quantity = stock.MinStock - stock.Quantity
@@ -89,7 +89,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 			return new ShoppingList
 			{
 				MemberId = memberId,
-				DateCreated = DateTime.Now,
+				CreatedOn = DateTime.Now,
 				HasNotified = false,
 			};
 		}

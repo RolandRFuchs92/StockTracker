@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using StockTracker.Context;
+using StockTracker.Interface.Models.ClientStock;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.ClientStock;
 using StockTracker.Model.Stock;
@@ -21,12 +22,12 @@ namespace StockTracker.Repository.Stock
 			this._map = map;
 		}
 
-		public bool AddNew(IStockItem stockItem)
+		public bool AddNew(IStockCore stockCore)
 		{
 			try
 			{
-				var stock = _map.Map<StockItem>(stockItem);
-				_db.StockItems.Add(stock);
+				var stock = _map.Map<StockCore>(stockCore);
+				_db.StockCores.Add(stock);
 				_db.SaveChanges();
 				return true;
 			}
@@ -36,7 +37,7 @@ namespace StockTracker.Repository.Stock
 			}
 		}
 
-		public int AddNew(List<IStockItem> stockItems)
+		public int AddNew(List<IStockCore> stockItems)
 		{
 			var fails = 0;
 
@@ -47,12 +48,22 @@ namespace StockTracker.Repository.Stock
 			return fails;
 		}
 
-		public bool Add(IStockLevel stockLevel)
+		public bool Add(IStockCore stockItemId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int Add(List<IStockCore> stockLevels)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Add(IClientStockLevel stockLevel)
 		{
 			try
 			{
-				var stock = _map.Map<StockLevel>(stockLevel);
-				_db.StockLevels.Add(stock);
+				var stock = _map.Map<IClientStockLevel>(stockLevel);
+				_db.ClientStockLevel.Add((ClientStockLevel)stock);
 				_db.SaveChanges();
 				return true;
 			}
@@ -62,7 +73,7 @@ namespace StockTracker.Repository.Stock
 			}
 		}
 
-		public int Add(List<IStockLevel> stockLevels)
+		public int Add(List<IClientStockLevel> stockLevels)
 		{
 			var fails = 0;
 
@@ -79,14 +90,14 @@ namespace StockTracker.Repository.Stock
 			{
 				var categorys = _db.
 					ClientStockItem.
-					Where(i => i.StockItem.StockCategoryId == categoryId)
-					.Select(i => new StockPar
+					Where(i => i.StockCore.StockCategoryId == categoryId)
+					.Select(i => new ClientStockItem
 					{
 						ClientId = clientId,
-						DateSet = DateTime.Now,
-						MaxStock =  i.MaxStock,
-						MinStock = i.MinStock,
-						StockItemId = i.StockItemId
+						CreatedOn = DateTime.Now,
+						StockMax =  i.StockMax,
+						StockMin = i.StockMin,
+						StockCoreId = i.StockCoreId
 					}).ToList();
 
 				_db.ClientStockItem.AddRange(categorys);
@@ -106,14 +117,14 @@ namespace StockTracker.Repository.Stock
 			{
 				var categorys = _db
 					.ClientStockItem
-					.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId))
-					.Select(i => new StockPar
+					.Where(i => categoryIds.Contains(i.StockCore.StockCategoryId))
+					.Select(i => new ClientStockItem()
 					{
 						ClientId = clientId,
-						DateSet = DateTime.Now,
-						MaxStock = i.MaxStock,
-						MinStock = i.MinStock,
-						StockItemId = i.StockItemId
+						CreatedOn = DateTime.Now,
+						StockMax = i.StockMax,
+						StockMin = i.StockMin,
+						StockCoreId = i.StockCoreId
 					}).ToList();
 
 				_db.ClientStockItem.AddRange(categorys);
@@ -138,17 +149,17 @@ namespace StockTracker.Repository.Stock
 									.ClientStockItem
 									.Where(i => i.ClientId == fromClientId 
 									        && !currentStocks
-											.Select(stocks => stocks.StockItemId)
-											.Contains(i.StockItemId)
+											.Select(stocks => stocks.StockCoreId)
+											.Contains(i.StockCoreId)
 									).ToList();
 
-				fromClientStocks = fromClientStocks.Select(i => new StockPar
+				fromClientStocks = fromClientStocks.Select(i => new ClientStockItem
 				{
 					ClientId = toClientId,
-					DateSet = DateTime.Now,
-					MaxStock = i.MaxStock,
-					StockItemId = i.StockItemId,
-					MinStock = i.MinStock
+					CreatedOn = DateTime.Now,
+					StockMax = i.StockMax,
+					StockMin = i.StockMin,
+					StockCoreId = i.StockCoreId
 				}).ToList();
 
 				_db.ClientStockItem.AddRange(fromClientStocks);
