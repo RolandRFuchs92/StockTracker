@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Extensions;
+using StockTracker.Model.ClientStock;
 
 namespace StockTracker.Seed.Stock
 {
@@ -18,22 +19,22 @@ namespace StockTracker.Seed.Stock
 			_rng = new Random();
 		}
 
-		public List<StockPar> GetStockPars(List<StockItem> stocks)
+		public List<ClientStockItem> GetClientStockItem(List<StockCore> stocks)
 		{
-			return GenerateStockPars(stocks);
+			return GenerateClientStockItem(stocks);
 		}
 
-		List<StockPar> GenerateStockPars(List<StockItem> stocks)
+		List<ClientStockItem> GenerateClientStockItem(List<StockCore> stocks)
 		{
-			var pars = new List<StockPar>();
+			var pars = new List<ClientStockItem>();
 
 			foreach(var item in stocks)
 			{
-				pars.Add(new StockPar {
-					DateSet = DateTime.Now.AddDays(_rng.Next(0, 10) * -1),
-					MaxStock = _rng.Next(6, 10),
-					MinStock = _rng.Next(4, 6),
-					StockItemId = item.StockItemId,
+				pars.Add(new ClientStockItem {
+					CreatedOn = DateTime.Now.AddDays(_rng.Next(0, 10) * -1),
+					StockMax = _rng.Next(6, 10),
+					StockMin = _rng.Next(4, 6),
+					StockCoreId = item.StockCoreId,
 					IsActive = true,
 					ClientId = _rng.Next(1,3)
 				});

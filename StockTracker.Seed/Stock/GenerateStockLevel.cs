@@ -19,15 +19,15 @@ namespace StockTracker.Seed.Stock
 		    _memberMaxCount = memberCount;
 	    }
 
-	    public List<StockLevel> GetStockLevels(List<StockPar> stockPars)
+	    public List<StockLevel> GetStockLevels(List<StockPar> ClientStockItem)
 	    {
-		    return GenerateStockLevels(stockPars);
+		    return GenerateStockLevels(ClientStockItem);
 	    }
 
-	    private List<StockLevel> GenerateStockLevels(List<StockPar> stockPars)
+	    private List<StockLevel> GenerateStockLevels(List<StockPar> ClientStockItem)
 	    {
 		    var stockLevels = new List<StockLevel>();
-		    foreach (var stock in stockPars)
+		    foreach (var stock in ClientStockItem)
 		    {
 			    stockLevels.Add(new StockLevel
 			    {

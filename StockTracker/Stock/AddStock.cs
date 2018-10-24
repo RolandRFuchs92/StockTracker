@@ -166,18 +166,18 @@ namespace StockTracker.Repository.Stock
 		{
 			try
 			{
-				var stockPars = _db.StockPars.Where(i => i.ClientId == fromClientId && i.IsActive).ToList();
-				var currentStocks = _db.StockPars.Where(i => toClientIds.Contains(i.ClientId));
+				var stockPars = _db.ClientStockItem.Where(i => i.ClientId == fromClientId && i.IsActive).ToList();
+				var currentStocks = _db.ClientStockItem.Where(i => toClientIds.Contains(i.ClientId));
 				var addedStocks = 0;
 
 				foreach (var stockPar in stockPars)
 				{
-					var clientsWithStock = currentStocks.Where(i => i.StockItemId == stockPar.StockItemId).Select(i => i.ClientId).ToList();
+					var clientsWithStock = currentStocks.Where(i => i.StockCoreId == stockPar.StockCoreId).Select(i => i.ClientId).ToList();
 					var clientsToGetStock = toClientIds.Where(i => !clientsWithStock.Contains(i)).ToList();
 
 					foreach (var clientId in clientsToGetStock)
 					{
-						_db.StockPars.Add(BuildStockPar(stockPar, clientId));
+						_db.ClientStockItem.Add(BuildStockPar(stockPar, clientId));
 						addedStocks++;
 					}
 				}
@@ -194,7 +194,7 @@ namespace StockTracker.Repository.Stock
 		{
 			try
 			{
-				var clientStock = _db.StockPars.Where(i => i.ClientId == clientId && !i.IsActive).ToList();
+				var clientStock = _db.ClientStockItem.Where(i => i.ClientId == clientId && !i.IsActive).ToList();
 
 				foreach (var stockPar in clientStock)
 				{
