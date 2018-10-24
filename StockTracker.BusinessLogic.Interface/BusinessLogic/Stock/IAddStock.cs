@@ -5,10 +5,10 @@ namespace StockTracker.Repository.Interface.BusinessLogic.Stock
 {
     public interface IAddStock
     {
-	    bool AddNew(IStockItem stockItem);
-	    int AddNew(List<IStockItem> stockItems);
-	    bool Add(IStockLevel stockItemId);
-	    int Add(List<IStockLevel> stockLevels);
+	    bool AddNew(IStockCore stockItem);
+	    int AddNew(List<IStockCore> stockItems);
+	    bool Add(IStockCore stockItemId);
+	    int Add(List<IStockCore> stockLevels);
 	    bool AddCategory(int categoryId, int clientId);
 	    bool AddCategory(List<int> categoryIds, int clientId);
 	    bool CopyFromClient(int fromClientId, int toClientId);

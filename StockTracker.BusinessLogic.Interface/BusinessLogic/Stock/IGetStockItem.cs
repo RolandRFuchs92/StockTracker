@@ -5,11 +5,11 @@ namespace StockTracker.Repository.Interface.BusinessLogic.Stock
 {
     public interface IGetStockItem
     {
-	    StockItem GetStockByStockItem(int stockItemId, int clientId);
-	    List<StockItem> GetStockCheckedToday(int clientId);
-	    List<StockItem> GetStockNotCheckedToday(int clientId);
-	    List<StockItem> GetStockBelowPar(int clientId);
-	    List<StockItem> GetStockAbovePar(int clientId);
-	    List<StockItem> GetAcceptableStock(int clientId);
+	    StockCore GetStockByStockCore(int stockItemId, int clientId);
+	    List<StockCore> GetStockCheckedToday(int clientId);
+	    List<StockCore> GetStockNotCheckedToday(int clientId);
+	    List<StockCore> GetStockBelowPar(int clientId);
+	    List<StockCore> GetStockAbovePar(int clientId);
+	    List<StockCore> GetAcceptableStock(int clientId);
     }
 }

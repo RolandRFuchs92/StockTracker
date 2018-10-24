@@ -18,7 +18,7 @@ namespace StockTracker.Model.ClientStock
 	    public int ClientId { get; set; }
 	    public int StockMax { get; set; }
 	    public int StockMin { get; set; }
-	    public int CreatedOn { get; set; }
+	    public DateTime CreatedOn { get; set; }
 	    public bool IsActive { get; set; }
 
 		[ForeignKey("StockCoreId")]

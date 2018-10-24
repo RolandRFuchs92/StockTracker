@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.ClientStock;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.BusinessLogic.Stock;
 
@@ -209,16 +210,16 @@ namespace StockTracker.Repository.Stock
 			}
 		}
 
-		private StockPar BuildStockPar(StockPar stockItem, int toClientId)
+		private ClientStockItem BuildStockPar(ClientStockItem stockItem, int toClientId)
 		{
-			return new StockPar
+			return new ClientStockItem
 			{
-				StockItemId = stockItem.StockItemId,
+				StockCoreId = stockItem.StockCoreId,
 				ClientId = toClientId,
 				IsActive = true,
-				DateSet = DateTime.Now,
-				MaxStock = stockItem.MaxStock,
-				MinStock = stockItem.MinStock
+				CreatedOn = DateTime.Now,
+				StockMax = stockItem.StockMax,
+				StockMin = stockItem.StockMin
 			};
 		}
 	}

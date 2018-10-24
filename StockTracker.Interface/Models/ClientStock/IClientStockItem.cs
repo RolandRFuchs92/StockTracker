@@ -13,7 +13,7 @@ namespace StockTracker.Interface.Models.ClientStock
 		int ClientId { get; set; }
 		int StockMax { get; set; }
 		int StockMin { get; set; }
-		int CreatedOn { get; set; }
+		DateTime CreatedOn { get; set; }
 		bool IsActive { get; set; }
     }
 }

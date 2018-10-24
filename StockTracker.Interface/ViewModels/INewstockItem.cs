@@ -9,7 +9,7 @@ namespace StockTracker.Interface.ViewModels
 {
     public interface INewstockItem
     {
-	    IStockItem StockItem { get; set; }
+	    IStockCore StockCore { get; set; }
 		int MinStock { get; set; }
     }
 }
