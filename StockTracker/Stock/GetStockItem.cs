@@ -84,7 +84,7 @@ namespace StockTracker.Repository.Stock
 		public List<StockItem> GetStockNotCheckedToday(int clientId)
 		{
 			return (from stockItem in _db.StockItems
-					join stockPar in _db.StockPars
+					join stockPar in _db.ClientStockItem
 						on stockItem.StockItemId equals stockPar.StockItemId into stocks
 					from stockLevel in _db.StockLevels.DefaultIfEmpty() 
 						where stocks.Select(i => i.StockParId).Contains(stockLevel.StockParId)
@@ -117,7 +117,7 @@ namespace StockTracker.Repository.Stock
 		private IQueryable<StockDTO> StockQuery(int clientId)
 		{
 			return from stockItem in _db.StockItems
-				   join stockPar in _db.StockPars
+				   join stockPar in _db.ClientStockItem
 					   on stockItem.StockItemId equals stockPar.StockItemId
 				   join stockLevel in _db.StockLevels
 					   on stockPar.StockParId equals stockLevel.StockParId

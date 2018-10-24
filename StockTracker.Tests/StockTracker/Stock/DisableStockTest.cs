@@ -29,11 +29,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			//Arrange
 			var stockItemId = 1;
 			var clientId = 1;
-			var originalActiveItem = _db.StockPars.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
+			var originalActiveItem = _db.ClientStockItem.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
 
 			//Act
 			var result = _disable.Disable(stockItemId, clientId);
-			var updateItem = _db.StockPars.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
+			var updateItem = _db.ClientStockItem.FirstOrDefault(i => i.StockItemId == stockItemId && i.ClientId == clientId);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -47,13 +47,13 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			//Arrange
 			var clientId = 1;
-			var listOfStockLevels= _db.StockPars.Where(i => i.ClientId == clientId).ToList();
+			var listOfStockLevels= _db.ClientStockItem.Where(i => i.ClientId == clientId).ToList();
 			var listOfStockIds = listOfStockLevels.Select(i => i.StockItemId).ToList();
 
 
 			//Act
 			var result = _disable.Disable(listOfStockIds, clientId);
-			var updateListOfStocks = _db.StockPars.Where(i => i.ClientId == clientId).ToList();
+			var updateListOfStocks = _db.ClientStockItem.Where(i => i.ClientId == clientId).ToList();
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -72,7 +72,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 		    //Act
 		    var result = _disable.DisableByCategory(categoryId, clientId);
-		    var updatedList = _db.StockPars.Where(i => i.ClientId == clientId && i.StockItem.StockCategoryId == categoryId).ToList();
+		    var updatedList = _db.ClientStockItem.Where(i => i.ClientId == clientId && i.StockItem.StockCategoryId == categoryId).ToList();
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -91,7 +91,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			//Act
 			var result = _disable.DisableByCategory(categoryIds, clientId);
 			var updatedList =
-				_db.StockPars.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId).Select(i => i.IsActive);
+				_db.ClientStockItem.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId).Select(i => i.IsActive);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -107,7 +107,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Act
 			var result = _disable.DisableAll(clientId);
-			var updatedList = _db.StockPars.Where(i => i.ClientId == clientId).ToList();
+			var updatedList = _db.ClientStockItem.Where(i => i.ClientId == clientId).ToList();
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -116,14 +116,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 
 		[TestMethod]
-		public void DisableAll_PassListOfClientIds_AllShouldHaveAllStockParsDisabled()
+		public void DisableAll_PassListOfClientIds_AllShouldHaveAllClientStockItemDisabled()
 		{
 			//Arrange
 			var clientIds = new List<int> {1, 2, 3};
 
 			//Act
 			var result = _disable.DisableAll(clientIds);
-			var updatedList = _db.StockPars.Where(i => clientIds.Contains(i.ClientId)).Select(i => i.IsActive).ToList();
+			var updatedList = _db.ClientStockItem.Where(i => clientIds.Contains(i.ClientId)).Select(i => i.IsActive).ToList();
 
 			//Assert
 			Assert.IsNotNull(result);

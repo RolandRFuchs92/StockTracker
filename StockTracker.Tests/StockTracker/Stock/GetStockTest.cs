@@ -124,7 +124,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			var stockItemList = stockItems.Select(stockItem => stockItem.StockItemId);
 			var stockItemParLevels = _db.StockLevels.Where(i => stockItemList.Contains(i.StockPar.StockItemId)).ToList();
-			var stockPars = _db.StockPars.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
+			var clientStockItem = _db.ClientStockItem.Where(i => stockItemList.Contains(i.StockItemId)).ToList();
 
 			foreach (var stockItem in stockItems)
 			{
@@ -132,9 +132,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 				var isToday = stockItem.DateCreated.ToString("d") == DateTime.Now.ToString("d");
 				var goalPar = 0;
 				if(isAbove)
-					goalPar = stockPars.FirstOrDefault(i => i.StockItemId == stockId).MinStock;
+					goalPar = ClientStockItem.FirstOrDefault(i => i.StockItemId == stockId).MinStock;
 				else 
-					goalPar = (int)stockPars.FirstOrDefault(i => i.StockItemId == stockId).MaxStock;
+					goalPar = (int)ClientStockItem.FirstOrDefault(i => i.StockItemId == stockId).MaxStock;
 
 				var currentPar = stockItemParLevels.FirstOrDefault(i => i.StockPar.StockItemId == stockId).Quantity;
 

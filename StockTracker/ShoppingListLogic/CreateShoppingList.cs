@@ -110,7 +110,7 @@ namespace StockTracker.Repository.ShoppingListLogic
 			var today = DateTime.Today;
 
 			return from stockItem in _db.StockItems
-					join stockPar in _db.StockPars
+					join stockPar in _db.ClientStockItem
 						on stockItem.StockItemId equals stockPar.StockItemId
 					join stockLevel in _db.StockLevels
 						on stockPar.StockParId equals stockLevel.StockParId 

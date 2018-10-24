@@ -78,7 +78,7 @@ namespace StockTracker.Repository.Stock
 			try
 			{
 				var categorys = _db.
-					StockPars.
+					ClientStockItem.
 					Where(i => i.StockItem.StockCategoryId == categoryId)
 					.Select(i => new StockPar
 					{
@@ -89,7 +89,7 @@ namespace StockTracker.Repository.Stock
 						StockItemId = i.StockItemId
 					}).ToList();
 
-				_db.StockPars.AddRange(categorys);
+				_db.ClientStockItem.AddRange(categorys);
 				_db.SaveChanges();
 
 				return true;
@@ -105,7 +105,7 @@ namespace StockTracker.Repository.Stock
 			try
 			{
 				var categorys = _db
-					.StockPars
+					.ClientStockItem
 					.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId))
 					.Select(i => new StockPar
 					{
@@ -116,7 +116,7 @@ namespace StockTracker.Repository.Stock
 						StockItemId = i.StockItemId
 					}).ToList();
 
-				_db.StockPars.AddRange(categorys);
+				_db.ClientStockItem.AddRange(categorys);
 				_db.SaveChanges();
 				return true;
 			}
@@ -131,11 +131,11 @@ namespace StockTracker.Repository.Stock
 			try
 			{
 				var currentStocks = _db
-									.StockPars
+									.ClientStockItem
 									.Where(i => i.ClientId == toClientId);
 
 				var fromClientStocks = _db
-									.StockPars
+									.ClientStockItem
 									.Where(i => i.ClientId == fromClientId 
 									        && !currentStocks
 											.Select(stocks => stocks.StockItemId)
@@ -151,7 +151,7 @@ namespace StockTracker.Repository.Stock
 					MinStock = i.MinStock
 				}).ToList();
 
-				_db.StockPars.AddRange(fromClientStocks);
+				_db.ClientStockItem.AddRange(fromClientStocks);
 				_db.SaveChanges();
 
 				return true;
@@ -166,11 +166,11 @@ namespace StockTracker.Repository.Stock
 		{
 			try
 			{
-				var stockPars = _db.ClientStockItem.Where(i => i.ClientId == fromClientId && i.IsActive).ToList();
+				var ClientStockItem = _db.ClientStockItem.Where(i => i.ClientId == fromClientId && i.IsActive).ToList();
 				var currentStocks = _db.ClientStockItem.Where(i => toClientIds.Contains(i.ClientId));
 				var addedStocks = 0;
 
-				foreach (var stockPar in stockPars)
+				foreach (var stockPar in ClientStockItem)
 				{
 					var clientsWithStock = currentStocks.Where(i => i.StockCoreId == stockPar.StockCoreId).Select(i => i.ClientId).ToList();
 					var clientsToGetStock = toClientIds.Where(i => !clientsWithStock.Contains(i)).ToList();

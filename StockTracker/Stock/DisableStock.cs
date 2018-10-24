@@ -21,7 +21,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var item = _db.StockPars.FirstOrDefault(i => i.ClientId == clientId && i.StockItemId == stockItemId);
+			    var item = _db.ClientStockItem.FirstOrDefault(i => i.ClientId == clientId && i.StockItemId == stockItemId);
 			    item.IsActive = false;
 			    _db.SaveChanges();
 
@@ -37,7 +37,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var stockList = _db.StockPars.Where(i => stockItemId.Contains(i.StockItemId) && i.ClientId == clientId).ToList();
+			    var stockList = _db.ClientStockItem.Where(i => stockItemId.Contains(i.StockItemId) && i.ClientId == clientId).ToList();
 				foreach (var stockPar in stockList)
 				{
 					stockPar.IsActive = false;
@@ -58,7 +58,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var stockList = _db.StockPars.Where(i => i.StockItem.StockCategoryId == categoryId && i.ClientId == clientId).ToList();
+			    var stockList = _db.ClientStockItem.Where(i => i.StockItem.StockCategoryId == categoryId && i.ClientId == clientId).ToList();
 
 				foreach (var stockItem in stockList)
 				{
@@ -79,7 +79,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var stockList = _db.StockPars.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId);
+			    var stockList = _db.ClientStockItem.Where(i => categoryIds.Contains(i.StockItem.StockCategoryId) && i.ClientId == clientId);
 
 				foreach (var stockPar in stockList)
 				{
@@ -100,7 +100,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var stockList = _db.StockPars.Where(i => i.ClientId == clientId).ToList();
+			    var stockList = _db.ClientStockItem.Where(i => i.ClientId == clientId).ToList();
 
 				foreach (var stockPar in stockList)
 				{
@@ -121,7 +121,7 @@ namespace StockTracker.Repository.Stock
 	    {
 		    try
 		    {
-			    var stockList = _db.StockPars.Where(i => clientIds.Contains(i.ClientId));
+			    var stockList = _db.ClientStockItem.Where(i => clientIds.Contains(i.ClientId));
 
 			    foreach (var stockPar in stockList)
 			    {
