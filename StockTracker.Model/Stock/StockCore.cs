@@ -11,8 +11,8 @@ using StockTracker.Model.StockSupplier;
 
 namespace StockTracker.Model.Stock
 {
-    public class StockItem : IStockItem
-    {
+    public class StockCore : IStockCore
+	{
 		[Key]
 	    public int StockCoreId { get; set; }
 	    public int StockCategoryId { get; set; }

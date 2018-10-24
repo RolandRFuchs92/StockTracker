@@ -19,6 +19,6 @@ namespace StockTracker.Model.ClientStock
 	    public bool IsActive { get; set; }
 
 		[ForeignKey("ClientStockItemId")]
-		public virtual ClientStockItem ClientStockItem { get; set; }
+		public virtual ClientStockCore ClientStockItem { get; set; }
     }
 }

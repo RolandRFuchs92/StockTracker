@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StockTracker.Interface.Models.Stock
 {
-    public interface IStockItem
-    {
+    public interface IStockCore
+	{
 		[Key]
 	    int StockCoreId { get; set; }
 		int StockCategoryId { get; set; }

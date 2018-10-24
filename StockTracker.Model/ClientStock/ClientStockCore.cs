@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.ClientStock;
+using StockTracker.Model.Stock;
 
 namespace StockTracker.Model.ClientStock
 {
@@ -16,5 +19,8 @@ namespace StockTracker.Model.ClientStock
 	    public int StockMin { get; set; }
 	    public int CreatedOn { get; set; }
 	    public bool IsActive { get; set; }
+
+		[ForeignKey("StockCoreId")]
+		public StockCore StockCore { get; set; }
     }
 }
