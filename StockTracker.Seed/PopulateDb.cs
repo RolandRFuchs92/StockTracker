@@ -22,11 +22,9 @@ namespace StockTracker.Seed
 		private readonly StockTrackerContext _db;
 		private List<MemberRole> _memberRoles;
 		private List<Person> _people;
-		private List<StockItem> _stockItems;
 		private List<Model.User.Member> _members;
 		private List<ShoppingList> _shoppingList;
 		private List<Model.Clients.Client> _clients;
-		private List<ClientStockItem> _ClientStockItem;
 
 		public PopulateDb(StockTrackerContext db)
 		{
@@ -35,15 +33,6 @@ namespace StockTracker.Seed
 
 		public StockTrackerContext Populate()
 		{
-			PopulateLeaves();
-			PopulateClientSettings();
-			PopulateClients();
-			PopulateMembers();
-			PopulateClientSettings();
-			PopulateClientStockItem();
-			PopulateStock();
-			PopulateShoppingLists();
-			PopulateShoppingListItems();
 			return _db;
 
 		}
