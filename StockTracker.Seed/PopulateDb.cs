@@ -12,8 +12,6 @@ using StockTracker.Model.User;
 using StockTracker.Seed.Client;
 using StockTracker.Seed.Member;
 using StockTracker.Seed.Settings;
-using StockTracker.Seed.ShoppingLists;
-using StockTracker.Seed.Stock;
 
 namespace StockTracker.Seed
 {
@@ -43,68 +41,5 @@ namespace StockTracker.Seed
 			_db.ClientSettings.AddRange(clienSettings);
 			_db.SaveChanges();
 		}
-
-		private void PopulateShoppingLists()
-		{
-			_shoppingList = new GenerateShoppingList().GenerateShoppingLists();
-
-			_db.ShoppingLists.AddRange(_shoppingList);
-			_db.SaveChanges();
-		}
-
-		private void PopulateShoppingListItems()
-		{
-			var gen = new GenerateShoppingItem {_maxStockItems = _shoppingList.Count};
-			var shoppingItems = gen.GetShoppingItems();
-			
-			_db.ShoppingListItems.AddRange(shoppingItems);
-			_db.SaveChanges();
-		}
-
-		private void PopulateClientStockItem()
-		{
-			_ClientStockItem = new GenerateStockPar().GetClientStockItem(_stockItems);
-
-			_db.ClientStockItem.AddRange(_ClientStockItem);
-			_db.SaveChanges();
-		}
-
-		private void PopulateStock()
-		{
-			var stockLevels = new GenerateStockLevel(_members.Count).GetStockLevels(_ClientStockItem);
-
-			_db.AddRange(stockLevels);
-			_db.SaveChanges();
-		}
-
-		private void PopulateMembers()
-	    {
-		    _members = new GenerateFakeMembers().SetupSeedMembers(_people);
-
-		    _db.AddRange(_members);
-		    _db.SaveChanges();
-	    }
-
-		private void PopulateClients()
-		{
-			_db.Clients.AddRange(new GenerateFakeClient().GenerateClientList());
-
-			_db.SaveChanges();
-		}
-
-		private void PopulateLeaves()
-	    {
-		    _memberRoles = new GenerateMemberRoles().GenerateMemberRole();
-		    _people = new GeneratePeople().GeneratePersonList(10);
-		    _stockItems = new GenerateStockItems().GetStocks();
-		    _clients = new GenerateFakeClient().GenerateClientList();
-
-			_db.MemberRoles.AddRange(_memberRoles);
-			_db.Persons.AddRange(_people);
-			_db.StockItems.AddRange(_stockItems);
-			_db.Clients.AddRange(_clients);
-
-		    _db.SaveChanges();
-	    }
 	}
 }
