@@ -18,11 +18,6 @@ namespace StockTracker.Seed
 	public class PopulateDb
 	{
 		private readonly StockTrackerContext _db;
-		private List<MemberRole> _memberRoles;
-		private List<Person> _people;
-		private List<Model.User.Member> _members;
-		private List<ShoppingList> _shoppingList;
-		private List<Model.Clients.Client> _clients;
 
 		public PopulateDb(StockTrackerContext db)
 		{
@@ -32,14 +27,7 @@ namespace StockTracker.Seed
 		public StockTrackerContext Populate()
 		{
 			return _db;
-
 		}
 
-		private void PopulateClientSettings()
-		{
-			var clienSettings = new GenerateClientSettings().Generate();
-			_db.ClientSettings.AddRange(clienSettings);
-			_db.SaveChanges();
-		}
 	}
 }
