@@ -22,4 +22,8 @@
     <ProjectReference Include="..\StockTracker\StockTracker.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StockTracker\" />
+  </ItemGroup>
+
 </Project>
