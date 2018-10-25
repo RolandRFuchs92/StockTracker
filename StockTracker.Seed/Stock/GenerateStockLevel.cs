@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.ClientStock;
 using StockTracker.Model.Stock;
 
 namespace StockTracker.Seed.Stock
@@ -19,22 +20,22 @@ namespace StockTracker.Seed.Stock
 		    _memberMaxCount = memberCount;
 	    }
 
-	    public List<StockLevel> GetStockLevels(List<StockPar> ClientStockItem)
+	    public List<ClientStockLevel> GetStockLevels(List<ClientStockItem> clientStockLevel)
 	    {
-		    return GenerateStockLevels(ClientStockItem);
+		    return GenerateStockLevels(clientStockLevel);
 	    }
 
-	    private List<StockLevel> GenerateStockLevels(List<StockPar> ClientStockItem)
+	    private List<ClientStockLevel> GenerateStockLevels(List<ClientStockItem> ClientStockItem)
 	    {
-		    var stockLevels = new List<StockLevel>();
+		    var stockLevels = new List<ClientStockLevel>();
 		    foreach (var stock in ClientStockItem)
 		    {
-			    stockLevels.Add(new StockLevel
-			    {
-					DateChecked = DateTime.Now,
+			    stockLevels.Add(new ClientStockLevel
+				{
+					CreatedOn = DateTime.Now,
 					Quantity = _rng.Next(1,10),
 					IsActive = true,
-					StockParId = stock.StockParId
+					ClientStockItemId = stock.ClientStockItemId
 			    });
 		    }
 			stockLevels.AddRange(GenerateGenericStocks());
