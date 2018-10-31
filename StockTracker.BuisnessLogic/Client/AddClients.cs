@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.Interface.Models.Client;
 
 namespace StockTracker.BuisnessLogic.Client
 {
-    public class AddClients
+    public class AddClients : IAddClient
     {
 	    private readonly IStockTrackerContext _db;
 
@@ -15,5 +17,15 @@ namespace StockTracker.BuisnessLogic.Client
 		{
 			_db = db;
 		}
-	}
+
+	    public bool AddClient(IClient newClient)
+	    {
+
+	    }
+
+	    public bool AddClient(bool isActive, string name, string email, string contactNumber)
+	    {
+		    throw new NotImplementedException();
+	    }
+    }
 }

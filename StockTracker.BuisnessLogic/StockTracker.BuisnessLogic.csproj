@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Inteface.csproj" />
     <ProjectReference Include="..\StockTracker.Context\StockTracker.Context.csproj" />
   </ItemGroup>
 
