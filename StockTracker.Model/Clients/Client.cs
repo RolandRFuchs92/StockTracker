@@ -17,7 +17,7 @@ namespace StockTracker.Model.Clients
 	    public string Email { get; set; }
 	    public string ContactNumber { get; set; }
 	    public string Address { get; set; }
-	    public DateTime LastCheckup { get; set; }
+	    public DateTime? LastCheckup { get; set; }
 	    public bool IsActive { get; set; }
 	    public DateTime CreatedOn { get; set; }
     }

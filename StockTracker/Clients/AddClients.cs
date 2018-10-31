@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Interface.BusinessLogic.Clients;
 
-namespace StockTracker.Repository.Test.StockTracker.Clients
+namespace StockTracker.Repository.Clients
 {
     public class AddClients : IAddClient
     {
@@ -20,18 +24,18 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 	    {
 		    try
 		    {
-			    _db.Clients.Add((Client) newClient);
-			    ((StockTrackerContext) _db).SaveChanges();
-				return true;
+			    _db.Clients.Add((Client)newClient);
+			    ((StockTrackerContext)_db).SaveChanges();
+			    return true;
 		    }
-		    catch (Exception E)
+		    catch (Exception e)
 		    {
 			    return false;
 		    }
 
-	    }
+		}
 
-		public bool AddClient(bool isActive, string name, string email, int contactNumber)
+		public bool AddClient(bool isActive, string name, string email, string contactNumber)
 	    {
 		    throw new NotImplementedException();
 	    }

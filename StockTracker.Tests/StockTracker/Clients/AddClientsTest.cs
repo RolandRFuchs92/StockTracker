@@ -1,0 +1,86 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
+using StockTracker.Interface.Models.Client;
+using StockTracker.Model.Clients;
+using StockTracker.Repository.Clients;
+using StockTracker.Repository.Interface.BusinessLogic.Clients;
+
+namespace StockTracker.Repository.Test.StockTracker.Clients
+{
+	[TestClass]
+    public class AddClientsTest
+    {
+	    private IStockTrackerContext _db;
+	    private readonly IAddClient _addClient;
+
+	    public AddClientsTest(IStockTrackerContext db)
+	    {
+		    _db = db;
+			_addClient = new AddClients(_db);
+	    }
+
+		[TestMethod]
+		public void AddClient_PassNormalClientObject_True()
+		{
+			//Arrange
+			var client = new Client
+			{
+				IsActive = true,
+				Address = "1 Testvill place",
+				ClientName = "Test the Cycles",
+				ContactNumber = "+27 083 123 1456",
+				CreatedOn = DateTime.Now,
+				Email = "Roland@test.co.za",
+				LastCheckup = null
+			};
+
+			//Act
+			var result = _addClient.AddClient(client);
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[TestMethod]
+		public void AddClient_PassEmptyClient_False()
+		{
+			//Arrange
+			var client = new Client();
+
+			//Act
+			var result = _addClient.AddClient(client);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+		[TestMethod]
+		public void AddClient_PassValidParams_True()
+		{
+			//Arrange
+			
+
+			//Act
+			var result = _addClient.AddClient(true, "Roland", "roland@ix.co.za", "0730520624");
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[TestMethod]
+		public void AddClient_PassInvalidParams_false()
+		{
+			//Arrange
+
+
+			//Act
+			var result = _addClient.AddClient(false, "", "", "");
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+
+    }
+}
