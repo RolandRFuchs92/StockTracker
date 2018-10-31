@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
+    <Compile Remove="BusinessLogic\**" />
+    <EmbeddedResource Remove="BusinessLogic\**" />
+    <None Remove="BusinessLogic\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessLogic\Reporting\" />
+    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
   </ItemGroup>
 
 </Project>

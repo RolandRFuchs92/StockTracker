@@ -7,7 +7,8 @@ using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
-using StockTracker.Repository.Interface.BusinessLogic.Clients;
+using StockTracker.Repository.Interface.Clients;
+
 
 namespace StockTracker.Repository.Clients
 {
