@@ -20,7 +20,7 @@ namespace StockTracker.BuisnessLogic.Client
 
 	    public bool AddClient(IClient newClient)
 	    {
-
+		    return false;
 	    }
 
 	    public bool AddClient(bool isActive, string name, string email, string contactNumber)
