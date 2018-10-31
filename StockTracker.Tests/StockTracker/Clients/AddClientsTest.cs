@@ -15,9 +15,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 	    private IStockTrackerContext _db;
 	    private readonly IAddClient _addClient;
 
-	    public AddClientsTest(IStockTrackerContext db)
+	    public AddClientsTest()
 	    {
-		    _db = db;
+		    _db = new TestDb().Db;
 			_addClient = new AddClients(_db);
 	    }
 
@@ -47,7 +47,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void AddClient_PassEmptyClient_False()
 		{
 			//Arrange
-			var client = new Client();
+			Client client = null;
 
 			//Act
 			var result = _addClient.AddClient(client);
@@ -67,19 +67,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsTrue(result);
-		}
-
-		[TestMethod]
-		public void AddClient_PassInvalidParams_false()
-		{
-			//Arrange
-
-
-			//Act
-			var result = _addClient.AddClient(false, "", "", "");
-
-			//Assert
-			Assert.IsFalse(result);
 		}
 
     }

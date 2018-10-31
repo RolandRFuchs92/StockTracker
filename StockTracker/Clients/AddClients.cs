@@ -24,6 +24,9 @@ namespace StockTracker.Repository.Clients
 	    {
 		    try
 		    {
+			    if (newClient == null)
+				    return false;
+
 			    _db.Clients.Add((Client)newClient);
 			    ((StockTrackerContext)_db).SaveChanges();
 			    return true;
@@ -37,7 +40,16 @@ namespace StockTracker.Repository.Clients
 
 		public bool AddClient(bool isActive, string name, string email, string contactNumber)
 	    {
-		    throw new NotImplementedException();
+		    var client = new Client
+		    {
+				IsActive = isActive,
+				ClientName = name,
+				Email = email,
+				ContactNumber = contactNumber
+		    };
+
+		    return AddClient(client);
+
 	    }
     }
 }

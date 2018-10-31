@@ -19,6 +19,5 @@ namespace StockTracker.Repository.Test
 		    Db = new PopulateDb(new StockTrackerContext(builder.Options)).Populate();
 		    IsActive = true;
 	    }
-
     }
 }
