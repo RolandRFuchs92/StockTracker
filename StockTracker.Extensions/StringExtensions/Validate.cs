@@ -33,10 +33,10 @@ namespace StockTracker.Extensions.StringExtensions
 
 		public static bool IsPhoneNumberValid(this string phoneNumber)
 		{
-			 if (Regex.IsMatch(phoneNumber, @"[0-9]"))
+			 if (Regex.IsMatch(phoneNumber, @"[A-Za-z]|\#"))
 				return false;
 
-			var rx = new Regex(@"^\+?[1-9][0-9\s.-]{7,11}$");
+			var rx = new Regex(@"^\+?[1-9][0-9\s.-]{8,11}$");
 			if (rx.IsMatch(phoneNumber))
 				return true;
 
