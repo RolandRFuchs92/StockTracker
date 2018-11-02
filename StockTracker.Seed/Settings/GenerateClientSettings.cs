@@ -18,14 +18,14 @@ namespace StockTracker.Seed.Settings
 			_rng = new Random();
 		}
 
-		public List<ClientSettings> Generate()
+		public List<CoreClientSettings> Generate()
 		{
 			return Enumerable.Range(1, _maxClients).Select(i => GenerateSingle(i)).ToList();
 		}
 
-		private ClientSettings GenerateSingle( int clientId = 1)
+		private CoreClientSettings GenerateSingle( int clientId = 1)
 		{
-			return new ClientSettings()
+			return new CoreClientSettings()
 			{
 				ClientId =  clientId,
 				CanAnyoneAddStock = _rng.IsTrue(),

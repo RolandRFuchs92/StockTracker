@@ -7,6 +7,9 @@
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Inteface.csproj" />
     <ProjectReference Include="..\StockTracker.Context\StockTracker.Context.csproj" />
+    <ProjectReference Include="..\StockTracker.Extensions\StockTracker.Extensions.csproj" />
+    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
+    <ProjectReference Include="..\StockTracker\StockTracker.Repository.csproj" />
   </ItemGroup>
 
 </Project>

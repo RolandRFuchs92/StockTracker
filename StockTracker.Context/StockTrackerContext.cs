@@ -30,7 +30,7 @@ namespace StockTracker.Context
 	    public virtual DbSet<ShoppingList> ShoppingLists { get; set; }
 	    public virtual DbSet<StockType> StockTypes { get; set; }
 	    public virtual DbSet<StockCategory> StockCategories { get; set; }
-	    public virtual DbSet<ClientSettings> ClientSettings { get; set; }
+	    public virtual DbSet<CoreClientSettings> ClientSettings { get; set; }
 	    public virtual DbSet<Client> Clients { get; set; }
     }
 }

@@ -7,9 +7,9 @@ using StockTracker.Interface.Models.Client;
 
 namespace StockTracker.Repository.Interface.Clients
 {
-    public interface IAddClient
+    public interface IAddClientRepo
     {
-	    bool AddClient(IClient newClient);
-	    bool AddClient(bool isActive, string name, string email, string contactNumber);
+	    bool Add(IClient newClient);
+	    bool Add(bool isActive, string name, string email, string contactNumber);
     }
 }
