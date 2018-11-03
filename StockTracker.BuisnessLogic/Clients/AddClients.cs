@@ -10,7 +10,6 @@ namespace StockTracker.BuisnessLogic.Clients
 {
 		public class AddClients : IAddClient
 		{
-				private readonly IStockTrackerContext _db;
 				private readonly IAddClientRepo _addClient;
 
 				public AddClients(IAddClientRepo addClient)
