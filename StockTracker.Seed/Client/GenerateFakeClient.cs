@@ -36,7 +36,7 @@ namespace StockTracker.Seed.Client
 					ContactNumber = _rng.Next(10000000, 999999999).ToString(),
 					LastCheckup = DateTime.Now.AddDays(-_rng.Next(100)),
 					CreatedOn = DateTime.Now.AddDays(_rng.Next(100)),
-					Email = $"{clientName}@randomclient.co.za"
+					Email = $"info@{clientName}.co.za"
 				});
 			}
 
