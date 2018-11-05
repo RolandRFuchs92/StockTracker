@@ -12,11 +12,11 @@ using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.Repository.Clients
 {
-		public class AddClientRepo : IAddClientRepo
+		public class ClientRepo : IAddClientRepo
 		{
 				private IStockTrackerContext _db;
 
-				public AddClientRepo(IStockTrackerContext db)
+				public ClientRepo(IStockTrackerContext db)
 				{
 						_db = db;
 				}

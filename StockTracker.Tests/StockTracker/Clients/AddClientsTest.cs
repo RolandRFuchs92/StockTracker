@@ -11,12 +11,12 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public class AddClientsTest
 		{
 				private IStockTrackerContext _db;
-				private readonly AddClientRepo _addClient;
+				private readonly IAddClientRepo _addClient;
 
 				public AddClientsTest()
 				{
 						_db = new TestDb().Db;
-						_addClient = new AddClientRepo(_db);
+						_addClient = new ClientRepo(_db);
 				}
 
 				[TestMethod]
