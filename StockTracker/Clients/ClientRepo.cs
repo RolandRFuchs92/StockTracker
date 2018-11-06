@@ -12,45 +12,45 @@ using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.Repository.Clients
 {
-		public class ClientRepo : IAddClientRepo
+	public class ClientRepo : IClientRepo
+	{
+		private IStockTrackerContext _db;
+
+		public ClientRepo(IStockTrackerContext db)
 		{
-				private IStockTrackerContext _db;
-
-				public ClientRepo(IStockTrackerContext db)
-				{
-						_db = db;
-				}
-
-				public bool Add(IClient newClient)
-				{
-						try
-						{
-								if (newClient == null)
-										return false;
-
-								_db.Clients.Add((Client)newClient);
-								((StockTrackerContext)_db).SaveChanges();
-								return true;
-						}
-						catch (Exception e)
-						{
-								return false;
-						}
-
-				}
-
-				public bool Add(bool isActive, string name, string email, string contactNumber)
-				{
-						var client = new Client
-						{
-								IsActive = isActive,
-								ClientName = name,
-								Email = email,
-								ContactNumber = contactNumber
-						};
-
-						return Add(client);
-
-				}
+			_db = db;
 		}
+
+		public bool Add(IClient newClient)
+		{
+			try
+			{
+				if (newClient == null)
+					return false;
+
+				_db.Clients.Add((Client)newClient);
+				((StockTrackerContext)_db).SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+
+		}
+
+		public bool Add(bool isActive, string name, string email, string contactNumber)
+		{
+			var client = new Client
+			{
+				IsActive = isActive,
+				ClientName = name,
+				Email = email,
+				ContactNumber = contactNumber
+			};
+
+			return Add(client);
+		}
+
+	}
 }

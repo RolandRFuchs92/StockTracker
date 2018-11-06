@@ -11,11 +11,11 @@ using StockTracker.Model.Clients;
 
 namespace StockTracker.BuisnessLogic.Clients
 {
-	public class AddClients : IAddClient
+	public class AddClients : IAddClients
 	{
-		private readonly IAddClientRepo _addClient;
+		private readonly IClientRepo _addClient;
 
-		public AddClients(IAddClientRepo addClient)
+		public AddClients(IClientRepo addClient)
 		{
 			_addClient = addClient;
 		}

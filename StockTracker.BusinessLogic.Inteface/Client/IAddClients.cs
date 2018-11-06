@@ -9,7 +9,7 @@ using StockTracker.Interface.Models.Client;
 
 namespace StockTracker.BusinessLogic.Inteface.Client
 {
-	public interface IAddClient
+	public interface IAddClients
 	{
 		IResult<bool> AddClient(IClient newClient);
 		IResult<bool> AddClient(bool isActive, string name, string email, string contactNumber);

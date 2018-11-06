@@ -11,7 +11,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public class AddClientsTest
 		{
 				private IStockTrackerContext _db;
-				private readonly IAddClientRepo _addClient;
+				private readonly IClientRepo _addClient;
 
 				public AddClientsTest()
 				{

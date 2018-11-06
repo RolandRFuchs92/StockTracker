@@ -13,9 +13,9 @@ namespace StockTracker.API.Controllers
     [ApiController]
     public class ClientsController : ControllerBase
     {
-	    private IAddClient _addClient;
+	    private IAddClients _addClient;
 
-	    public ClientsController(IAddClient addClient)
+	    public ClientsController(IAddClients addClient)
 	    {
 		    _addClient = addClient;
 	    }
@@ -25,9 +25,9 @@ namespace StockTracker.API.Controllers
 		{
 			var result = _addClient.AddClient(isActive, name, email, contactNumber);
 			if(result.IsSuccess)
-				return Ok(result.Message);
+				return Ok(result);
 
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 	    [Route("AddClient")]
@@ -35,9 +35,9 @@ namespace StockTracker.API.Controllers
 	    {
 		    var result = _addClient.AddClient(client);
 		    if (result.IsSuccess)
-			    return Ok(result.Message);
+			    return Ok(result);
 
-		    return BadRequest(result.Message);
+		    return BadRequest(result);
 	    }
 	}
 }

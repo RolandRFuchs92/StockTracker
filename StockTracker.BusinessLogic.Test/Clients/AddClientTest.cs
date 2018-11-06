@@ -22,11 +22,11 @@ namespace StockTracker.BusinessLogic.Test.Clients
 	public class AddClientTest
 	{
 		private StockTrackerContext _db;
-		private Mock<IAddClientRepo> _moqClientRepo;
+		private Mock<IClientRepo> _moqClientRepo;
 
 		public AddClientTest()
 		{
-			var moqClientRepo = new Mock<IAddClientRepo>();
+			var moqClientRepo = new Mock<IClientRepo>();
 			moqClientRepo.Setup(i => i.Add(It.IsAny<IClient>())).Returns(true);
 			_moqClientRepo = moqClientRepo;
 		}

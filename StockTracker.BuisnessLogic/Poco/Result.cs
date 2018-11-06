@@ -17,7 +17,7 @@ namespace StockTracker.BuisnessLogic.Poco
 
 		public Result(bool isSuccess)
 		{
-			this.IsSuccess = IsSuccess;
+			this.IsSuccess = isSuccess;
 		}
 
 		public Result(bool isSuccess, string successMessage, string errorMessage)
@@ -29,7 +29,7 @@ namespace StockTracker.BuisnessLogic.Poco
 		{
 			if (!isSuccess)
 				this.IsSuccess = false;
-			this.Message = $"{(isSuccess ? errorMessage : successMessage)}\r\n";
+			this.Message = $"{(isSuccess ? successMessage : errorMessage)}\r\n";
 		}
 
 		public void Check(bool isSuccess, string errorMessage)
