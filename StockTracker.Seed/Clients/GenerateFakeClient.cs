@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models;
 
-namespace StockTracker.Seed.Client
+namespace StockTracker.Seed.Clients
 {
 	public class GenerateFakeClient
 	{
