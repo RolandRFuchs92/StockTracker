@@ -17,6 +17,11 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 		public ClientsRepoTest()
 		{
+			Reset();
+		}
+
+		private void Reset()
+		{
 			_db = new TestDb().Db;
 			_clientRepo = new ClientRepo(_db);
 		}
@@ -130,8 +135,8 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			var selectedClientIndex = 1;
 			var newClient = new GenericClients().One(selectedClientIndex);
 			var result = false;
-			_clientRepo = new ClientRepo(new TestDb().Db);
 
+			Reset();
 
 			_db.Clients.Add(newClient);
 			((StockTrackerContext) _db).SaveChanges();
@@ -146,7 +151,28 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
+		#region Get Tests
 
+		[TestMethod]
+		public void Get_InsertNewClientReturnSameClient_NewClient()
+		{
+			//Arrange
+			var newCLient = new GenericClients().One();
+			var result = new Client();
+
+			Reset();
+
+			_db.Clients.Add(newCLient);
+			((StockTrackerContext) _db).SaveChanges();
+			
+			//Act
+			result = (Client)_clientRepo.Get(newCLient.ClientId);
+			
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(Client));
+		}
+		#endregion
 
 	}
 }
