@@ -15,6 +15,7 @@ using StockTracker.Interface.Models.Client;
 using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Repository.Test;
+using StockTracker.Seed.Clients;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {
@@ -35,7 +36,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		public void AddClient_PassValidClients_False()
 		{
 			//Arrange
-			var newClientList = ClientList();
+			var newClientList = new GenericClients().All();
 			var addClient = new AddClients(_moqClientRepo.Object);
 			var result = new Result<bool>();
 			var lastClient = 0;
@@ -64,7 +65,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			var lastClient = 0;
 
 
-			var clientList = ClientList().ToList();
+			var clientList = new GenericClients().All().ToList();
 			clientList.Add(clientList[0]);
 			clientList[0].Email = "moo..@doo.web";//Pass bad email address
 			clientList[1].ContactNumber = "abc123";
@@ -84,40 +85,6 @@ namespace StockTracker.BusinessLogic.Test.Clients
 
 			//Assert
 			Assert.IsFalse(result.IsSuccess, $"The last client checked was {lastClient}");
-		}
-
-		private Client[] ClientList()
-		{
-			return new[]
-			{
-				new Client{
-					ClientId = 1,
-					Address ="Test address",
-					ClientName ="Cammel Patrol",
-					CreatedOn = DateTime.Now,
-					ContactNumber = "0730730258",
-					IsActive = false,
-					Email = "moo@moo.co.za"
-				},
-				new Client{
-					ClientId = 2,
-					Address ="Test address 2",
-					ClientName ="Cammel Dog lane",
-					CreatedOn = DateTime.Now,
-					ContactNumber = "111 023 1234",
-					IsActive = true,
-					Email = "moo@mooo.gov.za"
-				},
-				new Client{
-					ClientId = 2,
-					Address ="Test address",
-					ClientName ="Camel Patrol",
-					CreatedOn = DateTime.Now,
-					ContactNumber = "(011) 023 1234",
-					IsActive = true,
-					Email = "moo@111.111.111.111"
-				}
-			};
 		}
 	}
 }
