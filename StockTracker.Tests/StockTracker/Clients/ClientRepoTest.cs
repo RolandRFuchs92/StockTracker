@@ -8,12 +8,12 @@ using StockTracker.Repository.Interface.Clients;
 namespace StockTracker.Repository.Test.StockTracker.Clients
 {
 		[TestClass]
-		public class AddClientsTest
+		public class ClientsRepoTest
 		{
 				private IStockTrackerContext _db;
 				private readonly IClientRepo _addClient;
 
-				public AddClientsTest()
+				public ClientsRepoTest()
 				{
 						_db = new TestDb().Db;
 						_addClient = new ClientRepo(_db);
