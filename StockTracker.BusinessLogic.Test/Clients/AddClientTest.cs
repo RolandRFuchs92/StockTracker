@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using Moq;
 using StockTracker.BuisnessLogic.Clients;
+using StockTracker.BuisnessLogic.Poco;
+using StockTracker.BusinessLogic.Inteface.Poco;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Client;
 using StockTracker.Repository.Clients;
@@ -35,14 +37,14 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Arrange
 			var newClientList = ClientList();
 			var addClient = new AddClients(_moqClientRepo.Object);
-			var result = false;
+			var result = new Result<bool>();
 			var lastClient = 0;
 
 			//Act
 			foreach (var client in newClientList)
 			{
-				result = addClient.AddClient(client);
-				if (!result)
+				result = (Result<bool>)addClient.AddClient(client);
+				if (!result.IsSuccess)
 				{
 					lastClient = client.ClientId;
 					break;
@@ -50,7 +52,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			}
 
 			//Assert
-			Assert.IsTrue(result, $"The last client checked was {lastClient}");
+			Assert.IsTrue(result.IsSuccess, $"The last client checked was {lastClient}");
 		}
 
 		[TestMethod]
@@ -58,7 +60,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		{
 			//Arrange
 			var addClient = new AddClients(_moqClientRepo.Object);
-			var result = false;
+			var result = new Result<bool>();
 			var lastClient = 0;
 
 
@@ -72,8 +74,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Act
 			foreach (var client in clientList)
 			{
-				result = addClient.AddClient(client);
-				if (result)
+				result = (Result<bool>)addClient.AddClient(client);
+				if (result.IsSuccess)
 				{
 					lastClient = client.ClientId;
 					break;
@@ -81,7 +83,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			}
 
 			//Assert
-			Assert.IsFalse(result, $"The last client checked was {lastClient}");
+			Assert.IsFalse(result.IsSuccess, $"The last client checked was {lastClient}");
 		}
 
 		private Client[] ClientList()

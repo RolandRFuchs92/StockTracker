@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.Interface.Models.Client;
 
 namespace StockTracker.API.Controllers
 {
@@ -29,5 +30,14 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result.Message);
 		}
 
-    }
+	    [Route("AddClient")]
+	    public IActionResult AddClient(IClient client)
+	    {
+		    var result = _addClient.AddClient(client);
+		    if (result.IsSuccess)
+			    return Ok(result.Message);
+
+		    return BadRequest(result.Message);
+	    }
+	}
 }

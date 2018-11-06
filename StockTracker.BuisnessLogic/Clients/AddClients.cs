@@ -25,7 +25,7 @@ namespace StockTracker.BuisnessLogic.Clients
 			var result = new Result<bool>();
 
 			result.Check(newClient.Email.IsValidEmail(), "Invalid email.");
-			result.Check(!newClient.ContactNumber.IsPhoneNumberValid(),"Invalid contact number.");
+			result.Check(newClient.ContactNumber.IsPhoneNumberValid(),"Invalid contact number.");
 		
 			if(!result.IsSuccess)
 				return result;
