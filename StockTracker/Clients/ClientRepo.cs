@@ -62,12 +62,12 @@ namespace StockTracker.Repository.Clients
 			throw new NotImplementedException();
 		}
 
-		public IClient GetClient(int clientId)
+		public IClient Get(int clientId)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IClient GetClient(string name)
+		public IClient Get(string name)
 		{
 			throw new NotImplementedException();
 		}
