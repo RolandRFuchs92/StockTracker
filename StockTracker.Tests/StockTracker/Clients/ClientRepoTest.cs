@@ -13,7 +13,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 	public class ClientsRepoTest
 	{
 		private IStockTrackerContext _db;
-		private readonly IClientRepo _clientRepo;
+		private IClientRepo _clientRepo;
 
 		public ClientsRepoTest()
 		{
@@ -70,8 +70,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
+		#region Remove Tests
 		[TestMethod]
-		public void Remove_PassvalidClient_True()
+		public void Remove_PassvalidClientId_True()
 		{
 			//Arrange
 			var clientTestIndex = 1;
@@ -85,6 +86,67 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsTrue(result);
 		}
+
+		[TestMethod]
+		public void Remove_PassInvalidClientId_False()
+		{
+			//Arrange
+			var result = false;
+
+			//Act
+			result = _clientRepo.Remove(0);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+		#endregion
+
+		#region Edit Tests
+		[TestMethod]
+		public void Edit_PassvalidClient_True()
+		{
+			//Arrange
+			var selectedClientIndex = 1;
+			var newClient = new GenericClients().One(selectedClientIndex);
+			var result = false;
+
+			_db.Clients.Add(newClient);
+			((StockTrackerContext) _db).SaveChanges();
+			newClient.Email = "unthasbeentest@goodtests.com";
+			newClient.ContactNumber = "+271234567";
+			newClient.IsActive = false;
+
+			//Act
+			result = _clientRepo.Edit(newClient);
+
+			//Assert
+			Assert.IsTrue(result);
+		}
+
+		[TestMethod]
+		public void Edit_PassInvalidClient_False()
+		{
+			//Arrange
+			var selectedClientIndex = 1;
+			var newClient = new GenericClients().One(selectedClientIndex);
+			var result = false;
+			_clientRepo = new ClientRepo(new TestDb().Db);
+
+
+			_db.Clients.Add(newClient);
+			((StockTrackerContext) _db).SaveChanges();
+
+			newClient.ClientId = 0;
+
+			//Act
+			result = _clientRepo.Edit(newClient);
+
+			//Assert
+			Assert.IsFalse(result);
+		}
+		#endregion
+
+
 
 	}
 }
