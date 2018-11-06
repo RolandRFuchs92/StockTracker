@@ -52,5 +52,29 @@ namespace StockTracker.Repository.Clients
 			return Add(client);
 		}
 
+		public bool Remove(int clientId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Edit(IClient client)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IClient GetClient(int clientId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IClient GetClient(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool ToggleClient(int clientId, bool isActive)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
