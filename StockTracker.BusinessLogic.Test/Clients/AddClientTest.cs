@@ -116,7 +116,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			var result = new ClientLogic(moqRepo.Object).GetClient(123);
 
 			//Assert
-			Assert.IsNull(result);
+			Assert.IsInstanceOfType(result, typeof(IResult<IClient>));
 		}
 		#endregion
 
