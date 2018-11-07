@@ -14,9 +14,11 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 	{
 		private IStockTrackerContext _db;
 		private IClientRepo _clientRepo;
+		private GenericClients _genClient;
 
 		public ClientsRepoTest()
 		{
+			_genClient = new GenericClients();
 			Reset();
 		}
 
@@ -81,7 +83,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var clientTestIndex = 1;
-			_db.Clients.Add(new GenericClients().One(clientTestIndex));
+			_db.Clients.Add(_genClient.One(clientTestIndex));
 			((StockTrackerContext)_db).SaveChanges();
 			var result = false;
 
@@ -112,7 +114,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var selectedClientIndex = 1;
-			var newClient = new GenericClients().One(selectedClientIndex);
+			var newClient = _genClient.One(selectedClientIndex);
 			var result = false;
 
 			_db.Clients.Add(newClient);
@@ -133,7 +135,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var selectedClientIndex = 1;
-			var newClient = new GenericClients().One(selectedClientIndex);
+			var newClient = _genClient.One(selectedClientIndex);
 			var result = false;
 
 			Reset();
@@ -154,10 +156,10 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		#region Get Tests
 
 		[TestMethod]
-		public void Get_InsertNewClientReturnSameClient_NewClient()
+		public void Get_InsertNewClientReturnSameClientById_NewClient()
 		{
 			//Arrange
-			var newCLient = new GenericClients().One();
+			var newCLient = _genClient.One();
 			var result = new Client();
 
 			Reset();
@@ -172,7 +174,64 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(Client));
 		}
+		[TestMethod]
+		public void Get_TryGetClientWhenNoneExsistById_null()
+		{
+			//Arrange
+			var result = new Client();
+			Reset();
+
+			//Act
+			result = (Client) _clientRepo.Get(1);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(Client));
+			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void Get_InsertNewClientReturnSameClientByName_NewClient()
+		{
+			//Arrange
+			var newClient = _genClient.One();
+			Reset();
+
+			_db.Clients.Add(newClient);
+			((StockTrackerContext) _db).SaveChanges();
+			//Act
+			var result = _clientRepo.Get(newClient.ClientName);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(Client));
+		}
+
+		[TestMethod]
+		public void Get_TryGetNewClientR_ExpectedResult()
+		{
+			//Arrange
+			Reset();
+
+			//Act
+			var result = _clientRepo.Get("");
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(Client));
+			Assert.IsNull(result);
+		}
 		#endregion
 
+		[TestMethod]
+		public void Toggle_InitialCondition_ExpectedResult()
+		{
+			//Arrange
+
+
+			//Act
+
+
+			//Assert
+
+		}
 	}
 }

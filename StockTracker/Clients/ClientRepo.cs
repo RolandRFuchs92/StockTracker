@@ -72,7 +72,7 @@ namespace StockTracker.Repository.Clients
 			throw new NotImplementedException();
 		}
 
-		public bool ToggleClient(int clientId, bool isActive)
+		public bool Toggle(int clientId, bool isActive)
 		{
 			throw new NotImplementedException();
 		}
