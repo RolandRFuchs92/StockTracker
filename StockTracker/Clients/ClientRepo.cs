@@ -54,7 +54,12 @@ namespace StockTracker.Repository.Clients
 
 		public bool Remove(int clientId)
 		{
-			throw new NotImplementedException();
+			var client = _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
+
+			if (client == null)
+				return false;
+
+			return true;
 		}
 
 		public bool Edit(IClient client)

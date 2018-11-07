@@ -23,7 +23,8 @@ namespace StockTracker.Model.Clients
 		[Range(5, 120)]
 	    public string Address { get; set; }
 	    public DateTime? LastCheckup { get; set; }
+		public bool? IsDeleted { get; set; }
 	    public bool IsActive { get; set; }
-	    public DateTime CreatedOn { get; set; }
+		public DateTime CreatedOn { get; set; }
     }
 }
