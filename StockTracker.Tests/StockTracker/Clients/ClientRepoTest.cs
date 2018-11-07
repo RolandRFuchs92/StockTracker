@@ -79,16 +79,16 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 		#region Remove Tests
 		[TestMethod]
-		public void Remove_PassvalidClientId_True()
+		public void Remove_PassValidClientId_True()
 		{
 			//Arrange
-			var clientTestIndex = 1;
-			_db.Clients.Add(_genClient.One(clientTestIndex));
+			var newCient = _genClient.One();
+			_db.Clients.Add(newCient);
 			((StockTrackerContext)_db).SaveChanges();
 			var result = false;
 
 			//Act
-			result = _clientRepo.Remove(clientTestIndex);
+			result = _clientRepo.Remove(newCient.ClientId);
 
 			//Assert
 			Assert.IsTrue(result);

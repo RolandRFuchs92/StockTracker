@@ -59,7 +59,16 @@ namespace StockTracker.Repository.Clients
 			if (client == null)
 				return false;
 
-			return true;
+			try
+			{
+				client.IsDeleted = true;
+				((StockTrackerContext) _db).SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 
 		public bool Edit(IClient client)
