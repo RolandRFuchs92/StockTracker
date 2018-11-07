@@ -170,6 +170,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Assert
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsTrue(result.Body);
+			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
 		}
 
 		[TestMethod]
@@ -187,6 +188,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Assert
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsFalse(result.Body);
+			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
 		}
 
 

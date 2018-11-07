@@ -13,11 +13,11 @@ namespace StockTracker.BuisnessLogic.Clients
 {
 	public class ClientLogic : IClientLogic
 	{
-		private readonly IClientRepo _addClient;
+		private readonly IClientRepo _clientRepo;
 
-		public ClientLogic(IClientRepo addClient)
+		public ClientLogic(IClientRepo clientRepo)
 		{
-			_addClient = addClient;
+			_clientRepo = clientRepo;
 		}
 
 		public IResult<bool> AddClient(IClient newClient)
@@ -30,7 +30,7 @@ namespace StockTracker.BuisnessLogic.Clients
 			if(!result.IsSuccess)
 				return result;
 
-			result.Check(_addClient.Add(newClient), "Client saved!", "Error saving client.");
+			result.Check(_clientRepo.Add(newClient), "Client saved!", "Error saving client.");
 
 			return result;
 		}
@@ -51,22 +51,39 @@ namespace StockTracker.BuisnessLogic.Clients
 
 		public IResult<IClient> GetClient(int clientId)
 		{
-			throw new NotImplementedException();
+			var result = new Result<IClient>();
+			result.Body = _clientRepo.Get(clientId);
+			result.Check(result.Body != null, "Successfully retreived client!", "Unable to find client.");
+
+			return result;
 		}
 
-		public IResult<bool> EditClient(IClient client)
+		public IResult<bool> EditClient(IClient editClient)
 		{
-			throw new NotImplementedException();
+			var result = new Result<bool>();
+			result.Body = _clientRepo.Edit(editClient);
+			result.Check(result.Body, "Successfully edited the client!", "Unable to edit the client.");
+
+			return result;
 		}
 
 		public IResult<bool> RemoveClient(int clientId)
 		{
-			throw new NotImplementedException();
+			var result = new Result<bool>();
+			result.Body = _clientRepo.Remove(clientId);
+			result.Check(result.Body, "Successfully removed the client!", "Unable to remove client.");
+
+			return result;
 		}
 
 		public IResult<bool> ToggleClient(int clientId, bool isActive)
 		{
-			throw new NotImplementedException();
+			var result = new Result<bool>();
+			var enableText = isActive ? "enable" : "disable";
+			result.Body = _clientRepo.Toggle(clientId, isActive);
+			result.Check(result.Body, $"Successfully {enableText}d the client!", $"Unable to {enableText} client.");
+
+			return result;
 		}
 	}
 }
