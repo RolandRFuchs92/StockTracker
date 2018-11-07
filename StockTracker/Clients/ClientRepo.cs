@@ -71,9 +71,30 @@ namespace StockTracker.Repository.Clients
 			}
 		}
 
-		public bool Edit(IClient client)
+		public bool Edit(IClient editClient)
 		{
-			throw new NotImplementedException();
+			if (editClient.ClientId == 0)
+				return false;
+
+			try
+			{
+				var client = _db.Clients.FirstOrDefault(i => i.ClientId == editClient.ClientId);
+
+				client.IsActive = editClient.IsActive;
+				client.IsDeleted = editClient.IsDeleted ?? client.IsDeleted;
+				client.ClientName = editClient.ClientName ?? client.ClientName;
+				client.ContactNumber = editClient.ContactNumber ?? client.ContactNumber;
+				client.Email = editClient.Email ?? client.Email;
+				client.Address = editClient.Address ?? client.Address;
+				client.LastCheckup = editClient.LastCheckup;
+
+				((StockTrackerContext) _db).SaveChanges();
+				return true;
+			}
+			catch (Exception E)
+			{
+				return false;
+			}
 		}
 
 		public IClient Get(int clientId)
