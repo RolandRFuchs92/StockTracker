@@ -22,7 +22,6 @@ namespace StockTracker.BusinessLogic.Test.Clients
 	[TestClass]
 	public class AddClientTest
 	{
-		private StockTrackerContext _db;
 		private Mock<IClientRepo> _moqClientRepo;
 
 		public AddClientTest()
@@ -32,6 +31,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			_moqClientRepo = moqClientRepo;
 		}
 
+		#region AddClient Tests
 		[TestMethod]
 		public void AddClient_PassValidClients_False()
 		{
@@ -86,5 +86,147 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Assert
 			Assert.IsFalse(result.IsSuccess, $"The last client checked was {lastClient}");
 		}
+		#endregion
+
+		#region GetClient
+		[TestMethod]
+		public void GetClient_GetAClientbyClientId_GetClient()
+		{
+			//Arrange
+			var client = new GenericClients().One();
+			_moqClientRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
+			var clientLogic = new ClientLogic(_moqClientRepo.Object);
+
+			//Act
+			var result = clientLogic.GetClient(client.ClientId);
+
+			//Assert
+			Assert.IsInstanceOfType(result.Body, typeof(IClient));
+			Assert.IsTrue(result.IsSuccess);
+		}
+
+		[TestMethod]
+		public void GetClient_GetAClientByIdThatDoesntExsist_NullFail()
+		{
+			//Arrange
+			var moqRepo = new Mock<IClientRepo>();
+			moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(new Client());
+
+			//Act
+			var result = new ClientLogic(moqRepo.Object).GetClient(123);
+
+			//Assert
+			Assert.IsNull(result);
+		}
+		#endregion
+
+		#region EditClient Tests
+		[TestMethod]
+		public void EditClient_EditClientWithInvalidDetails_Fail()
+		{
+			//Arrange
+			var client = new GenericClients().One();
+			client.Email = "Roland..@ix.web";
+
+			//Act
+			var result = new ClientLogic(_moqClientRepo.Object).EditClient(client);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
+			Assert.IsFalse(result.IsSuccess);
+		}
+
+		[TestMethod]
+		public void EditClient_EditClientWithValidDetails_Success()
+		{
+			//Arrange
+			var client = new GenericClients().One();
+			var moqRepo = new Mock<IClientRepo>();
+			moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
+			moqRepo.Setup(i => i.Edit(It.IsAny<IClient>())).Returns(true);
+
+			client.Email = "hello@world.co.za";
+
+			//Act
+			var result = new ClientLogic(moqRepo.Object).EditClient(client);
+			
+			//Assert
+			Assert.IsTrue(result.IsSuccess);
+		}
+		#endregion
+
+		#region RemoveClient Tests
+		[TestMethod]
+		public void RemoveClient_PassValidClient_True()
+		{
+			//Arrange
+			var moqRepo = new Mock<IClientRepo>();
+			moqRepo.Setup(i => i.Remove(It.IsAny<int>())).Returns(true);
+			var clientLogic = new ClientLogic(moqRepo.Object);
+
+			//Act
+			var result = clientLogic.RemoveClient(1);
+
+			//Assert
+			Assert.IsTrue(result.IsSuccess);
+			Assert.IsTrue(result.Body);
+		}
+
+		[TestMethod]
+		public void RemoveClient_PassInvalidClient_False()
+		{
+			//Arrange
+			var moqRepo = new Mock<IClientRepo>();
+			moqRepo.Setup(i => i.Remove(It.IsAny<int>())).Returns(false);
+			var clientLogic = new ClientLogic(moqRepo.Object);
+
+
+			//Act
+			var result = clientLogic.RemoveClient(1);
+
+			//Assert
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsFalse(result.Body);
+		}
+
+
+		#endregion
+
+		#region ToggleClient Tests
+
+		[TestMethod]
+		public void ToggleClient_PassValidClient_True()
+		{
+			//Arrange
+			var moq = new Mock<IClientRepo>();
+			moq.Setup(i => i.Toggle(It.IsAny<int>(), It.IsAny<bool>())).Returns(true);
+			var clientLogic = new ClientLogic(moq.Object);
+			
+			//Act
+			var result = clientLogic.ToggleClient(1, true);
+
+			//Assert
+			Assert.IsTrue(result.IsSuccess);
+			Assert.IsTrue(result.Body);
+			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
+		}
+
+		[TestMethod]
+		public void ToggleClient_PassInvalidClient_True()
+		{
+			//Arrange
+			var moq = new Mock<IClientRepo>();
+			moq.Setup(i => i.Toggle(It.IsAny<int>(), It.IsAny<bool>())).Returns(false);
+			var clientLogic = new ClientLogic(moq.Object);
+
+			//Act
+			var result = clientLogic.ToggleClient(1, true);
+
+			//Assert
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsFalse(result.Body);
+			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
+		}
+		#endregion
 	}
 }

@@ -59,7 +59,7 @@ namespace StockTracker.BuisnessLogic.Clients
 			throw new NotImplementedException();
 		}
 
-		public IResult<bool> Removeient(int clientId)
+		public IResult<bool> RemoveClient(int clientId)
 		{
 			throw new NotImplementedException();
 		}
