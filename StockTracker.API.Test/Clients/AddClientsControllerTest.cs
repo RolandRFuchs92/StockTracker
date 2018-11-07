@@ -20,12 +20,12 @@ namespace StockTracker.API.Test.Clients
 	[TestClass]
     public class AddClientsControllerTest
     {
-	    private Mock<IAddClients> _moq;
+	    private Mock<IClientLogic> _moq;
 	    private Client _client;
 
 	    public AddClientsControllerTest()
 	    {
-		    _moq = new Mock<IAddClients>();
+		    _moq = new Mock<IClientLogic>();
 			_client = new GenericClients().One();
 		}
 

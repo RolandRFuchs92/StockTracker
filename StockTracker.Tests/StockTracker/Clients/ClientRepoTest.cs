@@ -226,7 +226,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
-
 		#region Toggle Tests
 		[TestMethod]
 		public void Toggle_EnableDisableClient_True()
@@ -260,7 +259,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsFalse(result);
 		}
-
 		#endregion
 	}
 }

@@ -37,7 +37,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		{
 			//Arrange
 			var newClientList = new GenericClients().All();
-			var addClient = new AddClients(_moqClientRepo.Object);
+			var addClient = new ClientLogic(_moqClientRepo.Object);
 			var result = new Result<bool>();
 			var lastClient = 0;
 
@@ -60,7 +60,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		public void AddClient_PassInvalidClients_false()
 		{
 			//Arrange
-			var addClient = new AddClients(_moqClientRepo.Object);
+			var addClient = new ClientLogic(_moqClientRepo.Object);
 			var result = new Result<bool>();
 			var lastClient = 0;
 

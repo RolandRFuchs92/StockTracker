@@ -11,11 +11,11 @@ using StockTracker.Model.Clients;
 
 namespace StockTracker.BuisnessLogic.Clients
 {
-	public class AddClients : IAddClients
+	public class ClientLogic : IClientLogic
 	{
 		private readonly IClientRepo _addClient;
 
-		public AddClients(IClientRepo addClient)
+		public ClientLogic(IClientRepo addClient)
 		{
 			_addClient = addClient;
 		}
@@ -47,6 +47,26 @@ namespace StockTracker.BuisnessLogic.Clients
 			};
 
 			return AddClient(client);
+		}
+
+		public IResult<IClient> GetClient(int clientId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IResult<bool> EditClient(IClient client)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IResult<bool> Removeient(int clientId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IResult<bool> ToggleClient(int clientId, bool isActive)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

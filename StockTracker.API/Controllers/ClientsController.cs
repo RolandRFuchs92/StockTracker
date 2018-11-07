@@ -13,9 +13,9 @@ namespace StockTracker.API.Controllers
     [ApiController]
     public class ClientsController : ControllerBase
     {
-	    private IAddClients _addClient;
+	    private IClientLogic _addClient;
 
-	    public ClientsController(IAddClients addClient)
+	    public ClientsController(IClientLogic addClient)
 	    {
 		    _addClient = addClient;
 	    }
