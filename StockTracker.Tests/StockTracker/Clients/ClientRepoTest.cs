@@ -221,17 +221,41 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
+
+		#region Toggle Tests
 		[TestMethod]
-		public void Toggle_InitialCondition_ExpectedResult()
+		public void Toggle_EnableDisableClient_True()
 		{
 			//Arrange
+			var client = _genClient.One();
+			client.IsActive = false;
+			Reset();
 
+			_db.Clients.Add(client);
+			((StockTrackerContext) _db).SaveChanges();
 
 			//Act
-
+			var enableResult = _clientRepo.Toggle(client.ClientId, true);
+			var disableResult = _clientRepo.Toggle(client.ClientId, false);
 
 			//Assert
-
+			Assert.IsTrue(enableResult);
+			Assert.IsTrue(disableResult);
 		}
+
+		[TestMethod]
+		public void Toggle_DisableEnabledClient_True()
+		{
+			//Arrange
+			Reset();
+
+			//Act
+			var result = _clientRepo.Toggle(1, false);
+
+			//Assert
+			Assert.IsNull(result);
+		}
+
+		#endregion
 	}
 }
