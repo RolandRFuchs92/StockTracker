@@ -99,17 +99,28 @@ namespace StockTracker.Repository.Clients
 
 		public IClient Get(int clientId)
 		{
-			throw new NotImplementedException();
+			return _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
 		}
 
 		public IClient Get(string name)
 		{
-			throw new NotImplementedException();
+			return _db.Clients.FirstOrDefault(i => name.Contains(i.ClientName));
 		}
 
 		public bool Toggle(int clientId, bool isActive)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var client = _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
+				client.IsActive = isActive;
+
+				((StockTrackerContext) _db).SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 	}
 }

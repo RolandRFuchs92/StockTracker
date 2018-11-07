@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
@@ -19,19 +20,21 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public ClientsRepoTest()
 		{
 			_genClient = new GenericClients();
-			Reset();
-		}
-
-		private void Reset()
-		{
 			_db = new TestDb().Db;
 			_clientRepo = new ClientRepo(_db);
+		}
+
+		private void Trunc(string tableName)
+		{
+			//((StockTrackerContext) _db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
+			((StockTrackerContext) _db).Database.EnsureDeleted(); ;
 		}
 
 		#region Add Tests
 		[TestMethod]
 		public void Add_PassNormalClientObject_True()
 		{
+			Trunc("Clients");
 			//Arrange
 			var client = new Client
 			{
@@ -55,6 +58,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Add_PassEmptyClient_False()
 		{
 			//Arrange
+			Trunc("Clients");
 			Client client = null;
 
 			//Act
@@ -68,6 +72,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Add_PassValidParams_True()
 		{
 			//Arrange
+			Trunc("Clients");
 
 			//Act
 			var result = _clientRepo.Add(true, "Roland", "roland@ix.co.za", "0730520624");
@@ -82,6 +87,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Remove_PassValidClientId_True()
 		{
 			//Arrange
+			Trunc("Clients");
 			var newCient = _genClient.One();
 			_db.Clients.Add(newCient);
 			((StockTrackerContext)_db).SaveChanges();
@@ -98,6 +104,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Remove_PassInvalidClientId_False()
 		{
 			//Arrange
+			Trunc("Clients");
 			var result = false;
 
 			//Act
@@ -113,12 +120,14 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Edit_PassvalidClient_True()
 		{
 			//Arrange
+			Trunc("Clients");
 			var selectedClientIndex = 1;
 			var newClient = _genClient.One(selectedClientIndex);
 			var result = false;
 
 			_db.Clients.Add(newClient);
 			((StockTrackerContext) _db).SaveChanges();
+
 			newClient.Email = "unthasbeentest@goodtests.com";
 			newClient.ContactNumber = "+271234567";
 			newClient.IsActive = false;
@@ -134,11 +143,10 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Edit_PassInvalidClient_False()
 		{
 			//Arrange
+			Trunc("Clients");
 			var selectedClientIndex = 1;
 			var newClient = _genClient.One(selectedClientIndex);
 			var result = false;
-
-			Reset();
 
 			_db.Clients.Add(newClient);
 			((StockTrackerContext) _db).SaveChanges();
@@ -159,10 +167,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Get_InsertNewClientReturnSameClientById_NewClient()
 		{
 			//Arrange
+			Trunc("Clients");
 			var newCLient = _genClient.One();
 			var result = new Client();
-
-			Reset();
 
 			_db.Clients.Add(newCLient);
 			((StockTrackerContext) _db).SaveChanges();
@@ -178,14 +185,13 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Get_TryGetClientWhenNoneExsistById_null()
 		{
 			//Arrange
+			Trunc("Clients");
 			var result = new Client();
-			Reset();
 
 			//Act
 			result = (Client) _clientRepo.Get(1);
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(Client));
 			Assert.IsNull(result);
 		}
 
@@ -193,8 +199,8 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Get_InsertNewClientReturnSameClientByName_NewClient()
 		{
 			//Arrange
+			Trunc("Clients");
 			var newClient = _genClient.One();
-			Reset();
 
 			_db.Clients.Add(newClient);
 			((StockTrackerContext) _db).SaveChanges();
@@ -207,16 +213,15 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 
 		[TestMethod]
-		public void Get_TryGetNewClientR_ExpectedResult()
+		public void Get_TryGetNewClientByName_Null()
 		{
 			//Arrange
-			Reset();
+			Trunc("Clients");
 
 			//Act
 			var result = _clientRepo.Get("");
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(Client));
 			Assert.IsNull(result);
 		}
 		#endregion
@@ -227,9 +232,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Toggle_EnableDisableClient_True()
 		{
 			//Arrange
+			Trunc("Clients");
 			var client = _genClient.One();
 			client.IsActive = false;
-			Reset();
 
 			_db.Clients.Add(client);
 			((StockTrackerContext) _db).SaveChanges();
@@ -244,16 +249,16 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 
 		[TestMethod]
-		public void Toggle_DisableEnabledClient_True()
+		public void Toggle_DisableEnabledClient_False()
 		{
 			//Arrange
-			Reset();
+			Trunc("Clients");
 
 			//Act
 			var result = _clientRepo.Toggle(1, false);
 
 			//Assert
-			Assert.IsNull(result);
+			Assert.IsFalse(result);
 		}
 
 		#endregion
