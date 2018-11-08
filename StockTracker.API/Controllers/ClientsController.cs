@@ -21,7 +21,7 @@ namespace StockTracker.API.Controllers
 		    _clientLogic = clientLogic;
 	    }
 
-		[Route("AddClient")]
+		[Route("Add")]
 	    public IActionResult Add(bool isActive, string name, string email, string contactNumber)
 		{
 			var result = _clientLogic.AddClient(isActive, name, email, contactNumber);
@@ -31,9 +31,24 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
+		[Route("Add")]
+		public IActionResult Add(IClient client)
+		{
+			var result = _clientLogic.AddClient(client);
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
+		}
+
+		[Route("Get")]
 		public IActionResult Get(int clientId)
 		{
-			throw new NotImplementedException();
+			var result = _clientLogic.GetClient(clientId);
+			if (!result.IsSuccess)
+				return BadRequest(result.Message);
+
+			return Ok(result);
 		}
 
 		public IActionResult Edit(IClient client)
@@ -50,17 +65,6 @@ namespace StockTracker.API.Controllers
 		{
 			throw new NotImplementedException();
 		}
-
-		[Route("AddClient")]
-	    public IActionResult Add(IClient client)
-	    {
-		    var result = _clientLogic.AddClient(client);
-		    if (result.IsSuccess)
-			    return Ok(result);
-
-		    return BadRequest(result);
-	    }
-
 	
 	}
 }
