@@ -14,17 +14,17 @@ namespace StockTracker.API.Controllers
     [ApiController]
     public class ClientsController : ControllerBase, IClientsController
 	{
-	    private IClientLogic _addClient;
+	    private IClientLogic _clientLogic;
 
-	    public ClientsController(IClientLogic addClient)
+	    public ClientsController(IClientLogic clientLogic)
 	    {
-		    _addClient = addClient;
+		    _clientLogic = clientLogic;
 	    }
 
 		[Route("AddClient")]
 	    public IActionResult Add(bool isActive, string name, string email, string contactNumber)
 		{
-			var result = _addClient.AddClient(isActive, name, email, contactNumber);
+			var result = _clientLogic.AddClient(isActive, name, email, contactNumber);
 			if(result.IsSuccess)
 				return Ok(result);
 
@@ -54,7 +54,7 @@ namespace StockTracker.API.Controllers
 		[Route("AddClient")]
 	    public IActionResult Add(IClient client)
 	    {
-		    var result = _addClient.AddClient(client);
+		    var result = _clientLogic.AddClient(client);
 		    if (result.IsSuccess)
 			    return Ok(result);
 
