@@ -38,7 +38,7 @@ namespace StockTracker.API.Test.Clients
 			var controller = new ClientsController(logic);
 
 			//Act
-			var result = controller.AddClient(_client);
+			var result = controller.Add(_client);
 			
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
@@ -53,7 +53,7 @@ namespace StockTracker.API.Test.Clients
 			var controller = new ClientsController(logic);
 
 			//Act
-			var result = controller.AddClient(_client);
+			var result = controller.Add(_client);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));

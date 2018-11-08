@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StockTracker.API.Interface;
 using StockTracker.BusinessLogic.Inteface.Client;
 using StockTracker.Interface.Models.Client;
 
@@ -11,8 +12,8 @@ namespace StockTracker.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
-    {
+    public class ClientsController : ControllerBase, IClientsController
+	{
 	    private IClientLogic _addClient;
 
 	    public ClientsController(IClientLogic addClient)
@@ -21,7 +22,7 @@ namespace StockTracker.API.Controllers
 	    }
 
 		[Route("AddClient")]
-	    public IActionResult AddClient(bool isActive, string name, string email, string contactNumber)
+	    public IActionResult Add(bool isActive, string name, string email, string contactNumber)
 		{
 			var result = _addClient.AddClient(isActive, name, email, contactNumber);
 			if(result.IsSuccess)
@@ -31,7 +32,7 @@ namespace StockTracker.API.Controllers
 		}
 
 	    [Route("AddClient")]
-	    public IActionResult AddClient(IClient client)
+	    public IActionResult Add(IClient client)
 	    {
 		    var result = _addClient.AddClient(client);
 		    if (result.IsSuccess)
@@ -39,5 +40,25 @@ namespace StockTracker.API.Controllers
 
 		    return BadRequest(result);
 	    }
+
+		public IActionResult Get(IClient client)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IActionResult Edit(IClient client)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IActionResult Remove(IClient client)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IActionResult Toggle(IClient client)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockTracker.API.Interface\StockTracker.API.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Inteface.csproj" />
   </ItemGroup>
 
