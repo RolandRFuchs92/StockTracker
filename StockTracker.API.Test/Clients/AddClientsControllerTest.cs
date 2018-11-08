@@ -15,6 +15,7 @@ using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
+using StockTracker.Repository.Test;
 using StockTracker.Seed.Clients;
 
 namespace StockTracker.API.Test.Clients
@@ -24,12 +25,14 @@ namespace StockTracker.API.Test.Clients
     {
 	    private Mock<IClientLogic> _moq;
 	    private Client _client;
+	    private StockTrackerContext _db;
 
 	    public AddClientsControllerTest()
 	    {
 		    _moq = new Mock<IClientLogic>();
 			_client = new GenericClients().One();
-		}
+		    _db = new TestDb().Db;
+	    }
 
 	    [TestMethod]
 		public void Add_PassValidClients_OK()
@@ -68,14 +71,16 @@ namespace StockTracker.API.Test.Clients
 			var moqLoic = new Mock<IClientLogic>();
 			var logic = moqLoic.Object;
 			var controller = new ClientsController(logic);
-			new StockTrackerContext().Clients.Add(_client);
+			_db.Clients.Add(_client);
+			_db.SaveChanges();
 
 
 			//Act
-			var result = controller.Get(_client);
-
+			var result = controller.Get(_client.ClientId) as Result<IClient>;
+			
 			//Assert
-
+			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+			Assert.IsTrue(result.IsSuccess);
 		}
 
 	}
