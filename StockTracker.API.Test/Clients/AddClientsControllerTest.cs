@@ -10,9 +10,11 @@ using StockTracker.API.Controllers;
 using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.Context;
 using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Clients;
+using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients;
 
 namespace StockTracker.API.Test.Clients
@@ -30,7 +32,7 @@ namespace StockTracker.API.Test.Clients
 		}
 
 	    [TestMethod]
-		public void AddClient_PassValidClients_OK()
+		public void Add_PassValidClients_OK()
 		{
 			//Arrange
 			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
@@ -45,7 +47,7 @@ namespace StockTracker.API.Test.Clients
 		}
 
 		[TestMethod]
-		public void AddClient_PassInvalidClient_Badrequest()
+		public void Add_PassInvalidClient_Badrequest()
 		{
 			//Arrange
 			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(false));
@@ -58,6 +60,23 @@ namespace StockTracker.API.Test.Clients
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
 		}
-		
+
+		[TestMethod]
+		public void Get_PassValidClientIdForGet_GetCorrectClient()
+		{
+			//Arrange
+			var moqLoic = new Mock<IClientLogic>();
+			var logic = moqLoic.Object;
+			var controller = new ClientsController(logic);
+			new StockTrackerContext().Clients.Add(_client);
+
+
+			//Act
+			var result = controller.Get(_client);
+
+			//Assert
+
+		}
+
 	}
 }

@@ -13,10 +13,10 @@ namespace StockTracker.API.Interface
     {
 	    IActionResult Add(IClient client);
 	    IActionResult Add(bool isActive, string name, string email, string contactNumber);
-	    IActionResult Get(IClient client);
+	    IActionResult Get(int clientId);
 	    IActionResult Edit(IClient client);
-	    IActionResult Remove(IClient client);
-	    IActionResult Toggle(IClient client);
+	    IActionResult Remove(int clientId);
+	    IActionResult Toggle(int clientId, bool isActive);
 
     }
 }
