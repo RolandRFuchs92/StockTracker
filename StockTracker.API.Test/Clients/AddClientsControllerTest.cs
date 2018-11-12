@@ -100,8 +100,14 @@ namespace StockTracker.API.Test.Clients
 		public void Get_PassInvalidClientForGet_BadRequest()
 		{
 			//Arrange
+			var resultClient = new Result<IClient>()
+			{
+				Body = null,
+				IsSuccess = false,
+				Message = "Woops! Failed!"
+			};
 			var moqLogic = new Mock<IClientLogic>();
-				moqLogic.Setup(i => i.GetClient(_client.ClientId)).Returns(new Result<IClient>(false));
+				moqLogic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
 
 			var controller = new ClientsController(moqLogic.Object);
 
@@ -135,7 +141,7 @@ namespace StockTracker.API.Test.Clients
 			var controllerResult = result.Value as Result<bool>;
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(Result<bool>));
+			Assert.IsInstanceOfType(controllerResult, typeof(Result<bool>));
 			Assert.IsTrue(controllerResult.Body);
 			Assert.IsTrue(controllerResult.IsSuccess);
 		}
@@ -143,7 +149,6 @@ namespace StockTracker.API.Test.Clients
 		[TestMethod]
 		public void Edit_PassInvalidClient_False()
 		{
-			//Arrange
 			//Arrange
 			var clientResult = new Result<bool>
 			{
@@ -159,10 +164,10 @@ namespace StockTracker.API.Test.Clients
 
 
 			//Act
-			var result = controller.Edit(_client) as BadRequestResult;
+			var result = controller.Edit(_client) as BadRequestObjectResult;
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
 		}
 		#endregion
 
@@ -264,7 +269,7 @@ namespace StockTracker.API.Test.Clients
 
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult), "unexpected result returned.");
 		}
 
 		#endregion
