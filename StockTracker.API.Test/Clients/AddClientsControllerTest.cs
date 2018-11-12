@@ -69,18 +69,53 @@ namespace StockTracker.API.Test.Clients
 		{
 			//Arrange
 			var moqLoic = new Mock<IClientLogic>();
+			var resultClient = new Result<IClient>()
+			{
+				Body = _client,
+				IsSuccess = true,
+				Message = "Wow look how cool you are!"
+			};
+			moqLoic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
 			var logic = moqLoic.Object;
 			var controller = new ClientsController(logic);
-			_db.Clients.Add(_client);
-			_db.SaveChanges();
 
 
 			//Act
-			var result = controller.Get(_client.ClientId) as Result<IClient>;
-			
+			var result = controller.Get(_client.ClientId) as OkObjectResult;
+			var controllerResult = result.Value as Result<IClient>;
+
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-			Assert.IsTrue(result.IsSuccess);
+			Assert.IsTrue(controllerResult.IsSuccess);
+		}
+
+		[TestMethod]
+		public void Get_PassInvalidClientForGet_BadRequest()
+		{
+			//Arrange
+			var moqLogic = new Mock<IClientLogic>();
+				moqLogic.Setup(i => i.GetClient(_client.ClientId)).Returns(new Result<IClient>(false));
+
+			var controller = new ClientsController(moqLogic.Object);
+
+			//Act
+			var result = controller.Get(0);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+		}
+
+		[TestMethod]
+		public void Edit_PassValidClient_EditedClient()
+		{
+			//Arrange
+			var moqLogic = new Mock<IClientLogic>();
+
+			//Act
+
+
+			//Assert
+
 		}
 
 	}
