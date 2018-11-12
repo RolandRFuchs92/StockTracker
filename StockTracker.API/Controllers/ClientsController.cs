@@ -53,17 +53,29 @@ namespace StockTracker.API.Controllers
 
 		public IActionResult Edit(IClient client)
 		{
-			throw new NotImplementedException();
+			var result = _clientLogic.EditClient(client);
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
 		}
 
 		public IActionResult Remove(int clientId)
 		{
-			throw new NotImplementedException();
+			var result = _clientLogic.RemoveClient(clientId);
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
 		}
 
 		public IActionResult Toggle(int clientId, bool isActive)
 		{
-			throw new NotImplementedException();
+			var result = _clientLogic.ToggleClient(clientId, isActive);
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
 		}
 	
 	}
