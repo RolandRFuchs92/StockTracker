@@ -9,6 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using StockTracker.BuisnessLogic.Clients;
+using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
+using StockTracker.Repository.Clients;
+using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.API
 {
@@ -25,10 +31,16 @@ namespace StockTracker.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+	        services.AddOptions();
+	        services.AddTransient<IStockTrackerContext, StockTrackerContext>();
+	        services.AddTransient<IClientRepo, ClientRepo>();
+			services.AddTransient<IClientLogic, ClientLogic>();
+
+		}
+
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

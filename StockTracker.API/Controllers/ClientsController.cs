@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using StockTracker.API.Interface;
 using StockTracker.BusinessLogic.Inteface.Client;
 using StockTracker.Interface.Models.Client;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.API.Controllers
 {
@@ -21,18 +22,20 @@ namespace StockTracker.API.Controllers
 		    _clientLogic = clientLogic;
 	    }
 
-		[Route("Add")]
-	    public IActionResult Add(bool isActive, string name, string email, string contactNumber)
-		{
-			var result = _clientLogic.AddClient(isActive, name, email, contactNumber);
-			if(result.IsSuccess)
-				return Ok(result);
+		//[Route("Add")]
+		//[HttpPost]
+	 //   public IActionResult Add(bool isActive, string name, string email, string contactNumber)
+		//{
+		//	var result = _clientLogic.AddClient(isActive, name, email, contactNumber);
+		//	if(result.IsSuccess)
+		//		return Ok(result);
 
-			return BadRequest(result);
-		}
+		//	return BadRequest(result);
+		//}
 
 		[Route("Add")]
-		public IActionResult Add(IClient client)
+		[HttpPost]
+		public IActionResult Add(Client client)
 		{
 			var result = _clientLogic.AddClient(client);
 			if (result.IsSuccess)
@@ -42,6 +45,7 @@ namespace StockTracker.API.Controllers
 		}
 
 		[Route("Get")]
+		[HttpGet]
 		public IActionResult Get(int clientId)
 		{
 			var result = _clientLogic.GetClient(clientId);
@@ -51,7 +55,9 @@ namespace StockTracker.API.Controllers
 			return Ok(result);
 		}
 
-		public IActionResult Edit(IClient client)
+		[Route("Edit")]
+		[HttpPost]
+		public IActionResult Edit(Client client)
 		{
 			var result = _clientLogic.EditClient(client);
 			if (result.IsSuccess)
@@ -60,6 +66,8 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
+		[Route("Remove")]
+		[HttpPost]
 		public IActionResult Remove(int clientId)
 		{
 			var result = _clientLogic.RemoveClient(clientId);
@@ -69,6 +77,8 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
+		[Route("Toggle")]
+		[HttpPost]
 		public IActionResult Toggle(int clientId, bool isActive)
 		{
 			var result = _clientLogic.ToggleClient(clientId, isActive);
