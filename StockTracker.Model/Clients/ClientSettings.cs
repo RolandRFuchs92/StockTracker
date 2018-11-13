@@ -8,7 +8,6 @@ namespace StockTracker.Model.Clients
 {
 		public class ClientSettings : IClientSettings
 		{
-				[Key]
 				public int ClientSettingsId { get; set; }
 				public int ClientId { get; set; }
 				public bool CanAnyoneAddStock { get; set; }

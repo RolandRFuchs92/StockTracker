@@ -12,7 +12,16 @@ namespace StockTracker.Model.Clients.Config
     {
 	    public void Configure(EntityTypeBuilder<ClientSettings> builder)
 	    {
-		    throw new NotImplementedException();
+		    builder.HasKey(i => i.ClientSettingsId);
+		    builder.HasOne(i => i.Client).WithOne(i => i.ClientSettings);
+
+		    builder.Property(i => i.ClientId).IsRequired().HasColumnType("Int");
+		    builder.Property(i => i.CanAnyoneAddStock).IsRequired().HasColumnType("Bit");
+		    builder.Property(i => i.CanEmailManagers).IsRequired().HasColumnType("Bit");
+		    builder.Property(i => i.CloseTime).IsRequired().HasColumnType("DateTime");
+		    builder.Property(i => i.OpenTime).IsRequired().HasColumnType("DateTime");
+		    builder.Property(i => i.TotalUsers).IsRequired(false).HasColumnType("Int");
+
 	    }
     }
 }
