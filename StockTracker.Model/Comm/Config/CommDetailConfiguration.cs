@@ -17,15 +17,16 @@ namespace StockTracker.Model.Comm.Config
 		    builder.HasOne(i => i.Member);
 		    builder.HasOne(i => i.CommError);
 
-		    builder.Property(i => i.CommDetailId).HasColumnType("Int").IsRequired().ValueGeneratedOnAdd();
-		    builder.Property(i => i.CommErrorId).HasColumnType("Int").IsRequired();
+		    builder.Property(i => i.CommDetailId).HasColumnType("INT").IsRequired().ValueGeneratedOnAdd();
+		    builder.Property(i => i.CommErrorId).HasColumnType("INT").IsRequired();
+		    builder.Property(i => i.MemberId).HasColumnType("INT").IsRequired();
+
 		    builder.Property(i => i.Message).HasColumnType("NVARCHAR(MAX)").IsRequired();
 		    builder.Property(i => i.Recipients).HasColumnType("NVARCHAR(2048)").IsRequired();
 		    builder.Property(i => i.Sender).HasColumnType("NVARCHAR(200)").IsRequired();
 		    builder.Property(i => i.Response).HasColumnType("NVARCHAR(2048)").IsRequired(false);
 		    builder.Property(i => i.Subject).HasColumnType("NVARCHAR(256)").IsRequired();
 		    builder.Property(i => i.CommError).HasColumnType("NVARCHAR(MAX)").IsRequired(false);
-		    builder.Property(i => i.MemberId).HasColumnType("INT").IsRequired();
 	    }
     }
 }
