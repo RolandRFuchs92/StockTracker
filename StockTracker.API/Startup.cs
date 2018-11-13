@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,10 @@ namespace StockTracker.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-	        services.AddOptions();
+	        var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+	        services.AddDbContext<StockTrackerContext>(options => options.UseSqlServer(connection));
+
+			services.AddOptions();
 	        services.AddTransient<IStockTrackerContext, StockTrackerContext>();
 	        services.AddTransient<IClientRepo, ClientRepo>();
 			services.AddTransient<IClientLogic, ClientLogic>();
