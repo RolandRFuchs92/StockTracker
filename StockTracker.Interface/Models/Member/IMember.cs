@@ -11,6 +11,6 @@ namespace StockTracker.Interface.Models.Member
 		int ClientId { get; set; }
 		int MemberRoleId { get; set; }
 		bool IsActive { get; set; }
-		DateTime LastActiveDate { get; set; }
+		DateTime? LastActiveDate { get; set; }
 	}
 }

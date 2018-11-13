@@ -14,7 +14,7 @@ namespace StockTracker.Model.Member
 		public int ClientId { get; set; }
 		public int MemberRoleId { get; set; }
 		public bool IsActive { get; set; }
-		public DateTime LastActiveDate { get; set; }
+		public DateTime? LastActiveDate { get; set; }
 
 		[ForeignKey("PersonId")]
 		public virtual Person.Person Person { get; set; }
