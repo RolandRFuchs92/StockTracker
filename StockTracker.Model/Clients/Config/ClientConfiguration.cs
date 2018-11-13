@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StockTracker.Model.Clients;
 
-namespace StockTracker.Model.Config
+namespace StockTracker.Model.Clients.Config
 {
     public class ClientConfiguration : IEntityTypeConfiguration<Client>
 	{
