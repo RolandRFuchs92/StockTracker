@@ -11,6 +11,7 @@ namespace StockTracker.Model.Comm
 {
     public class CommCore : ICommCore
     {
+	    public int CommCoreId { get; set; }
 	    public int CommTypeId { get; set; }
 	    public int CommSendStatusTypeId { get; set; }
 	    public int CommDetailId { get; set; }

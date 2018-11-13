@@ -8,6 +8,7 @@ namespace StockTracker.Interface.Models.Comm
 {
     public interface ICommCore
     {
+		int CommCoreId { get; set; }
         int CommTypeId { get; set; }
 		int CommSendStatusTypeId { get; set;}
 		int CommDetailId { get; set; }
