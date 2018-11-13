@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTracker.Interface.Models.Client
+namespace StockTracker.Interface.Models.Clients
 {
     public interface IClient
     {

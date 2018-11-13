@@ -1,5 +1,4 @@
 ﻿using System;
-using StockTracker.Interface.Models.User;
 
 namespace StockTracker.Interface.Models.Shopping
 {

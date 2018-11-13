@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace StockTracker.Interface.Models.Client
+namespace StockTracker.Interface.Models.Clients
 {
     public interface IClientSettings
     {

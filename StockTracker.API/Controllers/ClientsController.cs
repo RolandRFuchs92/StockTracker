@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockTracker.API.Interface;
 using StockTracker.BusinessLogic.Inteface.Client;
-using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 
 namespace StockTracker.API.Controllers

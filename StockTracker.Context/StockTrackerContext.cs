@@ -2,10 +2,11 @@
 using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
 using StockTracker.Model.ClientStock;
+using StockTracker.Model.Member;
+using StockTracker.Model.Person;
 using StockTracker.Model.Settings;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
-using StockTracker.Model.User;
 
 namespace StockTracker.Context
 {

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace StockTracker.Interface.Models.User
+namespace StockTracker.Interface.Models.Member
 {
     public interface IMember 
     {

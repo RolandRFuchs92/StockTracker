@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Shopping;
-using StockTracker.Interface.Models.User;
-using StockTracker.Model.User;
 
 namespace StockTracker.Model.Shopping
 {
@@ -20,6 +18,6 @@ namespace StockTracker.Model.Shopping
 	    public DateTime CreatedOn { get; set; }
 
 		[ForeignKey("MemberId")]
-		public virtual Member Member { get; set; }
+		public virtual Member.Member Member { get; set; }
 	}
 }

@@ -5,8 +5,8 @@ using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Inteface.Client;
 using StockTracker.BusinessLogic.Inteface.Poco;
 using StockTracker.Extensions.StringExtensions;
+using StockTracker.Interface.Models.Clients;
 using StockTracker.Repository.Interface.Clients;
-using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 
 namespace StockTracker.BuisnessLogic.Clients

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using StockTracker.Interface.Models.User;
+using StockTracker.Interface.Models.Member;
 using StockTracker.Model.Clients;
 
-namespace StockTracker.Model.User
+namespace StockTracker.Model.Member
 {
 	public class Member: IMember
 	{
@@ -17,7 +17,7 @@ namespace StockTracker.Model.User
 		public DateTime LastActiveDate { get; set; }
 
 		[ForeignKey("PersonId")]
-		public virtual Person Person { get; set; }
+		public virtual Person.Person Person { get; set; }
 
 		[ForeignKey("ClientId")]
 		public virtual Client Client { get; set; }

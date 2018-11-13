@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StockTracker.Model.Clients;
 
-namespace StockTracker.Model.Config.Clients
+namespace StockTracker.Model.Config
 {
     public class ClientConfiguration : IEntityTypeConfiguration<Client>
 	{

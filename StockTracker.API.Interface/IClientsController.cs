@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockTracker.BusinessLogic.Inteface.Poco;
-using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 
 namespace StockTracker.API.Interface

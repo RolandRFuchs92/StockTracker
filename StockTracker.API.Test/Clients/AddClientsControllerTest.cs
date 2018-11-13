@@ -11,7 +11,7 @@ using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Inteface.Client;
 using StockTracker.Context;
-using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;

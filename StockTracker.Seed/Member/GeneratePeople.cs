@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Models.User;
 using StockTracker.Model;
-using StockTracker.Model.User;
+using StockTracker.Model.Person;
 
 namespace StockTracker.Seed.Member
 {

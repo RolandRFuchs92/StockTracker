@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 
 namespace StockTracker.Model.Clients

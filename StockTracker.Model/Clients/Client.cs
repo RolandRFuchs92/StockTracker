@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models;
-using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Clients;
 
 namespace StockTracker.Model.Clients
 {

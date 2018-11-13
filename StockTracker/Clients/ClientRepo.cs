@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
-using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Interface.Clients;
 

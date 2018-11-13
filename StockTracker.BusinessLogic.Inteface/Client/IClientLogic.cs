@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.BusinessLogic.Inteface.Poco;
-using StockTracker.Interface.Models.Client;
+using StockTracker.Interface.Models.Clients;
 
 namespace StockTracker.BusinessLogic.Inteface.Client
 {

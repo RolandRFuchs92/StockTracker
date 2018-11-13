@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Models.User;
 using StockTracker.Model;
-using StockTracker.Model.User;
+using StockTracker.Model.Person;
 
 namespace StockTracker.Seed.Member
 {
@@ -19,15 +18,15 @@ namespace StockTracker.Seed.Member
 			_memberRoleCount = new GenerateMemberRoles().GenerateMemberRole().Count();
 	    }
 
-		public List<Model.User.Member> SetupSeedMembers(List<Person> people)
+		public List<Model.Member.Member> SetupSeedMembers(List<Person> people)
 		{
-			var members = new List<Model.User.Member>();
+			var members = new List<Model.Member.Member>();
 			var rnd = new Random();
 
 			members.Add(AddUseCaseMember());
 			foreach (var person in people)
 			{
-				members.Add(new Model.User.Member
+				members.Add(new Model.Member.Member
 				{
 					PersonId = person.PersonId,
 					IsActive = true,
@@ -40,9 +39,9 @@ namespace StockTracker.Seed.Member
 			return members;
 		}
 
-	    public Model.User.Member AddUseCaseMember()
+	    public Model.Member.Member AddUseCaseMember()
 	    {
-		    return new Model.User.Member
+		    return new Model.Member.Member
 		    {
 				ClientId = 1,
 				IsActive = false,
