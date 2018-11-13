@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using StockTracker.Interface.Models.Client;
 using StockTracker.Model.Clients;
 
-namespace StockTracker.Model.Settings
+namespace StockTracker.Model.Clients
 {
 		public class ClientSettings : IClientSettings
 		{
@@ -17,7 +17,6 @@ namespace StockTracker.Model.Settings
 				public DateTime CloseTime { get; set; }
 				public int TotalUsers { get; set; }
 
-				[ForeignKey("ClientId")]
-				public virtual Client Client { get; set; }
+				public Client Client { get; set; }
 		}
 }
