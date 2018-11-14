@@ -8,6 +8,8 @@ namespace StockTracker.Model.Clients.Config
 		public void Configure(EntityTypeBuilder<Client> builder)
 		{
 			builder.HasKey(i => i.ClientId);
+
+			builder.Property(i => i.ClientId).ValueGeneratedOnAdd();
 			builder.Property(i => i.IsActive).IsRequired(true).HasColumnType("Bit");
 			builder.Property(i => i.Email).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(250);
 			builder.Property(i => i.ContactNumber).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(20);
