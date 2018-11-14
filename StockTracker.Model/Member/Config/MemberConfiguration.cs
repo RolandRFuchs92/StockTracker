@@ -19,7 +19,7 @@ namespace StockTracker.Model.Member.Config
 		    builder.HasOne(i => i.Person);
 
 		    builder.Property(i => i.MemberId).IsRequired().HasColumnType("INT").ValueGeneratedOnAdd();
-		    builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT").HasDefaultValueSql("1");
+		    builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");
 		    builder.Property(i => i.ClientId).IsRequired().HasColumnType("INT");
 		    builder.Property(i => i.MemberRoleId).IsRequired().HasColumnType("INT");
 		    builder.Property(i => i.LastActiveDate).IsRequired(false).HasColumnType("DATETIME");
