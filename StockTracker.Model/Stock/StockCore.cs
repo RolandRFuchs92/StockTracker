@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.Stock;
+using StockTracker.Model.Shopping;
 using StockTracker.Model.StockSupplier;
 
 namespace StockTracker.Model.Stock
@@ -21,11 +22,10 @@ namespace StockTracker.Model.Stock
 	    public string StockCoreName { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
-		[ForeignKey("StockCategoryId")]
 		public StockCategory StockCategory { get; set; }
-		[ForeignKey("StockSupplierDetailId")]
 		public StockSupplierDetail StockSupplierDetail { get; set; }
-		[ForeignKey("StockTypeId")]
-	    public virtual StockType StockType { get; set; }
+	    public StockType StockType { get; set; }
+
+		public ICollection<ShoppingListItem> ShoppingListItems { get; set; }
     }
 }

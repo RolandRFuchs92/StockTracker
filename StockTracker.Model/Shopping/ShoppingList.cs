@@ -17,7 +17,7 @@ namespace StockTracker.Model.Shopping
 	    public bool HasNotified { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
-		[ForeignKey("MemberId")]
-		public virtual Member.Member Member { get; set; }
+		public Member.Member Member { get; set; }
+		public ICollection<ShoppingListItem> ShoppingListItems { get; set; }
 	}
 }

@@ -21,9 +21,7 @@ namespace StockTracker.Model.Shopping
 		public bool IsCollected { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
-	    [ForeignKey("StockCoreId")]
-		public virtual StockCore StockItem { get; set; }
-	    [ForeignKey("ShoppingListId")]
-		public virtual ShoppingList ShoppingList { get; set; }
+		public StockCore StockCore { get; set; }
+		public ShoppingList ShoppingList { get; set; }
     }
 }
