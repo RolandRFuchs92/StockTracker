@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Model.Clients;
+using StockTracker.Model.Shopping;
 
 namespace StockTracker.Model.Member
 {
@@ -16,13 +17,10 @@ namespace StockTracker.Model.Member
 		public bool IsActive { get; set; }
 		public DateTime? LastActiveDate { get; set; }
 
-		[ForeignKey("PersonId")]
-		public virtual Person.Person Person { get; set; }
+		public Person.Person Person { get; set; }
+		public Client Client { get; set; }
+		public MemberRole MemberRole { get; set; }
 
-		[ForeignKey("ClientId")]
-		public virtual Client Client { get; set; }
-
-		[ForeignKey("MemberRoleId")]
-		public virtual MemberRole MemberRole { get; set; }
+		public ICollection<ShoppingList> ShoppingLists { get; set; }
 	}
 }
