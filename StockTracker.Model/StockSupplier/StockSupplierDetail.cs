@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.StockSupplier;
+using StockTracker.Model.Stock;
 using StockTracker.Model.Unit;
 
 namespace StockTracker.Model.StockSupplier
@@ -20,11 +21,10 @@ namespace StockTracker.Model.StockSupplier
 	    public int Unit { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
-		[ForeignKey("MemberId")]
-		public virtual Member.Member Member { get; set; }
-		[ForeignKey("SupplierId")]
-		public virtual Supplier.Supplier Supplier { get; set; }
-		[ForeignKey("UnitTypeId")]
-		public virtual UnitType UnitType { get; set; }
+		public Member.Member Member { get; set; }
+		public Supplier.Supplier Supplier { get; set; }
+		public UnitType UnitType { get; set; }
+
+	    public StockCore StockCore { get; set; }
     }
 }
