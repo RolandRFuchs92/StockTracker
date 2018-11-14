@@ -20,6 +20,7 @@ namespace StockTracker.Model.Clients.Config
 			builder.Property(i => i.IsDeleted).IsRequired(false).HasColumnType("Bit");
 
 			builder.HasOne<ClientSettings>().WithOne(i => i.Client);
+			builder.HasMany(i => i.Member).WithOne(i => i.Client);
 		}
 	}
 }

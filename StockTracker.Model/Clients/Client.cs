@@ -27,7 +27,7 @@ namespace StockTracker.Model.Clients
 	    public bool IsActive { get; set; }
 		public DateTime CreatedOn { get; set; }
 
-		[ForeignKey("ClientId")]
 	    public ClientSettings ClientSettings { get; set; }
+	    public ICollection<Member.Member> Member { get; set; }
     }
 }
