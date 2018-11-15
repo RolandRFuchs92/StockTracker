@@ -13,8 +13,8 @@ namespace StockTracker.Model.ClientStock.Config
 		public void Configure(EntityTypeBuilder<ClientStockLevel> builder)
 		{
 			builder.HasKey(i => i.ClientStockLevelId);
-			builder.HasOne(i => i.Member);
-			builder.HasOne(i => i.ClientStockItem);
+			builder.HasOne(i => i.Member).WithOne().OnDelete(DeleteBehavior.Restrict);
+			builder.HasOne(i => i.ClientStockItem).WithOne().OnDelete(DeleteBehavior.Restrict);
 
 
 			builder.Property(i => i.ClientStockItemId).HasColumnType("Int").IsRequired();

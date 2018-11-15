@@ -8,7 +8,8 @@ namespace StockTracker.Model.Clients.Config
 	    public void Configure(EntityTypeBuilder<ClientSettings> builder)
 	    {
 		    builder.HasKey(i => i.ClientSettingsId);
-		    builder.HasOne(i => i.Client).WithOne(i => i.ClientSettings);
+
+		    builder.HasOne(i => i.Client).WithOne(i => i.ClientSettings).OnDelete(DeleteBehavior.Restrict);
 
 		    builder.Property(i => i.ClientId).IsRequired().HasColumnType("Int");
 		    builder.Property(i => i.CanAnyoneAddStock).IsRequired().HasColumnType("Bit");

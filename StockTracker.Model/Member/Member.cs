@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Model.Clients;
 using StockTracker.Model.Shopping;

@@ -16,7 +16,7 @@ namespace StockTracker.Model.Member.Config
 		    builder.HasKey(i => i.MemberRoleId);
 
 		    builder.Property(i => i.MemberRoleId).IsRequired().HasColumnType("INT").ValueGeneratedOnAdd();
-		    builder.Property(i => i.MemberRoleName).IsRequired().HasColumnType("NVARCHAR(256");
+		    builder.Property(i => i.MemberRoleName).IsRequired().HasColumnType("NVARCHAR(256)");
 
 		    builder.HasData(GetMemberRoleSeed());
 	    }

@@ -14,9 +14,9 @@ namespace StockTracker.Model.Stock.Config
 	    {
 		    builder.HasKey(i => i.StockCoreId);
 
-		    builder.HasOne(i => i.StockType).WithOne(i => i.StockCore);
-		    builder.HasOne(i => i.StockCategory).WithOne(i => i.StockCore);
-		    builder.HasOne(i => i.StockSupplierDetail).WithOne(i => i.StockCore);
+		    builder.HasOne(i => i.StockType).WithOne(i => i.StockCore).OnDelete(DeleteBehavior.Restrict);
+		    builder.HasOne(i => i.StockCategory).WithOne(i => i.StockCore).OnDelete(DeleteBehavior.Restrict);
+		    builder.HasOne(i => i.StockSupplierDetail).WithOne(i => i.StockCore).OnDelete(DeleteBehavior.Restrict);
 
 		    builder.Property(i => i.StockCoreId).IsRequired().HasColumnType("INT").ValueGeneratedOnAdd();
 		    builder.Property(i => i.CreatedOn).IsRequired().HasColumnType("DATETIME").ValueGeneratedOnAdd();

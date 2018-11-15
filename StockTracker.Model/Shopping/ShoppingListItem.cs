@@ -13,7 +13,6 @@ namespace StockTracker.Model.Shopping
 {
     public class ShoppingListItem : IShoppingListItem
     {
-		[Key]
 	    public int ShoppingListItemId { get; set; }
 	    public int ShoppingListId { get; set; }
 	    public int StockCoreId { get; set; }

@@ -5,7 +5,6 @@ namespace StockTracker.Model.Person
 {
     public class Person : IPerson
     {
-		[Key]
 	    public int PersonId { get; set; }
 	    public string PersonName { get; set; }
 	    public string PersonSurname { get; set; }

@@ -14,8 +14,8 @@ namespace StockTracker.Model.Comm.Config
 	    {
 		    builder.HasKey(i => i.CommDetailId);
 
-		    builder.HasOne(i => i.Member);
-		    builder.HasOne(i => i.CommError);
+		    builder.HasOne(i => i.Member).WithOne().OnDelete(DeleteBehavior.Restrict);
+		    builder.HasOne(i => i.CommError).WithOne().OnDelete(DeleteBehavior.Restrict);
 
 		    builder.Property(i => i.CommDetailId).HasColumnType("INT").IsRequired().ValueGeneratedOnAdd();
 		    builder.Property(i => i.CommErrorId).HasColumnType("INT").IsRequired();

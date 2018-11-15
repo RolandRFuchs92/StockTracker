@@ -11,7 +11,6 @@ namespace StockTracker.Model.Shopping
 {
     public class ShoppingList : IShoppingList
     {
-		[Key]
 	    public int ShoppingListId { get; set; }
 	    public int MemberId { get; set; }
 	    public bool HasNotified { get; set; }
