@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Extensions;
-using StockTracker.Model.Settings;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.Seed.Settings
 {

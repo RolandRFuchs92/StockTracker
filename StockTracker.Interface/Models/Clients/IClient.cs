@@ -10,8 +10,6 @@ namespace StockTracker.Interface.Models.Clients
 		string ContactNumber { get; set; }
 		string Address { get; set; }
 		DateTime? LastCheckup { get; set; }
-		bool IsActive { get; set; }
-		bool? IsDeleted { get; set; }
 		DateTime CreatedOn { get; set; }
     }
 }

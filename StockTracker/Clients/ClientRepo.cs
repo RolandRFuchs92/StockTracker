@@ -80,8 +80,6 @@ namespace StockTracker.Repository.Clients
 			{
 				var client = _db.Clients.FirstOrDefault(i => i.ClientId == editClient.ClientId);
 
-				client.IsActive = editClient.IsActive;
-				client.IsDeleted = editClient.IsDeleted ?? client.IsDeleted;
 				client.ClientName = editClient.ClientName ?? client.ClientName;
 				client.ContactNumber = editClient.ContactNumber ?? client.ContactNumber;
 				client.Email = editClient.Email ?? client.Email;
