@@ -61,7 +61,7 @@ namespace StockTracker.Model.Stock.Config
 				},
 				new StockCategory
 				{
-					StockCategoryId = 7,
+					StockCategoryId = 8,
 					StockCategoryName = "Edible Liquid"
 				},
 			};

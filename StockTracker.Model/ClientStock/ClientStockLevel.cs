@@ -18,9 +18,7 @@ namespace StockTracker.Model.ClientStock
 	    public DateTime CreatedOn { get; set; }
 	    public bool IsActive { get; set; }
 
-		[ForeignKey("ClientStockItemId")]
-		public virtual ClientStockItem ClientStockItem { get; set; }
-		[ForeignKey("MemberId")]
-		public virtual Member.Member Member { get; set; }
+		public ClientStockItem ClientStockItem { get; set; }
+		public Member.Member Member { get; set; }
     }
 }

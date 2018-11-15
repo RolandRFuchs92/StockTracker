@@ -21,9 +21,7 @@ namespace StockTracker.Model.ClientStock
 	    public DateTime CreatedOn { get; set; }
 	    public bool IsActive { get; set; }
 
-		[ForeignKey("StockCoreId")]
-		public virtual StockCore StockCore { get; set; }
-		[ForeignKey("ClientId")]
-		public virtual Client Client { get; set; }
+		public StockCore StockCore { get; set; }
+		public Client Client { get; set; }
     }
 }
