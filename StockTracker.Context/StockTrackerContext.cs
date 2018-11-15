@@ -10,7 +10,9 @@ using StockTracker.Model.Member.Config;
 using StockTracker.Model.Person;
 using StockTracker.Model.Person.Config;
 using StockTracker.Model.Shopping;
+using StockTracker.Model.Shopping.Config;
 using StockTracker.Model.Stock;
+using StockTracker.Model.Stock.Config;
 
 namespace StockTracker.Context
 {
@@ -56,7 +58,16 @@ namespace StockTracker.Context
 		    modelBuilder.ApplyConfiguration(new MemberConfiguration());
 		    modelBuilder.ApplyConfiguration(new MemberRoleConfiguration());
 
+			
 			modelBuilder.ApplyConfiguration(new PersonConfiguration());
+
+		    modelBuilder.ApplyConfiguration(new ShoppingListConfiguration());
+		    modelBuilder.ApplyConfiguration(new ShoppingListItemConfiguration());
+
+		    modelBuilder.ApplyConfiguration(new StockCategoryConfiguration());
+		    modelBuilder.ApplyConfiguration(new StockCoreConfiguration());
+
+
 		}
 	}
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace StockTracker.Model.Stock.Config
 {
-    public class StockCoreConfiguation : IEntityTypeConfiguration<StockCore>
+    public class StockCoreConfiguration : IEntityTypeConfiguration<StockCore>
     {
 	    public void Configure(EntityTypeBuilder<StockCore> builder)
 	    {

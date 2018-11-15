@@ -19,7 +19,7 @@ namespace StockTracker.Model.Shopping.Config
 
 		    builder.Property(i => i.ShoppingListItemId).HasColumnType("INT").IsRequired().ValueGeneratedOnAdd();
 		    builder.Property(i => i.ShoppingListId).HasColumnType("INT").IsRequired();
-		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired();
+		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired().HasDefaultValueSql("GETDATE()");
 		    builder.Property(i => i.IsCollected).HasColumnType("BIT").IsRequired();
 		    builder.Property(i => i.StockCoreId).HasColumnType("INT").IsRequired();
 		    builder.Property(i => i.Quantity).HasColumnType("INT").IsRequired();

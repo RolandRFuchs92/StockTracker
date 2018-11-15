@@ -10,7 +10,7 @@ using StockTracker.Context;
 namespace StockTracker.API.Migrations
 {
     [DbContext(typeof(StockTrackerContext))]
-    [Migration("20181114205612_initial")]
+    [Migration("20181115161247_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
