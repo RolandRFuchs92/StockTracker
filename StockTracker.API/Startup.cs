@@ -33,7 +33,7 @@ namespace StockTracker.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-	        var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+	        var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockTracker;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 	        services.AddDbContext<StockTrackerContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("StockTracker.API")));
 
 			services.AddOptions();
