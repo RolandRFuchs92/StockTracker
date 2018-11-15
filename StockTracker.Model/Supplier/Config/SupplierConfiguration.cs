@@ -14,7 +14,15 @@ namespace StockTracker.Model.Supplier.Config
 	    {
 		    builder.HasKey(i => i.SupplierId);
 
+		    builder.HasOne(i => i.SupplierType).WithMany(i => i.Suppliers);
+
 		    builder.Property(i => i.SupplierId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.Email).HasColumnType("NVARCHAR(256)").IsRequired(false);
+		    builder.Property(i => i.Address).HasColumnType("NVARCHAR(1024)").IsRequired(false);
+		    builder.Property(i => i.ContactNumber).HasColumnType("NVARCHAR(256)").IsRequired(false);
+		    builder.Property(i => i.SupplierLocation).HasColumnType("NVARCHAR(256)").IsRequired(false);
+		    builder.Property(i => i.SupplierTypeId).HasColumnType("INT").IsRequired();
+		    builder.Property(i => i.SupplierName).HasColumnType("NVARCHAR(256)").IsRequired();
 	    }
     }
 }

@@ -11,5 +11,7 @@ namespace StockTracker.Model.Supplier
     {
 	    public int SupplierTypeId { get; set; }
 	    public string SupplierTypeName { get; set; }
+
+		public ICollection<Supplier> Suppliers { get; set; }
     }
 }

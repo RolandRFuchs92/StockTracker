@@ -18,7 +18,6 @@ namespace StockTracker.Model.Supplier
 	    public string Email { get; set; }
 	    public string Address { get; set; }
 
-		[ForeignKey("SupplierTypeId")]
 		public virtual SupplierType SupplierType { get; set; }
     }
 }
