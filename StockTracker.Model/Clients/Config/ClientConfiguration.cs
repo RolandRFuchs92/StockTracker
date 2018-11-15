@@ -9,13 +9,13 @@ namespace StockTracker.Model.Clients.Config
 		{
 			builder.HasKey(i => i.ClientId);
 
-			builder.Property(i => i.ClientId).ValueGeneratedOnAdd();
-			builder.Property(i => i.IsActive).IsRequired(true).HasColumnType("Bit");
-			builder.Property(i => i.Email).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(250);
-			builder.Property(i => i.ContactNumber).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(20);
-			builder.Property(i => i.Address).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(250);
-			builder.Property(i => i.ClientName).IsRequired(true).HasColumnType("Nvarchar").HasMaxLength(100);
-			builder.Property(i => i.CreatedOn).IsRequired(true).HasColumnType("DateTime").HasDefaultValueSql("GetDate()");
+			builder.Property(i => i.ClientId).UseSqlServerIdentityColumn();
+			builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");
+			builder.Property(i => i.Email).IsRequired().HasColumnType("NVARCHAR(250)").HasMaxLength(250);
+			builder.Property(i => i.ContactNumber).IsRequired().HasColumnType("NVARCHAR(20)").HasMaxLength(20);
+			builder.Property(i => i.Address).IsRequired().HasColumnType("NVARCHAR(250)").HasMaxLength(250);
+			builder.Property(i => i.ClientName).IsRequired().HasColumnType("NVARCHAR(100)");
+			builder.Property(i => i.CreatedOn).IsRequired().HasColumnType("DateTime").HasDefaultValueSql("GetDate()");
 			builder.Property(i => i.LastCheckup).IsRequired(false).HasColumnType("DateTime");
 			builder.Property(i => i.IsDeleted).IsRequired(false).HasColumnType("Bit");
 

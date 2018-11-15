@@ -18,7 +18,7 @@ namespace StockTracker.Model.ClientStock.Config
 
 
 			builder.Property(i => i.ClientStockItemId).HasColumnType("Int").IsRequired().UseSqlServerIdentityColumn();
-			builder.Property(i => i.CreatedOn).HasColumnType("DateTime").IsRequired();
+			builder.Property(i => i.CreatedOn).HasColumnType("DateTime").IsRequired().HasDefaultValueSql("GETDATE()");
 			builder.Property(i => i.IsActive).HasColumnType("Bit").IsRequired();
 			builder.Property(i => i.MemberId).HasColumnType("Int").IsRequired();
 			builder.Property(i => i.Quantity).HasColumnType("Int").IsRequired();

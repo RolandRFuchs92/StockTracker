@@ -11,13 +11,13 @@ namespace StockTracker.Model.Clients.Config
 
 		    builder.HasOne(i => i.Client).WithOne(i => i.ClientSettings).OnDelete(DeleteBehavior.Restrict);
 
-		    builder.Property(i => i.ClientId).IsRequired().HasColumnType("Int");
+		    builder.Property(i => i.ClientSettingsId).HasColumnType("INT").UseSqlServerIdentityColumn();
+			builder.Property(i => i.ClientId).IsRequired().HasColumnType("Int");
 		    builder.Property(i => i.CanAnyoneAddStock).IsRequired().HasColumnType("Bit");
 		    builder.Property(i => i.CanEmailManagers).IsRequired().HasColumnType("Bit");
 		    builder.Property(i => i.CloseTime).IsRequired().HasColumnType("DateTime");
 		    builder.Property(i => i.OpenTime).IsRequired().HasColumnType("DateTime");
 		    builder.Property(i => i.TotalUsers).IsRequired().HasColumnType("Int");
-
 	    }
     }
 }
