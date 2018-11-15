@@ -14,7 +14,7 @@ namespace StockTracker.Model.Person.Config
 	    {
 		    builder.HasKey(i => i.PersonId);
 
-		    builder.Property(i => i.PersonId).IsRequired().ValueGeneratedOnAdd().HasColumnType("INT");
+		    builder.Property(i => i.PersonId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
 		    builder.Property(i => i.Email).IsRequired().HasColumnType("NVARCHAR(256)");
 		    builder.Property(i => i.Mobile).IsRequired().HasColumnType("NVARCHAR(20)");
 		    builder.Property(i => i.PersonName).IsRequired().HasColumnType("NVARCHAR(256)");

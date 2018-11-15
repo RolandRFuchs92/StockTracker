@@ -18,7 +18,7 @@ namespace StockTracker.Model.Member.Config
 		    builder.HasOne(i => i.MemberRole).WithOne().OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.Person).WithOne().OnDelete(DeleteBehavior.Restrict);
 
-		    builder.Property(i => i.MemberId).IsRequired().HasColumnType("INT").ValueGeneratedOnAdd();
+		    builder.Property(i => i.MemberId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
 		    builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");
 		    builder.Property(i => i.ClientId).IsRequired().HasColumnType("INT");
 		    builder.Property(i => i.MemberRoleId).IsRequired().HasColumnType("INT");

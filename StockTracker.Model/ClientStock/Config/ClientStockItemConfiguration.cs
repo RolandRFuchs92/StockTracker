@@ -14,10 +14,12 @@ namespace StockTracker.Model.ClientStock.Config
 	    public void Configure(EntityTypeBuilder<ClientStockItem> builder)
 	    {
 		    builder.HasKey(i => i.ClientStockItemId);
+
 		    builder.HasOne(i => i.Client).WithOne().OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.StockCore).WithOne().OnDelete(DeleteBehavior.Restrict);
 
-		    builder.Property(i => i.ClientId).HasColumnType("Int").IsRequired();
+		    builder.Property(i => i.ClientStockItemId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
+			builder.Property(i => i.ClientId).HasColumnType("Int").IsRequired();
 		    builder.Property(i => i.IsActive).HasColumnType("Bit").IsRequired();
 		    builder.Property(i => i.CreatedOn).IsRequired().HasColumnType("DateTime").HasDefaultValueSql("GetDate()");
 		    builder.Property(i => i.StockMax).IsRequired().HasColumnType("Int");

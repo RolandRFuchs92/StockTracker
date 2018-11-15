@@ -14,7 +14,7 @@ namespace StockTracker.Model.Comm.Config
 	    {
 		    builder.HasKey(i => i.CommSendStatusTypeId);
 
-		    builder.Property(i => i.CommSendStatusTypeId).HasColumnType("INT").ValueGeneratedOnAdd();
+		    builder.Property(i => i.CommSendStatusTypeId).HasColumnType("INT").UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CommSendStatusName).HasColumnType("NVARCHAR(200)").IsRequired();
 
 		    builder.HasData(GetSeedStatusTypes());

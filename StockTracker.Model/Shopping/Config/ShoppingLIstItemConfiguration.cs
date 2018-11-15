@@ -17,7 +17,7 @@ namespace StockTracker.Model.Shopping.Config
 		    builder.HasOne(i => i.StockCore).WithMany(i => i.ShoppingListItems).OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.ShoppingList).WithMany(i => i.ShoppingListItems).OnDelete(DeleteBehavior.Restrict);
 
-		    builder.Property(i => i.ShoppingListItemId).HasColumnType("INT").IsRequired().ValueGeneratedOnAdd();
+		    builder.Property(i => i.ShoppingListItemId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
 		    builder.Property(i => i.ShoppingListId).HasColumnType("INT").IsRequired();
 		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired().HasDefaultValueSql("GETDATE()");
 		    builder.Property(i => i.IsCollected).HasColumnType("BIT").IsRequired();

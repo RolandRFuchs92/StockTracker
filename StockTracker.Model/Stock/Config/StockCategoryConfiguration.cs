@@ -14,7 +14,7 @@ namespace StockTracker.Model.Stock.Config
 		{
 			builder.HasKey(i => i.StockCategoryId);
 
-			builder.Property(i => i.StockCategoryId).IsRequired().HasColumnType("INT").ValueGeneratedOnAdd();
+			builder.Property(i => i.StockCategoryId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
 			builder.Property(i => i.StockCategoryName).IsRequired().HasColumnType("NVARCHAR(250)");
 
 			builder.HasData(GetStockCategorySeed());

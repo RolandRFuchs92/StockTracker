@@ -13,6 +13,7 @@ using StockTracker.Model.Shopping;
 using StockTracker.Model.Shopping.Config;
 using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.Config;
+using StockTracker.Model.StockSupplier.Config;
 
 namespace StockTracker.Context
 {
@@ -66,9 +67,12 @@ namespace StockTracker.Context
 
 		    modelBuilder.ApplyConfiguration(new StockCategoryConfiguration());
 		    modelBuilder.ApplyConfiguration(new StockCoreConfiguration());
+		    modelBuilder.ApplyConfiguration(new StockTypeConfiguration());
+
+		    modelBuilder.ApplyConfiguration(new StockSupplierDetailConfiguration());
 
 
-		}
+	    }
 	}
 }
  
