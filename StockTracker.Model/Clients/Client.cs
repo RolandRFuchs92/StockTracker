@@ -23,10 +23,9 @@ namespace StockTracker.Model.Clients
 	    public string ContactNumber { get; set; }
 	    public string Address { get; set; }
 	    public DateTime? LastCheckup { get; set; }
-		public bool? IsDeleted { get; set; }
-	    public bool IsActive { get; set; }
-		public DateTime CreatedOn { get; set; }
-
+	    public DateTime CreatedOn { get; set; }
+	    public bool? IsDeleted { get; set; }
+		public DateTime? DeletedOn { get; set; }
 	    public ClientSettings ClientSettings { get; set; }
 	    public ICollection<Member.Member> Member { get; set; }
     }
