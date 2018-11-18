@@ -38,7 +38,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Arrange
 			var client = new Client
 			{
-				IsActive = true,
 				Address = "1 Testvill place",
 				ClientName = "Test the Cycles",
 				ContactNumber = "+27 083 123 1456",

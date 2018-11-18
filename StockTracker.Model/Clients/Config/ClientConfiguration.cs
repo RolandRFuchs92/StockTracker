@@ -13,7 +13,6 @@ namespace StockTracker.Model.Clients.Config
 			builder.HasMany(i => i.Member).WithOne(i => i.Client).OnDelete(DeleteBehavior.Restrict);
 
 			builder.Property(i => i.ClientId).UseSqlServerIdentityColumn();
-			builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");
 			builder.Property(i => i.Email).IsRequired().HasColumnType("NVARCHAR(250)").HasMaxLength(250);
 			builder.Property(i => i.ContactNumber).IsRequired().HasColumnType("NVARCHAR(20)").HasMaxLength(20);
 			builder.Property(i => i.Address).IsRequired(false).HasColumnType("NVARCHAR(250)").HasMaxLength(250);

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Model.Clients;
+using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Clients
 {
-	public class GenericClients
+	public class GenericClients : IGeneric<Client>
 	{
 		public Client[] All()
 		{
@@ -20,7 +21,6 @@ namespace StockTracker.Seed.Clients
 					ClientName = "Cammel Patrol",
 					CreatedOn = DateTime.Now,
 					ContactNumber = "0730730258",
-					IsActive = false,
 					Email = "moo@moo.co.za"
 				},
 				new Client
@@ -30,7 +30,6 @@ namespace StockTracker.Seed.Clients
 					ClientName = "Cammel Dog lane",
 					CreatedOn = DateTime.Now,
 					ContactNumber = "111 023 1234",
-					IsActive = true,
 					Email = "moo@mooo.gov.za"
 				},
 				new Client
@@ -40,7 +39,6 @@ namespace StockTracker.Seed.Clients
 					ClientName = "Camel Patrol",
 					CreatedOn = DateTime.Now,
 					ContactNumber = "(011) 023 1234",
-					IsActive = true,
 					Email = "moo@111.111.111.111"
 				}
 			};

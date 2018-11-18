@@ -30,7 +30,6 @@ namespace StockTracker.Seed.Clients
 				var clientName = _clientNames[_rng.Next(0, 6)];
 				clientList.Add(new Model.Clients.Client
 				{
-					IsActive = inc == 1 || _rng.Next(0, 1) > 0,
 					Address = GenerateAddress(),
 					ClientName = clientName,
 					ContactNumber = _rng.Next(10000000, 999999999).ToString(),

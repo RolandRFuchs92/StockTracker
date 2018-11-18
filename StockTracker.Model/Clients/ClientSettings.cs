@@ -17,6 +17,7 @@ namespace StockTracker.Model.Clients
 		public int TotalUsers { get; set; }
 		public bool IsActive { get; set; }
 		public bool? IsDeleted { get; set; }
+		public DateTime? DateDeleted { get; set; }
 
 		public Client Client { get; set; }
 	}

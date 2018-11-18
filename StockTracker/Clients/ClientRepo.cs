@@ -43,7 +43,6 @@ namespace StockTracker.Repository.Clients
 		{
 			var client = new Client
 			{
-				IsActive = isActive,
 				ClientName = name,
 				Email = email,
 				ContactNumber = contactNumber
@@ -109,8 +108,8 @@ namespace StockTracker.Repository.Clients
 		{
 			try
 			{
-				var client = _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
-				client.IsActive = isActive;
+				var clientSettings = _db.ClientSettings.FirstOrDefault(i => i.ClientId == clientId);
+				clientSettings.IsActive = isActive;
 
 				((StockTrackerContext) _db).SaveChanges();
 				return true;
