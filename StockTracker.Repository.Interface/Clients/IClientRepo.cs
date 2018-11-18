@@ -11,7 +11,7 @@ namespace StockTracker.Repository.Interface.Clients
     {
 	    bool Add(IClient newClient);
 	    bool Add(bool isActive, string name, string email, string contactNumber);
-	    bool Remove(int clientId);
+	    //bool Remove(int clientId);
 	    bool Edit(IClient editClient);
 	    IClient Get(int clientId);
 	    IClient Get(string name);

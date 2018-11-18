@@ -171,56 +171,56 @@ namespace StockTracker.API.Test.Clients
 		}
 		#endregion
 
-		#region Remove Client API
+		//#region Remove Client API
 
-		[TestMethod]
-		public void Remove_PassValidClient_True()
-		{
-			//Arrange
-			var removeResult = new Result<bool>
-			{
-				Body = true,
-				IsSuccess = true,
-				Message = "Successfully Removed."
-			};
+		//[TestMethod]
+		//public void Remove_PassValidClient_True()
+		//{
+		//	//Arrange
+		//	var removeResult = new Result<bool>
+		//	{
+		//		Body = true,
+		//		IsSuccess = true,
+		//		Message = "Successfully Removed."
+		//	};
 
-			var moqLogic = new Mock<IClientLogic>();
-			moqLogic.Setup(i => i.RemoveClient(It.IsAny<int>())).Returns(removeResult);
-			var controller = new ClientsController(moqLogic.Object);
+		//	var moqLogic = new Mock<IClientLogic>();
+		//	moqLogic.Setup(i => i.RemoveClient(It.IsAny<int>())).Returns(removeResult);
+		//	var controller = new ClientsController(moqLogic.Object);
 
-			//Act
-			var result = controller.Remove(_client.ClientId) as OkObjectResult;
-			var controllerResult = result.Value as Result<bool>;
+		//	//Act
+		//	var result = controller.Remove(_client.ClientId) as OkObjectResult;
+		//	var controllerResult = result.Value as Result<bool>;
 
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-			Assert.IsTrue(controllerResult.Body);
-			Assert.IsTrue(controllerResult.IsSuccess);
-		}
+		//	//Assert
+		//	Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+		//	Assert.IsTrue(controllerResult.Body);
+		//	Assert.IsTrue(controllerResult.IsSuccess);
+		//}
 
-		[TestMethod]
-		public void Remove_PassinvalidClient_False()
-		{
-			//Arrange
-			var removeResult = new Result<bool>
-			{
-				Body = false,
-				IsSuccess = false,
-				Message = "Unable to Removed."
-			};
+		//[TestMethod]
+		//public void Remove_PassinvalidClient_False()
+		//{
+		//	//Arrange
+		//	var removeResult = new Result<bool>
+		//	{
+		//		Body = false,
+		//		IsSuccess = false,
+		//		Message = "Unable to Removed."
+		//	};
 
-			var moqLogic = new Mock<IClientLogic>();
-			moqLogic.Setup(i => i.RemoveClient(It.IsAny<int>())).Returns(removeResult);
-			var controller = new ClientsController(moqLogic.Object);
+		//	var moqLogic = new Mock<IClientLogic>();
+		//	moqLogic.Setup(i => i.RemoveClient(It.IsAny<int>())).Returns(removeResult);
+		//	var controller = new ClientsController(moqLogic.Object);
 
-			//Act
-			var result = controller.Remove(_client.ClientId) as BadRequestObjectResult;
+		//	//Act
+		//	var result = controller.Remove(_client.ClientId) as BadRequestObjectResult;
 
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-		}
+		//	//Assert
+		//	Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+		//}
 
-		#endregion
+		//#endregion
 
 		//#region Toggle Client API
 

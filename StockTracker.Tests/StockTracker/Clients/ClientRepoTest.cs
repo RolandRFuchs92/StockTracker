@@ -81,38 +81,38 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
-		#region Remove Tests
-		[TestMethod]
-		public void Remove_PassValidClientId_True()
-		{
-			//Arrange
-			Trunc("Clients");
-			var newCient = _genClient.One();
-			_db.Clients.Add(newCient);
-			((StockTrackerContext)_db).SaveChanges();
-			var result = false;
+		//#region Remove Tests
+		//[TestMethod]
+		//public void Remove_PassValidClientId_True()
+		//{
+		//	//Arrange
+		//	Trunc("Clients");
+		//	var newCient = _genClient.One();
+		//	_db.Clients.Add(newCient);
+		//	((StockTrackerContext)_db).SaveChanges();
+		//	var result = false;
 
-			//Act
-			result = _clientRepo.Remove(newCient.ClientId);
+		//	//Act
+		//	result = _clientRepo.Remove(newCient.ClientId);
 
-			//Assert
-			Assert.IsTrue(result);
-		}
+		//	//Assert
+		//	Assert.IsTrue(result);
+		//}
 
-		[TestMethod]
-		public void Remove_PassInvalidClientId_False()
-		{
-			//Arrange
-			Trunc("Clients");
-			var result = false;
+		//[TestMethod]
+		//public void Remove_PassInvalidClientId_False()
+		//{
+		//	//Arrange
+		//	Trunc("Clients");
+		//	var result = false;
 
-			//Act
-			result = _clientRepo.Remove(0);
+		//	//Act
+		//	result = _clientRepo.Remove(0);
 
-			//Assert
-			Assert.IsFalse(result);
-		}
-		#endregion
+		//	//Assert
+		//	Assert.IsFalse(result);
+		//}
+		//#endregion
 
 		#region Edit Tests
 		[TestMethod]

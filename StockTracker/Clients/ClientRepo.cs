@@ -51,24 +51,24 @@ namespace StockTracker.Repository.Clients
 			return Add(client);
 		}
 
-		public bool Remove(int clientId)
-		{
-			var client = _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
+		//public bool Remove(int clientId)
+		//{
+		//	var client = _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
 
-			if (client == null)
-				return false;
+		//	if (client == null)
+		//		return false;
 
-			try
-			{
-				client.IsDeleted = true;
-				((StockTrackerContext) _db).SaveChanges();
-				return true;
-			}
-			catch (Exception e)
-			{
-				return false;
-			}
-		}
+		//	try
+		//	{
+		//		client.IsDeleted = true;
+		//		((StockTrackerContext) _db).SaveChanges();
+		//		return true;
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		return false;
+		//	}
+		//}
 
 		public bool Edit(IClient editClient)
 		{

@@ -65,16 +65,16 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
-		[Route("Remove")]
-		[HttpPost]
-		public IActionResult Remove(int clientId)
-		{
-			var result = _clientLogic.RemoveClient(clientId);
-			if (result.IsSuccess)
-				return Ok(result);
+		//[Route("Remove")]
+		//[HttpPost]
+		//public IActionResult Remove(int clientId)
+		//{
+		//	var result = _clientLogic.RemoveClient(clientId);
+		//	if (result.IsSuccess)
+		//		return Ok(result);
 
-			return BadRequest(result);
-		}
+		//	return BadRequest(result);
+		//}
 
 		//[Route("Toggle")]
 		//[HttpPost]
