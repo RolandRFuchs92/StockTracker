@@ -12,10 +12,9 @@ namespace StockTracker.BusinessLogic.Inteface.Client
 	public interface IClientLogic
 	{
 		IResult<bool> AddClient(IClient newClient);
-		IResult<bool> AddClient(bool isActive, string name, string email, string contactNumber);
+		IResult<bool> AddClient(string name, string email, string contactNumber);
 		IResult<IClient> GetClient(int clientId);
 		IResult<bool> EditClient(IClient client);
 		IResult<bool> RemoveClient(int clientId);
-		IResult<bool> ToggleClient(int clientId, bool isActive);
 	}
 }

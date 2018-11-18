@@ -35,11 +35,10 @@ namespace StockTracker.BuisnessLogic.Clients
 			return result;
 		}
 
-		public IResult<bool> AddClient(bool isActive, string name, string email, string contactNumber)
+		public IResult<bool> AddClient(string name, string email, string contactNumber)
 		{
 			var client = new Client
 			{
-				IsActive = isActive,
 				ClientName = name,
 				Email = email,
 				ContactNumber = contactNumber,

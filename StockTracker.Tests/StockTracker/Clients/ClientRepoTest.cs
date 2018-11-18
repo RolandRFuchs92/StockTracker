@@ -225,39 +225,39 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
-		#region Toggle Tests
-		[TestMethod]
-		public void Toggle_EnableDisableClient_True()
-		{
-			//Arrange
-			Trunc("Clients");
-			var client = _genClient.One();
-			client.IsActive = false;
+		//#region Toggle Tests
+		//[TestMethod]
+		//public void Toggle_EnableDisableClient_True()
+		//{
+		//	//Arrange
+		//	Trunc("Clients");
+		//	var client = _genClient.One();
+		//	client.IsActive = false;
 
-			_db.Clients.Add(client);
-			((StockTrackerContext) _db).SaveChanges();
+		//	_db.Clients.Add(client);
+		//	((StockTrackerContext) _db).SaveChanges();
 
-			//Act
-			var enableResult = _clientRepo.Toggle(client.ClientId, true);
-			var disableResult = _clientRepo.Toggle(client.ClientId, false);
+		//	//Act
+		//	var enableResult = _clientRepo.Toggle(client.ClientId, true);
+		//	var disableResult = _clientRepo.Toggle(client.ClientId, false);
 
-			//Assert
-			Assert.IsTrue(enableResult);
-			Assert.IsTrue(disableResult);
-		}
+		//	//Assert
+		//	Assert.IsTrue(enableResult);
+		//	Assert.IsTrue(disableResult);
+		//}
 
-		[TestMethod]
-		public void Toggle_DisableEnabledClient_False()
-		{
-			//Arrange
-			Trunc("Clients");
+		//[TestMethod]
+		//public void Toggle_DisableEnabledClient_False()
+		//{
+		//	//Arrange
+		//	Trunc("Clients");
 
-			//Act
-			var result = _clientRepo.Toggle(1, false);
+		//	//Act
+		//	var result = _clientRepo.Toggle(1, false);
 
-			//Assert
-			Assert.IsFalse(result);
-		}
-		#endregion
+		//	//Assert
+		//	Assert.IsFalse(result);
+		//}
+		//#endregion
 	}
 }
