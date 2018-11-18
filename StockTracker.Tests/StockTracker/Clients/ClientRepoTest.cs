@@ -129,7 +129,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			newClient.Email = "unthasbeentest@goodtests.com";
 			newClient.ContactNumber = "+271234567";
-			newClient.IsActive = false;
 
 			//Act
 			result = _clientRepo.Edit(newClient);

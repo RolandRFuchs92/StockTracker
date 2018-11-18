@@ -76,16 +76,16 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
-		[Route("Toggle")]
-		[HttpPost]
-		public IActionResult Toggle(int clientId, bool isActive)
-		{
-			var result = _clientLogic.ToggleClient(clientId, isActive);
-			if (result.IsSuccess)
-				return Ok(result);
+		//[Route("Toggle")]
+		//[HttpPost]
+		//public IActionResult Toggle(int clientId, bool isActive)
+		//{
+		//	var result = _clientLogic.ToggleClient(clientId, isActive);
+		//	if (result.IsSuccess)
+		//		return Ok(result);
 
-			return BadRequest(result);
-		}
+		//	return BadRequest(result);
+		//}
 	
 	}
 }

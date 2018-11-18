@@ -16,7 +16,7 @@ namespace StockTracker.API.Interface
 	    IActionResult Get(int clientId);
 	    IActionResult Edit(Client client);
 	    IActionResult Remove(int clientId);
-	    IActionResult Toggle(int clientId, bool isActive);
+	    //IActionResult Toggle(int clientId, bool isActive);
 
     }
 }

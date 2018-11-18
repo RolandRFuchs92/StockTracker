@@ -222,56 +222,56 @@ namespace StockTracker.API.Test.Clients
 
 		#endregion
 
-		#region Toggle Client API
+		//#region Toggle Client API
 
-		[TestMethod]
-		public void Toggle_PassValidClient_True()
-		{
-			//Arrange
-			var toggleResult = new Result<bool>
-			{
-				Body = true,
-				IsSuccess = true,
-				Message = "Toggle successful."
-			};
+		//[TestMethod]
+		//public void Toggle_PassValidClient_True()
+		//{
+		//	//Arrange
+		//	var toggleResult = new Result<bool>
+		//	{
+		//		Body = true,
+		//		IsSuccess = true,
+		//		Message = "Toggle successful."
+		//	};
 
-			var moqLogic = new Mock<IClientLogic>();
-			moqLogic.Setup(i => i.ToggleClient(It.IsAny<int>(), It.IsAny<bool>())).Returns(toggleResult);
-			var controller = new ClientsController(moqLogic.Object);
+		//	var moqLogic = new Mock<IClientLogic>();
+		//	moqLogic.Setup(i => i.ToggleClient(It.IsAny<int>(), It.IsAny<bool>())).Returns(toggleResult);
+		//	var controller = new ClientsController(moqLogic.Object);
 
-			//Act
-			var result = controller.Toggle(1, true) as OkObjectResult;
-			var controllerResult = result.Value as Result<bool>;
+		//	//Act
+		//	var result = controller.Toggle(1, true) as OkObjectResult;
+		//	var controllerResult = result.Value as Result<bool>;
 
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-			Assert.IsTrue(controllerResult.Body);
-			Assert.IsTrue(controllerResult.IsSuccess);
-		}
+		//	//Assert
+		//	Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+		//	Assert.IsTrue(controllerResult.Body);
+		//	Assert.IsTrue(controllerResult.IsSuccess);
+		//}
 
-		[TestMethod]
-		public void Toggle_PassInvalidClient_False()
-		{
-			//Arrange
-			var toggleResult = new Result<bool>
-			{
-				Body = false,
-				IsSuccess = false,
-				Message = "Toggle failed!"
-			};
+		//[TestMethod]
+		//public void Toggle_PassInvalidClient_False()
+		//{
+		//	//Arrange
+		//	var toggleResult = new Result<bool>
+		//	{
+		//		Body = false,
+		//		IsSuccess = false,
+		//		Message = "Toggle failed!"
+		//	};
 
-			var moqLogic = new Mock<IClientLogic>();
-			moqLogic.Setup(i => i.ToggleClient(It.IsAny<int>(), It.IsAny<bool>())).Returns(toggleResult);
-			var controller = new ClientsController(moqLogic.Object);
+		//	var moqLogic = new Mock<IClientLogic>();
+		//	moqLogic.Setup(i => i.ToggleClient(It.IsAny<int>(), It.IsAny<bool>())).Returns(toggleResult);
+		//	var controller = new ClientsController(moqLogic.Object);
 
-			//Act
-			var result = controller.Toggle(1, false);
+		//	//Act
+		//	var result = controller.Toggle(1, false);
 
 
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult), "unexpected result returned.");
-		}
+		//	//Assert
+		//	Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult), "unexpected result returned.");
+		//}
 
-		#endregion
+		//#endregion
 	}
 }
