@@ -15,6 +15,6 @@ namespace StockTracker.Repository.Interface.Clients
 	    bool Edit(IClient editClient);
 	    IClient Get(int clientId);
 	    IClient Get(string name);
-	    bool Toggle(int clientId, bool isActive);
-    }
+
+	}
 }
