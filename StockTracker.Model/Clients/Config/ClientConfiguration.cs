@@ -19,7 +19,6 @@ namespace StockTracker.Model.Clients.Config
 			builder.Property(i => i.ClientName).IsRequired().HasColumnType("NVARCHAR(100)");
 			builder.Property(i => i.CreatedOn).IsRequired().HasColumnType("DateTime").HasDefaultValueSql("GetDate()");
 			builder.Property(i => i.LastCheckup).IsRequired(false).HasColumnType("DateTime");
-			builder.Property(i => i.IsDeleted).IsRequired(false).HasColumnType("Bit");
 		}
 	}
 }

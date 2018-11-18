@@ -13,19 +13,14 @@ namespace StockTracker.Model.Clients
 {
     public class Client : IClient
     {
-		[Key]
 	    public int ClientId { get; set; }
-		[MinLength(3)]
 	    public string ClientName { get; set; }
-		[EmailAddress]
 	    public string Email { get; set; }
-		[Phone]
 	    public string ContactNumber { get; set; }
 	    public string Address { get; set; }
 	    public DateTime? LastCheckup { get; set; }
 	    public DateTime CreatedOn { get; set; }
-	    public bool? IsDeleted { get; set; }
-		public DateTime? DeletedOn { get; set; }
+
 	    public ClientSettings ClientSettings { get; set; }
 	    public ICollection<Member.Member> Member { get; set; }
     }

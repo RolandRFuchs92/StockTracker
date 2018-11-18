@@ -18,6 +18,7 @@ namespace StockTracker.Model.Clients.Config
 		    builder.Property(i => i.CloseTime).IsRequired().HasColumnType("DateTime");
 		    builder.Property(i => i.OpenTime).IsRequired().HasColumnType("DateTime");
 		    builder.Property(i => i.TotalUsers).IsRequired().HasColumnType("Int");
+		    builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");
 	    }
     }
 }
