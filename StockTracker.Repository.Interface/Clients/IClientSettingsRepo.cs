@@ -7,13 +7,13 @@ using StockTracker.Interface.Models.Clients;
 
 namespace StockTracker.Repository.Interface.Clients
 {
-    public interface IClientSettingsRepo
-    {
-				IClientSettings AddClientSettings(IClientSettings settings);
-				IClientSettings IsActive(int clientId, bool isActive);
-				IClientSettings IsDeleted(int clientId, bool isDeleted);
-				IClientSettings Edit(IClientSettings settings, int clientId);
-				IClientSettings SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId);
-				IClientSettings AddTotalUsers(int addUsers);
-    }
+	public interface IClientSettingsRepo
+	{
+		IClientSettings AddClientSettings(IClientSettings settings);
+		IClientSettings IsActive(int clientId, bool isActive);
+		IClientSettings IsDeleted(int clientId, bool isDeleted);
+		IClientSettings Edit(IClientSettings settings);
+		IClientSettings SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId);
+		IClientSettings AddTotalUsers(int addUsers);
+	}
 }

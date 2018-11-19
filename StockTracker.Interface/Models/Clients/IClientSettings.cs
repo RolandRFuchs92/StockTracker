@@ -5,7 +5,6 @@ namespace StockTracker.Interface.Models.Clients
 {
     public interface IClientSettings
     {
-		[Key]
 		int ClientSettingsId { get; set; }
 		int ClientId { get; set; }
 		bool CanAnyoneAddStock { get; set; }

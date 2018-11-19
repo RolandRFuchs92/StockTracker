@@ -79,6 +79,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Arrange
 			var client = AddClient();
 			var isActive = false;
+			AddClientSettings();
 
 			//Act
 			var result = _clientSettingsRepo.IsActive(client, isActive);
@@ -95,6 +96,8 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var isActive = false;
+			var clientId = AddClient();
+			AddClientSettings();
 
 			//Act
 			var result = _clientSettingsRepo.IsActive(0, isActive);
@@ -109,10 +112,12 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void IsDeleted_ValidClientIdAndFalse_True()
 		{
 			//Arrange
+			var client = AddClient();
 			var isDeleted = false;
+			AddClientSettings();
 
 			//Act
-			var result = _clientSettingsRepo.IsDeleted(1, isDeleted);
+			var result = _clientSettingsRepo.IsDeleted(client, isDeleted);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
@@ -124,13 +129,14 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void IsDeleted_InvalidClientIdAndFalse_True()
 		{
 			//Arrange
+			var client = AddClient();
+			AddClientSettings();
 			var isDeleted = false;
 
 			//Act
-			var result = _clientSettingsRepo.IsDeleted(0, false);
+			var result = _clientSettingsRepo.IsDeleted(0, isDeleted);
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNull(result);
 		}
 		#endregion
@@ -227,6 +233,12 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			((StockTrackerContext)_db).SaveChanges();
 
 			return client.ClientId;
+		}
+
+		private void AddClientSettings()
+		{
+			_db.ClientSettings.Add(_genericSettings.One(0));
+			((StockTrackerContext)_db).SaveChanges();
 		}
 
 		private void Reset()

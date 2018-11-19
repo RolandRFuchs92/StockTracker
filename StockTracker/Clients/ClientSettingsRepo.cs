@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Clients;
@@ -46,17 +47,76 @@ namespace StockTracker.Repository.Clients
 
 	    public IClientSettings IsActive(int clientId, bool isActive)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var clientSettings = _db.Clients.Include(i => i.ClientSettings).FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
+			    if (clientSettings == null)
+				    return null;
+
+			    clientSettings.IsActive = isActive;
+			    var result = ((StockTrackerContext) _db).SaveChanges();
+
+			    return result > 0 ? clientSettings : null;
+		    }
+		    catch (Exception e)
+		    {
+				//TODO: ADD LOGGING
+			    return null;
+		    }
 	    }
 
 	    public IClientSettings IsDeleted(int clientId, bool isDeleted)
 	    {
-		    throw new NotImplementedException();
-	    }
+		    try
+		    {
+			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
+			    if (clientSettings == null)
+				    return null;
 
-	    public IClientSettings Edit(IClientSettings settings, int clientId)
+			    clientSettings.IsDeleted = isDeleted;
+			    if (isDeleted)
+				    clientSettings.DateDeleted = DateTime.Now;
+			    else
+				    clientSettings.DateDeleted = null;
+
+			    var result = ((StockTrackerContext) _db).SaveChanges();
+			    return result > 0 ? clientSettings : null;
+		    }
+		    catch (Exception e)
+		    {
+				//TODO: ADD LOGGING
+			    return null;
+		    }
+
+		}
+
+	    public IClientSettings Edit(IClientSettings settings)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == settings.ClientId)?.ClientSettings;
+			    if (clientSettings == null)
+				    return null;
+
+			    clientSettings.IsActive = settings.IsActive;
+			    clientSettings.CloseTime = settings.CloseTime;
+			    clientSettings.OpenTime = settings.OpenTime;
+			    clientSettings.DateDeleted = settings.DateDeleted;
+			    clientSettings.TotalUsers = settings.TotalUsers;
+			    clientSettings.CanAnyoneAddStock = settings.CanAnyoneAddStock;
+			    clientSettings.CanEmailManagers = settings.CanEmailManagers;
+
+			    var result = ((StockTrackerContext) _db).SaveChanges();
+			    if (result > 0)
+				    return settings;
+
+			    return null;
+		    }
+		    catch (Exception e)
+		    {
+				//TODO: ADD LOGGING
+			    return null;
+		    }
 	    }
 
 	    public IClientSettings SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId)
