@@ -142,20 +142,37 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		#endregion
 
 		#region SetOpenClosedTimes Test
-
 		[TestMethod]
 		public void SetOpenClosedTimes_PassValidClientIdAndDateTime_True()
 		{
 			//Arrange
-
+			var openingTime = new DateTime(2018,1,1,8,0,0);
+			var closingTime= new DateTime(2018,1,1,17,0,0);
+			
 
 			//Act
-
-
+			var result = _clientSettingsRepo.SetOpenClosedTimes(openingTime, closingTime, 1);
+			
 			//Assert
-
+			Assert.IsTrue(result);
 		}
 
-	    #endregion
+	    [TestMethod]
+	    public void SetOpenClosedTimes_PassInvalidClientIdAndDateTime_False()
+	    {
+		    //Arrange
+		    var openingTime = new DateTime(2018, 1, 1, 8, 0, 0);
+		    var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
+
+
+		    //Act
+		    var result = _clientSettingsRepo.SetOpenClosedTimes(openingTime, closingTime, 0);
+
+		    //Assert
+		    Assert.IsFalse(result);
+	    }
+		#endregion
+
+
 	}
 }
