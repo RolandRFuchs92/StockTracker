@@ -9,11 +9,11 @@ namespace StockTracker.Repository.Interface.Clients
 {
     public interface IClientSettingsRepo
     {
-	    bool AddClientSettings(IClientSettings settings);
-	    bool IsActive(int clientId, bool isActive);
-	    bool IsDeleted(int clientId, bool isDeleted);
-	    bool Edit(IClientSettings settings, int clientId);
-	    bool SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId);
-	    int AddTotalUsers(int addUsers);
+				IClientSettings AddClientSettings(IClientSettings settings);
+				IClientSettings IsActive(int clientId, bool isActive);
+				IClientSettings IsDeleted(int clientId, bool isDeleted);
+				IClientSettings Edit(IClientSettings settings, int clientId);
+				IClientSettings SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId);
+				IClientSettings AddTotalUsers(int addUsers);
     }
 }
