@@ -9,7 +9,7 @@ using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.Repository.Clients
 {
-    public class ClientSettingsRepo : IClientSettingsRepo
+    public class ClientSettingsRepo 
     {
 	    private IStockTrackerContext _db;
 
@@ -18,34 +18,6 @@ namespace StockTracker.Repository.Clients
 		    _db = db;
 	    }
 
-	    public bool AddClientSettings(IClientSettings settings)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public bool IsActive(int clientId, bool isActive)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public bool IsDeleted(int clientId, bool isDeleted)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public bool Edit(IClientSettings settings, int clientId)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public bool SetOpenClosedTimes(DateTime openTime, DateTime closedTime)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    public int AddTotalUsers(int addUsers)
-	    {
-		    throw new NotImplementedException();
-	    }
+	 
     }
 }
