@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.Interface\StockTracker.Interface.csproj" />
+    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
   </ItemGroup>
 
 </Project>
