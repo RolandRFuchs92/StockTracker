@@ -21,7 +21,6 @@ namespace StockTracker.Repository.Clients
 		    _db = db;
 	    }
 
-
 	    public IClientSettings AddClientSettings(IClientSettings settings)
 	    {
 		    try

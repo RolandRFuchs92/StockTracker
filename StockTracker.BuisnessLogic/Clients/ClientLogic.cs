@@ -65,24 +65,5 @@ namespace StockTracker.BuisnessLogic.Clients
 
 			return result;
 		}
-
-		//public IResult<bool> RemoveClient(int clientId)
-		//{
-		//	var result = new Result<bool>();
-		//	result.Body = _clientRepo.Remove(clientId);
-		//	result.Check(result.Body, "Successfully removed the client!", "Unable to remove client.");
-
-		//	return result;
-		//}
-
-		//public IResult<bool> ToggleClient(int clientId, bool isActive)
-		//{
-		//	var result = new Result<bool>();
-		//	var enableText = isActive ? "enable" : "disable";
-		//	result.Body = _clientRepo.Toggle(clientId, isActive);
-		//	result.Check(result.Body, $"Successfully {enableText}d the client!", $"Unable to {enableText} client.");
-
-		//	return result;
-		//}
 	}
 }

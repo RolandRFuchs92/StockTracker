@@ -21,17 +21,6 @@ namespace StockTracker.API.Controllers
 		    _clientLogic = clientLogic;
 	    }
 
-		//[Route("Add")]
-		//[HttpPost]
-	 //   public IActionResult Add(bool isActive, string name, string email, string contactNumber)
-		//{
-		//	var result = _clientLogic.AddClient(isActive, name, email, contactNumber);
-		//	if(result.IsSuccess)
-		//		return Ok(result);
-
-		//	return BadRequest(result);
-		//}
-
 		[Route("Add")]
 		[HttpPost]
 		public IActionResult Add(Client client)
@@ -64,28 +53,5 @@ namespace StockTracker.API.Controllers
 
 			return BadRequest(result);
 		}
-
-		//[Route("Remove")]
-		//[HttpPost]
-		//public IActionResult Remove(int clientId)
-		//{
-		//	var result = _clientLogic.RemoveClient(clientId);
-		//	if (result.IsSuccess)
-		//		return Ok(result);
-
-		//	return BadRequest(result);
-		//}
-
-		//[Route("Toggle")]
-		//[HttpPost]
-		//public IActionResult Toggle(int clientId, bool isActive)
-		//{
-		//	var result = _clientLogic.ToggleClient(clientId, isActive);
-		//	if (result.IsSuccess)
-		//		return Ok(result);
-
-		//	return BadRequest(result);
-		//}
-	
 	}
 }
