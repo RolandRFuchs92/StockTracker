@@ -109,12 +109,16 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 		#region IsDeleted Test
 		[TestMethod]
-		public void IsDeleted_ValidClientIdAndFalse_True()
+		public void IsDeleted_ValidClientIdAndFalse_ClientSettingsResult()
 		{
 			//Arrange
 			var client = AddClient();
 			var isDeleted = false;
-			AddClientSettings();
+			var clientSettings = _genericSettings.One();
+			clientSettings.IsDeleted = true;
+			clientSettings.DateDeleted = DateTime.Now.AddDays(-10);
+
+			AddClientSettings(clientSettings);
 
 			//Act
 			var result = _clientSettingsRepo.IsDeleted(client, isDeleted);
@@ -123,14 +127,14 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.IsDeleted, isDeleted);
+			Assert.IsNull(result.DateDeleted);
 		}
 
 		[TestMethod]
-		public void IsDeleted_InvalidClientIdAndFalse_True()
+		public void IsDeleted_InvalidClientIdAndFalse_Null()
 		{
 			//Arrange
 			var client = AddClient();
-			AddClientSettings();
 			var isDeleted = false;
 
 			//Act
@@ -139,6 +143,27 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsNull(result);
 		}
+
+		[TestMethod]
+		public void IsDeleted_TryDeleteDeletedClient_DateDeletedIsUnchanged()
+		{
+			//Arrange
+			var client = AddClient();
+			var isDeleted = true;
+			var dateDeleted = DateTime.Now.AddDays(-10);
+
+			var clientSettings = _genericSettings.One();
+			clientSettings.IsDeleted = true;
+			clientSettings.DateDeleted = dateDeleted;
+			AddClientSettings(clientSettings);
+
+			//Act
+			var result = _clientSettingsRepo.IsDeleted(client, isDeleted);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(result.DateDeleted, dateDeleted);
+		}
 		#endregion
 
 		#region Edit Test
@@ -146,41 +171,53 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public void Edit_NewClientSettingsValidClientId_true()
 		{
 			//Arrange
+			AddClient();
+			AddClientSettings();
+
 			var clientSettings = _genericSettings.One();
+			clientSettings.IsActive = false;
+			clientSettings.CloseTime = DateTime.Now;
+			clientSettings.TotalUsers = 10;
 
 			//Act
-			var result = _clientSettingsRepo.Edit(clientSettings, 1);
+			var result = _clientSettingsRepo.Edit(clientSettings);
+		
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
-			Assert.IsNull(result);
-			Assert.AreSame(result, clientSettings);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(result, clientSettings);
 		}
 
 		[TestMethod]
 		public void Edit_NewClientSettingsInvalidClientId_False()
 		{
 			//Arrange
+			AddClient();
+			AddClientSettings();
+
 			var clientSettings = _genericSettings.One();
+			clientSettings.ClientId = 0;
+			clientSettings.OpenTime = DateTime.Now;
 
 			//Act
-			var result = _clientSettingsRepo.Edit(clientSettings, 0);
+			var result = _clientSettingsRepo.Edit(clientSettings);
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNull(result);
-			Assert.AreSame(result, clientSettings);
 		}
 
 		#endregion
 
 		#region SetOpenClosedTimes Test
 		[TestMethod]
-		public void SetOpenClosedTimes_PassValidClientIdAndDateTime_True()
+		public void SetOpenClosedTimes_PassValidClientIdAndDateTime_ClientSettingsWithNewTimes()
 		{
 			//Arrange
 			var openingTime = new DateTime(2018, 1, 1, 8, 0, 0);
 			var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
+			AddClient();
+			AddClientSettings();
 
 			//Act
 			var result = _clientSettingsRepo.SetOpenClosedTimes(openingTime, closingTime, 1);
@@ -188,23 +225,47 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNotNull(result);
-			Assert.AreSame(result.OpenTime, openingTime);
-			Assert.AreSame(result.CloseTime, closingTime);
+			Assert.AreEqual(result.OpenTime, openingTime);
+			Assert.AreEqual(result.CloseTime, closingTime);
 		}
 
 		[TestMethod]
-		public void SetOpenClosedTimes_PassInvalidClientIdAndDateTime_False()
+		public void SetOpenClosedTimes_PassInvalidClientIdAndDateTime_Null()
 		{
 			//Arrange
 			var openingTime = new DateTime(2018, 1, 1, 8, 0, 0);
 			var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
+			AddClient();
+			AddClientSettings();
 
 			//Act
 			var result = _clientSettingsRepo.SetOpenClosedTimes(openingTime, closingTime, 0);
 
 			//Assert
-			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void SetOpenClosedTimes_PassNullOpenTime_ShouldNotReplaceOldTimes()
+		{
+			//Arrange
+			var openingTime = new DateTime(2018, 1, 1, 8, 0, 0);
+			var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
+			var clientSettings = _genericSettings.One();
+			clientSettings.CloseTime = closingTime.AddHours(2);
+			clientSettings.OpenTime = openingTime;
+
+			var clientId = AddClient();
+			AddClientSettings(clientSettings);
+
+			//Act
+			var result = _clientSettingsRepo.SetOpenClosedTimes(null, closingTime, clientId);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IClientSettings));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(result.OpenTime, openingTime);
+			Assert.AreEqual(result.CloseTime, closingTime);
 		}
 		#endregion
 
@@ -225,19 +286,23 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 		#endregion
 
-		private int AddClient()
+		#region Generic Test Methods
+		private int AddClient(Client client = null)
 		{
-			var client = _clients.One(0);
+			client = client ?? _clients.One(0);
 			Reset();
+
 			_db.Clients.Add(client);
 			((StockTrackerContext)_db).SaveChanges();
 
 			return client.ClientId;
 		}
 
-		private void AddClientSettings()
+		private void AddClientSettings(ClientSettings clientSettings = null)
 		{
-			_db.ClientSettings.Add(_genericSettings.One(0));
+			clientSettings = clientSettings ?? _genericSettings.One(0);
+
+			_db.ClientSettings.Add(clientSettings);
 			((StockTrackerContext)_db).SaveChanges();
 		}
 
@@ -245,5 +310,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			((StockTrackerContext)_db).Database.EnsureDeleted();
 		}
+		#endregion
 	}
 }

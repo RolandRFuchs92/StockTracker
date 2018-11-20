@@ -73,6 +73,9 @@ namespace StockTracker.Repository.Clients
 			    if (clientSettings == null)
 				    return null;
 
+			    if (clientSettings.IsDeleted == isDeleted)
+				    return clientSettings;
+
 			    clientSettings.IsDeleted = isDeleted;
 			    if (isDeleted)
 				    clientSettings.DateDeleted = DateTime.Now;
@@ -119,9 +122,24 @@ namespace StockTracker.Repository.Clients
 		    }
 	    }
 
-	    public IClientSettings SetOpenClosedTimes(DateTime openTime, DateTime closedTime, int coreClientId)
+	    public IClientSettings SetOpenClosedTimes(DateTime? openTime, DateTime? closedTime, int clientId)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
+			    if (clientSettings == null)
+				    return null;
+
+			    clientSettings.OpenTime = openTime ?? clientSettings.OpenTime;
+			    clientSettings.CloseTime = closedTime ?? clientSettings.CloseTime;
+
+			    return ((StockTrackerContext) _db).SaveChanges() > 0 ? clientSettings : null;
+		    }
+		    catch (Exception e)
+		    {
+				//TODO: ADD LOGGING HERE
+			    return null;
+		    }
 	    }
 
 	    public IClientSettings AddTotalUsers(int addUsers)
