@@ -14,6 +14,6 @@ namespace StockTracker.Repository.Interface.Clients
 		IClientSettings IsDeleted(int clientId, bool isDeleted);
 		IClientSettings Edit(IClientSettings settings);
 		IClientSettings SetOpenClosedTimes(DateTime? openTime, DateTime? closedTime, int coreClientId);
-		IClientSettings AddTotalUsers(int addUsers);
+		IClientSettings AddTotalUsers(int clientId, int addUsers);
 	}
 }

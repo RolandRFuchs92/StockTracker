@@ -272,18 +272,38 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		#region AddTotalUser Test
 
 		[TestMethod]
-		public void AddTotalUsers_AddNumberOfNewUsers_True()
+		public void AddTotalUsers_AddNumberOfNewUsers_IClientSettingsWithAdjustedUserCount()
 		{
 			//Arrange
 			var clientSettings = _genericSettings.One();
+			var clientId = AddClient();
+			var originalTotalUsers = 5;
+			var addUsers = 2;
+
+			clientSettings.TotalUsers = originalTotalUsers;
+			AddClientSettings(clientSettings);
 
 			//Act
-
+			var result = _clientSettingsRepo.AddTotalUsers(clientId, addUsers);
 
 			//Assert
-
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(IClientSettings));
+			Assert.AreEqual(result.TotalUsers, originalTotalUsers + addUsers);
 		}
 
+		[TestMethod]
+		public void AddTotalUsers_AddNumberToInvalidClient_Null()
+		{
+			//Arrange
+			var originalTotalUsers = 5;
+
+			//Act
+			var result = _clientSettingsRepo.AddTotalUsers(0, 12);
+
+			//Assert
+			Assert.IsNull(result);
+		}
 		#endregion
 
 		#region Generic Test Methods

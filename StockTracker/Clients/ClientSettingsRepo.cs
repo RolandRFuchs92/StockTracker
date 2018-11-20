@@ -142,9 +142,23 @@ namespace StockTracker.Repository.Clients
 		    }
 	    }
 
-	    public IClientSettings AddTotalUsers(int addUsers)
+	    public IClientSettings AddTotalUsers(int clientId, int addUsers)
 	    {
-		    throw new NotImplementedException();
+		    try
+		    {
+			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
+
+			    if ((clientSettings.TotalUsers - addUsers) < 0)
+				    clientSettings.TotalUsers = 0;
+			    else
+				    clientSettings.TotalUsers += addUsers;
+
+			    return ((StockTrackerContext) _db).SaveChanges() > 0 ? clientSettings : null;
+		    }
+		    catch (Exception e)
+		    {
+			    return null;
+		    }
 	    }
 
 	    private IClient GetClient(int clientId)
