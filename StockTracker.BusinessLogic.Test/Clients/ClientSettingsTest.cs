@@ -143,6 +143,47 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		}
 		#endregion
 
+		#region IsActive Test
+		[TestMethod]
+		public void Edit_PassValidChanges_ValidResults()
+		{
+			//Arrange
+			var clientSettings = _genericClientSettings.One();
+			var isActive = true;
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.AddClientSettings(It.IsAny<IClientSettings>())).Returns(clientSettings);
+
+			//Act
+			var result = _clientSettingsLogic.IsActive(1, isActive);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.IsSuccess);
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
+			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+		}
+
+
+		[TestMethod]
+		public void Edit_InitialCondition_ExpectedResult()
+		{
+			//Arrange
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.Edit(It.IsAny<IClientSettings>())).Returns((IClientSettings) null);
+
+			//Act
+			var result = _clientSettingsLogic.IsActive(0, false);
+
+			//Assert
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+			Assert.IsNull(result.Body);
+		}
+		#endregion
+
 
 	}
 }
