@@ -12,11 +12,7 @@ namespace StockTracker.API.Interface
     public interface IClientsController
     {
 	    IActionResult Add(Client client);
-	    //IActionResult Add(bool isActive, string name, string email, string contactNumber);
 	    IActionResult Get(int clientId);
 	    IActionResult Edit(Client client);
-	    //IActionResult Remove(int clientId);
-	    //IActionResult Toggle(int clientId, bool isActive);
-
     }
 }
