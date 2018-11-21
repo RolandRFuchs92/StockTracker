@@ -121,22 +121,28 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+			Assert.AreSame(result.Body, result);
 		}
 
 		[TestMethod]
 		public void IsDeleted_InitialConditionas_ExpectedResult()
 		{
 			//Arrange
-
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.IsDeleted(It.IsAny<int>(), It.IsAny<bool>())).Returns((IClientSettings) null);
 
 			//Act
-
+			var result = _clientSettingsLogic.IsDeleted(2, false);
 
 			//Assert
-
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsTrue(!string.IsNullOrEmpty(result.Message));
+			Assert.IsNull(result.Body);
 		}
-
-
 		#endregion
+
+
 	}
 }
