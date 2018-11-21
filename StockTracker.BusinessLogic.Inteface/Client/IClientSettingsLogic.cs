@@ -15,7 +15,7 @@ namespace StockTracker.BusinessLogic.Inteface.Client
 		IResult<IClientSettings> IsActive(int clientId, bool isActive);
 		IResult<IClientSettings> IsDeleted(int clientId, bool isDeleted);
 		IResult<IClientSettings> Edit(IClientSettings clientSettings);
-		IResult<IClientSettings> SetBusinessHours(DateTime? openTime, DateTime? closeTime);
+		IResult<IClientSettings> SetBusinessHours(DateTime? openTime, DateTime? closeTime, int clientId);
 		IResult<IClientSettings> AddTotalUsers(int clientId, int AddUsers);
     }
 }

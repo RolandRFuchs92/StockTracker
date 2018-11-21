@@ -184,6 +184,87 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		}
 		#endregion
 
+		#region SetBusinessHours Test
+		[TestMethod]
+		public void SetBusinessHours_PassValidBusinessHours_ReturnResultIClientSettings()
+		{
+			//Arrange
+			var clientSettings = _genericClientSettings.One();
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.SetOpenClosedTimes(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(),clientSettings.ClientId)).Returns(clientSettings);
+			var openingTime = new DateTime(2018, 1, 1, 8,0,0);
+			var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
 
+			//Act
+			var result = _clientSettingsLogic.SetBusinessHours(openingTime, closingTime, clientSettings.ClientId);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsTrue(result.IsSuccess);
+			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
+			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+		}
+
+		[TestMethod]
+		public void SetBusinessHours_PassinvalidBusinessHours_ReturnsFalse()
+		{
+			//Arrange
+			var clientId = 0;
+			var openingTime = new DateTime(2018, 1, 1, 18, 0, 0);
+			var closingTime = new DateTime(2018, 1, 1, 7, 0, 0);
+			var clientSettings = _genericClientSettings.One();
+
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.SetOpenClosedTimes(openingTime, closingTime, 0)).Returns(clientSettings);
+
+			//Act
+			var result = _clientSettingsLogic.SetBusinessHours(openingTime, closingTime, clientId);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsNull(result.Body);
+			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+		}
+		#endregion
+
+		#region AddTotalUsers
+		[TestMethod]
+		public void AddTotalUsers_AddACertainAmountOfUsers_ValidUsersReturned()
+		{
+			//Arrange
+			var clientSettings = _genericClientSettings.One();
+			
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.AddTotalUsers(It.IsAny<int>(), It.IsAny<int>())).Returns(clientSettings);
+
+			//Act
+			var result = _clientSettingsLogic.AddTotalUsers(1, 5);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsTrue(result.IsSuccess);
+			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
+		}
+
+		[TestMethod]
+		public void AddTotalUsers_AddCertainAmountOfUsersBadClient_ErrorResult()
+		{
+			//Arrange
+			var moq = new Mock<IClientSettingsRepo>();
+			moq.Setup(i => i.AddTotalUsers(It.IsAny<int>(), It.IsAny<int>())).Returns((IClientSettings)null);
+
+
+			//Act
+			var result = _clientSettingsLogic.AddTotalUsers(0, 100);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+			Assert.IsFalse(result.IsSuccess);
+			Assert.IsNull(result.Body);
+			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+		}
+		#endregion
 	}
 }
