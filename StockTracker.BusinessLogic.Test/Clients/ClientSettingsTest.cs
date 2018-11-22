@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BusinessLogic.Inteface.Client;
 using StockTracker.BusinessLogic.Inteface.Poco;
 using StockTracker.Interface.Models.Clients;
@@ -14,6 +15,7 @@ using StockTracker.Seed.Clients;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {
+    [TestClass]
     public class ClientSettingsTest
     {
 	    private IClientSettingsLogic _clientSettingsLogic;
@@ -30,38 +32,39 @@ namespace StockTracker.BusinessLogic.Test.Clients
 		{
 			//Arrange
 			var clientId = 1;
-			var isActive = false;
 			var clientSettings = _genericClientSettings.One(clientId);
 			var moq = new Mock<IClientSettingsRepo>();
 
-			clientSettings.IsActive = isActive;
-			moq.Setup(i => i.IsActive(It.IsAny<int>(), It.IsAny<bool>())).Returns(clientSettings);
+			moq.Setup(i => i.Edit(It.IsAny<IClientSettings>())).Returns(clientSettings);
+            _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
 			//Act
-			var result = _clientSettingsLogic.IsActive(clientId, false);
+			var result = _clientSettingsLogic.Edit(clientSettings);
 
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.IsTrue(result.IsSuccess);
-			Assert.AreEqual(result.Body.IsActive, result);
+			Assert.AreEqual(result.Body.IsActive, result.Body.IsActive);
 		}
 
 		[TestMethod]
 		public void Edit_PassInvalidClientWithSettings_Null()
 		{
 			//Arrange
-			var badClientId = 0;
-			var isActive = false;
-
+		    var clientSettings = _genericClientSettings.One();
 			var moq = new Mock<IClientSettingsRepo>();
-			moq.Setup(i => i.IsActive(It.IsAny<int>(), It.IsAny<bool>())).Returns((IClientSettings)null);
+			moq.Setup(i => i.Edit(It.IsAny<IClientSettings>())).Returns((IClientSettings)null);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.IsActive(badClientId, isActive);
+            //Act
+            var result = _clientSettingsLogic.Edit(clientSettings);
 
 			//Assert
-			Assert.IsNull(result);
+            Assert.IsFalse(result.IsSuccess);
+            Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+            Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+            Assert.IsNull(result.Body);
 		}
 		#endregion
 
@@ -73,9 +76,10 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			var moq = new Mock<IClientSettingsRepo>();
 			var clientSettings = _genericClientSettings.One();
 			moq.Setup(i => i.AddClientSettings(It.IsAny<IClientSettings>())).Returns(clientSettings);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.Add(clientSettings);
+            //Act
+            var result = _clientSettingsLogic.Add(clientSettings);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -89,10 +93,11 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Arrange
 			var moq = new Mock<IClientSettingsRepo>();
 			var clientSettings = _genericClientSettings.One();
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
 
-			//Act
-			var result = _clientSettingsLogic.Add(clientSettings);
+            //Act
+            var result = _clientSettingsLogic.Add(clientSettings);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -111,9 +116,10 @@ namespace StockTracker.BusinessLogic.Test.Clients
 
 			var moq = new Mock<IClientSettingsRepo>();
 			moq.Setup(i => i.IsDeleted(It.IsAny<int>(), It.IsAny<bool>())).Returns(clientSettings);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.IsDeleted(0, true);
+            //Act
+            var result = _clientSettingsLogic.IsDeleted(0, true);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -121,7 +127,6 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
-			Assert.AreSame(result.Body, result);
 		}
 
 		[TestMethod]
@@ -130,9 +135,10 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Arrange
 			var moq = new Mock<IClientSettingsRepo>();
 			moq.Setup(i => i.IsDeleted(It.IsAny<int>(), It.IsAny<bool>())).Returns((IClientSettings) null);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.IsDeleted(2, false);
+            //Act
+            var result = _clientSettingsLogic.IsDeleted(2, false);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -145,16 +151,17 @@ namespace StockTracker.BusinessLogic.Test.Clients
 
 		#region IsActive Test
 		[TestMethod]
-		public void Edit_PassValidChanges_ValidResults()
+		public void IsActive_PassValidChanges_ValidResults()
 		{
 			//Arrange
 			var clientSettings = _genericClientSettings.One();
 			var isActive = true;
 			var moq = new Mock<IClientSettingsRepo>();
-			moq.Setup(i => i.AddClientSettings(It.IsAny<IClientSettings>())).Returns(clientSettings);
+			moq.Setup(i => i.IsActive(It.IsAny<int>(), isActive)).Returns(clientSettings);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.IsActive(1, isActive);
+            //Act
+            var result = _clientSettingsLogic.IsActive(1, isActive);
 
 			//Assert
 			Assert.IsNotNull(result);
@@ -166,17 +173,19 @@ namespace StockTracker.BusinessLogic.Test.Clients
 
 
 		[TestMethod]
-		public void Edit_InitialCondition_ExpectedResult()
+		public void IsActive_PassinvalidClient_BadResult()
 		{
 			//Arrange
+			var isActive = true;
 			var moq = new Mock<IClientSettingsRepo>();
-			moq.Setup(i => i.Edit(It.IsAny<IClientSettings>())).Returns((IClientSettings) null);
+			moq.Setup(i => i.IsActive(It.IsAny<int>(), isActive)).Returns((IClientSettings)null);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.IsActive(0, false);
+            //Act
+            var result = _clientSettingsLogic.IsActive(0, false);
 
-			//Assert
-			Assert.IsNotNull(result);
+            //Assert
+            Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
@@ -192,7 +201,9 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			var clientSettings = _genericClientSettings.One();
 			var moq = new Mock<IClientSettingsRepo>();
 			moq.Setup(i => i.SetOpenClosedTimes(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(),clientSettings.ClientId)).Returns(clientSettings);
-			var openingTime = new DateTime(2018, 1, 1, 8,0,0);
+            _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
+
+		    var openingTime = new DateTime(2018, 1, 1, 8,0,0);
 			var closingTime = new DateTime(2018, 1, 1, 17, 0, 0);
 
 			//Act
@@ -215,10 +226,11 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			var clientSettings = _genericClientSettings.One();
 
 			var moq = new Mock<IClientSettingsRepo>();
-			moq.Setup(i => i.SetOpenClosedTimes(openingTime, closingTime, 0)).Returns(clientSettings);
+			moq.Setup(i => i.SetOpenClosedTimes(openingTime, closingTime, 0)).Returns((IClientSettings)null);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.SetBusinessHours(openingTime, closingTime, clientId);
+            //Act
+            var result = _clientSettingsLogic.SetBusinessHours(openingTime, closingTime, clientId);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
@@ -237,9 +249,10 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			
 			var moq = new Mock<IClientSettingsRepo>();
 			moq.Setup(i => i.AddTotalUsers(It.IsAny<int>(), It.IsAny<int>())).Returns(clientSettings);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-			//Act
-			var result = _clientSettingsLogic.AddTotalUsers(1, 5);
+            //Act
+            var result = _clientSettingsLogic.AddTotalUsers(1, 5);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
@@ -254,10 +267,10 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			//Arrange
 			var moq = new Mock<IClientSettingsRepo>();
 			moq.Setup(i => i.AddTotalUsers(It.IsAny<int>(), It.IsAny<int>())).Returns((IClientSettings)null);
+		    _clientSettingsLogic = new ClientSettingsLogic(moq.Object);
 
-
-			//Act
-			var result = _clientSettingsLogic.AddTotalUsers(0, 100);
+            //Act
+            var result = _clientSettingsLogic.AddTotalUsers(0, 100);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
