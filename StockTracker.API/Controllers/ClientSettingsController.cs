@@ -44,7 +44,12 @@ namespace StockTracker.API.Controllers
 
         public IActionResult IsDeleted(int clientId, bool isDeleted)
         {
-            throw new NotImplementedException();
+            var result = _clientSettingsLogic.IsDeleted(clientId, isDeleted);
+
+            if (result.IsSuccess)
+                return new OkObjectResult(result);
+
+            return new BadRequestObjectResult(result);
         }
 
         public IActionResult Edit(IClientSettings settings)
