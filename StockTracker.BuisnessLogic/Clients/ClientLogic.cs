@@ -2,8 +2,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using StockTracker.BuisnessLogic.Poco;
-using StockTracker.BusinessLogic.Inteface.Client;
-using StockTracker.BusinessLogic.Inteface.Poco;
+using StockTracker.BusinessLogic.Interface.Client;
+using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Extensions.StringExtensions;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Repository.Interface.Clients;

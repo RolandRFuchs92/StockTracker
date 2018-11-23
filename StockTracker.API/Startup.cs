@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using StockTracker.BuisnessLogic.Clients;
-using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Repository.Clients;

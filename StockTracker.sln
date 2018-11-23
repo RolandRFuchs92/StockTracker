@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Extensions", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BuisnessLogic", "StockTracker.BuisnessLogic\StockTracker.BuisnessLogic.csproj", "{8CE39685-9E7D-48F9-9CD0-209665BB43AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic.Inteface", "StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Inteface.csproj", "{65285322-DEB8-4BFE-8ECB-A6BE879CA149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.BusinessLogic.Interface", "StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Interface.csproj", "{65285322-DEB8-4BFE-8ECB-A6BE879CA149}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository.Interface", "StockTracker.Repository.Interface\StockTracker.Repository.Interface.csproj", "{2BF00EC7-844B-4935-BBCF-F01326B84712}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.API.Test", "St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.API.Interface", "StockTracker.API.Interface\StockTracker.API.Interface.csproj", "{5DF28E41-A082-486F-A954-E6D10E286C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.ViewModel", "StockTracker.ViewModel\StockTracker.ViewModel.csproj", "{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.ViewModel", "StockTracker.ViewModel\StockTracker.ViewModel.csproj", "{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

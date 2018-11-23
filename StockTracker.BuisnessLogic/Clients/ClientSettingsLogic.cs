@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.BuisnessLogic.Poco;
-using StockTracker.BusinessLogic.Inteface.Client;
-using StockTracker.BusinessLogic.Inteface.Poco;
+using StockTracker.BusinessLogic.Interface.Client;
+using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Repository.Interface.Clients;
 

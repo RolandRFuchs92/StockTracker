@@ -10,8 +10,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.API.Interface.Clients;
 using StockTracker.BuisnessLogic.Poco;
-using StockTracker.BusinessLogic.Inteface.Client;
-using StockTracker.BusinessLogic.Inteface.Poco;
+using StockTracker.BusinessLogic.Interface.Client;
+using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Seed.Clients;
 

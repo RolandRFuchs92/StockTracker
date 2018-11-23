@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using StockTracker.BusinessLogic.Inteface.Poco;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockTracker.Model.Clients;
 
-namespace StockTracker.API.Interface
+namespace StockTracker.API.Interface.Clients
 {
     public interface IClientsController
     {
