@@ -34,7 +34,12 @@ namespace StockTracker.API.Controllers
 
         public IActionResult IsActive(int clientId, bool isActive)
         {
-            throw new NotImplementedException();
+            var result = _clientSettingsLogic.IsActive(clientId, isActive);
+
+            if(result.IsSuccess)
+                return new OkObjectResult(result);
+
+            return new BadRequestObjectResult(result);
         }
 
         public IActionResult IsDeleted(int clientId, bool isDeleted)
