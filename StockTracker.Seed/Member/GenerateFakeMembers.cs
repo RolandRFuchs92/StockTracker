@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Model;
-using StockTracker.Model.Person;
+using StockTracker.Model.Persons;
 
 namespace StockTracker.Seed.Member
 {

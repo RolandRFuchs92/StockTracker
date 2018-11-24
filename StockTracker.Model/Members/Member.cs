@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Model.Clients;
+using StockTracker.Model.Persons;
 using StockTracker.Model.Shopping;
 
 namespace StockTracker.Model.Members
@@ -17,7 +18,7 @@ namespace StockTracker.Model.Members
 		public bool IsActive { get; set; }
 		public DateTime? LastActiveDate { get; set; }
 
-		public Person.Person Person { get; set; }
+		public Person Person { get; set; }
 		public Client Client { get; set; }
 		public MemberRole MemberRole { get; set; }
 

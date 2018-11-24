@@ -2,7 +2,7 @@
 using StockTracker.Model.Clients;
 using StockTracker.Model.ClientStock;
 using StockTracker.Model.Members;
-using StockTracker.Model.Person;
+using StockTracker.Model.Persons;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
 

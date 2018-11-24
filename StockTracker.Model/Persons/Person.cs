@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using StockTracker.Interface.Models.Person;
+﻿using StockTracker.Interface.Models.Person;
 using StockTracker.Model.Members;
 
-namespace StockTracker.Model.Person
+namespace StockTracker.Model.Persons
 {
     public class Person : IPerson
     {
