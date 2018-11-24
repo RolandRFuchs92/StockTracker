@@ -58,20 +58,17 @@ namespace StockTracker.API.Test.Clients
         public void Add_PassInvalidInfo_GetBadResult()
         {
             //Arrange
-            var moq = new Mock<IClientSettingsLogic>();
-            moq.Setup(i => i.Add(It.IsAny<IClientSettings>())).Returns(null as IResult<IClientSettings>);
-            _clientSettingsController = new ClientSettingsController(moq.Object);
-
+            var clientSettingsController = GenericClientSettingsController(i => i.Add(It.IsAny<IClientSettings>()), GenericClientSettingsResult(false));
 
             //Act
-            var result = _clientSettingsController.Add(_setting);
+            var result = clientSettingsController.Add(_setting);
             var badResult = result as BadRequestObjectResult;
-            var badVal = badResult as IResult<IClientSettings>;
+            var badVal = badResult.Value as IResult<IClientSettings>;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(badResult.Value, typeof(BadRequestObjectResult));
-            Assert.IsInstanceOfType(badVal, typeof(IResult<IClientSettings>));
+            Assert.IsInstanceOfType(badResult, typeof(BadRequestObjectResult));
+            Assert.IsNull(badVal.Body);
             Assert.IsFalse(badVal.IsSuccess);
             Assert.IsFalse(string.IsNullOrEmpty(badVal.Message));
         }
@@ -160,7 +157,7 @@ namespace StockTracker.API.Test.Clients
                     GenericClientSettingsResult(false));
 
             //Act
-            var result = GenericClientSettingsResult(false);
+            var result = genericClientSettingsController.Edit(_setting);
 
             //Assert
             Assertions(result, false);
@@ -217,7 +214,7 @@ namespace StockTracker.API.Test.Clients
             var result = genericClientSettingsController.AddTotalUsers(0, 1);
 
             //Assert
-
+            Assertions(result, false);
         }
 
         [TestMethod]
@@ -252,10 +249,10 @@ namespace StockTracker.API.Test.Clients
             return result;
         }
 
-        IClientSettingsController GenericClientSettingsController(Expression<Action<IClientSettingsLogic>> method, IResult<IClientSettings> result)
+        IClientSettingsController GenericClientSettingsController(Expression<Func<IClientSettingsLogic, IResult<IClientSettings>>> method, IResult<IClientSettings> result)
         {
             var moq = new Mock<IClientSettingsLogic>();
-            moq.Setup(method);
+            moq.Setup(method).Returns(result);
 
             _clientSettingsController = new ClientSettingsController(moq.Object);
 
@@ -278,13 +275,13 @@ namespace StockTracker.API.Test.Clients
             else
             {
                 var badResult = result as BadRequestObjectResult;
-                var badVal = badResult as IResult<IClientSettings>;
+                var badVal = badResult.Value as IResult<IClientSettings>;
 
                 Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(badResult.Value, typeof(BadRequestObjectResult));
-                Assert.IsInstanceOfType(badVal, typeof(IResult<IClientSettings>));
-                Assert.IsFalse(badVal.IsSuccess);
-                Assert.IsFalse(string.IsNullOrEmpty(badVal.Message));
+                Assert.IsInstanceOfType(badResult, typeof(BadRequestObjectResult), "Bad request instance check");
+                Assert.IsInstanceOfType(badVal, typeof(IResult<IClientSettings>), "Request value instance check");
+                Assert.IsFalse(badVal.IsSuccess, "Should be false.");
+                Assert.IsFalse(string.IsNullOrEmpty(badVal.Message), "Not empty Message");
             }
         }
         #endregion
