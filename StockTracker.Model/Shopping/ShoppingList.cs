@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Shopping;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Model.Shopping
 {
@@ -16,7 +17,7 @@ namespace StockTracker.Model.Shopping
 	    public bool HasNotified { get; set; }
 	    public DateTime CreatedOn { get; set; }
 
-		public Member.Member Member { get; set; }
+		public Member Member { get; set; }
 		public ICollection<ShoppingListItem> ShoppingListItems { get; set; }
 	}
 }

@@ -18,15 +18,15 @@ namespace StockTracker.Seed.Member
 			_memberRoleCount = new GenerateMemberRoles().GenerateMemberRole().Count();
 	    }
 
-		public List<Model.Member.Member> SetupSeedMembers(List<Person> people)
+		public List<Model.Members.Member> SetupSeedMembers(List<Person> people)
 		{
-			var members = new List<Model.Member.Member>();
+			var members = new List<Model.Members.Member>();
 			var rnd = new Random();
 
 			members.Add(AddUseCaseMember());
 			foreach (var person in people)
 			{
-				members.Add(new Model.Member.Member
+				members.Add(new Model.Members.Member
 				{
 					PersonId = person.PersonId,
 					IsActive = true,
@@ -39,9 +39,9 @@ namespace StockTracker.Seed.Member
 			return members;
 		}
 
-	    public Model.Member.Member AddUseCaseMember()
+	    public Model.Members.Member AddUseCaseMember()
 	    {
-		    return new Model.Member.Member
+		    return new Model.Members.Member
 		    {
 				ClientId = 1,
 				IsActive = false,

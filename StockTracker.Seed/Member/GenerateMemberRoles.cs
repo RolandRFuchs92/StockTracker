@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using StockTracker.Model.Member;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Seed.Member
 {

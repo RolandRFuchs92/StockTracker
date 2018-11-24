@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models;
 using StockTracker.Interface.Models.Clients;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Model.Clients
 {
@@ -22,6 +23,6 @@ namespace StockTracker.Model.Clients
 	    public DateTime CreatedOn { get; set; }
 
 	    public ClientSettings ClientSettings { get; set; }
-	    public ICollection<Member.Member> Member { get; set; }
+	    public ICollection<Member> Member { get; set; }
     }
 }

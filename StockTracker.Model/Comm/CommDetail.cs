@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.Comm;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Model.Comm
 {
@@ -23,6 +24,6 @@ namespace StockTracker.Model.Comm
 		[ForeignKey("CommErrorId")]
 		public virtual CommError CommError { get; set; }
 		[ForeignKey("MemberId")]
-		public virtual Member.Member Member { get; set; }
+		public virtual Member Member { get; set; }
     }
 }

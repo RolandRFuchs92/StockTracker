@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using StockTracker.Interface.Models.Person;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Model.Person
 {
@@ -11,5 +12,7 @@ namespace StockTracker.Model.Person
 	    public string Mobile { get; set; }
 	    public string WhatsApp { get; set; }
 	    public string Email { get; set; }
+
+        public Member Member { get; set; }
     }
 }

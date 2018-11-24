@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using StockTracker.Interface.Models.Member;
+﻿using StockTracker.Interface.Models.Member;
 
-namespace StockTracker.Model.Member
+namespace StockTracker.Model.Members
 {
     public class MemberRole : IMemberRole
     {

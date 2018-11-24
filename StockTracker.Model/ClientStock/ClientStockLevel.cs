@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.ClientStock;
+using StockTracker.Model.Members;
 
 namespace StockTracker.Model.ClientStock
 {
@@ -19,6 +20,6 @@ namespace StockTracker.Model.ClientStock
 	    public bool IsActive { get; set; }
 
 		public ClientStockItem ClientStockItem { get; set; }
-		public Member.Member Member { get; set; }
+		public Member Member { get; set; }
     }
 }

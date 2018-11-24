@@ -12,7 +12,6 @@ using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Model.ClientStock;
-using StockTracker.Model.Member;
 using StockTracker.Model.Person;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;

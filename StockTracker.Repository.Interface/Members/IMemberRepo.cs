@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Interface.Models.Person;
-using StockTracker.Model.Member;
 
 namespace StockTracker.Repository.Interface.Members
 {
