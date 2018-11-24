@@ -11,8 +11,4 @@
     <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Member\Generic\" />
-  </ItemGroup>
-
 </Project>
