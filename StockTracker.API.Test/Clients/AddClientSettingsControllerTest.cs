@@ -79,13 +79,13 @@ namespace StockTracker.API.Test.Clients
         public void IsActive_PassValidClient_PopulatedValuesOkResult()
         {
             //Arrange
-            var clientSettingsController = GenericClientSettingsController(i => i.Add(It.IsAny<IClientSettings>()), GenericClientSettingsResult());
+            var clientSettingsController = GenericClientSettingsController(i => i.IsActive(It.IsAny<int>(), It.IsAny<bool>()), GenericClientSettingsResult());
 
             //Act
             var result = clientSettingsController.IsActive(0, false);
 
             //Assert
-            Assertions(result, true);
+            Assertions(result);
         }
 
         [TestMethod]
@@ -107,10 +107,10 @@ namespace StockTracker.API.Test.Clients
         public void IsDeleted_PassValidClient_OkResultWithRelatedData()
         {
             //Arrange
-            var genericClientSettingsController = GenericClientSettingsController(i => i.IsDeleted(It.IsAny<int>(), true), GenericClientSettingsResult());
+            var genericClientSettingsController = GenericClientSettingsController(i => i.IsDeleted(It.IsAny<int>(), It.IsAny<bool>()), GenericClientSettingsResult());
 
             //Act
-            var result = genericClientSettingsController.IsActive(1, true);
+            var result = genericClientSettingsController.IsDeleted(1, true);
 
             //Assert
             Assertions(result);
@@ -211,7 +211,7 @@ namespace StockTracker.API.Test.Clients
                     GenericClientSettingsResult());
 
             //Act
-            var result = genericClientSettingsController.AddTotalUsers(0, 1);
+            var result = genericClientSettingsController.AddTotalUsers(1, 1);
 
             //Assert
             Assertions(result, false);

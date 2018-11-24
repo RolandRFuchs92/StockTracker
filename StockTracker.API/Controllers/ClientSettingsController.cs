@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockTracker.API.Interface.Clients;
+using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Interface.Models.Clients;
+using StockTracker.Model.Clients;
 
 namespace StockTracker.API.Controllers
 {
@@ -23,7 +25,7 @@ namespace StockTracker.API.Controllers
         public IActionResult Add(IClientSettings settings)
         {
             if (settings.ClientId < 1)
-                return new BadRequestObjectResult("No ClientId found.");
+                return new BadRequestObjectResult(new Result<IClientSettings>("No ClientId found.")));
 
             var result = _clientSettingsLogic.Add(settings);
 
@@ -56,7 +58,7 @@ namespace StockTracker.API.Controllers
         public IActionResult Edit(IClientSettings settings)
         {
             if (settings.ClientId == 0 || settings.ClientSettingsId == 0)
-                return new BadRequestObjectResult("No Client or Settings Id was specified.");
+                return new BadRequestObjectResult(new Result<IClientSettings>("No Client or Settings Id was specified."));
 
             return GenericResponse(_clientSettingsLogic.Edit(settings));
         }
@@ -64,7 +66,7 @@ namespace StockTracker.API.Controllers
         public IActionResult SetBusinessHours(DateTime? openTime, DateTime? closeTime, int clientId)
         {
             if ((int) clientId == 0)
-                return new BadRequestObjectResult("No clientId was supplied.");
+                return new BadRequestObjectResult(new Result<IClientSettings>("No clientId was supplied."));
 
             return GenericResponse(_clientSettingsLogic.SetBusinessHours(openTime,closeTime,clientId));
         }

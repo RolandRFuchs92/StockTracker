@@ -20,6 +20,13 @@ namespace StockTracker.BuisnessLogic.Poco
 			this.IsSuccess = isSuccess;
 		}
 
+	    public Result(string errorMessage)
+	    {
+	        IsSuccess = false;
+	        Message = errorMessage;
+	        Body = (T)Convert.ChangeType(null, typeof(T));
+	    }
+
 		public Result(bool isSuccess, string successMessage, string errorMessage)
 		{
 			Check(isSuccess, successMessage, errorMessage);
