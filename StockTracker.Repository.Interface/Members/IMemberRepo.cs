@@ -16,7 +16,5 @@ namespace StockTracker.Repository.Interface.Members
         IMember ChangeClient(int memberId, int clientId);
 	    IMember LastActiveDate(int memberId);
         IMember EditPerson(int memberId, IPerson person);
-        IMemberRole AddRole(string memberRoleName);
-        IMemberRole EditRole(int roleId, string memberRoleName);
     }
 }

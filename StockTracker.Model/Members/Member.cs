@@ -10,7 +10,6 @@ namespace StockTracker.Model.Members
 {
 	public class Member: IMember
 	{
-		[Key]
 		public int MemberId { get; set; }
 		public int PersonId { get; set; }
 		public int ClientId { get; set; }
