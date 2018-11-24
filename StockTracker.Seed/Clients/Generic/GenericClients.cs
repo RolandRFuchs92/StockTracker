@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StockTracker.Model.Clients;
 using StockTracker.Seed.Interface;
 
-namespace StockTracker.Seed.Clients
+namespace StockTracker.Seed.Clients.Generic
 {
 	public class GenericClients : IGeneric<Client>
 	{

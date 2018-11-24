@@ -17,6 +17,7 @@ using StockTracker.Model.Stock;
 using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients;
+using StockTracker.Seed.Clients.Generic;
 
 namespace StockTracker.Repository.Test.StockTracker.Clients
 {
