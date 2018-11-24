@@ -214,11 +214,11 @@ namespace StockTracker.API.Test.Clients
             var result = genericClientSettingsController.AddTotalUsers(1, 1);
 
             //Assert
-            Assertions(result, false);
+            Assertions(result, true);
         }
 
         [TestMethod]
-        public void AddTotalUsers_PassValidClient_BadResult()
+        public void AddTotalUsers_PassInvalidClient_BadResult()
         {
             //Arrange
             var genericClientSettingsController =

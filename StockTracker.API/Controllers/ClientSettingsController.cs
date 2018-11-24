@@ -25,7 +25,7 @@ namespace StockTracker.API.Controllers
         public IActionResult Add(IClientSettings settings)
         {
             if (settings.ClientId < 1)
-                return new BadRequestObjectResult(new Result<IClientSettings>("No ClientId found.")));
+                return new BadRequestObjectResult(new Result<IClientSettings>("No ClientId found."));
 
             var result = _clientSettingsLogic.Add(settings);
 
@@ -74,7 +74,7 @@ namespace StockTracker.API.Controllers
         public IActionResult AddTotalUsers(int clientId, int userCount)
         {
             if ((int) clientId == 0)
-                return new BadRequestObjectResult("No Id was added");
+                return new BadRequestObjectResult(new Result<IClientSettings>("No Id was added"));
 
             return GenericResponse(_clientSettingsLogic.AddTotalUsers(clientId, userCount));
         }
