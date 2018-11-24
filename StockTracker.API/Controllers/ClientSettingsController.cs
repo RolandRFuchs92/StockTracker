@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockTracker.API.Interface.Clients;
 using StockTracker.BusinessLogic.Interface.Client;
+using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Interface.Models.Clients;
 
 namespace StockTracker.API.Controllers
@@ -54,17 +55,34 @@ namespace StockTracker.API.Controllers
 
         public IActionResult Edit(IClientSettings settings)
         {
-            throw new NotImplementedException();
+            if (settings.ClientId == 0 || settings.ClientSettingsId == 0)
+                return new BadRequestObjectResult("No Client or Settings Id was specified.");
+
+            return GenericResponse(_clientSettingsLogic.Edit(settings));
         }
 
         public IActionResult SetBusinessHours(DateTime? openTime, DateTime? closeTime, int clientId)
         {
-            throw new NotImplementedException();
+            if ((int) clientId == 0)
+                return new BadRequestObjectResult("No clientId was supplied.");
+
+            return GenericResponse(_clientSettingsLogic.SetBusinessHours(openTime,closeTime,clientId));
         }
 
         public IActionResult AddTotalUsers(int clientId, int userCount)
         {
-            throw new NotImplementedException();
+            if ((int) clientId == 0)
+                return new BadRequestObjectResult("No Id was added");
+
+            return GenericResponse(_clientSettingsLogic.AddTotalUsers(clientId, userCount));
+        }
+
+        IActionResult GenericResponse<T>(IResult<T> result)
+        {
+            if (result.IsSuccess)
+                return new OkObjectResult(result);
+
+            return new BadRequestObjectResult(result);
         }
     }
 }
