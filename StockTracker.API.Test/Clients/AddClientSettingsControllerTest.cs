@@ -8,6 +8,7 @@ using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StockTracker.API.Controllers;
 using StockTracker.API.Interface.Clients;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Client;
@@ -38,6 +39,7 @@ namespace StockTracker.API.Test.Clients
             var moqResult = GenericClientSettingsResult();
             var moq = new Mock<IClientSettingsLogic>();
             moq.Setup(i => i.Add(It.IsAny<IClientSettings>())).Returns(moqResult);
+            _clientSettingsController = new ClientSettingsController(moq.Object);
 
             //Act
             var result = _clientSettingsController.Add(_setting);
@@ -58,6 +60,8 @@ namespace StockTracker.API.Test.Clients
             //Arrange
             var moq = new Mock<IClientSettingsLogic>();
             moq.Setup(i => i.Add(It.IsAny<IClientSettings>())).Returns(null as IResult<IClientSettings>);
+            _clientSettingsController = new ClientSettingsController(moq.Object);
+
 
             //Act
             var result = _clientSettingsController.Add(_setting);
@@ -253,7 +257,7 @@ namespace StockTracker.API.Test.Clients
             var moq = new Mock<IClientSettingsLogic>();
             moq.Setup(method);
 
-            //_clientSettingsController = new ClientSettingsController(moq.Object);
+            _clientSettingsController = new ClientSettingsController(moq.Object);
 
             return _clientSettingsController;
         }

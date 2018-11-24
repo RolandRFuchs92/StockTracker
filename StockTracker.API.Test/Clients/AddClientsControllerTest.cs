@@ -9,7 +9,7 @@ using Moq;
 using StockTracker.API.Controllers;
 using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BuisnessLogic.Poco;
-using StockTracker.BusinessLogic.Inteface.Client;
+using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
