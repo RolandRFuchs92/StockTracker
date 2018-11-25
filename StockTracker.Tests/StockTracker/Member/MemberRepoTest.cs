@@ -196,8 +196,35 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         #endregion
 
         #region LastActiveDate Test
+        [TestMethod]
+        public void LastActiveDate_PassedValidMember_ReturnUpdateMemberId()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var member = _genericMember.One();
+            var lastUpdateDate = member.LastActiveDate;
 
+            //Act
+            var result = _memberRepo.LastActiveDate(member.MemberId);
 
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(IMember));
+            Assert.AreNotEqual(result.LastActiveDate, lastUpdateDate);
+        }
+
+        [TestMethod]
+        public void LastActiveDate_PassInvalidMemberId_null()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var badMemberId = 100;
+
+            //Act
+            var result = _memberRepo.LastActiveDate(badMemberId);
+
+            //Assert
+            Assert.IsNull(result);
+        }
         #endregion
 
         #region Dry Code
