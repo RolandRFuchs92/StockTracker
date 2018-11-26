@@ -17,6 +17,7 @@ using StockTracker.Seed.Member.Generic;
 
 namespace StockTracker.Repository.Test.StockTracker.Member
 {
+    [TestClass]
     public class MemberRepoTest
     {
         private IMemberRepo _memberRepo;

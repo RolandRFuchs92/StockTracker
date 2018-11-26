@@ -30,7 +30,7 @@ namespace StockTracker.Seed.Clients.Generic
 				},
 				new Client
 				{
-					ClientId = 2,
+					ClientId = 3,
 					Address = "Test address",
 					ClientName = "Camel Patrol",
 					CreatedOn = DateTime.Now,
