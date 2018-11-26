@@ -11,6 +11,7 @@ using StockTracker.Interface.Models.Member;
 using StockTracker.Repository.Interface.Members;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
+using StockTracker.Model.Persons;
 using StockTracker.Seed.Member.Generate;
 using StockTracker.Seed.Member.Generic;
 
@@ -221,6 +222,73 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Act
             var result = _memberRepo.LastActiveDate(badMemberId);
+
+            //Assert
+            Assert.IsNull(result);
+        }
+        #endregion
+
+        #region EditPerson Test
+
+        [TestMethod]
+        public void EditPerson_PassValidMemberIdWithFullPerson_ReturnMemberWithNewPersonRef()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var member = _genericMember.One();
+            var person = new Person()
+            {
+                Email = "roland@telkomplace.co.za",
+                Mobile = "0730531234",
+                WhatsApp = "0320771234",
+                PersonName = "Roland",
+                PersonSurname = "Moodude"
+            };
+
+            //Act
+            var result = _memberRepo.EditPerson(member.MemberId, person);
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(IMember));
+            Assert.AreEqual((result as Model.Members.Member).Person, person);
+        }
+
+        [TestMethod]
+        public void EditPerson_PassValidMemberEditPersonData_ReturnMember()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var member = _genericMember.One();
+            var personId = member.PersonId;
+            var personEmail = "ro@ro.co.za";
+            var personMobile = "087123456";
+            var personCurrentWhatsapp = _db.Persons.FirstOrDefault(i => i.PersonId == personId).WhatsApp;
+
+            var person = new Person
+            {
+                Email = personEmail,
+                Mobile = personMobile
+            };
+
+            //Act
+            var result = _memberRepo.EditPerson(member.MemberId, person);
+            var personResult = _db.Persons.FirstOrDefault(i => i.PersonId == personId);
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(IMember));
+            Assert.AreEqual(personResult.Email, personEmail);
+            Assert.AreEqual(personResult.Mobile, personMobile);
+            Assert.AreEqual(personResult.WhatsApp, personCurrentWhatsapp);
+        }
+
+        [TestMethod]
+        public void EditPerson_PassInvalidMemberId_ReturnNull()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            
+            //Act
+            var result = _memberRepo.EditPerson(100, new Person());
 
             //Assert
             Assert.IsNull(result);
