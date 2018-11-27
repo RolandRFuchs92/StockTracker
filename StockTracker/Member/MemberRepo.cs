@@ -24,7 +24,11 @@ namespace StockTracker.Repository.Member
         {
             try
             {
-                _db.Members.Add((Model.Members.Member) member);
+                if (!_db.Clients.Any(i => i.ClientId == member.ClientId))
+                    return null;
+                
+
+                _db.Members.Add((Model.Members.Member)member);
                 var memberId = ((StockTrackerContext) _db).SaveChanges();
                 return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
             }

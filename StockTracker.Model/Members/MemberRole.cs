@@ -7,5 +7,7 @@ namespace StockTracker.Model.Members
 	    public int MemberRoleId { get; set; }
 	    public string MemberRoleName { get; set; }
         public bool IsActive { get; set; }
+
+        public Member Member { get; set; }
     }
 }

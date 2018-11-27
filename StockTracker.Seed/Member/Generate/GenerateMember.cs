@@ -44,7 +44,7 @@ namespace StockTracker.Seed.Member.Generate
             ((StockTrackerContext) _db).SaveChanges();
         }
 
-        private void Truncate()
+        public void Truncate()
         {
             ((StockTrackerContext)_db).Database.EnsureDeleted();
         }

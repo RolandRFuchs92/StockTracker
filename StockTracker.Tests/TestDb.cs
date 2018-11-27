@@ -21,8 +21,9 @@ namespace StockTracker.Repository.Test
 
 		    var builder = new DbContextOptionsBuilder<StockTrackerContext>();
 		    builder.UseInMemoryDatabase();
+	        builder.EnableSensitiveDataLogging();
 
-		    Db = new PopulateDb(new StockTrackerContext(builder.Options)).Populate();
+            Db = new PopulateDb(new StockTrackerContext(builder.Options)).Populate();
 		    IsActive = true;
 		}
     }

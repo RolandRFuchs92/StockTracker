@@ -12,6 +12,7 @@ using StockTracker.Repository.Interface.Members;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Model.Persons;
+using StockTracker.Repository.Member;
 using StockTracker.Seed.Member.Generate;
 using StockTracker.Seed.Member.Generic;
 
@@ -30,6 +31,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             _db = new TestDb().Db;
             _generateMembers = new GenerateMember(_db);
             _genericMember = new GenericMember();
+            _memberRepo = new MemberRepo(_db);
         }
 
         #region Add Test
@@ -38,9 +40,17 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         {
             //Arrange
             _generateMembers.Generate();
-            var member = _genericMember.One();
-            ((StockTrackerContext)_db).Members.RemoveRange(_genericMember.All());
-                    
+            var member = new Model.Members.Member
+            {
+                IsActive = true,
+                ClientId = 1,
+                LastActiveDate =  DateTime.Now,
+                PersonId = 0,
+                MemberRoleId = 1
+            };
+            //_db.Members.Remove(_db.Members.FirstOrDefault(i => i.MemberId == 1));
+            //((StockTrackerContext) _db).SaveChanges();
+
             //Act
             var result = _memberRepo.Add(member);
 
@@ -52,9 +62,9 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         public void Add_PassInvalidClientWithMember_Null()
         {
             //Arrange
-            _generateMembers.Generate();
+            _generateMembers.Truncate();
             var member = _genericMember.One();
-            ((StockTrackerContext)_db).Members.RemoveRange(_genericMember.All());
+            member.ClientId = 100;
 
             //Act
             var result = _memberRepo.Add(member);
