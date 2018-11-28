@@ -113,12 +113,40 @@ namespace StockTracker.Repository.Member
 
         public IMember LastActiveDate(int memberId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                member.LastActiveDate = DateTime.Now;
+
+                ((StockTrackerContext) _db).SaveChanges();
+                return member;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public IMember EditPerson(int memberId, IPerson person)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                var oldPerson = member.Person;
+
+                oldPerson.Email = string.IsNullOrEmpty(person.Email) ? oldPerson.Email : person.Email;
+                oldPerson.Mobile = string.IsNullOrEmpty(person.Mobile) ? oldPerson.Mobile : person.Mobile;
+                oldPerson.WhatsApp = string.IsNullOrEmpty(person.WhatsApp) ? oldPerson.WhatsApp : person.WhatsApp;
+                oldPerson.PersonName = string.IsNullOrEmpty(person.PersonName) ? oldPerson.PersonName : person.PersonName;
+                oldPerson.PersonSurname = string.IsNullOrEmpty(person.PersonSurname) ? oldPerson.PersonSurname : person.PersonSurname;
+
+                ((StockTrackerContext) _db).SaveChanges();
+                return member;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
