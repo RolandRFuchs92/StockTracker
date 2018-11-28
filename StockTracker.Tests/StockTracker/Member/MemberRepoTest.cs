@@ -76,7 +76,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             member.ClientId = 100;
             member.MemberId = 0;
-            person.PersonId = 0;
+
             //Act
             var result = _memberRepo.Add(member, person);
 

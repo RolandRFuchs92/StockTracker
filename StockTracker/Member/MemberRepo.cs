@@ -43,12 +43,43 @@ namespace StockTracker.Repository.Member
 
         public IMember Edit(IMember member)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var isValidClient = _db.Clients.Any(i => i.ClientId == member.ClientId || member.ClientId == 0) ;
+                var isValidMemberRoleId = _db.MemberRoles.Any(i => i.MemberRoleId == member.MemberRoleId || member.MemberRoleId == 0) ;
+                var isValidPersonId = _db.Persons.Any(i => i.PersonId == member.PersonId || member.PersonId == 0) ;
+
+                if (!isValidClient || !isValidMemberRoleId || !isValidPersonId)
+                    return null;
+
+                var oldMember = _db.Members.FirstOrDefault(i => i.MemberId == member.MemberId);
+                oldMember.PersonId = member.PersonId == 0 ? oldMember.PersonId : member.PersonId;
+                oldMember.MemberRoleId = member.MemberRoleId == 0 ? oldMember.MemberRoleId : member.MemberRoleId;
+                oldMember.ClientId = member.ClientId == 0 ? oldMember.ClientId : member.ClientId;
+                oldMember.LastActiveDate = member.LastActiveDate == null ? oldMember.LastActiveDate : member.LastActiveDate;
+                oldMember.IsActive = member.IsActive;
+
+                var memberId = ((StockTrackerContext)_db).SaveChanges();
+                return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public IMember ChangeRole(int memberId, int memberRoleId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public IMember ChangeClient(int memberId, int clientId)
