@@ -73,8 +73,16 @@ namespace StockTracker.Repository.Member
         {
             try
             {
-                
+                var isValidMemberRole = _db.MemberRoles.Any(i => i.MemberRoleId == memberRoleId);
+                if (!isValidMemberRole)
+                    return null;
 
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                member.MemberRoleId = memberRoleId;
+
+                ((StockTrackerContext) _db).SaveChanges();
+
+                return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
             }
             catch (Exception e)
             {
