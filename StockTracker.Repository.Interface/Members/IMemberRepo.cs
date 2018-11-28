@@ -10,13 +10,11 @@ namespace StockTracker.Repository.Interface.Members
 {
     public interface IMemberRepo
     {
-	    IMember Add(IMember member);
+	    IMember Add(IMember member, IPerson person);
 	    IMember Edit(IMember member);
         IMember ChangeRole(int memberId, int memberRoleId);
         IMember ChangeClient(int memberId, int clientId);
 	    IMember LastActiveDate(int memberId);
         IMember EditPerson(int memberId, IPerson person);
-        IMemberRole AddRole(string memberRoleName);
-        IMemberRole EditRole(int roleId, string memberRoleName);
     }
 }

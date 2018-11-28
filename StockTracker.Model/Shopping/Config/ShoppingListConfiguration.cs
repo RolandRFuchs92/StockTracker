@@ -13,7 +13,7 @@ namespace StockTracker.Model.Shopping.Config
 		    builder.HasMany(i => i.ShoppingListItems).WithOne(i => i.ShoppingList).OnDelete(DeleteBehavior.Restrict);
 
 
-			builder.Property(i => i.ShoppingListId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
+			builder.Property(i => i.ShoppingListId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.MemberId).IsRequired().HasColumnType("INT");
 		    builder.Property(i => i.CreatedOn).IsRequired().HasColumnType("DATETIME").HasDefaultValueSql("GetDate()");
 		    builder.Property(i => i.HasNotified).IsRequired().HasColumnType("BIT");

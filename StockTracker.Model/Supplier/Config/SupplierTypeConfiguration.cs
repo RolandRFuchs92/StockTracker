@@ -16,7 +16,7 @@ namespace StockTracker.Model.Supplier.Config
 
 		    builder.HasMany(i => i.Suppliers).WithOne(i => i.SupplierType);
 
-		    builder.Property(i => i.SupplierTypeId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
+		    builder.Property(i => i.SupplierTypeId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.SupplierTypeName).IsRequired().HasColumnType("NVARCHAR(256)");
 
 		    builder.HasData();

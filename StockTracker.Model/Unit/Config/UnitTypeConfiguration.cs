@@ -14,7 +14,7 @@ namespace StockTracker.Model.Unit.Config
 	    {
 		    builder.HasKey(i => i.UnitTypeId);
 
-		    builder.Property(i => i.UnitTypeId).IsRequired().HasColumnType("INT").UseSqlServerIdentityColumn();
+		    builder.Property(i => i.UnitTypeId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.Name).IsRequired().HasColumnType("NVARCHAR(64)");
 		    builder.Property(i => i.Symbol).IsRequired().HasColumnType("NVARCHAR(8)");
 

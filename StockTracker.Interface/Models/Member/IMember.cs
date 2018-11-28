@@ -5,7 +5,6 @@ namespace StockTracker.Interface.Models.Member
 {
     public interface IMember 
     {
-		[Key]
         int MemberId { get; set; }
 		int PersonId { get; set; }
 		int ClientId { get; set; }

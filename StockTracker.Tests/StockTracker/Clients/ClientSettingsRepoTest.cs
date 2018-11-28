@@ -17,6 +17,7 @@ using StockTracker.Model.Stock;
 using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients;
+using StockTracker.Seed.Clients.Generic;
 
 namespace StockTracker.Repository.Test.StockTracker.Clients
 {
@@ -30,7 +31,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 		public ClientSettingsRepoTest()
 		{
-			_db = new TestDb().Db;
+			_db = new TestDbFactory().Db();
 			_genericSettings = new GenericClientSettings();
 			_clientSettingsRepo = new ClientSettingsRepo(_db);
 			_clients = new GenericClients();

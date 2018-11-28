@@ -42,37 +42,37 @@ namespace StockTracker.Context
 	    public virtual DbSet<Client> Clients { get; set; }
 
 
-	    protected override void OnModelCreating(ModelBuilder modelBuilder)
-	    {
-		    modelBuilder.ApplyConfiguration(new ClientConfiguration());
-		    modelBuilder.ApplyConfiguration(new ClientSettingsConfiguration());
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ClientConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientSettingsConfiguration());
 
-		    modelBuilder.ApplyConfiguration(new ClientStockItemConfiguration());
-		    modelBuilder.ApplyConfiguration(new ClientStockLevelConfigurtion());
+            modelBuilder.ApplyConfiguration(new ClientStockItemConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientStockLevelConfigurtion());
 
-		    modelBuilder.ApplyConfiguration(new CommCoreConfiguration());
-		    modelBuilder.ApplyConfiguration(new CommDetailConfiguration());
-		    modelBuilder.ApplyConfiguration(new CommErrorConfiguration());
-		    modelBuilder.ApplyConfiguration(new CommSendStatusTypeConfiguration());
-		    modelBuilder.ApplyConfiguration(new CommTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CommCoreConfiguration());
+            //modelBuilder.ApplyConfiguration(new CommDetailConfiguration());
+            //modelBuilder.ApplyConfiguration(new CommErrorConfiguration());
+            modelBuilder.ApplyConfiguration(new CommSendStatusTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CommTypeConfiguration());
 
-		    modelBuilder.ApplyConfiguration(new MemberConfiguration());
-		    modelBuilder.ApplyConfiguration(new MemberRoleConfiguration());
-
-			
-			modelBuilder.ApplyConfiguration(new PersonConfiguration());
-
-		    modelBuilder.ApplyConfiguration(new ShoppingListConfiguration());
-		    modelBuilder.ApplyConfiguration(new ShoppingListItemConfiguration());
-
-		    modelBuilder.ApplyConfiguration(new StockCategoryConfiguration());
-		    modelBuilder.ApplyConfiguration(new StockCoreConfiguration());
-		    modelBuilder.ApplyConfiguration(new StockTypeConfiguration());
-
-		    modelBuilder.ApplyConfiguration(new StockSupplierDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberRoleConfiguration());
 
 
-	    }
-	}
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ShoppingListConfiguration());
+            modelBuilder.ApplyConfiguration(new ShoppingListItemConfiguration());
+
+            modelBuilder.ApplyConfiguration(new StockCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new StockCoreConfiguration());
+            modelBuilder.ApplyConfiguration(new StockTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new StockSupplierDetailConfiguration());
+
+
+        }
+    }
 }
  

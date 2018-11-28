@@ -14,9 +14,7 @@ namespace StockTracker.Model.StockSupplier.Config
 	    {
 		    builder.HasKey(i => i.StockSupplierDetailId);
 
-			//TODO: Finish this crap... bored now...
-
-		    builder.Property(i => i.StockSupplierDetailId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.StockSupplierDetailId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired().HasDefaultValueSql("GETDATE()");
 		    builder.Property(i => i.MemberId).HasColumnType("INT").IsRequired();
 		    builder.Property(i => i.Price).HasColumnType("DECIMAL").IsRequired();
