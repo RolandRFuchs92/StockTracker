@@ -9,7 +9,6 @@ namespace StockTracker.Repository.Test
 {
     public class TestDbFactory : IDisposable
     {
-	    public StockTrackerContext Db { get; private set; }
         private SqliteConnection _connection;
         private bool IsActive;
 
@@ -19,7 +18,12 @@ namespace StockTracker.Repository.Test
                 .UseSqlite(_connection).Options;
         }
 
-        public StockTrackerContext CreateContext()
+        public StockTrackerContext Db()
+        {
+            return CreateContext();
+        }
+
+        private StockTrackerContext CreateContext()
         {
 
             if (_connection == null)

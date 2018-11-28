@@ -21,7 +21,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		public ClientsRepoTest()
 		{
 			_genClient = new GenericClients();
-			_db = new TestDbFactory().Db;
+			_db = new TestDbFactory().Db();
 			_clientRepo = new ClientRepo(_db);
 		}
 
