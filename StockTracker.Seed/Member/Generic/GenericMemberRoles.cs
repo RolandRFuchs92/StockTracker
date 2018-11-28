@@ -17,25 +17,21 @@ namespace StockTracker.Seed.Member.Generic
                 new MemberRole
                 {
                     IsActive = true,
-                    MemberRoleId = 1,
                     MemberRoleName = "Manager"
                 },
                 new MemberRole
                 {
                     IsActive = true,
-                    MemberRoleId = 2,
                     MemberRoleName = "Head Cheff"
                 },
                 new MemberRole
                 {
                     IsActive = true,
-                    MemberRoleId = 3,
                     MemberRoleName = "Cheff"
                 },
                 new MemberRole
                 {
                     IsActive = true,
-                    MemberRoleId = 4,
                     MemberRoleName = "Waiter"
                 },
             };

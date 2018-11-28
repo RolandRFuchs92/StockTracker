@@ -1,4 +1,5 @@
-﻿using StockTracker.Interface.Models.Member;
+﻿using System.Collections.Generic;
+using StockTracker.Interface.Models.Member;
 
 namespace StockTracker.Model.Members
 {
@@ -8,6 +9,6 @@ namespace StockTracker.Model.Members
 	    public string MemberRoleName { get; set; }
         public bool IsActive { get; set; }
 
-        public Member Member { get; set; }
+        public ICollection<Member> Member { get; set; }
     }
 }
