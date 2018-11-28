@@ -92,7 +92,23 @@ namespace StockTracker.Repository.Member
 
         public IMember ChangeClient(int memberId, int clientId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var isValidClientId = _db.Clients.Any(i => i.ClientId == clientId);
+
+                if (!isValidClientId)
+                    return null;
+
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                member.ClientId = clientId;
+
+                memberId = ((StockTrackerContext) _db).SaveChanges();
+                return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public IMember LastActiveDate(int memberId)
