@@ -28,7 +28,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
         public MemberRepoTest()
         {
-            _db = new TestDb().Db;
+            _db = new TestDbFactory().Db;
             _generateMembers = new GenerateMember(_db);
             _genericMember = new GenericMember();
             _memberRepo = new MemberRepo(_db);

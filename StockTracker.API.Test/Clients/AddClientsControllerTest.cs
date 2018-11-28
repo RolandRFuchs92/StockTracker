@@ -32,7 +32,7 @@ namespace StockTracker.API.Test.Clients
 	    {
 		    _moq = new Mock<IClientLogic>();
 			_client = new GenericClients().One();
-		    _db = new TestDb().Db;
+		    _db = new TestDbFactory().Db;
 	    }
 
 
