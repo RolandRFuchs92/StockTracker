@@ -16,7 +16,7 @@ namespace StockTracker.Model.Supplier.Config
 
 		    builder.HasOne(i => i.SupplierType).WithMany(i => i.Suppliers);
 
-		    builder.Property(i => i.SupplierId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.SupplierId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.Email).HasColumnType("NVARCHAR(256)").IsRequired(false);
 		    builder.Property(i => i.Address).HasColumnType("NVARCHAR(1024)").IsRequired(false);
 		    builder.Property(i => i.ContactNumber).HasColumnType("NVARCHAR(256)").IsRequired(false);

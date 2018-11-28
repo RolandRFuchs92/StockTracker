@@ -17,7 +17,7 @@ namespace StockTracker.Model.Comm.Config
 		    builder.HasOne(i => i.Member).WithOne().OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.CommError).WithOne().OnDelete(DeleteBehavior.Restrict);
 
-		    builder.Property(i => i.CommDetailId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.CommDetailId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CommErrorId).HasColumnType("INT").IsRequired();
 		    builder.Property(i => i.MemberId).HasColumnType("INT").IsRequired();
 		    builder.Property(i => i.Response).HasColumnType("NVARCHAR(2048)").IsRequired(false);

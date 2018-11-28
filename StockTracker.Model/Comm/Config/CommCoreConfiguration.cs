@@ -14,7 +14,7 @@ namespace StockTracker.Model.Comm.Config
 	    {
 		    builder.HasKey(i => i.CommCoreId);
 
-		    builder.Property(i => i.CommCoreId).HasColumnType("Int").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.CommCoreId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CommDetailId).HasColumnType("Int").IsRequired();
 		    builder.Property(i => i.ChangedOn).HasColumnType("DateTime").IsRequired().HasDefaultValueSql("GetDate()");
 		    builder.Property(i => i.CreatedOn).HasColumnType("DateTime").IsRequired().HasDefaultValueSql("GetDate()");

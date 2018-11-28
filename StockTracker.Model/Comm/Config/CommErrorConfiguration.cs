@@ -14,7 +14,7 @@ namespace StockTracker.Model.Comm.Config
 	    {
 		    builder.HasKey(i => i.CommErrorId);
 
-		    builder.Property(i => i.CommErrorId).HasColumnType("INT").IsRequired().UseSqlServerIdentityColumn();
+		    builder.Property(i => i.CommErrorId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired().HasDefaultValueSql("GETDATE()");
 		    builder.Property(i => i.Exception).HasColumnType("NVARCHAR(MAX)").IsRequired();
 		    builder.Property(i => i.Note).HasColumnType("NVARCHAR(2048)").IsRequired();
