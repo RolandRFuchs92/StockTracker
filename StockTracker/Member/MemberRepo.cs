@@ -7,11 +7,12 @@ using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Interface.Models.Person;
+using StockTracker.Model.Persons;
 using StockTracker.Repository.Interface.Members;
 
 namespace StockTracker.Repository.Member
 {
-    public class MemberRepo  :IMemberRepo
+    public class MemberRepo : IMemberRepo
     {
         private IStockTrackerContext _db;
 
@@ -20,13 +21,15 @@ namespace StockTracker.Repository.Member
             _db = db;
         }
 
-        public IMember Add(IMember member)
+        public IMember Add(IMember member, IPerson person)
         {
             try
             {
-                if (!_db.Clients.Any(i => i.ClientId == member.ClientId))
+                if (!_db.Clients.Any(i => i.ClientId == member.ClientId) || person == null)
                     return null;
-                
+
+                _db.Persons.Add((Person)person);
+                member.PersonId = person.PersonId;
 
                 _db.Members.Add((Model.Members.Member)member);
                 var memberId = ((StockTrackerContext) _db).SaveChanges();

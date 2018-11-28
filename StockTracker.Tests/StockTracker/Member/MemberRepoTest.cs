@@ -11,10 +11,12 @@ using StockTracker.Interface.Models.Member;
 using StockTracker.Repository.Interface.Members;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
+using StockTracker.Interface.Models.Person;
 using StockTracker.Model.Persons;
 using StockTracker.Repository.Member;
 using StockTracker.Seed.Member.Generate;
 using StockTracker.Seed.Member.Generic;
+using StockTracker.Seed.Persons;
 
 namespace StockTracker.Repository.Test.StockTracker.Member
 {
@@ -25,13 +27,16 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         private IStockTrackerContext _db;
         private GenerateMember _generateMembers;
         private GenericMember _genericMember;
+        private GenericPerson _genericPerson;
 
         public MemberRepoTest()
         {
             _db = new TestDbFactory().Db();
             _generateMembers = new GenerateMember(_db);
             _genericMember = new GenericMember();
+            _genericPerson = new GenericPerson();
             _memberRepo = new MemberRepo(_db);
+            
         }
 
         #region Add Test
@@ -48,11 +53,14 @@ namespace StockTracker.Repository.Test.StockTracker.Member
                 PersonId = 0,
                 MemberRoleId = 1
             };
-            //_db.Members.Remove(_db.Members.FirstOrDefault(i => i.MemberId == 1));
-            //((StockTrackerContext) _db).SaveChanges();
+
+            var person = _genericPerson.One();
+
+            member.MemberId = 0;
+            person.PersonId = 0;
 
             //Act
-            var result = _memberRepo.Add(member);
+            var result = _memberRepo.Add(member, person);
 
             //Assert
             Assertions(result);
@@ -64,10 +72,13 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             //Arrange
             _generateMembers.Truncate();
             var member = _genericMember.One();
-            member.ClientId = 100;
+            var person = (IPerson)null;
 
+            member.ClientId = 100;
+            member.MemberId = 0;
+            person.PersonId = 0;
             //Act
-            var result = _memberRepo.Add(member);
+            var result = _memberRepo.Add(member, person);
 
             //Assert
             Assertions(result, false);
