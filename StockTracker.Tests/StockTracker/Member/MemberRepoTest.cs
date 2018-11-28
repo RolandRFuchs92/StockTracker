@@ -272,7 +272,11 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(IMember));
-            Assert.AreEqual((result as Model.Members.Member).Person, person);
+            Assert.AreEqual((result as Model.Members.Member).Person.Email, person.Email);
+            Assert.AreEqual((result as Model.Members.Member).Person.Mobile, person.Mobile);
+            Assert.AreEqual((result as Model.Members.Member).Person.WhatsApp, person.WhatsApp);
+            Assert.AreEqual((result as Model.Members.Member).Person.PersonName, person.PersonName);
+            Assert.AreEqual((result as Model.Members.Member).Person.PersonSurname, person.PersonSurname);
         }
 
         [TestMethod]

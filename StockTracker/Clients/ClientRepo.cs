@@ -28,6 +28,7 @@ namespace StockTracker.Repository.Clients
 				if (newClient == null)
 					return false;
 
+			    newClient.CreatedOn = DateTime.MinValue == newClient.CreatedOn ? DateTime.Now : newClient.CreatedOn;
 				_db.Clients.Add((Client)newClient);
 				((StockTrackerContext)_db).SaveChanges();
 				return true;
