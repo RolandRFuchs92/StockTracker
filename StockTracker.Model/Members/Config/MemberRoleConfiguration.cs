@@ -9,6 +9,8 @@ namespace StockTracker.Model.Members.Config
 	    {
 		    builder.HasKey(i => i.MemberRoleId);
 
+	        builder.HasMany(i => i.Member).WithOne(i => i.MemberRole).OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(i => i.MemberRoleId).UseSqlServerIdentityColumn();
             builder.Property(i => i.MemberRoleName).IsRequired().HasColumnType("NVARCHAR(256)");
 	        builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");

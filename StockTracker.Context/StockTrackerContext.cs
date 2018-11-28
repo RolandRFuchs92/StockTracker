@@ -51,8 +51,8 @@ namespace StockTracker.Context
             modelBuilder.ApplyConfiguration(new ClientStockLevelConfigurtion());
 
             modelBuilder.ApplyConfiguration(new CommCoreConfiguration());
-            modelBuilder.ApplyConfiguration(new CommDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new CommErrorConfiguration());
+            //modelBuilder.ApplyConfiguration(new CommDetailConfiguration());
+            //modelBuilder.ApplyConfiguration(new CommErrorConfiguration());
             modelBuilder.ApplyConfiguration(new CommSendStatusTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CommTypeConfiguration());
 
