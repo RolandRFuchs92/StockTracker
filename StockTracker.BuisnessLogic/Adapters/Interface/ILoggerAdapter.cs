@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTracker.BuisnessLogic.Adapter.Interface
+namespace StockTracker.BuisnessLogic.Adapters.Interface
 {
     public interface ILoggerAdapter<T>
     {

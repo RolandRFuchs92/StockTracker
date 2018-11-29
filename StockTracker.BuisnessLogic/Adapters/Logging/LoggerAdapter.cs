@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using StockTracker.BuisnessLogic.Adapter.Interface;
+using StockTracker.BuisnessLogic.Adapters.Interface;
 
-namespace StockTracker.BuisnessLogic.Adapter.Logging
+namespace StockTracker.BuisnessLogic.Adapters.Logging
 {
     public class LoggerAdapter<T> : ILoggerAdapter<T>
     {
