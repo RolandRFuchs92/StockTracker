@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Logger\" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockTracker.Adapter.Interface\StockTracker.Adapter.Interface.csproj" />
   </ItemGroup>
 
 </Project>
