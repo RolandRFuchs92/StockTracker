@@ -41,8 +41,9 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             _generateMembers = new GenerateMember(_db);
             _genericMember = new GenericMember();
             _genericPerson = new GenericPerson();
-            _memberRepo = new MemberRepo(_db, _log);
             _log = CreateLogger();
+
+            _memberRepo = new MemberRepo(_db, _log);
         }
 
 
@@ -52,6 +53,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         {
             //Arrange
             _generateMembers.Generate();
+
             var member = new Model.Members.Member
             {
                 IsActive = true,
@@ -90,7 +92,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
-            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 

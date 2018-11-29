@@ -13,6 +13,8 @@ namespace StockTracker.Repository.Enums
         First = 1002,
         List = 1003,
         Delete = 1004,
-        Insert = 1005
+        Insert = 1005,
+
+        BadParameters = 2000
     }
 }

@@ -31,7 +31,7 @@ namespace StockTracker.Repository.Member
             try
             {
                 if (!_db.Clients.Any(i => i.ClientId == member.ClientId) || person == null)
-                    return null;
+                    return BlockCheck("Invalid ClientId or Person was null.");
 
                 _db.Persons.Add((Person)person);
                 member.PersonId = person.PersonId;
@@ -156,6 +156,12 @@ namespace StockTracker.Repository.Member
             {
                 return null;
             }
+        }
+
+        IMember BlockCheck(string message)
+        {
+            _log.LogError((int)LoggingEvent.BadParameters, message);
+            return (IMember) null;
         }
     }
 }

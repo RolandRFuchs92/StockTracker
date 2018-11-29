@@ -18,6 +18,11 @@ namespace StockTracker.Adapter.Logger
             _log.LogError(eventId, exception, message);
         }
 
+        public void LogError(int eventId, string message)
+        {
+            _log.LogError(eventId, message);
+        }
+
         public void LogInformation(int eventId, string message)
         {
             _log.LogInformation(eventId, message);
