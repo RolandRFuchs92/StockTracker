@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Interface.Models.Person;
 using StockTracker.Model.Persons;
+using StockTracker.Repository.Enums;
 using StockTracker.Repository.Interface.Members;
 
 namespace StockTracker.Repository.Member
@@ -15,10 +17,12 @@ namespace StockTracker.Repository.Member
     public class MemberRepo : IMemberRepo
     {
         private IStockTrackerContext _db;
+        private ILogger<MemberRepo> _log;
 
-        public MemberRepo(IStockTrackerContext db)
+        public MemberRepo(IStockTrackerContext db, ILogger<MemberRepo> log)
         {
             _db = db;
+            _log = log;
         }
 
         public IMember Add(IMember member, IPerson person)
@@ -33,10 +37,14 @@ namespace StockTracker.Repository.Member
 
                 _db.Members.Add((Model.Members.Member)member);
                 var memberId = ((StockTrackerContext) _db).SaveChanges();
+
+                _log.LogInformation((int)LoggingEvent.Create, "Created new Member");
+
                 return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
             }
             catch (Exception e)
             {
+                _log.LogError((int)LoggingEvent.Create, e, "Create Member/Person");
                 return null;
             }
         }

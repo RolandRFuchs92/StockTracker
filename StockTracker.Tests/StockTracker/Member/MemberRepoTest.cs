@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Remotion.Linq.Utilities;
@@ -25,9 +27,12 @@ namespace StockTracker.Repository.Test.StockTracker.Member
     {
         private IMemberRepo _memberRepo;
         private IStockTrackerContext _db;
+        private ILogger<MemberRepo> _log;
+
         private GenerateMember _generateMembers;
         private GenericMember _genericMember;
         private GenericPerson _genericPerson;
+        private Mock<ILogger<MemberRepo>> _mock;
 
         public MemberRepoTest()
         {
@@ -35,9 +40,10 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             _generateMembers = new GenerateMember(_db);
             _genericMember = new GenericMember();
             _genericPerson = new GenericPerson();
-            _memberRepo = new MemberRepo(_db);
-            
+            _memberRepo = new MemberRepo(_db, _log);
+            _log = CreateLogger();
         }
+
 
         #region Add Test
         [TestMethod]
@@ -63,7 +69,8 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             var result = _memberRepo.Add(member, person);
 
             //Assert
-            Assertions(result);
+            Assert.IsInstanceOfType(result, typeof(IMember));
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
         }
 
         [TestMethod]
@@ -81,7 +88,8 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             var result = _memberRepo.Add(member, person);
 
             //Assert
-            Assertions(result, false);
+            Assert.IsNull(result);
+            _mock.Verify(i => i.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 
@@ -322,25 +330,16 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         #endregion
 
         #region Dry Code
-        private IStockTrackerContext StockTracker (Expression<Func<IStockTrackerContext, IMember>> method, IMember result)
+        private ILogger<MemberRepo> CreateLogger()
         {
-            var moq = new Mock<IStockTrackerContext>();
-            moq.Setup(method).Returns(result);
-            
-            return moq.Object;
+            _mock = new Mock<ILogger<MemberRepo>>();
+
+            //_mock.Setup(i => i.Log(LogLevel.Error, It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
+            //_mock.Setup(i => i.Log(LogLevel.Information, It.IsAny<int>(), It.IsAny<string>()));
+
+            return _mock.Object;
         }
 
-        private void Assertions(IMember result, bool isValid = true)
-        {
-            if (isValid)
-            {
-                Assert.IsInstanceOfType(result, typeof(IMember));
-            }
-            else
-            {
-                Assert.IsNull(result);
-            }
-        }
         #endregion
     }
 }
