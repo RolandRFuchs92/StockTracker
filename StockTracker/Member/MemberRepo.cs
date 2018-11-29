@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Member;
@@ -17,9 +18,9 @@ namespace StockTracker.Repository.Member
     public class MemberRepo : IMemberRepo
     {
         private IStockTrackerContext _db;
-        private ILogger<MemberRepo> _log;
+        private ILoggerAdapter<MemberRepo> _log;
 
-        public MemberRepo(IStockTrackerContext db, ILogger<MemberRepo> log)
+        public MemberRepo(IStockTrackerContext db, ILoggerAdapter<MemberRepo> log)
         {
             _db = db;
             _log = log;

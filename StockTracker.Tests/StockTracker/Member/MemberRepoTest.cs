@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Remotion.Linq.Utilities;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Interface.Models.Member;
 using StockTracker.Repository.Interface.Members;
 using StockTracker.Context;
@@ -27,11 +28,12 @@ namespace StockTracker.Repository.Test.StockTracker.Member
     {
         private IMemberRepo _memberRepo;
         private IStockTrackerContext _db;
-        private  ILogger<MemberRepo> _log;
+        private ILoggerAdapter<MemberRepo> _log;
 
         private GenerateMember _generateMembers;
         private GenericMember _genericMember;
         private GenericPerson _genericPerson;
+        private Mock<ILoggerAdapter<MemberRepo>> _mock;
 
         public MemberRepoTest()
         {
@@ -88,7 +90,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
-            _mock.Verify(i => i.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 
@@ -329,12 +331,12 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         #endregion
 
         #region Dry Code
-        private ILogger<MemberRepo> CreateLogger()
+        private ILoggerAdapter<MemberRepo> CreateLogger()
         {
-            _mock = new Mock<ILogger<MemberRepo>>();
+            _mock = new Mock<ILoggerAdapter<MemberRepo>>();
 
-            //_mock.Setup(i => i.Log(LogLevel.Error, It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
-            //_mock.Setup(i => i.Log(LogLevel.Information, It.IsAny<int>(), It.IsAny<string>()));
+            _mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
+            _mock.Setup(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
 
             return _mock.Object;
         }
