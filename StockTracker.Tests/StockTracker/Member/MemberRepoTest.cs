@@ -27,12 +27,11 @@ namespace StockTracker.Repository.Test.StockTracker.Member
     {
         private IMemberRepo _memberRepo;
         private IStockTrackerContext _db;
-        private ILogger<MemberRepo> _log;
+        private  ILogger<MemberRepo> _log;
 
         private GenerateMember _generateMembers;
         private GenericMember _genericMember;
         private GenericPerson _genericPerson;
-        private Mock<ILogger<MemberRepo>> _mock;
 
         public MemberRepoTest()
         {
