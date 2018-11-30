@@ -115,10 +115,11 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             Assert.IsInstanceOfType(result, typeof(IMember));
             Assert.AreEqual(result.IsActive, isMemberActive);
             Assert.AreEqual(result.ClientId, clientId);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        public void Edit_PassValidClient_NullMember()
+        public void Edit_PassInvalidClient_NullMember()
         {
             //Arrange
             _generateMembers.Generate();
@@ -130,6 +131,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         #endregion
