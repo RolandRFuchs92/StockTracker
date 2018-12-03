@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
+using StockTracker.Repository.Enums;
 using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.Repository.Clients
@@ -15,10 +17,12 @@ namespace StockTracker.Repository.Clients
     public class ClientSettingsRepo : IClientSettingsRepo
     {
 	    private IStockTrackerContext _db;
+        private ILoggerAdapter<ClientSettingsRepo> _log;
 
-	    public ClientSettingsRepo(IStockTrackerContext db)
+        public ClientSettingsRepo(IStockTrackerContext db, ILoggerAdapter<ClientSettingsRepo> log)
 	    {
 		    _db = db;
+	        _log = log;
 	    }
 
 	    public IClientSettings AddClientSettings(IClientSettings settings)
@@ -32,6 +36,7 @@ namespace StockTracker.Repository.Clients
 
 			    _db.ClientSettings.Add((ClientSettings)settings);
 				var result = ((StockTrackerContext) _db).SaveChanges();
+
 			    if (result == 0)
 				    return null;
 
@@ -39,7 +44,6 @@ namespace StockTracker.Repository.Clients
 		    }
 		    catch (Exception e)
 		    {
-				//TODO: ADD LOGGING
 			    return null;
 		    }
 	    }
@@ -160,9 +164,30 @@ namespace StockTracker.Repository.Clients
 		    }
 	    }
 
-	    private IClient GetClient(int clientId)
-	    {
-		    return _db.Clients.FirstOrDefault( i=> i.ClientId == clientId);
-	    }
+        private IClient GetClient(int clientId)
+        {
+            return _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
+        }
+
+        private IClientSettings LogSuccess(LoggingEvent evt, string message)
+        {
+            _log.LogInformation((int)evt, message);
+            
+            return (IClientSettings)null;
+        }
+
+        private IClientSettings LogError(LoggingEvent evt, Exception e, string message)
+        {
+            _log.LogError((int)evt, e, message);
+
+            return (IClientSettings)null;
+        }
+
+        private IClientSettings LogError(LoggingEvent evt, string message)
+        {
+            _log.LogError((int)evt, message);
+
+            return (IClientSettings) null;
+        }
     }
 }
