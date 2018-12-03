@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
@@ -17,15 +19,30 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		private IStockTrackerContext _db;
 		private IClientRepo _clientRepo;
 		private GenericClients _genClient;
+	    private ILoggerAdapter<ClientRepo> _logger;
+
+	    private Mock<ILoggerAdapter<ClientRepo>> _mock;
 
 		public ClientsRepoTest()
 		{
 			_genClient = new GenericClients();
 			_db = new TestDbFactory().Db();
-			_clientRepo = new ClientRepo(_db);
+		    _logger = MockLogger();
+            _clientRepo = new ClientRepo(_db, _logger);
 		}
 
-		private void Trunc(string tableName)
+	    private ILoggerAdapter<ClientRepo> MockLogger()
+	    {
+            _mock = new Mock<ILoggerAdapter<ClientRepo>>();
+
+	        _mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
+	        _mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
+	        _mock.Setup(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
+
+	        return _mock.Object;
+	    }
+
+	    private void Trunc(string tableName)
 		{
 			//((StockTrackerContext) _db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
 			((StockTrackerContext) _db).Database.EnsureDeleted(); ;
@@ -52,7 +69,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsTrue(result);
-		}
+		    _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+
+        }
 
 		[TestMethod]
 		public void Add_PassEmptyClient_False()
@@ -66,9 +85,10 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsFalse(result);
+		    _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
 		}
 
-		[TestMethod]
+        [TestMethod]
 		public void Add_PassValidParams_True()
 		{
 			//Arrange
@@ -79,6 +99,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsTrue(result);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 		}
 		#endregion
 
@@ -103,6 +124,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsTrue(result);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 		}
 
 		[TestMethod]
@@ -124,6 +146,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsFalse(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
 		}
 		#endregion
 
