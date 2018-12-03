@@ -5,14 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Interface.csproj" />
-    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
-      <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.mvc.abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
   </ItemGroup>
 
 </Project>
