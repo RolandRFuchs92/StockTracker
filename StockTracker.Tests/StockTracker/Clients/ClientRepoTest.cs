@@ -82,7 +82,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		}
 		#endregion
 
-
 		#region Edit Tests
 		[TestMethod]
 		public void Edit_PassvalidClient_True()
