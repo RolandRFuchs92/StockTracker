@@ -77,7 +77,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
         }
 
         [TestMethod]
-        public void Add_PassInvalidClientWithMember_Null()
+        public void Add_PassInvalidClientWithMember_NullReturnLogInvalid()
         {
             //Arrange
             _generateMembers.Truncate();
@@ -93,6 +93,28 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             //Assert
             Assert.IsNull(result);
             _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void Add_ThrowError_ReturnNullLogError()
+        {
+            _generateMembers.Truncate();
+            var member = _genericMember.One();
+            var person = (IPerson)null;
+
+            member.ClientId = 100;
+            member.MemberId = 0;
+
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.Members).Throws(new Exception());
+            _memberRepo = new MemberRepo(moq.Object, _log);
+
+            //Act
+            var result = _memberRepo.Add(member, person);
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 
@@ -134,6 +156,25 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
+        [TestMethod]
+        public void Edit_PassInvalidClient_NullMemberLogError()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var member = _genericMember.One();
+            member.ClientId = 0;
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.Members).Throws(new Exception());
+            _memberRepo = new MemberRepo(moq.Object, _log);
+
+            //Act
+            var result = _memberRepo.Edit(member);
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+        }
+
         #endregion
 
         #region ChangeRole Test
@@ -151,6 +192,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             //Assert
             Assert.IsInstanceOfType(result, typeof(IMember));
             Assert.AreEqual(result.MemberRoleId, newRoleId);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
@@ -165,6 +207,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
@@ -180,6 +223,26 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void ChangeRole_PassInvalidMemberRoleId_ReturnNullLogError()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var memberId = 1;
+            var memberRoleId = 100;
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.Members).Throws(new Exception());
+            _memberRepo = new MemberRepo(moq.Object, _log);
+
+            //Act
+            var result = _memberRepo.ChangeRole(memberId, memberRoleId);
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 
@@ -198,6 +261,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             //Assert
             Assert.IsInstanceOfType(result, typeof(IMember));
             Assert.AreEqual(result.ClientId, clientId);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
@@ -213,6 +277,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
@@ -228,6 +293,24 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void ChangeClient_PassInvalidMember_ReturnNullAndThrowError()
+        {
+            //Arrange
+            SetupStockTrackerErrorThrow();
+            _generateMembers.Generate();
+            var memberId = 1;
+            var clientId = 0;
+
+            //Act
+            var result = _memberRepo.ChangeClient(memberId, clientId);
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
         #endregion
 
@@ -246,6 +329,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             //Assert
             Assert.IsInstanceOfType(result, typeof(IMember));
             Assert.AreNotEqual(result.LastActiveDate, lastUpdateDate);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
         }
 
         [TestMethod]
@@ -260,6 +344,23 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
+        }
+
+        [TestMethod]
+        public void LastActiveDate_PassInvalidMemberId_nullLogError()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            var badMemberId = 100;
+            SetupStockTrackerErrorThrow();
+
+            //Act
+            var result = _memberRepo.LastActiveDate(badMemberId);
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -290,6 +391,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             Assert.AreEqual((result as Model.Members.Member).Person.WhatsApp, person.WhatsApp);
             Assert.AreEqual((result as Model.Members.Member).Person.PersonName, person.PersonName);
             Assert.AreEqual((result as Model.Members.Member).Person.PersonSurname, person.PersonSurname);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
         }
 
         [TestMethod]
@@ -318,6 +420,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             Assert.AreEqual(personResult.Email, personEmail);
             Assert.AreEqual(personResult.Mobile, personMobile);
             Assert.AreEqual(personResult.WhatsApp, personCurrentWhatsapp);
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
         }
 
         [TestMethod]
@@ -331,6 +434,22 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
+        }
+
+        [TestMethod]
+        public void EditPerson_PassInvalidMemberId_ReturnNullLogError()
+        {
+            //Arrange
+            _generateMembers.Generate();
+            SetupStockTrackerErrorThrow();
+
+            //Act
+            var result = _memberRepo.EditPerson(100, new Person());
+
+            //Assert
+            Assert.IsNull(result);
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -343,6 +462,15 @@ namespace StockTracker.Repository.Test.StockTracker.Member
             _mock.Setup(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
 
             return _mock.Object;
+        }
+
+
+        private void SetupStockTrackerErrorThrow()
+        {
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.Members).Throws(new Exception());
+            _memberRepo = new MemberRepo(moq.Object, _log);
+
         }
 
         #endregion

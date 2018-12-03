@@ -53,9 +53,9 @@ namespace StockTracker.Repository.Member
         {
             try
             {
-                var isValidClient = _db.Clients.Any(i => i.ClientId == member.ClientId || member.ClientId == 0);
-                var isValidMemberRoleId = _db.MemberRoles.Any(i => i.MemberRoleId == member.MemberRoleId || member.MemberRoleId == 0);
-                var isValidPersonId = _db.Persons.Any(i => i.PersonId == member.PersonId || member.PersonId == 0);
+                var isValidClient = _db.Clients.Any(i => i.ClientId == member.ClientId || member.ClientId != 0);
+                var isValidMemberRoleId = _db.MemberRoles.Any(i => i.MemberRoleId == member.MemberRoleId || member.MemberRoleId != 0);
+                var isValidPersonId = _db.Persons.Any(i => i.PersonId == member.PersonId || member.PersonId != 0);
 
                 if (!isValidClient || !isValidMemberRoleId || !isValidPersonId)
                     return BlockCheck($"Invalid Client[{isValidClient}]/MemberRole[{isValidMemberRoleId}]/Person[{isValidPersonId}]");
@@ -84,10 +84,12 @@ namespace StockTracker.Repository.Member
             try
             {
                 var isValidMemberRole = _db.MemberRoles.Any(i => i.MemberRoleId == memberRoleId);
-                if (!isValidMemberRole)
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                var isMemberValid = member != null;
+
+                if (!isValidMemberRole || !isMemberValid)
                     return BlockCheck($"Member[{memberId}].MemberRoleId[{memberRoleId}] was invalid.");
 
-                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
                 var oldMemberRoleId = member.MemberRoleId;
                 member.MemberRoleId = memberRoleId;
                 _log.LogInformation((int)LoggingEvent.Create, $"Changed member[{memberId}] to MemberRole[{oldMemberRoleId}] to MemberRole[{memberRoleId}].");
@@ -107,11 +109,12 @@ namespace StockTracker.Repository.Member
             try
             {
                 var isValidClientId = _db.Clients.Any(i => i.ClientId == clientId);
+                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                var isValidMember = member != null;
 
-                if (!isValidClientId)
+                if (!isValidClientId || !isValidMember)
                     return BlockCheck($"Member[{memberId}] Client[{clientId}] - ClientId was invalid.");
 
-                var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
                 var oldMembersClientId = member.ClientId;
                 member.ClientId = clientId;
 
