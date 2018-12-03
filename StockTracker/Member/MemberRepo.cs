@@ -37,7 +37,7 @@ namespace StockTracker.Repository.Member
                 member.PersonId = person.PersonId;
 
                 _db.Members.Add((Model.Members.Member)member);
-                var memberId = ((StockTrackerContext) _db).SaveChanges();
+                var memberId = ((StockTrackerContext)_db).SaveChanges();
 
                 _log.LogInformation((int)LoggingEvent.Create, "Created new Member");
 
@@ -45,8 +45,7 @@ namespace StockTracker.Repository.Member
             }
             catch (Exception e)
             {
-                _log.LogError((int)LoggingEvent.Create, e, "Create Member/Person");
-                return null;
+                return BlockCheck(LoggingEvent.Create, e, "Create Member/Person");
             }
         }
 
@@ -54,12 +53,12 @@ namespace StockTracker.Repository.Member
         {
             try
             {
-                var isValidClient = _db.Clients.Any(i => i.ClientId == member.ClientId || member.ClientId == 0) ;
-                var isValidMemberRoleId = _db.MemberRoles.Any(i => i.MemberRoleId == member.MemberRoleId || member.MemberRoleId == 0) ;
-                var isValidPersonId = _db.Persons.Any(i => i.PersonId == member.PersonId || member.PersonId == 0) ;
+                var isValidClient = _db.Clients.Any(i => i.ClientId == member.ClientId || member.ClientId == 0);
+                var isValidMemberRoleId = _db.MemberRoles.Any(i => i.MemberRoleId == member.MemberRoleId || member.MemberRoleId == 0);
+                var isValidPersonId = _db.Persons.Any(i => i.PersonId == member.PersonId || member.PersonId == 0);
 
                 if (!isValidClient || !isValidMemberRoleId || !isValidPersonId)
-                    return null;
+                    return BlockCheck($"Invalid Client[{isValidClient}]/MemberRole[{isValidMemberRoleId}]/Person[{isValidPersonId}]");
 
                 var oldMember = _db.Members.FirstOrDefault(i => i.MemberId == member.MemberId);
                 oldMember.PersonId = member.PersonId == 0 ? oldMember.PersonId : member.PersonId;
@@ -69,15 +68,14 @@ namespace StockTracker.Repository.Member
                 oldMember.IsActive = member.IsActive;
 
                 var memberId = ((StockTrackerContext)_db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Create, $"Edited member with Member[{member.MemberId}].");
+                _log.LogInformation((int)LoggingEvent.Create, $"Edited member with Member[{member.MemberId}].");
 
                 return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
 
-						}
+            }
             catch (Exception e)
             {
-								_log.LogError((int)LoggingEvent.Update, e, $"An error occured while editing Member[{member.MemberId}].");
-                return null;
+                return BlockCheck(LoggingEvent.Update, e, $"An error occured while editing Member[{member.MemberId}]."); ;
             }
         }
 
@@ -87,22 +85,21 @@ namespace StockTracker.Repository.Member
             {
                 var isValidMemberRole = _db.MemberRoles.Any(i => i.MemberRoleId == memberRoleId);
                 if (!isValidMemberRole)
-                    return null;
+                    return BlockCheck($"Member[{memberId}].MemberRoleId[{memberRoleId}] was invalid.");
 
                 var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
-								var oldMemberRoleId = member.MemberRoleId;
+                var oldMemberRoleId = member.MemberRoleId;
                 member.MemberRoleId = memberRoleId;
-								_log.LogInformation((int)LoggingEvent.Create, $"Changed member[{memberId}] to MemberRole[{oldMemberRoleId}] to MemberRole[{memberRoleId}].");
+                _log.LogInformation((int)LoggingEvent.Create, $"Changed member[{memberId}] to MemberRole[{oldMemberRoleId}] to MemberRole[{memberRoleId}].");
 
-								((StockTrackerContext) _db).SaveChanges();
+                ((StockTrackerContext)_db).SaveChanges();
 
                 return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
             }
             catch (Exception e)
             {
-								_log.LogError((int)LoggingEvent.Update, e, $"An error occured while changing Member[{memberId}] to MemberRole[{memberRoleId}].");
-                return null;
-						}
+                return BlockCheck(LoggingEvent.Update, e, $"An error occured while changing Member[{memberId}] to MemberRole[{memberRoleId}].");
+            }
         }
 
         public IMember ChangeClient(int memberId, int clientId)
@@ -112,22 +109,21 @@ namespace StockTracker.Repository.Member
                 var isValidClientId = _db.Clients.Any(i => i.ClientId == clientId);
 
                 if (!isValidClientId)
-                    return null;
+                    return BlockCheck($"Member[{memberId}] Client[{clientId}] - ClientId was invalid.");
 
                 var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
-								var oldMembersClientId = member.ClientId;
+                var oldMembersClientId = member.ClientId;
                 member.ClientId = clientId;
 
-                memberId = ((StockTrackerContext) _db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Create, $"Changed Member[{memberId}] from Client[{oldMembersClientId}] to Client[{clientId}].");
+                memberId = ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Create, $"Changed Member[{memberId}] from Client[{oldMembersClientId}] to Client[{clientId}].");
 
                 return _db.Members.FirstOrDefault(i => i.MemberId == memberId);
             }
             catch (Exception e)
             {
-								_log.LogError((int)LoggingEvent.Update, e, $"An error occured while changing the Member[{memberId}] ClientId to Client[{clientId}]");
-                return null;
-						}
+                return BlockCheck(LoggingEvent.Update, e, $"An error occured while changing the Member[{memberId}] ClientId to Client[{clientId}]");
+            }
         }
 
         public IMember LastActiveDate(int memberId)
@@ -135,18 +131,20 @@ namespace StockTracker.Repository.Member
             try
             {
                 var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                if (member == null)
+                    return BlockCheck($"Memeber[{member}] is invalid.");
+
                 member.LastActiveDate = DateTime.Now;
 
-                ((StockTrackerContext) _db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Create, $"Updated Member[{memberId}] LastActiveDate.");
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Create, $"Updated Member[{memberId}] LastActiveDate.");
 
                 return member;
-						}
+            }
             catch (Exception e)
             {
-								_log.LogError((int)LoggingEvent.Update, e, $"An error while updating a Member[{memberId}] LastActiveDate.");
-                return null;
-						}
+                return BlockCheck(LoggingEvent.Update, e, $"An error while updating a Member[{memberId}] LastActiveDate."); 
+            }
         }
 
         public IMember EditPerson(int memberId, IPerson person)
@@ -154,6 +152,9 @@ namespace StockTracker.Repository.Member
             try
             {
                 var member = _db.Members.FirstOrDefault(i => i.MemberId == memberId);
+                if (member == null)
+                    return BlockCheck($"The Member[{memberId}] was invalid.");
+
                 var oldPerson = member.Person;
 
                 oldPerson.Email = string.IsNullOrEmpty(person.Email) ? oldPerson.Email : person.Email;
@@ -162,21 +163,26 @@ namespace StockTracker.Repository.Member
                 oldPerson.PersonName = string.IsNullOrEmpty(person.PersonName) ? oldPerson.PersonName : person.PersonName;
                 oldPerson.PersonSurname = string.IsNullOrEmpty(person.PersonSurname) ? oldPerson.PersonSurname : person.PersonSurname;
 
-                ((StockTrackerContext) _db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Create, $"Updated Member[{memberId}] Person details.");
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Create, $"Updated Member[{memberId}] Person details.");
 
                 return member;
-						}
+            }
             catch (Exception e)
             {
-								_log.LogError((int)LoggingEvent.Update, e, $"An error while updating Member[{memberId}] Person details.");
-                return null;
-						}
+                return BlockCheck(LoggingEvent.Update, e, $"An error while updating Member[{memberId}] Person details."); ;
+            }
         }
 
         IMember BlockCheck(string message)
         {
             _log.LogError((int)LoggingEvent.BadParameters, message);
+            return (IMember)null;
+        }
+
+        IMember BlockCheck(LoggingEvent evt, Exception e, string message)
+        {
+            _log.LogError((int)evt, e, message);
             return (IMember) null;
         }
     }

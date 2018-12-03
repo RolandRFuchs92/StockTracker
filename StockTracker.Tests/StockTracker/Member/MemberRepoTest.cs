@@ -73,7 +73,7 @@ namespace StockTracker.Repository.Test.StockTracker.Member
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(IMember));
-            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
