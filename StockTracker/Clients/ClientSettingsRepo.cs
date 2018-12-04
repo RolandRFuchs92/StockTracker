@@ -105,7 +105,7 @@ namespace StockTracker.Repository.Clients
 		    {
 			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == settings.ClientId)?.ClientSettings;
 			    if (clientSettings == null)
-				    return null;
+				    return LogError(LoggingEvent.Update, $"Client[{settings.ClientId}] is invalid");
 
 			    clientSettings.IsActive = settings.IsActive;
 			    clientSettings.CloseTime = settings.CloseTime;
@@ -116,15 +116,16 @@ namespace StockTracker.Repository.Clients
 			    clientSettings.CanEmailManagers = settings.CanEmailManagers;
 
 			    var result = ((StockTrackerContext) _db).SaveChanges();
-			    if (result > 0)
-				    return settings;
+		        clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == settings.ClientId).ClientSettings;
 
-			    return null;
+			    if (result > 0)
+				    return LogSuccess(clientSettings, LoggingEvent.Update, $"Updated Client[{settings.ClientId}] with new settings");
+
+			    return LogError(LoggingEvent.Update, $"Unabled to edit Client{settings.ClientId} with new Settings");
 		    }
 		    catch (Exception e)
 		    {
-				//TODO: ADD LOGGING
-			    return null;
+			    return LogError(LoggingEvent.Update, e, $"Error occured when trying to edit Client[{settings.ClientId}] with new ClientSettings");
 		    }
 	    }
 
