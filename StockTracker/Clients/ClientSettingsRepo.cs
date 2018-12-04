@@ -162,11 +162,13 @@ namespace StockTracker.Repository.Clients
 			    else
 				    clientSettings.TotalUsers += addUsers;
 
-			    return ((StockTrackerContext) _db).SaveChanges() > 0 ? clientSettings : null;
+		        return ((StockTrackerContext) _db).SaveChanges() > 0
+		            ? LogSuccess(clientSettings, LoggingEvent.Update, $"Added to Client[{clientId}] Total Users")
+		            : LogError(LoggingEvent.Update, $"Unable to Add user count to Client[{clientId}]");
 		    }
 		    catch (Exception e)
 		    {
-			    return null;
+			    return LogError(LoggingEvent.Update, e, $"An error occured when trying to Add Total Users to Client[{clientId}]");
 		    }
 	    }
 
