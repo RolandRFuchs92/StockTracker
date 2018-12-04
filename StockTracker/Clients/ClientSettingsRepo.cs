@@ -32,19 +32,21 @@ namespace StockTracker.Repository.Clients
 			    var currentClient = GetClient(settings.ClientId);
 
 			    if (currentClient == null)
-				    return null;
+				    return LogError(LoggingEvent.BadParameters, $"Client[{settings.ClientId}] is invalid.");
 
 			    _db.ClientSettings.Add((ClientSettings)settings);
 				var result = ((StockTrackerContext) _db).SaveChanges();
 
 			    if (result == 0)
-				    return null;
+				    return LogError(LoggingEvent.Create, $"Error creating ClientSettings for Client[{settings.ClientId}].");
 
-			    return _db.ClientSettings.FirstOrDefault(i => i.ClientId == settings.ClientId);
+                var clientSettings = _db.ClientSettings.FirstOrDefault(i => i.ClientId == settings.ClientId);
+		        LogSuccess(LoggingEvent.Create, $"Created new ClientSettings[{clientSettings.ClientSettingsId}] for Client[{clientSettings.ClientId}]");
+		        return clientSettings;
 		    }
 		    catch (Exception e)
 		    {
-			    return null;
+			    return LogError(LoggingEvent.Create, $"Error was thrown while creating ClientSettings for client[{settings.ClientId}]");
 		    }
 	    }
 
@@ -54,17 +56,18 @@ namespace StockTracker.Repository.Clients
 		    {
 			    var clientSettings = _db.Clients.Include(i => i.ClientSettings).FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
 			    if (clientSettings == null)
-				    return null;
+				    return LogError(LoggingEvent.BadParameters, $"Client[{clientId}] is invalid or doesn't have ClientSettings.");
 
 			    clientSettings.IsActive = isActive;
 			    var result = ((StockTrackerContext) _db).SaveChanges();
 
-			    return result > 0 ? clientSettings : null;
+			    return result > 0 
+			                ? LogSuccess(LoggingEvent.Update, $"Updated Client[{clientId}] to IsActive={isActive}")
+			                : LogError(LoggingEvent.Update, $"Did not update Client[{clientId}] to IsActive={isActive}");
 		    }
 		    catch (Exception e)
 		    {
-				//TODO: ADD LOGGING
-			    return null;
+		        return LogError(LoggingEvent.Update, e, $"Unable to update Client[{clientId}] to IsActive=[{isActive}]");
 		    }
 	    }
 
