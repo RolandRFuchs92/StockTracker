@@ -209,6 +209,21 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
             VerifyLogInfo();
 		}
+
+        [TestMethod]
+        public void IsDeleted_TryDeleteClient_ThrowError()
+        {
+            //Arrange
+            var isDeleted = true;
+            var clientId = 1;
+           
+            //Act
+            var result = GetClientSettingsRepo().IsDeleted(clientId, isDeleted);
+
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogErrorException();
+        }
 		#endregion
 
 		#region Edit Test
@@ -254,6 +269,19 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
             VerifyLogError();
 		}
 
+        [TestMethod]
+        public void Edit_AddInvalidClientSettings_ThrowsErrorLogsErrorException()
+        {
+            //Arrange
+            var clientSettings = _genericSettings.One();
+
+            //Act
+            var result = GetClientSettingsRepo().Edit(clientSettings);
+
+            //Assert
+            VerifyLogErrorException();
+        }
+
 		#endregion
 
 		#region SetOpenClosedTimes Test
@@ -274,6 +302,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.OpenTime, openingTime);
 			Assert.AreEqual(result.CloseTime, closingTime);
+            VerifyLogInfo();
 		}
 
 		[TestMethod]
@@ -288,8 +317,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Act
 			var result = _clientSettingsRepo.SetOpenClosedTimes(openingTime, closingTime, 0);
 
-			//Assert
-			Assert.IsNull(result);
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogError();
 		}
 
 		[TestMethod]
@@ -313,7 +343,24 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.OpenTime, openingTime);
 			Assert.AreEqual(result.CloseTime, closingTime);
+            VerifyLogInfo();
 		}
+
+        [TestMethod]
+        public void SetOpenClosingTimes_PassNull_THrowsError()
+        {
+            //Arrange
+            var openTime = new DateTime(2018, 1, 1, 8, 0, 0);
+            var closeTime = new DateTime(2018, 1, 1, 17, 0, 0);
+            var clientId = 1;
+
+            //Act
+            var result = GetClientSettingsRepo().SetOpenClosedTimes(openTime, closeTime, clientId);
+
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogErrorException();
+        }
 		#endregion
 
 		#region AddTotalUser Test
@@ -337,20 +384,23 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.AreEqual(result.TotalUsers, originalTotalUsers + addUsers);
+            VerifyLogInfo();
 		}
 
-		[TestMethod]
-		public void AddTotalUsers_AddNumberToInvalidClient_Null()
-		{
-			//Arrange
-			var originalTotalUsers = 5;
+        [TestMethod]
+        public void AddTotalUsers_AddInvalidNumber_ThrowsErrorReturnsNull()
+        {
+            //Arrange
+            var clientId = 0;
+            var addUserCount = 1;
 
-			//Act
-			var result = _clientSettingsRepo.AddTotalUsers(0, 12);
+            //Act
+            var result = GetClientSettingsRepo().AddTotalUsers(clientId, addUserCount);
 
-			//Assert
-			Assert.IsNull(result);
-		}
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogErrorException();
+        }
 		#endregion
 
 		#region Generic Test Methods
@@ -377,6 +427,16 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			((StockTrackerContext)_db).Database.EnsureDeleted();
 		}
+
+	    private ClientSettingsRepo GetClientSettingsRepo()
+	    {
+	        var moq = new Mock<IStockTrackerContext>();
+	        moq.Setup(i => i.ClientSettings).Throws(new Exception());
+
+	        var repo = new ClientSettingsRepo(moq.Object, _logger);
+
+	        return repo;
+	    }
 
 	    private void VerifyLogInfo()
 	    {
