@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Clients;
@@ -27,13 +29,18 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		private IStockTrackerContext _db;
 		private GenericClientSettings _genericSettings;
 		private IClientSettingsRepo _clientSettingsRepo;
+	    private ILoggerAdapter<ClientSettingsRepo> _logger;
 		private GenericClients _clients;
+        private Mock<ILoggerAdapter<ClientSettingsRepo>> _mock;
+
 
 		public ClientSettingsRepoTest()
 		{
 			_db = new TestDbFactory().Db();
 			_genericSettings = new GenericClientSettings();
-			_clientSettingsRepo = new ClientSettingsRepo(_db);
+            _mock = new Mock<ILoggerAdapter<ClientSettingsRepo>>();
+		    _logger = _mock.Object;
+			_clientSettingsRepo = new ClientSettingsRepo(_db, _logger);
 			_clients = new GenericClients();
 		}
 
@@ -45,15 +52,16 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			AddClient();
 
 			var clientSettings = _genericSettings.One();
-			var clientSettingsRepo = new ClientSettingsRepo(_db);
 
 			//Act
-			var result = (ClientSettings)clientSettingsRepo.AddClientSettings(clientSettings);
+			var result = _clientSettingsRepo.AddClientSettings(clientSettings);
 
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNotNull(result);
 			Assert.AreSame(result, clientSettings);
+		    VerifyLogInfo();
+
 		}
 
 		[TestMethod]
@@ -68,7 +76,24 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsNull(result);
+            VerifyLogError();
 		}
+
+        [TestMethod]
+        public void AddClientSettings_PassSomethingThrowsError_LogErrorWithException()
+        {
+            //Arrange
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.ClientSettings).Throws(new Exception());
+            var clientSettingsRepo = new ClientSettingsRepo(moq.Object, _logger);
+
+            //Act
+            var result = clientSettingsRepo.AddClientSettings(_genericSettings.One());
+
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogErrorException();
+        }
 		#endregion
 
 		#region IsActive Test
@@ -87,6 +112,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.IsActive, isActive);
+            VerifyLogInfo();
 		}
 
 
@@ -95,7 +121,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var isActive = false;
-			var clientId = AddClient();
 			AddClientSettings();
 
 			//Act
@@ -103,7 +128,25 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsNull(result);
+            VerifyLogError();
 		}
+
+        [TestMethod]
+        public void IsActive_PassInvalidClientId_ThrowsError()
+        {
+            //Arrange
+            var isActive = false;
+            var moq = new Mock<IStockTrackerContext>();
+            moq.Setup(i => i.ClientSettings).Throws(new Exception());
+            var clientSettingsRepo = new ClientSettingsRepo(moq.Object, _logger);
+
+            //Act
+            var result = clientSettingsRepo.IsActive(0, isActive);
+
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogErrorException();
+        }
 		#endregion
 
 		#region IsDeleted Test
@@ -127,6 +170,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.IsDeleted, isDeleted);
 			Assert.IsNull(result.DateDeleted);
+            VerifyLogErrorException();
 		}
 
 		[TestMethod]
@@ -139,8 +183,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Act
 			var result = _clientSettingsRepo.IsDeleted(0, isDeleted);
 
-			//Assert
-			Assert.IsNull(result);
+            //Assert
+            Assert.IsNull(result);
+            VerifyLogError();
 		}
 
 		[TestMethod]
@@ -162,6 +207,8 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.DateDeleted, dateDeleted);
+
+            VerifyLogError();
 		}
 		#endregion
 
@@ -329,6 +376,22 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			((StockTrackerContext)_db).Database.EnsureDeleted();
 		}
-		#endregion
+
+	    private void VerifyLogInfo()
+	    {
+            _mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+	    }
+
+	    private void VerifyLogError()
+	    {
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+	    }
+
+	    private void VerifyLogErrorException()
+	    {
+            _mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+	    }
+
+	    #endregion
 	}
 }
