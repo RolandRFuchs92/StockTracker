@@ -41,8 +41,7 @@ namespace StockTracker.Repository.Clients
 				    return LogError(LoggingEvent.Create, $"Error creating ClientSettings for Client[{settings.ClientId}].");
 
                 var clientSettings = _db.ClientSettings.FirstOrDefault(i => i.ClientId == settings.ClientId);
-		        LogSuccess(LoggingEvent.Create, $"Created new ClientSettings[{clientSettings.ClientSettingsId}] for Client[{clientSettings.ClientId}]");
-		        return clientSettings;
+		        return LogSuccess(clientSettings, LoggingEvent.Create, $"Created new ClientSettings[{clientSettings.ClientSettingsId}] for Client[{clientSettings.ClientId}]"); ;
 		    }
 		    catch (Exception e)
 		    {
@@ -62,7 +61,7 @@ namespace StockTracker.Repository.Clients
 			    var result = ((StockTrackerContext) _db).SaveChanges();
 
 			    return result > 0 
-			                ? LogSuccess(LoggingEvent.Update, $"Updated Client[{clientId}] to IsActive={isActive}")
+			                ? LogSuccess(clientSettings, LoggingEvent.Update, $"Updated Client[{clientId}] to IsActive={isActive}")
 			                : LogError(LoggingEvent.Update, $"Did not update Client[{clientId}] to IsActive={isActive}");
 		    }
 		    catch (Exception e)
@@ -77,7 +76,7 @@ namespace StockTracker.Repository.Clients
 		    {
 			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
 			    if (clientSettings == null)
-				    return null;
+				    return LogError(LoggingEvent.Delete, $"ClientId[{clientId}] is Invalid");
 
 			    if (clientSettings.IsDeleted == isDeleted)
 				    return clientSettings;
@@ -89,12 +88,13 @@ namespace StockTracker.Repository.Clients
 				    clientSettings.DateDeleted = null;
 
 			    var result = ((StockTrackerContext) _db).SaveChanges();
-			    return result > 0 ? clientSettings : null;
+			    return result > 0 
+                        ? LogSuccess(clientSettings, LoggingEvent.Delete, $"Flagged Client[{clientId}] as IsDeleted={isDeleted}") 
+			            : LogError(LoggingEvent.Delete, $"Unabled to flag Client[{clientId} as IsDeleted={isDeleted}]");
 		    }
 		    catch (Exception e)
 		    {
-				//TODO: ADD LOGGING
-			    return null;
+			    return LogError(LoggingEvent.Delete, e, $"Error occured when trying to flag Client[{clientId}] as IsDeleted[{isDeleted}]");
 		    }
 
 		}
@@ -172,11 +172,11 @@ namespace StockTracker.Repository.Clients
             return _db.Clients.FirstOrDefault(i => i.ClientId == clientId);
         }
 
-        private IClientSettings LogSuccess(LoggingEvent evt, string message)
+        private IClientSettings LogSuccess(IClientSettings clientSettings, LoggingEvent evt, string message)
         {
             _log.LogInformation((int)evt, message);
             
-            return (IClientSettings)null;
+            return clientSettings;
         }
 
         private IClientSettings LogError(LoggingEvent evt, Exception e, string message)
