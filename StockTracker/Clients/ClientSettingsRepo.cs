@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
@@ -135,17 +136,18 @@ namespace StockTracker.Repository.Clients
 		    {
 			    var clientSettings = _db.Clients.FirstOrDefault(i => i.ClientId == clientId)?.ClientSettings;
 			    if (clientSettings == null)
-				    return null;
+				    return LogError(LoggingEvent.Update, $"Client[{clientId}] is invalid.");
 
 			    clientSettings.OpenTime = openTime ?? clientSettings.OpenTime;
 			    clientSettings.CloseTime = closedTime ?? clientSettings.CloseTime;
 
-			    return ((StockTrackerContext) _db).SaveChanges() > 0 ? clientSettings : null;
+			    return ((StockTrackerContext) _db).SaveChanges() > 0 
+			            ? LogSuccess(clientSettings, LoggingEvent.Update, $"Updated Opening and Closing times for client[{clientId}]")
+			            : LogError(LoggingEvent.Update, $"Unabled to update Client[{clientId}] Opening and Closing times.");
 		    }
 		    catch (Exception e)
 		    {
-				//TODO: ADD LOGGING HERE
-			    return null;
+			    return LogError(LoggingEvent.Update, e, $"Error occured when trying to update Client[{clientId}] open and closing times.");
 		    }
 	    }
 
