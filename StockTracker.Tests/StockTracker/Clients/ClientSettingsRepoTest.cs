@@ -121,7 +121,6 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 		{
 			//Arrange
 			var isActive = false;
-			AddClientSettings();
 
 			//Act
 			var result = _clientSettingsRepo.IsActive(0, isActive);
@@ -170,7 +169,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.IsDeleted, isDeleted);
 			Assert.IsNull(result.DateDeleted);
-            VerifyLogErrorException();
+            VerifyLogInfo();
 		}
 
 		[TestMethod]
@@ -208,7 +207,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.DateDeleted, dateDeleted);
 
-            VerifyLogError();
+            VerifyLogInfo();
 		}
 		#endregion
 
@@ -232,7 +231,8 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 			//Assert
 			Assert.IsInstanceOfType(result, typeof(IClientSettings));
 			Assert.IsNotNull(result);
-			Assert.AreEqual(result, clientSettings);
+			Assert.AreEqual(result.IsActive, clientSettings.IsActive);
+            VerifyLogInfo();
 		}
 
 		[TestMethod]
@@ -251,6 +251,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 			//Assert
 			Assert.IsNull(result);
+            VerifyLogError();
 		}
 
 		#endregion

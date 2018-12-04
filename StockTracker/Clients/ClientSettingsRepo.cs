@@ -46,7 +46,7 @@ namespace StockTracker.Repository.Clients
 		    }
 		    catch (Exception e)
 		    {
-			    return LogError(LoggingEvent.Create, $"Error was thrown while creating ClientSettings for client[{settings.ClientId}]");
+			    return LogError(LoggingEvent.Create, e, $"Error was thrown while creating ClientSettings for client[{settings.ClientId}]");
 		    }
 	    }
 
@@ -80,7 +80,7 @@ namespace StockTracker.Repository.Clients
 				    return LogError(LoggingEvent.Delete, $"ClientId[{clientId}] is Invalid");
 
 			    if (clientSettings.IsDeleted == isDeleted)
-				    return clientSettings;
+				    return LogSuccess(clientSettings, LoggingEvent.Delete, $"Client[{clientId}] is unaffected");
 
 			    clientSettings.IsDeleted = isDeleted;
 			    if (isDeleted)
