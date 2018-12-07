@@ -58,7 +58,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 						var clientSettings = _genericClientSettings.One();
 						var moq = new Mock<IClientSettingsRepo>();
 						moq.Setup(i => i.Edit(It.IsAny<IClientSettings>())).Returns((IClientSettings)null);
-						_clientSettingsLogic = new ClientSettingsLogic(moq.Object, log);
+						_clientSettingsLogic = new ClientSettingsLogic(moq.Object, _log);
 
 						//Act
 						var result = _clientSettingsLogic.Edit(clientSettings);
