@@ -21,11 +21,11 @@ using StockTracker.Seed.Clients.Generic;
 namespace StockTracker.BusinessLogic.Test.Clients
 {
 	[TestClass]
-	public class ClientTest
+	public class ClientLogicTest
 	{
 		private Mock<IClientRepo> _moqClientRepo;
 
-		public ClientTest()
+		public ClientLogicTest()
 		{
 			var moqClientRepo = new Mock<IClientRepo>();
 			moqClientRepo.Setup(i => i.Add(It.IsAny<IClient>())).Returns(true);

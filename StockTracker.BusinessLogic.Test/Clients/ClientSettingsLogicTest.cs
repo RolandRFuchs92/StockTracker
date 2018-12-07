@@ -12,14 +12,14 @@ using StockTracker.Seed.Clients.Generic;
 namespace StockTracker.BusinessLogic.Test.Clients
 {
 		[TestClass]
-		public class ClientSettingsTest
+		public class ClientSettingsLogicTest
 		{
 				private IClientSettingsLogic _clientSettingsLogic;
 				private GenericClientSettings _genericClientSettings;
 				private GenericLoggerCheck<ClientSettingsLogic> _genericLog;
 				private ILoggerAdapter<ClientSettingsLogic> _log;
 
-				public ClientSettingsTest()
+				public ClientSettingsLogicTest()
 				{
 						_genericClientSettings = new GenericClientSettings();
 
