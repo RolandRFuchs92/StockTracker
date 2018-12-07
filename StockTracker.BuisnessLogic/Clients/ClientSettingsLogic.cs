@@ -8,6 +8,7 @@ using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Interface.Models.Clients;
+using StockTracker.Repository.Enums;
 using StockTracker.Repository.Interface.Clients;
 
 namespace StockTracker.BuisnessLogic.Clients
@@ -34,7 +35,7 @@ namespace StockTracker.BuisnessLogic.Clients
 						var data = _repo.IsActive(clientId, isActive);
 						var activateAdjective = isActive ? "activate" : "deactivate";
 						var message = $"We were unable to {activateAdjective} this client.";
-
+						
 						return FormulateResult(data, message);
 				}
 
@@ -78,10 +79,12 @@ namespace StockTracker.BuisnessLogic.Clients
 
 						if (!result.IsSuccess)
 						{
+								_log.LogInformation((int)LoggingEvent.Error, errorMessage);
 								result.Message = errorMessage;
 								return result;
 						}
 
+						_log.LogInformation((int)LoggingEvent.Info, "Returned success result");
 						return result;
 				}
 		}
