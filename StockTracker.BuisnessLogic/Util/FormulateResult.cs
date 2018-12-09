@@ -11,8 +11,10 @@ namespace StockTracker.BuisnessLogic.Util
 {
     public class FormulateResult<T, L>
     {
-        private ILoggerAdapter<L> _log;
+        private readonly ILoggerAdapter<L> _log;
         private Result<T> _result;
+
+        public bool IsSuccess => _result.IsSuccess;
 
         public FormulateResult(ILoggerAdapter<L> log)
         {
@@ -20,21 +22,37 @@ namespace StockTracker.BuisnessLogic.Util
             _log = log;
         }
 
-        public Result<T> Result()
+        public Result<T> Result
         {
-            if (!_result.IsSuccess)
+            get
             {
-                _log.LogError((int)LoggingEvent.Error, _result.Message);
+                if (!_result.IsSuccess)
+                {
+                    _log.LogError((int)LoggingEvent.Error, _result.Message);
+                    return _result;
+                }
+
+                _log.LogInformation((int)LoggingEvent.Info, _result.Message);
                 return _result;
             }
-
-            _log.LogInformation((int)LoggingEvent.Info, _result.Message);
-            return _result;
+            set => _result = value;
         }
 
         public void Check(bool isSuccess, string message)
         {
             _result.Check(isSuccess, message);
+        }
+
+        public void Check(bool isSuccess, string successMessage, string errorMessage)
+        {
+            _result.Check(isSuccess, successMessage, errorMessage);
+        }
+
+        public void Check(T result, string successMessage, string errorMessage)
+        {
+            _result.Body = result;
+            _result.IsSuccess = result != null;
+            _result.Message = !_result.IsSuccess ? errorMessage : successMessage;
         }
     }
 }

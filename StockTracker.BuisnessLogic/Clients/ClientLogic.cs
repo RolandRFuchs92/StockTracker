@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BuisnessLogic.Poco;
+using StockTracker.BuisnessLogic.Util;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
 using StockTracker.Extensions.StringExtensions;
@@ -26,20 +27,18 @@ namespace StockTracker.BuisnessLogic.Clients
 
         public IResult<bool> AddClient(IClient newClient)
         {
-            var result = new Result<bool>();
+            var result = new FormulateResult<bool, ClientLogic>(_log);
 
             result.Check(newClient.Email.IsValidEmail(), "Invalid email.");
             result.Check(newClient.ContactNumber.IsPhoneNumberValid(), "Invalid contact number.");
 
             if (!result.IsSuccess)
             {
-                _log.LogError((int)LoggingEvent.Error, result.Message);
-                return result;
+                return result.Result;
             }
 
-
             result.Check(_clientRepo.Add(newClient), "Client saved!", "Error saving client.");
-            return result;
+            return result.Result;
         }
 
         public IResult<bool> AddClient(string name, string email, string contactNumber)
@@ -57,8 +56,7 @@ namespace StockTracker.BuisnessLogic.Clients
 
         public IResult<IClient> GetClient(int clientId)
         {
-            var result = new Result<IClient>();
-            result.Body = _clientRepo.Get(clientId);
+            var result = new FormulateResult<IClient, ClientLogic>(_log);
             result.Check(result.Body != null, "Successfully retreived client!", "Unable to find client.");
 
             return result;
