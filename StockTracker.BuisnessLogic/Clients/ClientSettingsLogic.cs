@@ -79,7 +79,7 @@ namespace StockTracker.BuisnessLogic.Clients
 
 						if (!result.IsSuccess)
 						{
-								_log.LogInformation((int)LoggingEvent.Error, errorMessage);
+								_log.LogError((int)LoggingEvent.Error, errorMessage);
 								result.Message = errorMessage;
 								return result;
 						}
