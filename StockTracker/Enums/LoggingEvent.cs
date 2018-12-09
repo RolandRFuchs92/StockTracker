@@ -15,6 +15,9 @@ namespace StockTracker.Repository.Enums
         Delete = 1004,
         Insert = 1005,
 
-        BadParameters = 2000
+        BadParameters = 2000,
+				
+				Info = 3000,
+				Error = 3001
     }
 }
