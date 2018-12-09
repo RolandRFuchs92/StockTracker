@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Moq;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Poco;
@@ -24,9 +25,14 @@ namespace StockTracker.BusinessLogic.Test.Clients
 	public class ClientLogicTest
 	{
 		private Mock<IClientRepo> _moqClientRepo;
+	    private GenericLoggerCheck<ClientLogic> _genericLogger;
+	    private ILoggerAdapter<ClientLogic> _logger;
 
 		public ClientLogicTest()
 		{
+            _genericLogger = new GenericLoggerCheck<ClientLogic>();
+		    _logger = _genericLogger.Mock.Object;
+
 			var moqClientRepo = new Mock<IClientRepo>();
 			moqClientRepo.Setup(i => i.Add(It.IsAny<IClient>())).Returns(true);
 			_moqClientRepo = moqClientRepo;
