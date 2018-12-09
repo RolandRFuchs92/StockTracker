@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
+using StockTracker.BusinessLogic.Test.Utils;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Interface.Clients;
@@ -21,9 +23,13 @@ namespace StockTracker.BusinessLogic.Test.Clients
     {
 	    private IClientSettingsLogic _clientSettingsLogic;
 		private GenericClientSettings _genericClientSettings;
+        private Mock<ILoggerAdapter<ClientSettingsLogic>> _mockLogger;
+        private LogVerify<ClientSettingsLogic> _verify;
 
 		public ClientSettingsTest()
-	    {
+		{
+		    _mockLogger = new Mock<ILoggerAdapter<ClientSettingsLogic>>();
+            _verify = new LogVerify<ClientSettingsLogic>(_mockLogger);
 		    _genericClientSettings = new GenericClientSettings();
 	    }
 
@@ -47,6 +53,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.IsTrue(result.IsSuccess);
 			Assert.AreEqual(result.Body.IsActive, result.Body.IsActive);
+
+            _verify.Success();
 		}
 
 		[TestMethod]
@@ -66,6 +74,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
             Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
             Assert.IsFalse(string.IsNullOrEmpty(result.Message));
             Assert.IsNull(result.Body);
+
+            _verify.Error();
 		}
 		#endregion
 
@@ -86,6 +96,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsNotNull(result);
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.AreSame(clientSettings, result.Body);
+
+            _verify.Success();
 		}
 
 		[TestMethod]
@@ -104,6 +116,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsNotNull(result);
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
+
+            _verify.Error();
 		}
 		#endregion
 
@@ -128,10 +142,12 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+
+            _verify.Success();
 		}
 
 		[TestMethod]
-		public void IsDeleted_InitialConditionas_ExpectedResult()
+		public void IsDeleted_RepoReturnsNull_ResultToFalseAndMessage()
 		{
 			//Arrange
 			var moq = new Mock<IClientSettingsRepo>();
@@ -147,6 +163,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsTrue(!string.IsNullOrEmpty(result.Message));
 			Assert.IsNull(result.Body);
+
+            _verify.Error();
 		}
 		#endregion
 
@@ -170,6 +188,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+
+            _verify.Success();
 		}
 
 
@@ -191,6 +211,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
 			Assert.IsNull(result.Body);
+
+            _verify.Error();
 		}
 		#endregion
 
@@ -215,6 +237,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
+
+            _verify.Success();
 		}
 
 		[TestMethod]
@@ -238,6 +262,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsNull(result.Body);
 			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+
+            _verify.Error();
 		}
 		#endregion
 
@@ -260,6 +286,8 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsTrue(result.IsSuccess);
 			Assert.IsInstanceOfType(result.Body, typeof(IClientSettings));
 			Assert.IsTrue(string.IsNullOrEmpty(result.Message));
+
+            _verify.Success();
 		}
 
 		[TestMethod]
@@ -277,7 +305,9 @@ namespace StockTracker.BusinessLogic.Test.Clients
 			Assert.IsInstanceOfType(result, typeof(IResult<IClientSettings>));
 			Assert.IsFalse(result.IsSuccess);
 			Assert.IsNull(result.Body);
-			Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+            Assert.IsFalse(string.IsNullOrEmpty(result.Message));
+
+            _verify.Error();
 		}
 		#endregion
 	}
