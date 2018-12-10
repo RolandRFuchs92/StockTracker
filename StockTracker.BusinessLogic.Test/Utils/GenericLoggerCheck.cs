@@ -17,19 +17,29 @@ namespace StockTracker.BusinessLogic.Test
             Mock = GetMockLogger();
         }
 
-        public void Success()
+        public void Success(int timesCount = 1)
         {
-            Mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+            if(timesCount == 1)
+                Mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+            else if (timesCount > 1)
+                Mock.Verify(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()), Times.AtLeast(timesCount));
         }
 
-        public void Error()
+        public void Error(int timesCount = 1)
         {
-            Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+            if(timesCount == 1)
+                Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.Once);
+            if(timesCount > 1)
+                Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()), Times.AtLeast(timesCount));
         }
 
-        public void ErrorException()
+        public void ErrorException(int timesCount = 1)
         {
-            Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+            if(timesCount == 1)
+                Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+            else if(timesCount > 1)
+                Mock.Verify(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()), Times.AtLeast(timesCount));
+
         }
 
         private Mock<ILoggerAdapter<T>> GetMockLogger()
