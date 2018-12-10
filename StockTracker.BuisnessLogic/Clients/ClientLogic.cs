@@ -57,14 +57,15 @@ namespace StockTracker.BuisnessLogic.Clients
         public IResult<IClient> GetClient(int clientId)
         {
             var result = new FormulateResult<IClient, ClientLogic>(_log);
-            result.Check(result.Body != null, "Successfully retreived client!", "Unable to find client.");
+            var body = _clientRepo.Get(clientId);
+            result.Check(body, "Successfully retreived client!", "Unable to find client.");
 
-            return result;
+            return result.Result;
         }
 
         public IResult<bool> EditClient(IClient editClient)
         {
-            var result = new Result<bool>();
+            var result = new FormulateResult<bool, ClientLogic>(_log);
             result.Body = _clientRepo.Edit(editClient);
             result.Check(result.Body, "Successfully edited the client!", "Unable to edit the client.");
 
