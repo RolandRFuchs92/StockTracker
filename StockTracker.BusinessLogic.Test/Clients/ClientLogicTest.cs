@@ -21,146 +21,153 @@ using StockTracker.Seed.Clients.Generic;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {
-	[TestClass]
-	public class ClientLogicTest
-	{
-		private Mock<IClientRepo> _moqClientRepo;
-	    private GenericLoggerCheck<ClientLogic> _genericLogger;
-	    private ILoggerAdapter<ClientLogic> _logger;
-
-		public ClientLogicTest()
+		[TestClass]
+		public class ClientLogicTest
 		{
-            _genericLogger = new GenericLoggerCheck<ClientLogic>();
-		    _logger = _genericLogger.Mock.Object;
+				private Mock<IClientRepo> _moqClientRepo;
+				private GenericLoggerCheck<ClientLogic> _genericLogger;
+				private ILoggerAdapter<ClientLogic> _logger;
 
-			var moqClientRepo = new Mock<IClientRepo>();
-			moqClientRepo.Setup(i => i.Add(It.IsAny<IClient>())).Returns(true);
-			_moqClientRepo = moqClientRepo;
-		}
-
-		#region AddClient Tests
-		[TestMethod]
-		public void AddClient_PassValidClients_False()
-		{
-			//Arrange
-			var newClientList = new GenericClients().All();
-			var addClient = new ClientLogic(_moqClientRepo.Object);
-			var result = new Result<bool>();
-			var lastClient = 0;
-
-			//Act
-			foreach (var client in newClientList)
-			{
-				result = (Result<bool>)addClient.AddClient(client);
-				if (!result.IsSuccess)
+				public ClientLogicTest()
 				{
-					lastClient = client.ClientId;
-					break;
+						_genericLogger = new GenericLoggerCheck<ClientLogic>();
+						_logger = _genericLogger.Mock.Object;
+
+						var moqClientRepo = new Mock<IClientRepo>();
+						moqClientRepo.Setup(i => i.Add(It.IsAny<IClient>())).Returns(true);
+						_moqClientRepo = moqClientRepo;
 				}
-			}
 
-			//Assert
-			Assert.IsTrue(result.IsSuccess, $"The last client checked was {lastClient}");
-		}
-
-		[TestMethod]
-		public void AddClient_PassInvalidClients_false()
-		{
-			//Arrange
-			var addClient = new ClientLogic(_moqClientRepo.Object);
-			var result = new Result<bool>();
-			var lastClient = 0;
-
-
-			var clientList = new GenericClients().All().ToList();
-			clientList.Add(clientList[0]);
-			clientList[0].Email = "moo..@doo.web";//Pass bad email address
-			clientList[1].ContactNumber = "abc123";
-			clientList[2].Email = "";
-			clientList[3].ContactNumber = "";
-
-			//Act
-			foreach (var client in clientList)
-			{
-				result = (Result<bool>)addClient.AddClient(client);
-				if (result.IsSuccess)
+				#region AddClient Tests
+				[TestMethod]
+				public void AddClient_PassValidClients_False()
 				{
-					lastClient = client.ClientId;
-					break;
+						//Arrange
+						var newClientList = new GenericClients().All();
+						var addClient = new ClientLogic(_moqClientRepo.Object, _logger);
+						var result = new Result<bool>();
+						var lastClient = 0;
+
+						//Act
+						foreach (var client in newClientList)
+						{
+								result = (Result<bool>)addClient.AddClient(client);
+								if (!result.IsSuccess)
+								{
+										lastClient = client.ClientId;
+										break;
+								}
+						}
+
+						//Assert
+						Assert.IsTrue(result.IsSuccess, $"The last client checked was {lastClient}");
+						_genericLogger.Success();
 				}
-			}
 
-			//Assert
-			Assert.IsFalse(result.IsSuccess, $"The last client checked was {lastClient}");
+				[TestMethod]
+				public void AddClient_PassInvalidClients_false()
+				{
+						//Arrange
+						var addClient = new ClientLogic(_moqClientRepo.Object, _logger);
+						var result = new Result<bool>();
+						var lastClient = 0;
+
+						var clientList = new GenericClients().All().ToList();
+						clientList.Add(clientList[0]);
+						clientList[0].Email = "moo..@doo.web";//Pass bad email address
+						clientList[1].ContactNumber = "abc123";
+						clientList[2].Email = "";
+						clientList[3].ContactNumber = "";
+
+						//Act
+						foreach (var client in clientList)
+						{
+								result = (Result<bool>)addClient.AddClient(client);
+								if (result.IsSuccess)
+								{
+										lastClient = client.ClientId;
+										break;
+								}
+						}
+
+						//Assert
+						Assert.IsFalse(result.IsSuccess, $"The last client checked was {lastClient}");
+						_genericLogger.Error();
+				}
+				#endregion
+
+				#region GetClient
+				[TestMethod]
+				public void GetClient_GetAClientbyClientId_GetClient()
+				{
+						//Arrange
+						var client = new GenericClients().One();
+						_moqClientRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
+						var clientLogic = new ClientLogic(_moqClientRepo.Object, _logger);
+
+						//Act
+						var result = clientLogic.GetClient(client.ClientId);
+
+						//Assert
+						Assert.IsInstanceOfType(result.Body, typeof(IClient));
+						Assert.IsTrue(result.IsSuccess);
+
+						_genericLogger.Success();
+				}
+
+				[TestMethod]
+				public void GetClient_GetAClientByIdThatDoesntExsist_NullFail()
+				{
+						//Arrange
+						var moqRepo = new Mock<IClientRepo>();
+						moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(new Client());
+
+						//Act
+						var result = new ClientLogic(moqRepo.Object, _logger).GetClient(123);
+
+						//Assert
+						Assert.IsInstanceOfType(result, typeof(IResult<IClient>));
+						_genericLogger.Error();
+				}
+				#endregion
+
+				#region EditClient Tests
+				[TestMethod]
+				public void EditClient_EditClientWithInvalidDetails_Fail()
+				{
+						//Arrange
+						var client = new GenericClients().One();
+						client.Email = "Roland..@ix.web";
+
+						//Act
+						var result = new ClientLogic(_moqClientRepo.Object, _logger).EditClient(client);
+
+						//Assert
+						Assert.IsInstanceOfType(result, typeof(IResult<bool>));
+						Assert.IsFalse(result.IsSuccess);
+
+						_genericLogger.Success();
+				}
+
+				[TestMethod]
+				public void EditClient_EditClientWithValidDetails_Success()
+				{
+						//Arrange
+						var client = new GenericClients().One();
+						var moqRepo = new Mock<IClientRepo>();
+						moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
+						moqRepo.Setup(i => i.Edit(It.IsAny<IClient>())).Returns(true);
+
+						client.Email = "hello@world.co.za";
+
+						//Act
+						var result = new ClientLogic(moqRepo.Object, _logger).EditClient(client);
+
+						//Assert
+						Assert.IsTrue(result.IsSuccess);
+						_genericLogger.Error();
+				}
+				#endregion
+
 		}
-		#endregion
-
-		#region GetClient
-		[TestMethod]
-		public void GetClient_GetAClientbyClientId_GetClient()
-		{
-			//Arrange
-			var client = new GenericClients().One();
-			_moqClientRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
-			var clientLogic = new ClientLogic(_moqClientRepo.Object);
-
-			//Act
-			var result = clientLogic.GetClient(client.ClientId);
-
-			//Assert
-			Assert.IsInstanceOfType(result.Body, typeof(IClient));
-			Assert.IsTrue(result.IsSuccess);
-		}
-
-		[TestMethod]
-		public void GetClient_GetAClientByIdThatDoesntExsist_NullFail()
-		{
-			//Arrange
-			var moqRepo = new Mock<IClientRepo>();
-			moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(new Client());
-
-			//Act
-			var result = new ClientLogic(moqRepo.Object).GetClient(123);
-
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(IResult<IClient>));
-		}
-		#endregion
-
-		#region EditClient Tests
-		[TestMethod]
-		public void EditClient_EditClientWithInvalidDetails_Fail()
-		{
-			//Arrange
-			var client = new GenericClients().One();
-			client.Email = "Roland..@ix.web";
-
-			//Act
-			var result = new ClientLogic(_moqClientRepo.Object).EditClient(client);
-
-			//Assert
-			Assert.IsInstanceOfType(result, typeof(IResult<bool>));
-			Assert.IsFalse(result.IsSuccess);
-		}
-
-		[TestMethod]
-		public void EditClient_EditClientWithValidDetails_Success()
-		{
-			//Arrange
-			var client = new GenericClients().One();
-			var moqRepo = new Mock<IClientRepo>();
-			moqRepo.Setup(i => i.Get(It.IsAny<int>())).Returns(client);
-			moqRepo.Setup(i => i.Edit(It.IsAny<IClient>())).Returns(true);
-
-			client.Email = "hello@world.co.za";
-
-			//Act
-			var result = new ClientLogic(moqRepo.Object).EditClient(client);
-			
-			//Assert
-			Assert.IsTrue(result.IsSuccess);
-		}
-		#endregion
-
-	}
 }
