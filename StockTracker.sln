@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.API.Interface"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.ViewModel", "StockTracker.ViewModel\StockTracker.ViewModel.csproj", "{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Adapter.Interface", "StockTracker.Adapter.Interface\StockTracker.Adapter.Interface.csproj", "{90DBA4D9-948C-4555-AA87-B84488E689E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Adapter", "StockTracker.Adapter\StockTracker.Adapter.csproj", "{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,14 @@ Global
 		{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D026BC9-FFFE-4C2B-92D1-D8754F24D195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90DBA4D9-948C-4555-AA87-B84488E689E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90DBA4D9-948C-4555-AA87-B84488E689E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90DBA4D9-948C-4555-AA87-B84488E689E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90DBA4D9-948C-4555-AA87-B84488E689E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

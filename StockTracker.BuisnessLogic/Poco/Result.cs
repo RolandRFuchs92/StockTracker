@@ -10,7 +10,11 @@ namespace StockTracker.BuisnessLogic.Poco
 {
 	public class Result<T> : IResult<T>
 	{
-		public Result()
+	    public bool IsSuccess { get; set; } = true;
+	    public string Message { get; set; } = "";
+	    public T Body { get; set; }
+
+        public Result()
 		{
 			
 		}
@@ -45,9 +49,5 @@ namespace StockTracker.BuisnessLogic.Poco
 				this.IsSuccess = false;
 			this.Message += isSuccess ?  "" : errorMessage;
 		}
-
-		public bool IsSuccess { get; set; } = true;
-		public string Message { get; set; } = "";
-		public T Body { get; set; }
 	}
 }
