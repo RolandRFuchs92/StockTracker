@@ -1,12 +1,8 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using StockTracker.Adapter.Interface.Logger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StockTracker.BusinessLogic.Test
+namespace StockTracker.BusinessLogic.Test.Utils
 {
     public class GenericLoggerCheck<T>
     {
