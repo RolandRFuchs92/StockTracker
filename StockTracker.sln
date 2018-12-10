@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository", "StockTracker\StockTracker.Repository.csproj", "{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Interface", "StockTracker.Interface\StockTracker.Interface.csproj", "{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Context", "StockTracker.Context\StockTracker.Context.csproj", "{1A609AE0-4E53-4C7C-BBC4-4F603E1D7DCB}"
@@ -39,16 +37,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Adapter", "Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository.Test", "StockTracker.Repository.Tests\StockTracker.Repository.Test.csproj", "{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository", "StockTracker.Repository\StockTracker.Repository.csproj", "{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB13976D-1CFF-4F36-B9F8-591C21D6EC3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +113,10 @@ Global
 		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
