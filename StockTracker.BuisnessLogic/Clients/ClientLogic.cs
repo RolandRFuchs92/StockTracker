@@ -66,10 +66,11 @@ namespace StockTracker.BuisnessLogic.Clients
         public IResult<bool> EditClient(IClient editClient)
         {
             var result = new FormulateResult<bool, ClientLogic>(_log);
-            result.Body = _clientRepo.Edit(editClient);
-            result.Check(result.Body, "Successfully edited the client!", "Unable to edit the client.");
+            var body = _clientRepo.Edit(editClient);
 
-            return result;
+            result.Check(body, "Successfully edited the client!", "Unable to edit the client.");
+
+            return result.Result;
         }
     }
 }
