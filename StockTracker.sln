@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Adapter.Interf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Adapter", "StockTracker.Adapter\StockTracker.Adapter.csproj", "{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository.Test", "StockTracker.Repository.Tests\StockTracker.Repository.Test.csproj", "{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DFF04D9-C38C-4BC0-AA22-E0A9B8DBE13F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FF9B5B3-B8C3-4374-A718-53AD58A6FE01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.API\StockTracker.API.csproj" />
     <ProjectReference Include="..\StockTracker.BuisnessLogic\StockTracker.BuisnessLogic.csproj" />
+    <ProjectReference Include="..\StockTracker.Repository.Tests\StockTracker.Repository.Test.csproj" />
     <ProjectReference Include="..\StockTracker.Seed\StockTracker.Seed.csproj" />
     <ProjectReference Include="..\StockTracker\StockTracker.Repository.csproj" />
   </ItemGroup>
