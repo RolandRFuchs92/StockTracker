@@ -40,7 +40,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
 
 				#region AddClient Tests
 				[TestMethod]
-				public void AddClient_PassValidClients_False()
+				public void AddClient_PassValidClients_True()
 				{
 						//Arrange
 						var newClientList = new GenericClients().All();
