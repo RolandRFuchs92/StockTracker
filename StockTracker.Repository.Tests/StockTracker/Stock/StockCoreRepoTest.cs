@@ -50,15 +50,27 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         }
 
         [TestMethod]
-        public void Add_InvalidStockCategory_LogError()
+        public void Add_InvalidStockCategory_ReturnNullAndLogError()
         {
-            var stockItem = _genericStock.One();
-            Add_Tests(stockItem, "StockCategoryId", 0);
+            Add_Tests("StockCategoryId", 0);
         }
 
-        private void Add_Tests(StockCore stockItem, string propertyName, int val)
+        [TestMethod]
+        public void Add_InvalidStockSupplierDetailId_ReturnNullAndLogError()
+        {
+            Add_Tests("StockSupplierDetailId", 0);
+        }
+
+        [TestMethod]
+        public void Add_InvalidStockTypeId_ReturnNullAndLogError()
+        {
+            Add_Tests("StockTypeId", 0);
+        }
+
+        private void Add_Tests(string propertyName, int val)
         {
             //Arrange
+            var stockItem = _genericStock.One();
             var repo = GetRepo();
             stockItem.GetType().GetProperty(propertyName).SetValue(stockItem, val);
 
@@ -69,7 +81,45 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             Asserts(result, false);
             _check.Error();
         }
+        #endregion
 
+        #region Edit Test
+
+        [TestMethod]
+        public void Edit_PassValidStockObject_ReturnModifiedStockItem()
+        {
+            //Arrange
+            var repo = GetRepo();
+            var stockItem = _genericStock.One();
+            var categoryId = 2;
+            var detailId = 2;
+
+            _db.StockCores.Add(stockItem);
+            ((StockTrackerContext) _db).SaveChanges();
+
+            stockItem.StockSupplierDetailId = categoryId;
+            stockItem.StockCategoryId = detailId;
+
+            //Act
+            var result = repo.Edit(stockItem);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(StockCore));
+            Assert.AreEqual(result.StockCategoryId, categoryId);
+            Assert.AreEqual(result.StockCategoryId, detailId);
+
+            _check.Success();
+        }
+
+        private void Edit_Tests()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
 
         #endregion
 
