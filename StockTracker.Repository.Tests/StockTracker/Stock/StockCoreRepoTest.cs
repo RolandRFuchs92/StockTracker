@@ -9,6 +9,7 @@ using Moq;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BusinessLogic.Test.Utils;
 using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
@@ -20,7 +21,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
     public class StockCoreRepoTest
     {
         private IStockCoreRepo _repo;
-        private StockTrackerContext _db;
+        private IStockTrackerContext _db;
         private GenericLoggerCheck<StockCoreRepo> _check;
         private Mock<ILoggerAdapter<StockCoreRepo>> _log;
         private GenericStockCore _genericStock;
@@ -88,17 +89,91 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void Edit_PassValidStockObject_ReturnModifiedStockItem()
         {
+            var testValues = new Dictionary<string, string>
+            {
+                { nameof(StockCore.StockCategoryId), "2" },
+                { nameof(StockCore.StockSupplierDetailId), "2" }
+            };
+
+            Edit_Tests_Success(testValues);
+        }
+
+
+        [TestMethod]
+        public void Edit_PassOnlyStockCoreIdAndNewCategoryId_ReturnFullStockItemAndLogSuccess()
+        {
+            var testValues = new Dictionary<string, string>
+            {
+                { nameof(StockCore.StockCategoryId), "2" },
+                { nameof(StockCore.StockSupplierDetailId), "0" },
+                { nameof(StockCore.StockTypeId), "0" }
+            };
+
+            Edit_Tests_Success(testValues);
+        }
+
+        [TestMethod]
+        public void Edit_PassOnlyStockCoreIdAndStockName_ReturnFullStockItemAndLogSuccess()
+        {
+            var testValues = new Dictionary<string, string>
+            {
+                { nameof(StockCore.StockCoreName), "Gooey Nectar" },
+                { nameof(StockCore.StockCategoryId), "0" },
+                { nameof(StockCore.StockSupplierDetailId), "0" },
+                { nameof(StockCore.StockTypeId), "0" }
+            };
+
+            Edit_Tests_Success(testValues);
+        }
+
+        [TestMethod]
+        public void Edit_PassInvalidStockCode_ReturnNullLogError()
+        {
+            var testValues = new Dictionary<string, string>
+            {
+                { nameof(StockCore.StockCoreId), "1000"}
+            };
+
+            Edit_Tests_Error(testValues);
+        }
+
+        [TestMethod]
+        public void Edit_PassInvalidStockCodeStockCategoryId_ReturnNullLogError()
+        {
+            var testValues = new Dictionary<string, string>
+            {
+                {nameof(StockCore.StockCategoryId), "1000"},
+                {nameof(StockCore.StockSupplierDetailId), "1000"},
+            };
+
+            Edit_Tests_Error(testValues);
+        }
+
+        [TestMethod]
+        public void Edit_StockTrackerContextThrowsError_ReturnNullLogException()
+        {
+            Edit_Tests_Error(new Dictionary<string, string>(), true);
+        }
+
+        private void Edit_Tests_Success(Dictionary<string, string> stockPropertyChanges)
+        {
             //Arrange
             var repo = GetRepo();
             var stockItem = _genericStock.One();
-            var categoryId = 2;
-            var detailId = 2;
 
             _db.StockCores.Add(stockItem);
-            ((StockTrackerContext) _db).SaveChanges();
+            ((StockTrackerContext)_db).SaveChanges();
 
-            stockItem.StockSupplierDetailId = categoryId;
-            stockItem.StockCategoryId = detailId;
+            //was gonna use a linq statement here to save lines of code, but this is easier to read.
+            foreach (var item in stockPropertyChanges)
+            {
+                var isInt = int.TryParse(item.Key, out int val);
+
+                if (isInt)
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), val);
+                else
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), item.Value);
+            }
 
             //Act
             var result = repo.Edit(stockItem);
@@ -106,19 +181,47 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(StockCore));
-            Assert.AreEqual(result.StockCategoryId, categoryId);
-            Assert.AreEqual(result.StockCategoryId, detailId);
+
+            foreach (var item in stockPropertyChanges)
+            {
+                var isInt = int.TryParse(item.Key, out int val);
+
+
+                if (isInt)
+                    Assert.AreNotEqual(result.GetType().GetProperty(item.Key).GetValue(result), val);
+                else
+                    Assert.AreEqual(result.GetType().GetProperty(item.Key).GetValue(result), item.Value);
+            }
 
             _check.Success();
         }
 
-        private void Edit_Tests()
+        private void Edit_Tests_Error(Dictionary<string, string> propertyValues, bool isExceptionCheck = false)
         {
             //Arrange
+            var repo = GetRepo(i => i.StockCores.Select(It.IsAny<Func<StockCore, StockCore>>()));
+            var stockItem = _genericStock.One();
+
+            foreach (var item in propertyValues)
+            {
+                var isInt = int.TryParse(item.Value, out int intVal);
+
+                if(isInt)
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), intVal);
+                else
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), item.Value);
+            }
+
 
             //Act
+            var result = repo.Edit(stockItem);
 
             //Assert
+            Asserts(result,false);
+            if(isExceptionCheck)
+                _check.ErrorException();
+            else
+                _check.Error();
         }
 
         #endregion
@@ -137,11 +240,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         }
 
 
-        private IStockCoreRepo GetRepo()
+        private IStockCoreRepo GetRepo(Expression<Action<IStockTrackerContext>> customContextBehavior) 
         {
-            var moq = new Mock<IStockCoreRepo>();
+            var repo = new Mock<IStockCoreRepo>().Object;
 
-            return moq.Object;
+            var db = new Mock<IStockTrackerContext>();
+            db.Setup(customContextBehavior).Throws(new Exception());
+
+            return repo;
         }
 
         #endregion
