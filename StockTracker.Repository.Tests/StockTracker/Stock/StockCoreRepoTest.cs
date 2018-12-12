@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
-using StockTracker.BusinessLogic.Test.Utils;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
 using StockTracker.Seed.Stock;
+using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {

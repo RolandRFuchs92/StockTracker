@@ -2,7 +2,7 @@
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
 
-namespace StockTracker.BusinessLogic.Test.Utils
+namespace StockTracker.Tests.Utils.MockVerifiers
 {
     public class GenericLoggerCheck<T>
     {
