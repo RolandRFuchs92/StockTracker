@@ -272,10 +272,12 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var repo = new Repo<StockCoreRepo>();
 
             //Act
-            var result = repo.Result("ChangeStockType");
+            var result = repo.Result("ChangeStockType", 1, 2);
 
             //Assert
-            
+            Assert.IsInstanceOfType(result, typeof(StockCore));
+            Assert.AreEqual((result as StockCore).StockCategoryId, 2);
+
             repo._loggerCheck.Success();
         }
         #endregion
