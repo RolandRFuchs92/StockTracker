@@ -14,6 +14,7 @@ using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
 using StockTracker.Seed.Stock;
+using StockTracker.Tests.Utils.Acts;
 using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
@@ -268,10 +269,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
             //Arrange
-            var repo = GetRepo();
+            var repo = new Repo<StockCoreRepo>();
 
             //Act
-            var result = 
+            var result = repo.Result("ChangeStockType")
 
             //Assert
 
