@@ -267,6 +267,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
+            //Arrange
+            var repo = GetRepo();
+
+            //Act
+            var result = 
+
+            //Assert
+
 
         }
         #endregion
