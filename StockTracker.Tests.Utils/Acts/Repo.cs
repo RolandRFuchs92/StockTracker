@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context.Interface;
@@ -17,15 +18,20 @@ using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Tests.Utils.Acts
 {
-    public class Repo<T>
+    public class Repo<T> 
     {
-        private T _repo;
-        private GenericLoggerCheck<T> _loggerCheck;
+        private readonly T _repo;
         private IStockTrackerContext _db;
+        private readonly bool isValidResult;
+        
 
+        public dynamic Result { get; private set; }
+        public GenericLoggerCheck<T> _loggerCheck { get; }
+        public object[] ParametersUsed { get; private set; }
 
         public Repo(string errorDbSetName = "")
         {
+            isValidResult = string.IsNullOrEmpty(errorDbSetName);
             CreateDbInstance(errorDbSetName);
             _repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object);
         }
@@ -39,7 +45,7 @@ namespace StockTracker.Tests.Utils.Acts
             _db = moq.Object;
         }
 
-        public dynamic Result(string methodName, bool isValidResult = true)
+        public void CreateResult(string methodName)
         {
             var methodInfo = _repo.GetType().GetMethod(methodName);
             var parameterInfo = methodInfo.GetParameters();
@@ -49,24 +55,22 @@ namespace StockTracker.Tests.Utils.Acts
             foreach (var parameter in parameterInfo)
             {
                 if(isValidResult)
-                    methodParameters.Add(DefaultValue(parameter, true));
+                    methodParameters.Add(DefaultValue(parameter));
                 else
-                    methodParameters.Add(DefaultValue(parameter, false));
+                    methodParameters.Add(DefaultValue(parameter));
             }
 
-            var result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParameters.ToArray());
-
-            return result;
+            ParametersUsed = methodParameters.ToArray();
+            CreateResult(methodName, ParametersUsed);
         }
 
-        public dynamic Result(string methodName, object[] methodParams)
+        public void CreateResult(string methodName, object[] methodParams)
         {
-            var result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParams);
-
-            return result;
+            ParametersUsed = methodParams;
+            Result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParams);
         }
 
-        private object DefaultValue(ParameterInfo parameter, bool isValidResult)
+        private object DefaultValue(ParameterInfo parameter)
         {
             var paramType = parameter.ParameterType;
 
@@ -79,27 +83,25 @@ namespace StockTracker.Tests.Utils.Acts
             if(paramType == typeof(double))
                 return isValidResult ? 1.23 : 100000.00000;
 
-            if (paramType.IsClass)
-            {
-                var assembly = Assembly.Load("StockTracker.Seed");
-                var types = (from classObj in assembly.GetTypes()
-                            let obj = classObj.BaseType
-                            where !classObj.IsAbstract
-                                  && !classObj.IsInterface
-                                  && obj != null
-                                  && obj.IsGenericType
-                                  && obj.GetGenericTypeDefinition() == typeof(IGeneric<>)
-                                  && obj.GetGenericTypeDefinition().GetType() == paramType
-                            select classObj).FirstOrDefault();
+            if (!paramType.IsClass) throw new Exception("Unrecognised parameter type.");
 
-                if (types == null)
-                    throw new Exception("Unrecognised parameter type.");
+            var assembly = Assembly.Load("StockTracker.Seed");
+            var types = (from classObj in assembly.GetTypes()
+                        let obj = classObj.BaseType
+                        where !classObj.IsAbstract
+                              && !classObj.IsInterface
+                              && obj != null
+                              && obj.IsGenericType
+                              && obj.GetGenericTypeDefinition() == typeof(IGeneric<>)
+                              && obj.GetGenericTypeDefinition() == paramType
+                        select classObj).FirstOrDefault();
 
-                var newInstance = Activator.CreateInstance(types, true).GetType().GetMethod("One");
-                return newInstance.Invoke(newInstance, new object[] { });
-            }
+            if (types == null)
+                throw new Exception("Unrecognised parameter type.");
 
-            throw new Exception("Unrecognised parameter type.");
+            var newInstance = Activator.CreateInstance(types, true).GetType().GetMethod("One");
+            return newInstance.Invoke(newInstance, new object[] { });
+
         }
     }
 }
