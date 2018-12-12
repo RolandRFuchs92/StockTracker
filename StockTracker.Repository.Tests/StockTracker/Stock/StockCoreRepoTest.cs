@@ -277,6 +277,19 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
         }
 
+        private void ChangeStockType_Test(int stockCategoryId)
+        {
+            //Arrange
+            var stockCore = _genericStock.One();
+            var repo = GetRepo();
+
+            //Act
+            var result = repo.ChangeStockDetail(stockCore.StockCoreId, stockCategoryId);
+
+            //Assert
+
+        }
+
         #endregion
 
         #region Dry Code
@@ -299,7 +312,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
                 Assert.IsNotNull(result);
                 foreach (var item in compare)
                 {
-
+                    var initialValue = result.GetType().GetProperty(item.Key).GetValue(result);
+                    var newValue = item.Value;
+                    Assert.AreEqual(initialValue, newValue);
                 }
             }
             else
