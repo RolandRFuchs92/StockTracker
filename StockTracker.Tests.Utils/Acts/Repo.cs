@@ -84,7 +84,7 @@ namespace StockTracker.Tests.Utils.Acts
             CreateResult(methodName, ParametersUsed);
         }
 
-        public void CreateResult(string methodName, object[] methodParams)
+        public void CreateResult(string methodName, params object[] methodParams)
         {
             ParametersUsed = methodParams;
             Result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParams);

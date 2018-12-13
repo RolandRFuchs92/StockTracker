@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Persons;
 using StockTracker.Seed.Interface;
 
@@ -10,6 +12,14 @@ namespace StockTracker.Seed.Persons
 {
     public class GenericPerson : IGeneric<Person>
     {
+        public GenericPerson(){}
+
+        public GenericPerson(IStockTrackerContext db)
+        {
+            db.Persons.AddRange(All());
+            ((StockTrackerContext)db).SaveChanges();
+        }
+
         public Person[] All()
         {
             return new[]

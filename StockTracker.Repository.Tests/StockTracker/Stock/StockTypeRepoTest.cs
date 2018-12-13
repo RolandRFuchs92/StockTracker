@@ -5,14 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using StockTracker.Tests.Utils.Context;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
-    public class StockTypeRepoTest<T>
+    [TestClass]
+    public class StockTypeRepoTest
     {
-				public StockTypeRepoTest(IStockTrackerContext db, ILoggerAdapter<T> log)
-				{
+        private IStockTrackerContext _db;
 
-				}
+        [TestMethod]
+        public void StockTypes()
+        {
+
+            var db = new TestDbFactory().Db();
+            var addSeed = new AddSeed(db, "StockCores");
+            var wee = "";
+        }
     }
 }

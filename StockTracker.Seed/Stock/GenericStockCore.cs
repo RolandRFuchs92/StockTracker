@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Stock;
 using StockTracker.Seed.Interface;
 
@@ -10,6 +12,17 @@ namespace StockTracker.Seed.Stock
 {
     public class GenericStockCore : IGeneric<StockCore>
     {
+        public GenericStockCore()
+        {
+            
+        }
+
+        public GenericStockCore(IStockTrackerContext db)
+        {
+            db.StockCores.AddRange(All());
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
         public StockCore[] All()
         {
             return new[]
