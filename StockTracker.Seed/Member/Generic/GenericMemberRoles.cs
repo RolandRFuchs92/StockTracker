@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Members;
 using StockTracker.Seed.Interface;
 
@@ -10,6 +12,17 @@ namespace StockTracker.Seed.Member.Generic
 {
     public class GenericMemberRoles : IGeneric<MemberRole>
     {
+        public GenericMemberRoles()
+        {
+            
+        }
+
+        public GenericMemberRoles(IStockTrackerContext db)
+        {
+            db.MemberRoles.AddRange(All());
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
         public MemberRole[] All()
         {
             return new[]

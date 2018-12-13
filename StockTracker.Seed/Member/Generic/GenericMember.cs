@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Member.Generic
 {
     public class GenericMember : IGeneric<Model.Members.Member>
     {
+        public GenericMember()
+        {
+                
+        }
+
+        public GenericMember(IStockTrackerContext db)
+        {
+            db.Members.AddRange(All());
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
         public Model.Members.Member[] All()
         {
             return new[]

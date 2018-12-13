@@ -31,9 +31,7 @@ namespace StockTracker.Tests.Utils.Context
                                    && seed.GetInterfaces()[0].GenericTypeArguments[0] == dbsetType
                             select seed).FirstOrDefault();
 
-            var seedObject = Activator.CreateInstance(seedType, _db);
-                
-            seedObject.GetType().GetMethod("All").Invoke(seedObject, new object[]{});
+            Activator.CreateInstance(seedType, _db);
         }
 
         private Type GetDbSetType(string dbsetName)

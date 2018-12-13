@@ -1,4 +1,6 @@
 ﻿using System;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
 using StockTracker.Seed.Interface;
 
@@ -6,6 +8,16 @@ namespace StockTracker.Seed.Clients.Generic
 {
     public class GenericClientSettings : IGeneric<ClientSettings>
     {
+        public GenericClientSettings()
+        {
+                
+        }
+
+        public GenericClientSettings(IStockTrackerContext db)
+        {
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
 	    public ClientSettings[] All()
 	    {
 		    var viewModel = new[]

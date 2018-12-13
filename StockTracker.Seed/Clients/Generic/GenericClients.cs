@@ -1,4 +1,6 @@
 ﻿using System;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
 using StockTracker.Seed.Interface;
 
@@ -6,6 +8,17 @@ namespace StockTracker.Seed.Clients.Generic
 {
 	public class GenericClients : IGeneric<Client>
 	{
+	    public GenericClients()
+	    {
+	        
+	    }
+
+	    public GenericClients(IStockTrackerContext db)
+	    {
+	        db.Clients.AddRange(All());
+	        ((StockTrackerContext) db).SaveChanges();
+	    }
+
 		public Client[] All()
 		{
 			return new[]
