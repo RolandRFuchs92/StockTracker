@@ -11,5 +11,6 @@ namespace StockTracker.Repository.Interface.Stock
     {
         IStockType Add(string stockTypeName);
         IStockType Edit(int stockTypeId, string stockTypeName);
+				bool IsValid(int stockTypeId);
     }
 }

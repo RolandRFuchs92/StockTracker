@@ -269,9 +269,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             //Arrange
             var repo = new Repo<StockCoreRepo>();
+						repo.CreateResult("ChangeStockType", new object[] { 1, 2 });
 
-            //Act
-            var result = repo.Result("ChangeStockType", 1, 2);
+						//Act
+						var result = repo.Result;
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(StockCore));
