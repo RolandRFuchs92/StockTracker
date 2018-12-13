@@ -21,6 +21,11 @@ namespace StockTracker.Tests.Utils.Context
             AddSeedList(dbSetName);
         }
 
+        public void NewSeed(string dbSetName)
+        {
+            AddSeedList(dbSetName);
+        }
+
         private void AddSeedList(string dbSetName)
         {
             dbsetType = GetDbSetType(dbSetName);
@@ -28,6 +33,7 @@ namespace StockTracker.Tests.Utils.Context
 
             var seedType = (from seed in assembly.GetTypes()
                              where seed.GetInterfaces().Length > 0
+                                   && seed.GetInterfaces()[0].IsConstructedGenericType
                                    && seed.GetInterfaces()[0].GenericTypeArguments[0] == dbsetType
                             select seed).FirstOrDefault();
 
