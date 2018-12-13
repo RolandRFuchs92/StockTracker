@@ -20,25 +20,37 @@ namespace StockTracker.Tests.Utils.Acts
 {
     public class Repo<T> 
     {
-        private readonly T _repo;
+        private T _repo;
         private IStockTrackerContext _db;
-        private readonly bool isValidResult;
+        private bool isValidResult;
         
 
         public dynamic Result { get; private set; }
-        public GenericLoggerCheck<T> _loggerCheck { get; }
+        public GenericLoggerCheck<T> _loggerCheck { get; private set; }
         public object[] ParametersUsed { get; private set; }
         public Dictionary<string, dynamic> ParameterDictionary { get; private set; }
 
         public Repo(string errorDbSetName = "")
         {
-            isValidResult = string.IsNullOrEmpty(errorDbSetName);
-            CreateDbInstance(errorDbSetName);
-            _loggerCheck = new GenericLoggerCheck<T>();
-            _repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object);
+						Setup(errorDbSetName);
+						_repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object);
         }
 
-        private void CreateDbInstance(string errorDbSetName)
+				public Repo(string errorDbSetName = "", params object[] parameter)
+				{
+						Setup(errorDbSetName);
+						_repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object, parameter[0]);
+				}
+
+				private void Setup(string errorDbSetName) 
+				{
+						isValidResult = string.IsNullOrEmpty(errorDbSetName);
+						CreateDbInstance(errorDbSetName);
+						_loggerCheck = new GenericLoggerCheck<T>();
+						//_db = new TestDbFactory()
+				}
+
+				private void CreateDbInstance(string errorDbSetName)
         {
             var moq = new Mock<IStockTrackerContext>();
             if (!string.IsNullOrEmpty(errorDbSetName))

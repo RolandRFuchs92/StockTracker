@@ -46,7 +46,7 @@ namespace StockTracker.Repository.Stock
             try 
 						{
 								if (!_stockTypeRepo.IsValid(stockTypeId))
-										return null;
+										return LogError($"Invalid StockType[{stockTypeId}]", null);
 
 								var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
 								var oldStockTypeId = core.StockTypeId;
@@ -59,8 +59,7 @@ namespace StockTracker.Repository.Stock
 						}
 						catch(Exception e)
 						{
-								_log.LogError((int)LoggingEvent.Update, e, $"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]");
-								return null;
+								return LogError($"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]", e);
 						}
         }
 
@@ -68,5 +67,15 @@ namespace StockTracker.Repository.Stock
         {
             throw new NotImplementedException();
         }
+
+				private StockCore LogError(string message, Exception e)
+				{
+						if(e == null)
+								_log.LogError((int)LoggingEvent.Update, message);
+						else
+								_log.LogError((int)LoggingEvent.Update, e, message);
+
+						return null;
+				}
     }
 }
