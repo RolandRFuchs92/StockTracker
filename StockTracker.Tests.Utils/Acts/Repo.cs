@@ -34,6 +34,7 @@ namespace StockTracker.Tests.Utils.Acts
         {
             isValidResult = string.IsNullOrEmpty(errorDbSetName);
             CreateDbInstance(errorDbSetName);
+            _loggerCheck = new GenericLoggerCheck<T>();
             _repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object);
         }
 
