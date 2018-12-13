@@ -15,6 +15,7 @@ using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
 using StockTracker.Seed.Stock;
 using StockTracker.Tests.Utils.Acts;
+using StockTracker.Tests.Utils.Context;
 using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock

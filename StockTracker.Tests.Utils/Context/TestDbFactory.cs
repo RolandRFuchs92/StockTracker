@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using StockTracker.Context;
-using StockTracker.Seed;
 
-namespace StockTracker.Repository.Test
+namespace StockTracker.Tests.Utils.Context
 {
     public class TestDbFactory : IDisposable
     {
