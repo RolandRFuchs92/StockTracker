@@ -264,7 +264,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         #endregion
 
         #region ChangeStockType Test
-
         [TestMethod]
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
@@ -279,6 +278,21 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             Assert.AreEqual((result as StockCore).StockCategoryId, 2);
 
             repo._loggerCheck.Success();
+        }
+
+        [TestMethod]
+        public void ChangeStockType_PassInvalidStockCodeIdAndValidStockType_ReturnNullLogError()
+        {
+            //Arrange
+            var repo = new Repo<StockCoreRepo>();
+
+            //Act
+            var result = repo.Result("ChangeStockType", 0, 2);
+
+            //Assert
+            Assert.IsNull(result);
+
+            repo._loggerCheck.Error();
         }
         #endregion
 

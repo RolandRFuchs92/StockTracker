@@ -28,6 +28,7 @@ namespace StockTracker.Tests.Utils.Acts
         public dynamic Result { get; private set; }
         public GenericLoggerCheck<T> _loggerCheck { get; }
         public object[] ParametersUsed { get; private set; }
+        public Dictionary<string, dynamic> ParameterDictionary { get; private set; }
 
         public Repo(string errorDbSetName = "")
         {
@@ -54,10 +55,9 @@ namespace StockTracker.Tests.Utils.Acts
 
             foreach (var parameter in parameterInfo)
             {
-                if(isValidResult)
-                    methodParameters.Add(DefaultValue(parameter));
-                else
-                    methodParameters.Add(DefaultValue(parameter));
+                var val = DefaultValue(parameter);
+                ParameterDictionary.Add(parameter.Name, val);
+                methodParameters.Add(val);
             }
 
             ParametersUsed = methodParameters.ToArray();
@@ -78,7 +78,7 @@ namespace StockTracker.Tests.Utils.Acts
                 return isValidResult ? 1 : 100;
 
             if (paramType == typeof(string))
-                return isValidResult ? "Ragunaut" : "";
+                return isValidResult ? "Ragunaught" : "";
 
             if(paramType == typeof(double))
                 return isValidResult ? 1.23 : 100000.00000;

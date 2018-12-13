@@ -16,20 +16,20 @@ namespace StockTracker.Tests.Utils.Asserts
             }
         }
 
-        public void AreEqualAsserts<T>(T initalObject, Dictionary<string, dynamic> compare)
+        public void AreEqualAsserts<T>(T initalObject, Dictionary<string, dynamic> parameterDictionary)
         {
-            ComparisonAsserts(initalObject, compare, true);
+            ComparisonAsserts(initalObject, parameterDictionary, true);
         }
 
-        public void AreNotEqualAsserts<T>(T initalObject, Dictionary<string, dynamic> compare)
+        public void AreNotEqualAsserts<T>(T initalObject, Dictionary<string, dynamic> parameterDictionary)
         {
-            ComparisonAsserts(initalObject, compare, false);
+            ComparisonAsserts(initalObject, parameterDictionary, false);
         }
 
-        private void ComparisonAsserts<T>(T result, Dictionary<string, dynamic> compare, bool areEqualCheck )
+        private void ComparisonAsserts<T>(T result, Dictionary<string, dynamic> parameterDictionary, bool areEqualCheck )
         {
             Assert.IsNotNull(result);
-            foreach (var item in compare)
+            foreach (var item in parameterDictionary)
             {
                 var objectValue = result.GetType().GetProperty(item.Key).GetValue(result);
                 var comparisonValue = item.Value;
