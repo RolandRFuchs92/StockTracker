@@ -271,6 +271,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             //Arrange
             var stockTypeRepo = new Mock<IStockTypeRepo>();
             stockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
+            new AddSeed(_db, "StockCores");
             var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo.Object);
             repo.CreateResult("ChangeStockType", 1, 2 );
 
