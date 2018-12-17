@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Model.Stock;
+using StockTracker.Model.StockSupplier;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Stock
@@ -19,8 +20,16 @@ namespace StockTracker.Seed.Stock
 
         public GenericStockCore(IStockTrackerContext db)
         {
+            
+        }
+
+        private void SeedContext(IStockTrackerContext db)
+        {
+            //var stockSupplierDetailArray = new ;
+
+
             db.StockCores.AddRange(All());
-            ((StockTrackerContext) db).SaveChanges();
+            ((StockTrackerContext)db).SaveChanges();
         }
 
         public StockCore[] All()

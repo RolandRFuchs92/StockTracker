@@ -11,7 +11,7 @@ namespace StockTracker.Interface.Models.StockSupplier
 		int StockSupplierDetailId { get; set; }
 		int SupplierId { get; set; }
 		int MemberId { get; set; }
-		float Price { get; set; }
+		decimal Price { get; set; }
 		int UnitTypeId { get; set; }
 		int Unit { get; set; }
 		DateTime CreatedOn { get; set; }
