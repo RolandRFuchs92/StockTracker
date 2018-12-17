@@ -53,9 +53,9 @@ namespace StockTracker.Tests.Utils.Acts
 
         private void CreateDbInstance(string errorDbSetName)
         {
-            var moq = new Mock<IStockTrackerContext>();
             if (!string.IsNullOrEmpty(errorDbSetName))
             {
+                var moq = new Mock<IStockTrackerContext>();
                 moq.Setup(i => i.GetType().GetProperty(errorDbSetName)).Throws(new Exception());
                 _db = moq.Object;
             }

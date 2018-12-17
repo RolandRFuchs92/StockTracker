@@ -299,9 +299,25 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Assert.IsNull(result);
-
             repo._loggerCheck.Error();
         }
+        #endregion
+
+        #region ChangeStockDetail Test
+        [TestMethod]
+        public void ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
+        {
+            //Arrange
+            var repo = new Repo<StockCoreRepo>();
+            repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail),1,2);
+
+            //Act
+            var result = repo.Result;
+
+            //Assert
+            Assert.IsNotNull(result);
+        }
+
         #endregion
 
         #region Dry Code
