@@ -43,7 +43,6 @@ namespace StockTracker.Context
 	    public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<StockSupplierDetail> StockSupplierDetails { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ClientConfiguration());

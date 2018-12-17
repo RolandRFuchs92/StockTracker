@@ -27,9 +27,7 @@ namespace StockTracker.Seed.Stock
 
         public override void SeedContext(IStockTrackerContext db)
         {
-            var stockSupplierDetailArray = new GenericStockSupplier();
-
-
+            db.StockSupplierDetails.AddRange(new GenericStockSupplier().All());
             db.StockCores.AddRange(All());
             ((StockTrackerContext)db).SaveChanges();
         }
