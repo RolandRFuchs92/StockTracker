@@ -8,6 +8,8 @@ using StockTracker.Context.Interface;
 using StockTracker.Model.StockSupplier;
 using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
+using StockTracker.Seed.Member.Generic;
+using StockTracker.Seed.Suppliers;
 
 namespace StockTracker.Seed.StockSupplier
 {
@@ -15,7 +17,11 @@ namespace StockTracker.Seed.StockSupplier
     {
         public override void SeedContext(IStockTrackerContext db)
         {
-            
+            new GenericMember().SeedContext(db);
+            new GenericSupplier().SeedContext(db);
+
+            db.StockSupplierDetails.AddRange(All());
+            ((StockTrackerContext) db).SaveChanges();
         }
 
         public override StockSupplierDetail[] All()

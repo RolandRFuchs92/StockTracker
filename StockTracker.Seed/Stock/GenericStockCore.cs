@@ -15,16 +15,6 @@ namespace StockTracker.Seed.Stock
 {
     public class GenericStockCore : GenericSeed<StockCore>
     {
-        public GenericStockCore()
-        {
-            
-        }
-
-        public GenericStockCore(IStockTrackerContext db)
-        {
-            
-        }
-
         public override void SeedContext(IStockTrackerContext db)
         {
             db.StockSupplierDetails.AddRange(new GenericStockSupplier().All());
