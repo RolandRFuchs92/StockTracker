@@ -6,24 +6,14 @@ using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Model.Members;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Member.Generic
 {
-    public class GenericMemberRoles : IGeneric<MemberRole>
+    public class GenericMemberRoles : GenericSeed<MemberRole>
     {
-        public GenericMemberRoles()
-        {
-            
-        }
-
-        public GenericMemberRoles(IStockTrackerContext db)
-        {
-            db.MemberRoles.AddRange(All());
-            ((StockTrackerContext) db).SaveChanges();
-        }
-
-        public MemberRole[] All()
+        public override MemberRole[] All()
         {
             return new[]
             {
@@ -48,16 +38,6 @@ namespace StockTracker.Seed.Member.Generic
                     MemberRoleName = "Waiter"
                 },
             };
-        }
-
-        public MemberRole One()
-        {
-            return All()[0];
-        }
-
-        public MemberRole One(int index)
-        {
-            return All()[index];
         }
     }
 }
