@@ -63,7 +63,6 @@ namespace StockTracker.Tests.Utils.Acts
             {
                 _db = new TestDbFactory().Db();
             }
-
         }
 
         public void CreateResult(string methodName)

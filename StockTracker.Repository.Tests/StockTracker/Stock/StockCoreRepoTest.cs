@@ -29,6 +29,12 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         private Mock<ILoggerAdapter<StockCoreRepo>> _log;
         private GenericStockCore _genericStock;
 
+        private const string _changeStockType = nameof(StockCoreRepo.ChangeStockType);
+        private const string _changeCategory = nameof(StockCoreRepo.ChangeCategory);
+        private const string _add = nameof(StockCoreRepo.Add);
+        private const string _edit = nameof(StockCoreRepo.Edit);
+        private const string _changeStockDetail = nameof(StockCoreRepo.ChangeStockDetail);
+
         public StockCoreRepoTest()
         {
             _db = new TestDbFactory().Db();
@@ -273,7 +279,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             stockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
             new AddSeed(_db, "StockCores");
             var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo.Object);
-            repo.CreateResult("ChangeStockType", 1, 2 );
+            repo.CreateResult(_changeStockType, 1, 2 );
 
             //Act
             var result = repo.Result;
@@ -292,7 +298,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var fake = new Mock<IStockTypeRepo>();
             fake.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
             var repo = new Repo<StockCoreRepo>(parameter: fake.Object);
-            repo.CreateResult("ChangeStockType", 0, 2);
+            repo.CreateResult(_changeStockType, 0, 2);
 
             //Act
             var result = repo.Result;
@@ -309,6 +315,8 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             //Arrange
             var repo = new Repo<StockCoreRepo>();
+            var originalResult = _genericStock.One();
+
             repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail),1,2);
 
             //Act
@@ -316,6 +324,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual(originalResult.StockSupplierDetailId, ((StockCore)result).StockSupplierDetail);
+
+            repo._loggerCheck.Success();
         }
 
         #endregion
