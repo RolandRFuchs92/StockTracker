@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
+using StockTracker.Model.Persons;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Tests.Utils.Context
@@ -37,7 +39,8 @@ namespace StockTracker.Tests.Utils.Context
                                    && seed.GetInterfaces()[0].GenericTypeArguments[0] == dbsetType
                             select seed).FirstOrDefault();
 
-            Activator.CreateInstance(seedType, _db);
+            var instanceObject = Activator.CreateInstance(seedType);
+            instanceObject.GetType().GetMethod(nameof(GenericSeed<Person>.SeedContext)).Invoke(instanceObject, new object[]{ _db });
         }
 
         private Type GetDbSetType(string dbsetName)
