@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Stock;
+using StockTracker.Model.StockSupplier;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
+using StockTracker.Seed.StockSupplier;
 
 namespace StockTracker.Seed.Stock
 {
-    public class GenericStockCore : IGeneric<StockCore>
+    public class GenericStockCore : GenericSeed<StockCore>
     {
-        public StockCore[] All()
+        public override void SeedContext(IStockTrackerContext db)
+        {
+            db.StockSupplierDetails.AddRange(new GenericStockSupplier().All());
+            db.StockCores.AddRange(All());
+            ((StockTrackerContext)db).SaveChanges();
+        }
+
+        public override StockCore[] All()
         {
             return new[]
             {
@@ -39,16 +51,6 @@ namespace StockTracker.Seed.Stock
                     StockTypeId = 3
                 },
             };
-        }
-
-        public StockCore One()
-        {
-            return All()[0];
-        }
-
-        public StockCore One(int index)
-        {
-            return All()[index];
         }
     }
 }

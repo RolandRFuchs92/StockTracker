@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
+using StockTracker.Seed.Abstract;
+using StockTracker.Seed.Clients.Generic;
 using StockTracker.Seed.Interface;
+using StockTracker.Seed.Persons;
 
 namespace StockTracker.Seed.Member.Generic
 {
-    public class GenericMember : IGeneric<Model.Members.Member>
+    public class GenericMember : GenericSeed<Model.Members.Member>
     {
-        public Model.Members.Member[] All()
+        public override void SeedContext(IStockTrackerContext db)
+        {
+            db.Clients.AddRange(new GenericClients().All());
+            db.Persons.AddRange(new GenericPerson().All());
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
+        public override Model.Members.Member[] All()
         {
             return new[]
             {
@@ -41,16 +53,6 @@ namespace StockTracker.Seed.Member.Generic
                     PersonId = 3
                 }
             };
-        }
-
-        public Model.Members.Member One()
-        {
-            return All()[0];
-        }
-
-        public Model.Members.Member One(int index)
-        {
-            return All()[index];
         }
     }
 }

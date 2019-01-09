@@ -15,6 +15,7 @@ using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
 using StockTracker.Seed.Stock;
 using StockTracker.Tests.Utils.Acts;
+using StockTracker.Tests.Utils.Context;
 using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
@@ -27,6 +28,12 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         private GenericLoggerCheck<StockCoreRepo> _check;
         private Mock<ILoggerAdapter<StockCoreRepo>> _log;
         private GenericStockCore _genericStock;
+
+        private const string _changeStockType = nameof(StockCoreRepo.ChangeStockType);
+        private const string _changeCategory = nameof(StockCoreRepo.ChangeCategory);
+        private const string _add = nameof(StockCoreRepo.Add);
+        private const string _edit = nameof(StockCoreRepo.Edit);
+        private const string _changeStockDetail = nameof(StockCoreRepo.ChangeStockDetail);
 
         public StockCoreRepoTest()
         {
@@ -206,7 +213,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             {
                 var isInt = int.TryParse(item.Value, out int intVal);
 
-                if(isInt)
+                if (isInt)
                     stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), intVal);
                 else
                     stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), item.Value);
@@ -217,8 +224,8 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var result = repo.Edit(stockItem);
 
             //Assert
-            Asserts(result,false);
-            if(isExceptionCheck)
+            Asserts(result, false);
+            if (isExceptionCheck)
                 _check.ErrorException();
             else
                 _check.Error();
@@ -231,13 +238,13 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeCategory_PassValidStockIdAndDifferentCategory_NewStockItemAndLogSuccess()
         {
-            ChangeCategory_Test(new Dictionary<string, string>{ { "StockCategoryId", "3"}});
+            ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "3" } });
         }
 
         [TestMethod]
         public void ChangeCategory_PassInvalidCategoryId_ReturnNullLogGenericError()
         {
-            ChangeCategory_Test(new Dictionary<string, string>{{ "StockCategoryId", "1" }}, false);
+            ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "1" } }, false);
         }
 
         [TestMethod]
@@ -246,7 +253,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "1" } }, false, true);
         }
 
-        private void ChangeCategory_Test(Dictionary<string,string> newVals, bool isSuccess = true, bool exceptionTest = false)
+        private void ChangeCategory_Test(Dictionary<string, string> newVals, bool isSuccess = true, bool exceptionTest = false)
         {
             //Arrange
             var repo = GetRepo(exceptionTest);
@@ -257,7 +264,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Asserts(result, isSuccess);
-            
+
             _check.Success();
         }
 
@@ -267,14 +274,15 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
-						//Arrange
-						var stockTypeRepo = new Mock<IStockTypeRepo>();
-						stockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
-						var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo.Object);
-						repo.CreateResult("ChangeStockType", new object[] { 1, 2 });
+            //Arrange
+            var stockTypeRepo = new Mock<IStockTypeRepo>();
+            stockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
+            new AddSeed(_db, "StockCores");
+            var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo.Object);
+            repo.CreateResult(_changeStockType, 1, 2 );
 
-						//Act
-						var result = repo.Result;
+            //Act
+            var result = repo.Result;
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(StockCore));
@@ -286,16 +294,41 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeStockType_PassInvalidStockCodeIdAndValidStockType_ReturnNullLogError()
         {
-						//Arrange
-						var repo = new Repo<StockCoreRepo>();
+            //Arrange
+            var fake = new Mock<IStockTypeRepo>();
+            fake.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
+            var repo = new Repo<StockCoreRepo>(parameter: fake.Object);
+            repo.CreateResult(_changeStockType, 0, 2);
 
             //Act
-            var result = repo.Result("ChangeStockType", 0, 2);
+            var result = repo.Result;
 
             //Assert
             Assert.IsNull(result);
             repo._loggerCheck.Error();
         }
+        #endregion
+
+        #region ChangeStockDetail Test
+        [TestMethod]
+        public void ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
+        {
+            //Arrange
+            var repo = new Repo<StockCoreRepo>();
+            var originalResult = _genericStock.One();
+
+            repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail),1,2);
+
+            //Act
+            var result = repo.Result;
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(originalResult.StockSupplierDetailId, ((StockCore)result).StockSupplierDetail);
+
+            repo._loggerCheck.Success();
+        }
+
         #endregion
 
         #region Dry Code
@@ -311,7 +344,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             }
         }
 
-        private void Asserts(StockCore result, Dictionary<string,string> compare, bool isSuccess = true)
+        private void Asserts(StockCore result, Dictionary<string, string> compare, bool isSuccess = true)
         {
             if (isSuccess)
             {
@@ -337,7 +370,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             {
                 var isInt = int.TryParse(item.Value, out int itemInt);
 
-                if(isInt)
+                if (isInt)
                     stockCore.GetType().GetProperty(item.Key).SetValue(stockCore.GetType(), itemInt);
                 else
                     stockCore.GetType().GetProperty(item.Key).SetValue(stockCore.GetType(), item.Value);
@@ -346,13 +379,13 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             return stockCore;
         }
 
-        private IStockCoreRepo GetRepo(bool mustThrowError = false) 
+        private IStockCoreRepo GetRepo(bool mustThrowError = false)
         {
             var repo = new Mock<IStockCoreRepo>().Object;
 
             var db = new Mock<IStockTrackerContext>();
-            if(mustThrowError)
-            db.Setup(i => i.StockCores).Throws(new Exception());
+            if (mustThrowError)
+                db.Setup(i => i.StockCores).Throws(new Exception());
 
             return repo;
         }

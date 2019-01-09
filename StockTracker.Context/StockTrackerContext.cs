@@ -13,6 +13,7 @@ using StockTracker.Model.Shopping;
 using StockTracker.Model.Shopping.Config;
 using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.Config;
+using StockTracker.Model.StockSupplier;
 using StockTracker.Model.StockSupplier.Config;
 
 namespace StockTracker.Context
@@ -40,7 +41,7 @@ namespace StockTracker.Context
 	    public virtual DbSet<StockCategory> StockCategories { get; set; }
 	    public virtual DbSet<ClientSettings> ClientSettings { get; set; }
 	    public virtual DbSet<Client> Clients { get; set; }
-
+        public virtual DbSet<StockSupplierDetail> StockSupplierDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

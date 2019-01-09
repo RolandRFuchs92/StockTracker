@@ -15,15 +15,15 @@ namespace StockTracker.Repository.Stock
 {
     public class StockCoreRepo : IStockCoreRepo
     {
-				private IStockTypeRepo _stockTypeRepo;
-				private IStockTrackerContext _db;
-				private ILoggerAdapter<StockCoreRepo> _log;
+        private IStockTypeRepo _stockTypeRepo;
+        private IStockTrackerContext _db;
+        private ILoggerAdapter<StockCoreRepo> _log;
 
-				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo)
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo)
         {
-						_stockTypeRepo = stockTypeRepo;
-						_db = db;
-						_log = log;
+            _stockTypeRepo = stockTypeRepo;
+            _db = db;
+            _log = log;
         }
 
         public StockCore Edit(IStockCore stockCore)
@@ -43,24 +43,24 @@ namespace StockTracker.Repository.Stock
 
         public StockCore ChangeStockType(int stockCoreId, int stockTypeId)
         {
-            try 
-						{
-								if (!_stockTypeRepo.IsValid(stockTypeId))
-										return LogError($"Invalid StockType[{stockTypeId}]", null);
+            try
+            {
+                if (!_stockTypeRepo.IsValid(stockTypeId))
+                    return LogError($"Invalid StockType[{stockTypeId}]", null);
 
-								var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
-								var oldStockTypeId = core.StockTypeId;
-								core.StockTypeId = stockTypeId;
+                var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
+                var oldStockTypeId = core.StockTypeId;
+                core.StockTypeId = stockTypeId;
 
-								((StockTrackerContext)_db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{stockCoreId}] from StockType[{oldStockTypeId}] to StockType[{stockTypeId}]");
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{stockCoreId}] from StockType[{oldStockTypeId}] to StockType[{stockTypeId}]");
 
-								return core;
-						}
-						catch(Exception e)
-						{
-								return LogError($"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]", e);
-						}
+                return core;
+            }
+            catch (Exception e)
+            {
+                return LogError($"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]", e);
+            }
         }
 
         public StockCore ChangeStockDetail(int stockCoreId, int stockDetailId)
@@ -68,14 +68,14 @@ namespace StockTracker.Repository.Stock
             throw new NotImplementedException();
         }
 
-				private StockCore LogError(string message, Exception e)
-				{
-						if(e == null)
-								_log.LogError((int)LoggingEvent.Update, message);
-						else
-								_log.LogError((int)LoggingEvent.Update, e, message);
+        private StockCore LogError(string message, Exception e)
+        {
+            if (e == null)
+                _log.LogError((int)LoggingEvent.Update, message);
+            else
+                _log.LogError((int)LoggingEvent.Update, e, message);
 
-						return null;
-				}
+            return null;
+        }
     }
 }

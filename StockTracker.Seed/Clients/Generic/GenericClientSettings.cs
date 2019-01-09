@@ -1,12 +1,15 @@
 ﻿using System;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Clients.Generic
 {
-    public class GenericClientSettings : IGeneric<ClientSettings>
+    public class GenericClientSettings : GenericSeed<ClientSettings>
     {
-	    public ClientSettings[] All()
+	    public override ClientSettings[] All()
 	    {
 		    var viewModel = new[]
 		    {
@@ -52,16 +55,6 @@ namespace StockTracker.Seed.Clients.Generic
 			};
 
 		    return viewModel;
-	    }
-
-	    public ClientSettings One()
-	    {
-		    return All()[0];
-	    }
-
-	    public ClientSettings One(int index)
-	    {
-		    return All()[index];
 	    }
     }
 }
