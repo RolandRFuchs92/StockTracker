@@ -314,7 +314,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         public void ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
         {
             //Arrange
-            var repo = new Repo<StockCoreRepo>();
+            var moq = new Mock<IStockTypeRepo>();
+            moq.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
+
+            var repo = new Repo<StockCoreRepo>(parameter: moq.Object);
             var originalResult = _genericStock.One();
 
             repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail),1,2);
