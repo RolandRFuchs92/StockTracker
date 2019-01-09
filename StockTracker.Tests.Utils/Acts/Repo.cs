@@ -47,16 +47,18 @@ namespace StockTracker.Tests.Utils.Acts
 						isValidResult = string.IsNullOrEmpty(errorDbSetName);
 						CreateDbInstance(errorDbSetName);
 						_loggerCheck = new GenericLoggerCheck<T>();
-						//_db = new TestDbFactory()
 				}
 
 				private void CreateDbInstance(string errorDbSetName)
         {
-            var moq = new Mock<IStockTrackerContext>();
-            if (!string.IsNullOrEmpty(errorDbSetName))
-                moq.Setup(i => i.GetType().GetProperty(errorDbSetName)).Throws(new Exception());
+            if (!string.IsNullOrEmpty(errorDbSetName)){
+								var moq = new Mock<IStockTrackerContext>();
+								moq.Setup(i => i.GetType().GetProperty(errorDbSetName)).Throws(new Exception());
+								_db = moq.Object;
+								return;
+						}
 
-            _db = moq.Object;
+						_db = new TestDbFactory().Db();
         }
 
         public void CreateResult(string methodName)

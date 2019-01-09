@@ -286,15 +286,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeStockType_PassInvalidStockCodeIdAndValidStockType_ReturnNullLogError()
         {
-            //Arrange
-            var repo = new Repo<StockCoreRepo>();
+						//Arrange
+						var repo = new Repo<StockCoreRepo>();
 
             //Act
             var result = repo.Result("ChangeStockType", 0, 2);
 
             //Assert
             Assert.IsNull(result);
-
             repo._loggerCheck.Error();
         }
         #endregion
