@@ -37,6 +37,11 @@ namespace StockTracker.Tests.Utils.Acts
             _repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object);
         }
 
+        public Repo(bool exceptionTest)
+        {
+            var mock
+        }
+
         public Repo(string errorDbSetName = "", params object[] parameter)
         {
             Setup(errorDbSetName);
