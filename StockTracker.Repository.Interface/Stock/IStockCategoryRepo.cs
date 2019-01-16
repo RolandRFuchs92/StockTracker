@@ -11,5 +11,6 @@ namespace StockTracker.Repository.Interface.Stock
     {
         IStockCategory Add(string categoryName);
         IStockCategory Edit(int stockCategoryId, string categoryName);
+		bool IsValid(int stockCategoryId);
     }
 }

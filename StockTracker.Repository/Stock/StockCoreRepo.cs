@@ -18,10 +18,26 @@ namespace StockTracker.Repository.Stock
         private IStockTypeRepo _stockTypeRepo;
         private IStockTrackerContext _db;
         private ILoggerAdapter<StockCoreRepo> _log;
+        private IStockCategoryRepo _stockCategoryRepo;
 
         public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo)
         {
             _stockTypeRepo = stockTypeRepo;
+            _db = db;
+            _log = log;
+        }
+
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo)
+        {
+            _stockCategoryRepo = stockCategoryRepo;
+            _db = db;
+            _log = log;
+        }
+
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo)
+        {
+            _stockTypeRepo = stockTypeRepo;
+            _stockCategoryRepo = stockCategoryRepo;
             _db = db;
             _log = log;
         }
@@ -33,7 +49,15 @@ namespace StockTracker.Repository.Stock
 
         public StockCore Add(IStockCore stockCore)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(!_stockTypeRepo.IsValid(stockCore.StockTypeId) || !_stockCategoryRepo.)
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public StockCore ChangeCategory(int stockCoreId, int stockCategoryId)
