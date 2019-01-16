@@ -386,17 +386,17 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             return stockCore;
         }
 
-        private Repo<IStockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null)
+        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null)
         {
             if(stockTypeRepo == null)
-                return new Repo<IStockCoreRepo>();
+                return new Repo<StockCoreRepo>();
 
-            return new Repo<IStockCoreRepo>(parameter: stockTypeRepo);
+            return new Repo<StockCoreRepo>(parameter: stockTypeRepo);
         }
 
-        private IStockTypeRepo GetStockTypeRepo(string methodName, object result)
+        private StockTypeRepo GetStockTypeRepo(string methodName, object result)
         {
-            var mockStockTypeRepo = new Mock<IStockTypeRepo>();
+            var mockStockTypeRepo = new Mock<StockTypeRepo>();
 
             switch (methodName)
             {
