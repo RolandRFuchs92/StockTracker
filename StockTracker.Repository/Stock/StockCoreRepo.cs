@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
+using StockTracker.Extensions.StringExtensions;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Enums;
@@ -44,19 +45,38 @@ namespace StockTracker.Repository.Stock
 
         public StockCore Edit(IStockCore stockCore)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = ValidateStockCore(stockCore);
+                if (result == null)
+                    return result;
+
+                var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
+                oldStockCore.StockCoreName =
+
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public StockCore Add(IStockCore stockCore)
         {
             try
             {
-                if(!_stockTypeRepo.IsValid(stockCore.StockTypeId) || !_stockCategoryRepo.)
+                var result = ValidateStockCore(stockCore);
+                if (result == null)
+                    return result;
 
+                _db.StockCores.Add((StockCore)stockCore);
+                var newId = ((StockTrackerContext) _db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Create, $"Created new StockCore[{newId}]");
+                return (StockCore)stockCore;
             }
             catch (Exception e)
             {
-                return null;
+                return LogError("An error occured when adding a new StockCore.", e);
             }
         }
 
@@ -70,7 +90,7 @@ namespace StockTracker.Repository.Stock
             try
             {
                 if (!_stockTypeRepo.IsValid(stockTypeId))
-                    return LogError($"Invalid StockType[{stockTypeId}]", null);
+                    return LogError($"Invalid StockType[{stockTypeId}]");
 
                 var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
                 var oldStockTypeId = core.StockTypeId;
@@ -92,7 +112,7 @@ namespace StockTracker.Repository.Stock
             throw new NotImplementedException();
         }
 
-        private StockCore LogError(string message, Exception e)
+        private StockCore LogError(string message, Exception e = null)
         {
             if (e == null)
                 _log.LogError((int)LoggingEvent.Update, message);
@@ -100,6 +120,21 @@ namespace StockTracker.Repository.Stock
                 _log.LogError((int)LoggingEvent.Update, e, message);
 
             return null;
+        }
+
+        StockCore LogQuickError(string objectName, int objectId, Exception e = null)
+        {
+            return LogError($"Invalid {objectName}[{objectId}]");
+        }
+
+        private StockCore ValidateStockCore(IStockCore stockCore)
+        {
+            if (!_stockTypeRepo.IsValid(stockCore.StockTypeId))
+                return LogQuickError("StockTypeId", stockCore.StockTypeId);
+            if (!_stockCategoryRepo.IsValid(stockCore.StockCategoryId))
+                return LogQuickError("StockCategoryId", stockCore.StockCategoryId);
+
+            return (StockCore)stockCore;
         }
     }
 }
