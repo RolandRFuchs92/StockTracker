@@ -49,7 +49,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         public void Add_ValidStockCoreObject_ReturnNewStockCoreItem()
         {
             //Arrange
-            var repo = new Repo<IStockCoreRepo>();
+            var repo = GetRepo();
             var stockItem = _genericStock.One();
             repo.CreateResult(nameof(IStockCoreRepo.Add), stockItem);
 
@@ -83,7 +83,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             //Arrange
             var stockItem = _genericStock.One();
-            var repo = new Repo<IStockCoreRepo>();
+            var repo = GetRepo(GetStockTypeRepo(nameof(IStockTypeRepo.Add), null));
             repo.CreateResult(nameof(IStockCoreRepo.Add), stockItem);
             stockItem.GetType().GetProperty(propertyName).SetValue(stockItem, val);
 
@@ -411,7 +411,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
                     break;
                 default:
                     throw new Exception("Unrecognized Method related to IStockTypeRepo");
-                    break;
             }
 
             return mockStockTypeRepo.Object;

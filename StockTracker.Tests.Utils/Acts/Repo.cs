@@ -39,7 +39,6 @@ namespace StockTracker.Tests.Utils.Acts
 
         public Repo(bool exceptionTest)
         {
-            var mock
         }
 
         public Repo(string errorDbSetName = "", params object[] parameter)
