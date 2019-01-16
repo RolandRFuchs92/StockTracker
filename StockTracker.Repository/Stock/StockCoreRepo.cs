@@ -17,9 +17,9 @@ namespace StockTracker.Repository.Stock
     {
         private IStockTypeRepo _stockTypeRepo;
         private IStockTrackerContext _db;
-        private ILoggerAdapter<IStockCoreRepo> _log;
+        private ILoggerAdapter<StockCoreRepo> _log;
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<IStockCoreRepo> log, IStockTypeRepo stockTypeRepo)
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo)
         {
             _stockTypeRepo = stockTypeRepo;
             _db = db;
