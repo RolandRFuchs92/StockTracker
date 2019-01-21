@@ -30,7 +30,7 @@ namespace StockTracker.Repository.Test.Util
             var result = _binder.Bind(originalModel, newModel);
 
             //Assert
-            Assert.AreEqual(originalModel.Id, result);
+            Assert.AreEqual(originalModel.Id, result.Id);
         }
 
         [TestMethod]

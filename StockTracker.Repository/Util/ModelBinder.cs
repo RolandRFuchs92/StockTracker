@@ -12,8 +12,14 @@ namespace StockTracker.Repository.Util
         {
             var properties = oldModel.GetType().GetProperties().Select(i => i.Name);
 
+            if (newModel == null)
+                return oldModel;
+
             foreach (var property in properties)
             {
+                if (property.Equals($"{typeof(T).Name}Id") || property.Equals("Id"))
+                    continue;
+                
                 var newValue = newModel.GetType().GetProperty(property).GetValue(newModel);
                 oldModel.GetType().GetProperty(property).SetValue(oldModel, newValue);
             }
