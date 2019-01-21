@@ -52,7 +52,9 @@ namespace StockTracker.Repository.Stock
                     return result;
 
                 var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
-                oldStockCore.StockCoreName =
+                oldStockCore.StockCoreName = "";
+
+
 
             }
             catch (Exception e)
