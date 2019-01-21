@@ -11,6 +11,7 @@ using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Enums;
 using StockTracker.Repository.Interface.Stock;
+using StockTracker.Repository.Util;
 
 namespace StockTracker.Repository.Stock
 {
@@ -20,27 +21,29 @@ namespace StockTracker.Repository.Stock
         private IStockTrackerContext _db;
         private ILoggerAdapter<StockCoreRepo> _log;
         private IStockCategoryRepo _stockCategoryRepo;
+        private ModelBinder _binder;
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo)
+        private StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
         {
-            _stockTypeRepo = stockTypeRepo;
+            _binder = new ModelBinder();
             _db = db;
             _log = log;
         }
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo)
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo) : this(db, log)
         {
-            _stockCategoryRepo = stockCategoryRepo;
-            _db = db;
-            _log = log;
+            _stockTypeRepo = stockTypeRepo;
         }
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo)
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo) : this(db, log)
+        {
+            _stockCategoryRepo = stockCategoryRepo;
+        }
+
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo) : this(db, log)
         {
             _stockTypeRepo = stockTypeRepo;
             _stockCategoryRepo = stockCategoryRepo;
-            _db = db;
-            _log = log;
         }
 
         public StockCore Edit(IStockCore stockCore)
@@ -52,14 +55,15 @@ namespace StockTracker.Repository.Stock
                     return result;
 
                 var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
-                oldStockCore.StockCoreName = "";
+                oldStockCore = _binder.Bind(oldStockCore, (StockCore)stockCore);
 
-
-
+                ((StockTrackerContext) _db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{oldStockCore.StockCoreId}]");
+                return oldStockCore;
             }
             catch (Exception e)
             {
-
+                return LogError($"An error occured when editing StockCore[{stockCore.StockCoreId}]");
             }
         }
 
@@ -72,7 +76,7 @@ namespace StockTracker.Repository.Stock
                     return result;
 
                 _db.StockCores.Add((StockCore)stockCore);
-                var newId = ((StockTrackerContext) _db).SaveChanges();
+                var newId = ((StockTrackerContext)_db).SaveChanges();
                 _log.LogInformation((int)LoggingEvent.Create, $"Created new StockCore[{newId}]");
                 return (StockCore)stockCore;
             }
