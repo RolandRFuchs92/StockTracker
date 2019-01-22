@@ -13,9 +13,11 @@ using StockTracker.Context;
 using StockTracker.Context.Interface;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
+using StockTracker.Model.StockSupplier;
 using StockTracker.Repository.Interface.Stock;
 using StockTracker.Repository.Stock;
 using StockTracker.Seed.Stock;
+using StockTracker.Seed.StockSupplier;
 using StockTracker.Tests.Utils.Acts;
 using StockTracker.Tests.Utils.Context;
 using StockTracker.Tests.Utils.MockVerifiers;
@@ -46,19 +48,20 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         }
 
         #region Add Test
+
         [TestMethod]
         public void Add_ValidStockCoreObject_ReturnNewStockCoreItem()
         {
             //Arrange
-            var categoryRepo = GetStockCategoryRepo("", true);
-            var stockTypeRepo = GetStockTypeRepo("",true);
-            var repo = GetRepo(stockTypeRepo, categoryRepo);
-
+            var categoryRepo = GetStockCategoryRepo("IsValid", true);
+            var stockTypeRepo = GetStockTypeRepo("IsValid", true);
+            var repo = new StockCoreRepo(_db, _log.Object, categoryRepo, stockTypeRepo);
             var stockItem = _genericStock.One();
-            repo.CreateResult(nameof(IStockCoreRepo.Add), stockItem);
+
+            new GenericStockSupplier().SeedContext(_db);
 
             //Act
-            var result = repo.Result;
+            var result = repo.Add(stockItem);
 
             //Assert
             Asserts(result);
@@ -98,16 +101,18 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             Asserts(result, false);
             repo._loggerCheck.Error();
         }
+
         #endregion
 
         #region Edit Test
+
         [TestMethod]
         public void Edit_PassValidStockObject_ReturnModifiedStockItem()
         {
             var testValues = new Dictionary<string, string>
             {
-                { nameof(StockCore.StockCategoryId), "2" },
-                { nameof(StockCore.StockSupplierDetailId), "2" }
+                {nameof(StockCore.StockCategoryId), "2"},
+                {nameof(StockCore.StockSupplierDetailId), "2"}
             };
 
             Edit_Tests_Success(testValues);
@@ -118,9 +123,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             var testValues = new Dictionary<string, string>
             {
-                { nameof(StockCore.StockCategoryId), "2" },
-                { nameof(StockCore.StockSupplierDetailId), "0" },
-                { nameof(StockCore.StockTypeId), "0" }
+                {nameof(StockCore.StockCategoryId), "2"},
+                {nameof(StockCore.StockSupplierDetailId), "0"},
+                {nameof(StockCore.StockTypeId), "0"}
             };
 
             Edit_Tests_Success(testValues);
@@ -131,10 +136,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             var testValues = new Dictionary<string, string>
             {
-                { nameof(StockCore.StockCoreName), "Gooey Nectar" },
-                { nameof(StockCore.StockCategoryId), "0" },
-                { nameof(StockCore.StockSupplierDetailId), "0" },
-                { nameof(StockCore.StockTypeId), "0" }
+                {nameof(StockCore.StockCoreName), "Gooey Nectar"},
+                {nameof(StockCore.StockCategoryId), "0"},
+                {nameof(StockCore.StockSupplierDetailId), "0"},
+                {nameof(StockCore.StockTypeId), "0"}
             };
 
             Edit_Tests_Success(testValues);
@@ -145,7 +150,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
             var testValues = new Dictionary<string, string>
             {
-                { nameof(StockCore.StockCoreId), "1000"}
+                {nameof(StockCore.StockCoreId), "1000"}
             };
 
             Edit_Tests_Error(testValues);
@@ -176,7 +181,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var stockItem = _genericStock.One();
 
             _db.StockCores.Add(stockItem);
-            ((StockTrackerContext)_db).SaveChanges();
+            ((StockTrackerContext) _db).SaveChanges();
 
             //was gonna use a linq statement here to save lines of code, but this is easier to read.
             foreach (var item in stockPropertyChanges)
@@ -246,19 +251,19 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         [TestMethod]
         public void ChangeCategory_PassValidStockIdAndDifferentCategory_NewStockItemAndLogSuccess()
         {
-            ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "3" } });
+            ChangeCategory_Test(new Dictionary<string, string> {{"StockCategoryId", "3"}});
         }
 
         [TestMethod]
         public void ChangeCategory_PassInvalidCategoryId_ReturnNullLogGenericError()
         {
-            ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "1" } }, false);
+            ChangeCategory_Test(new Dictionary<string, string> {{"StockCategoryId", "1"}}, false);
         }
 
         [TestMethod]
         public void ChangeCategory_ThrowsException_ReturnNullLogGenericErrorException()
         {
-            ChangeCategory_Test(new Dictionary<string, string> { { "StockCategoryId", "1" } }, false);
+            ChangeCategory_Test(new Dictionary<string, string> {{"StockCategoryId", "1"}}, false);
         }
 
         private void ChangeCategory_Test(Dictionary<string, string> newVals, bool isSuccess = true)
@@ -266,7 +271,8 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             //Arrange
             var repo = GetRepo();
             var stockCore = ModifyStockCore(newVals);
-            repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId, int.Parse(newVals["StockCategoryId"]));
+            repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId,
+                int.Parse(newVals["StockCategoryId"]));
 
             //Act
             var result = repo.Result;
@@ -279,6 +285,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         #endregion
 
         #region ChangeStockType Test
+
         [TestMethod]
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
@@ -287,7 +294,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             stockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
             new AddSeed(_db, "StockCores");
             var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo.Object);
-            repo.CreateResult(_changeStockType, 1, 2 );
+            repo.CreateResult(_changeStockType, 1, 2);
 
             //Act
             var result = repo.Result;
@@ -315,11 +322,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             Assert.IsNull(result);
             repo._loggerCheck.Error();
         }
+
         #endregion
 
         #region ChangeStockDetail Test
+
         [TestMethod]
-        public void ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
+        public void
+            ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
         {
             //Arrange
             var moq = new Mock<IStockTypeRepo>();
@@ -328,14 +338,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var repo = new Repo<StockCoreRepo>(parameter: moq.Object);
             var originalResult = _genericStock.One();
 
-            repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail),1,2);
+            repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail), 1, 2);
 
             //Act
             var result = repo.Result;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(originalResult.StockSupplierDetailId, ((StockCore)result).StockSupplierDetail);
+            Assert.AreEqual(originalResult.StockSupplierDetailId, ((StockCore) result).StockSupplierDetail);
 
             repo._loggerCheck.Success();
         }
@@ -343,6 +353,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         #endregion
 
         #region Dry Code
+
         private void Asserts(StockCore result, bool isSuccess = true)
         {
             if (isSuccess)
@@ -390,18 +401,19 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             return stockCore;
         }
 
-        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null, IStockCategoryRepo stockCategoryRepo = null)
+        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null,
+            IStockCategoryRepo stockCategoryRepo = null)
         {
-            if(stockTypeRepo == null && stockCategoryRepo == null)
+            if (stockTypeRepo == null && stockCategoryRepo == null)
                 return new Repo<StockCoreRepo>();
 
-            if(stockTypeRepo != null && stockCategoryRepo == null)
+            if (stockTypeRepo != null && stockCategoryRepo == null)
                 return new Repo<StockCoreRepo>(parameter: stockTypeRepo);
 
             if (stockTypeRepo == null && stockCategoryRepo != null)
                 return new Repo<StockCoreRepo>(parameter: stockCategoryRepo);
 
-            return new Repo<StockCoreRepo>("", true, true, stockTypeRepo, stockCategoryRepo);
+            return new Repo<StockCoreRepo>();
         }
 
         private IStockTypeRepo GetStockTypeRepo(string methodName, object result)
@@ -414,10 +426,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
                     mockStockTypeRepo.Setup(i => i.Add(It.IsAny<string>())).Returns((IStockType) result);
                     break;
                 case "Edit":
-                    mockStockTypeRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>())).Returns((IStockType)result);
+                    mockStockTypeRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>()))
+                        .Returns((IStockType) result);
                     break;
                 case "IsValid":
-                    mockStockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns((bool)result);
+                    mockStockTypeRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns((bool) result);
                     break;
                 default:
                     throw new Exception("Unrecognized Method related to IStockTypeRepo");
@@ -436,13 +449,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             switch (methodName)
             {
                 case (nameof(IStockCategoryRepo.Add)):
-                    mockCategoryRepo.Setup(i => i.Add(It.IsAny<string>())).Returns((IStockCategory)result);
+                    mockCategoryRepo.Setup(i => i.Add(It.IsAny<string>())).Returns((IStockCategory) result);
                     break;
                 case nameof(IStockCategoryRepo.Edit):
-                    mockCategoryRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>())).Returns((IStockCategory)result);
+                    mockCategoryRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>()))
+                        .Returns((IStockCategory) result);
                     break;
                 case nameof(IStockCategoryRepo.IsValid):
-                    mockCategoryRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns((bool)result);
+                    mockCategoryRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns((bool) result);
                     break;
                 default:
                     throw new Exception("Unrecognized Method related to IStockCategoryRepo");
@@ -450,6 +464,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             return mockCategoryRepo.Object;
         }
+
         #endregion
     }
 }

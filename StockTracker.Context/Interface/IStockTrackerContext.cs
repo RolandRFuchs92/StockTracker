@@ -6,6 +6,7 @@ using StockTracker.Model.Persons;
 using StockTracker.Model.Shopping;
 using StockTracker.Model.Stock;
 using StockTracker.Model.StockSupplier;
+using StockTracker.Model.Supplier;
 
 namespace StockTracker.Context.Interface
 {
@@ -23,6 +24,9 @@ namespace StockTracker.Context.Interface
 	    DbSet<StockCategory> StockCategories { get; set; }
 	    DbSet<ClientSettings> ClientSettings { get; set; }
 	    DbSet<Client> Clients { get; set; }
+
         DbSet<StockSupplierDetail> StockSupplierDetails { get; set; }
+        DbSet<Supplier> Suppliers { get; set; }
+        DbSet<SupplierType> SupplierTypes { get; set; }
     }
 }

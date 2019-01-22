@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Supplier;
 using StockTracker.Seed.Abstract;
 
@@ -10,6 +12,12 @@ namespace StockTracker.Seed.Suppliers
 {
     public class GenericSupplier : GenericSeed<Supplier>
     {
+        public override void SeedContext(IStockTrackerContext db)
+        {
+            db.Suppliers.AddRange(All());
+            ((StockTrackerContext) db).SaveChanges();
+        }
+
         public override Supplier[] All()
         {
             return new[]
@@ -22,6 +30,7 @@ namespace StockTracker.Seed.Suppliers
                     ContactNumber = "083 123 4567",
                     SupplierLocation = "Somwhere over the rainbow",
                     SupplierName = "Bib Foods"
+                    
                 },
                 new Supplier
                 {

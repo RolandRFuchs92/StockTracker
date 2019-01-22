@@ -15,6 +15,8 @@ using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.Config;
 using StockTracker.Model.StockSupplier;
 using StockTracker.Model.StockSupplier.Config;
+using StockTracker.Model.Supplier;
+using StockTracker.Model.Supplier.Config;
 
 namespace StockTracker.Context
 {
@@ -42,6 +44,8 @@ namespace StockTracker.Context
 	    public virtual DbSet<ClientSettings> ClientSettings { get; set; }
 	    public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<StockSupplierDetail> StockSupplierDetails { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<SupplierType> SupplierTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,8 +75,8 @@ namespace StockTracker.Context
             modelBuilder.ApplyConfiguration(new StockTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new StockSupplierDetailConfiguration());
-
-
+            modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+            modelBuilder.ApplyConfiguration(new SupplierTypeConfiguration());
         }
     }
 }

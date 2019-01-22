@@ -39,8 +39,9 @@ namespace StockTracker.Tests.Utils.Acts
         }
 
    
-        public Repo(bool exceptionTest)
+        public Repo(T repo)
         {
+            _repo = repo;
         }
 
         public Repo(string errorDbSetName = "", params object[] parameter)
@@ -48,21 +49,6 @@ namespace StockTracker.Tests.Utils.Acts
             Setup(errorDbSetName);
 
             _repo = (T)Activator.CreateInstance(typeof(T), _db, _loggerCheck.Mock.Object, parameter[0]);
-        }
-
-        public Repo(string errorDbSet, bool useDefaultDb, bool useDefaultLoggerCheck, params object[] parameter)
-        {
-            Setup(errorDbSet);
-
-            var constructorParams = new List<object>();
-
-            if (useDefaultDb)
-                constructorParams.Add(_db);
-
-            if (useDefaultLoggerCheck)
-                constructorParams.Add(_loggerCheck);
-
-            constructorParams.AddRange(parameter);
         }
 
         private void Setup(string errorDbSetName)
