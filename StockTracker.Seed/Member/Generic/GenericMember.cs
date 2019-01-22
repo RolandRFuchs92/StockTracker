@@ -18,6 +18,8 @@ namespace StockTracker.Seed.Member.Generic
         {
             db.Clients.AddRange(new GenericClients().All());
             db.Persons.AddRange(new GenericPerson().All());
+
+            db.Members.AddRange(All());
             ((StockTrackerContext) db).SaveChanges();
         }
 
