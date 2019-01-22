@@ -99,14 +99,5 @@ namespace StockTracker.Repository.Test.Util
             public DateTime Birthdate { get; set; }
             public string Mobile { get; set; }
         }
-
-        private class FakeClassB
-        {
-            public int FakeClassBId { get; set; }
-            public string Name { get; set; }
-            public DateTime CreatedOn { get; set; }
-            public DateTime? DeletedOn { get; set; }
-            public bool IsActive { get; set; }
-        }
     }
 }

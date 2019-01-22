@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
@@ -49,7 +50,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         public void Add_ValidStockCoreObject_ReturnNewStockCoreItem()
         {
             //Arrange
-            var repo = GetRepo();
+            var categoryRepo = GetStockCategoryRepo("", true);
+            var stockTypeRepo = GetStockTypeRepo("",true);
+            var repo = GetRepo(stockTypeRepo, categoryRepo);
+
             var stockItem = _genericStock.One();
             repo.CreateResult(nameof(IStockCoreRepo.Add), stockItem);
 
@@ -92,7 +96,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Asserts(result, false);
-            _check.Error();
+            repo._loggerCheck.Error();
         }
         #endregion
 
@@ -386,12 +390,18 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             return stockCore;
         }
 
-        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null)
+        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null, IStockCategoryRepo stockCategoryRepo = null)
         {
-            if(stockTypeRepo == null)
+            if(stockTypeRepo == null && stockCategoryRepo == null)
                 return new Repo<StockCoreRepo>();
 
-            return new Repo<StockCoreRepo>(parameter: stockTypeRepo);
+            if(stockTypeRepo != null && stockCategoryRepo == null)
+                return new Repo<StockCoreRepo>(parameter: stockTypeRepo);
+
+            if (stockTypeRepo == null && stockCategoryRepo != null)
+                return new Repo<StockCoreRepo>(parameter: stockCategoryRepo);
+
+            return new Repo<StockCoreRepo>("", true, true, stockTypeRepo, stockCategoryRepo);
         }
 
         private IStockTypeRepo GetStockTypeRepo(string methodName, object result)
@@ -414,6 +424,31 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             }
 
             return mockStockTypeRepo.Object;
+        }
+
+        private IStockCategoryRepo GetStockCategoryRepo(string methodName = "IsValid", object result = null)
+        {
+            var mockCategoryRepo = new Mock<IStockCategoryRepo>();
+
+            if (methodName.Equals("IsValid") && result == null)
+                result = true;
+
+            switch (methodName)
+            {
+                case (nameof(IStockCategoryRepo.Add)):
+                    mockCategoryRepo.Setup(i => i.Add(It.IsAny<string>())).Returns((IStockCategory)result);
+                    break;
+                case nameof(IStockCategoryRepo.Edit):
+                    mockCategoryRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>())).Returns((IStockCategory)result);
+                    break;
+                case nameof(IStockCategoryRepo.IsValid):
+                    mockCategoryRepo.Setup(i => i.IsValid(It.IsAny<int>())).Returns((bool)result);
+                    break;
+                default:
+                    throw new Exception("Unrecognized Method related to IStockCategoryRepo");
+            }
+
+            return mockCategoryRepo.Object;
         }
         #endregion
     }
