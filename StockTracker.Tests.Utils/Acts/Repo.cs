@@ -43,11 +43,31 @@ namespace StockTracker.Tests.Utils.Acts
             _repo = repo;
         }
 
-        public Repo(string errorDbSetName = "", params object[] parameter)
+        public Repo(string errorDbSetName = "", params object[] parameters)
         {
             Setup(errorDbSetName);
+            InstanceFactory(parameters);
+        }
 
-            _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0]);
+        private void InstanceFactory(params object[] parameter)
+        {
+            var paramLen = parameter.Length;
+
+
+            switch (paramLen)
+            {
+                case 1:
+                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0]);
+                    break;
+                case 2:
+                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1]);
+                    break;
+                case 3:
+                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1], parameter[2]);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Setup(string errorDbSetName)

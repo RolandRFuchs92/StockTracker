@@ -50,7 +50,10 @@ namespace StockTracker.Repository.Stock
         {
             try
             {
-                if (IsValidateStockCore(stockCore))
+                if (!_db.StockCores.Any(i => i.StockCoreId == stockCore.StockCoreId))
+                    return LogError("StockCore requires an identifier.");
+
+                if (!IsValidateStockCore(stockCore))
                     return null;
 
                 var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
@@ -169,10 +172,10 @@ namespace StockTracker.Repository.Stock
 
         private bool IsValidateStockCore(IStockCore stockCore)
         {
-            if (IsValidStockType(stockCore.StockTypeId) || IsValidStockCategory(stockCore.StockCategoryId))
-                return true;
+            if (!IsValidStockType(stockCore.StockTypeId) || !IsValidStockCategory(stockCore.StockCategoryId))
+                return false;
 
-            return false;
+            return true;
         }
 
         bool IsValidStockType(int stockTypeId)

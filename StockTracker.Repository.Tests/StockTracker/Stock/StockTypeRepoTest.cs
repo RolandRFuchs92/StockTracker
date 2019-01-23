@@ -21,7 +21,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         {
 
             var db = new TestDbFactory().Db();
-            var addSeed = new AddSeed(db, "Clients");
             var wee = "";
         }
     }
