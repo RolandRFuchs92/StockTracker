@@ -333,26 +333,26 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 				#endregion
 
 				#region ChangeStockDetail Test
-
 				[TestMethod]
-				public void
-								ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
+				public void ChangeStockDetail_PassValidStockIdAndValidStockSupplierDetail_ReturnStockObjectWithNewStockDetailId()
 				{
 						//Arrange
-						var moq = new Mock<IStockTypeRepo>();
-						moq.Setup(i => i.IsValid(It.IsAny<int>())).Returns(true);
-
-						var repo = new Repo<StockCoreRepo>(parameter: moq.Object);
+						var repo = new Repo<StockCoreRepo>();
 						var originalResult = _genericStock.One();
+						
+						new GenericStockCore().SeedContext(repo._db);
+						var stockCoreId = originalResult.StockCoreId;
+						var stockDetailId = originalResult.StockSupplierDetailId;
+						var newStockDetailId = 2;
 
-						repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail), 1, 2);
+						repo.CreateResult(nameof(StockCoreRepo.ChangeStockDetail), originalResult.StockCoreId, newStockDetailId);
 
 						//Act
 						var result = repo.Result;
 
 						//Assert
 						Assert.IsNotNull(result);
-						Assert.AreEqual(originalResult.StockSupplierDetailId, ((StockCore)result).StockSupplierDetail);
+						Assert.AreEqual(newStockDetailId, ((StockCore)result).StockSupplierDetailId);
 
 						repo._loggerCheck.Success();
 				}

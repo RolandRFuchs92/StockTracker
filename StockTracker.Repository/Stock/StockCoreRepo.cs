@@ -23,7 +23,7 @@ namespace StockTracker.Repository.Stock
 				private IStockCategoryRepo _stockCategoryRepo;
 				private ModelBinder _binder;
 
-				private StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
+				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
 				{
 						_binder = new ModelBinder();
 						_db = db;
@@ -129,9 +129,24 @@ namespace StockTracker.Repository.Stock
 						}
 				}
 
-				public StockCore ChangeStockDetail(int stockCoreId, int stockDetailId)
+				public StockCore ChangeStockDetail(int stockCoreId, int stockSupplierDetailId)
 				{
-						throw new NotImplementedException();
+						try
+						{
+								if (!_db.StockSupplierDetails.Any(i => i.StockSupplierDetailId == stockSupplierDetailId))
+										return LogError($"Unable to change StockCore[{stockCoreId}] to use StockSupplierDetail[{stockSupplierDetailId}] as the StockSupplierDetail was invalid.");
+
+								var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
+								stockCore.StockSupplierDetailId = stockSupplierDetailId;
+								_log.LogInformation((int)LoggingEvent.Update, $"Successfully updated StockCore[{stockCoreId}] to use StockSupplierDetailId[{stockSupplierDetailId}]");
+
+								((StockTrackerContext)_db).SaveChanges();
+								return stockCore;
+						}
+						catch (Exception e)
+						{
+								return LogError($"There was an error changing StockCore[{stockCoreId}] to reference StockDetail[{stockSupplierDetailId}]", e);
+						}
 				}
 
 				private StockCore LogError(string message, Exception e = null)
