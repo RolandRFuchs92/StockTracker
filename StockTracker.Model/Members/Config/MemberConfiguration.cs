@@ -12,6 +12,8 @@ namespace StockTracker.Model.Members.Config
 		    builder.HasOne(i => i.Client).WithMany(i => i.Member).OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.MemberRole).WithOne().OnDelete(DeleteBehavior.Restrict);
 		    builder.HasOne(i => i.Person).WithOne().OnDelete(DeleteBehavior.Restrict);
+						
+						builder.HasMany(i => i.StockSupplierDetails).WithOne(i => i.Member).OnDelete(DeleteBehavior.Restrict);
 
 		    builder.Property(i => i.MemberId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.IsActive).IsRequired().HasColumnType("BIT");

@@ -14,6 +14,10 @@ namespace StockTracker.Model.StockSupplier.Config
 	    {
 		    builder.HasKey(i => i.StockSupplierDetailId);
 
+						builder.HasOne(i => i.Member).WithMany(i => i.stockSupplierDetails).OnDelete(DeleteBehavior.Restrict);
+						builder.HasOne(i => i.Supplier).WithOne(i => i.StockSupplierDetail).OnDelete(DeleteBehavior.Restrict);
+						builder.HasOne(i => i.UnitType).WithMany(i => i.StockSupplierDetail).OnDelete(DeleteBehavior.Restrict);
+
 		    builder.Property(i => i.StockSupplierDetailId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.CreatedOn).HasColumnType("DATETIME").IsRequired().HasDefaultValueSql("GETDATE()");
 		    builder.Property(i => i.MemberId).HasColumnType("INT").IsRequired();
