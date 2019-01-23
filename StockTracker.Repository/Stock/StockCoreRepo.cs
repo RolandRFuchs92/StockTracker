@@ -15,179 +15,182 @@ using StockTracker.Repository.Util;
 
 namespace StockTracker.Repository.Stock
 {
-		public class StockCoreRepo : IStockCoreRepo
-		{
-				private IStockTypeRepo _stockTypeRepo;
-				private IStockTrackerContext _db;
-				private ILoggerAdapter<StockCoreRepo> _log;
-				private IStockCategoryRepo _stockCategoryRepo;
-				private ModelBinder _binder;
+    public class StockCoreRepo : IStockCoreRepo
+    {
+        private IStockTypeRepo _stockTypeRepo;
+        private IStockTrackerContext _db;
+        private ILoggerAdapter<StockCoreRepo> _log;
+        private IStockCategoryRepo _stockCategoryRepo;
+        private ModelBinder _binder;
 
-				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
-				{
-						_binder = new ModelBinder();
-						_db = db;
-						_log = log;
-				}
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
+        {
+            _binder = new ModelBinder();
+            _db = db;
+            _log = log;
+        }
 
-				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo) : this(db, log)
-				{
-						_stockTypeRepo = stockTypeRepo;
-				}
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo) : this(db, log)
+        {
+            _stockTypeRepo = stockTypeRepo;
+        }
 
-				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo) : this(db, log)
-				{
-						_stockCategoryRepo = stockCategoryRepo;
-				}
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo) : this(db, log)
+        {
+            _stockCategoryRepo = stockCategoryRepo;
+        }
 
-				public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo) : this(db, log)
-				{
-						_stockTypeRepo = stockTypeRepo;
-						_stockCategoryRepo = stockCategoryRepo;
-				}
+        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo) : this(db, log)
+        {
+            _stockTypeRepo = stockTypeRepo;
+            _stockCategoryRepo = stockCategoryRepo;
+        }
 
-				public StockCore Edit(IStockCore stockCore)
-				{
-						try
-						{
-								if (IsValidateStockCore(stockCore))
-										return null;
+        public StockCore Edit(IStockCore stockCore)
+        {
+            try
+            {
+                if (IsValidateStockCore(stockCore))
+                    return null;
 
-								var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
-								oldStockCore = _binder.Bind(oldStockCore, (StockCore)stockCore);
+                var oldStockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCore.StockCoreId);
+                oldStockCore = _binder.Bind(oldStockCore, (StockCore)stockCore);
 
-								((StockTrackerContext)_db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{oldStockCore.StockCoreId}]");
-								return oldStockCore;
-						}
-						catch (Exception e)
-						{
-								return LogError($"An error occured when editing StockCore[{stockCore.StockCoreId}]", e);
-						}
-				}
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{oldStockCore.StockCoreId}]");
+                return oldStockCore;
+            }
+            catch (Exception e)
+            {
+                return LogError($"An error occured when editing StockCore[{stockCore.StockCoreId}]", e);
+            }
+        }
 
-				public StockCore Add(IStockCore stockCore)
-				{
-						try
-						{
-								if (!IsValidateStockCore(stockCore))
-										return null;
+        public StockCore Add(IStockCore stockCore)
+        {
+            try
+            {
+                if (!IsValidateStockCore(stockCore))
+                    return null;
 
-								_db.StockCores.Add((StockCore)stockCore);
-								var newId = ((StockTrackerContext)_db).SaveChanges();
+                _db.StockCores.Add((StockCore)stockCore);
+                var newId = ((StockTrackerContext)_db).SaveChanges();
 
-								_log.LogInformation((int)LoggingEvent.Create, $"Created new StockCore[{newId}]");
-								return (StockCore)stockCore;
-						}
-						catch (Exception e)
-						{
-								return LogError("An error occured when adding a new StockCore.", e);
-						}
-				}
+                _log.LogInformation((int)LoggingEvent.Create, $"Created new StockCore[{newId}]");
+                return (StockCore)stockCore;
+            }
+            catch (Exception e)
+            {
+                return LogError("An error occured when adding a new StockCore.", e);
+            }
+        }
 
-				public StockCore ChangeCategory(int stockCoreId, int stockCategoryId)
-				{
-						try
-						{
-								if (!IsValidStockCategory(stockCategoryId))
-										return null;
+        public StockCore ChangeCategory(int stockCoreId, int stockCategoryId)
+        {
+            try
+            {
+                if (!IsValidStockCategory(stockCategoryId))
+                    return null;
 
-								var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
-								stockCore.StockCategoryId = stockCategoryId;
+                var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
+                stockCore.StockCategoryId = stockCategoryId;
 
-								((StockTrackerContext)_db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Update, $"Successfully changed StockCore[{stockCoreId}] to StockCategory[{stockCategoryId}]");
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Update, $"Successfully changed StockCore[{stockCoreId}] to StockCategory[{stockCategoryId}]");
 
-								return stockCore;
-						}
-						catch (Exception e)
-						{
-								return LogError($"There was an error Changing StockCore[{stockCoreId}] StockCategoryId to {stockCategoryId}", e);
-						}
-				}
+                return stockCore;
+            }
+            catch (Exception e)
+            {
+                return LogError($"There was an error Changing StockCore[{stockCoreId}] StockCategoryId to {stockCategoryId}", e);
+            }
+        }
 
+        public StockCore ChangeStockType(int stockCoreId, int stockTypeId)
+        {
+            try
+            {
+                var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
 
-				public StockCore ChangeStockType(int stockCoreId, int stockTypeId)
-				{
-						try
-						{
-								if (!_stockTypeRepo.IsValid(stockTypeId))
-										return LogError($"Invalid StockType[{stockTypeId}]");
+                if (core == null)
+                    return LogError($"Invalid StockCore[{stockCoreId}]");
 
-								var core = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
-								var oldStockTypeId = core.StockTypeId;
-								core.StockTypeId = stockTypeId;
+                if (!_stockTypeRepo.IsValid(stockTypeId))
+                    return LogError($"Invalid StockType[{stockTypeId}]");
 
-								((StockTrackerContext)_db).SaveChanges();
-								_log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{stockCoreId}] from StockType[{oldStockTypeId}] to StockType[{stockTypeId}]");
+                var oldStockTypeId = core.StockTypeId;
+                core.StockTypeId = stockTypeId;
 
-								return core;
-						}
-						catch (Exception e)
-						{
-								return LogError($"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]", e);
-						}
-				}
+                ((StockTrackerContext)_db).SaveChanges();
+                _log.LogInformation((int)LoggingEvent.Update, $"Updated StockCore[{stockCoreId}] from StockType[{oldStockTypeId}] to StockType[{stockTypeId}]");
 
-				public StockCore ChangeStockDetail(int stockCoreId, int stockSupplierDetailId)
-				{
-						try
-						{
-								if (!_db.StockSupplierDetails.Any(i => i.StockSupplierDetailId == stockSupplierDetailId))
-										return LogError($"Unable to change StockCore[{stockCoreId}] to use StockSupplierDetail[{stockSupplierDetailId}] as the StockSupplierDetail was invalid.");
+                return core;
+            }
+            catch (Exception e)
+            {
+                return LogError($"Error occured changing StockCore[{stockCoreId}] to StockType[{stockTypeId}]", e);
+            }
+        }
 
-								var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
-								stockCore.StockSupplierDetailId = stockSupplierDetailId;
-								_log.LogInformation((int)LoggingEvent.Update, $"Successfully updated StockCore[{stockCoreId}] to use StockSupplierDetailId[{stockSupplierDetailId}]");
+        public StockCore ChangeStockDetail(int stockCoreId, int stockSupplierDetailId)
+        {
+            try
+            {
+                if (!_db.StockSupplierDetails.Any(i => i.StockSupplierDetailId == stockSupplierDetailId))
+                    return LogError($"Unable to change StockCore[{stockCoreId}] to use StockSupplierDetail[{stockSupplierDetailId}] as the StockSupplierDetail was invalid.");
 
-								((StockTrackerContext)_db).SaveChanges();
-								return stockCore;
-						}
-						catch (Exception e)
-						{
-								return LogError($"There was an error changing StockCore[{stockCoreId}] to reference StockDetail[{stockSupplierDetailId}]", e);
-						}
-				}
+                var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
+                stockCore.StockSupplierDetailId = stockSupplierDetailId;
+                _log.LogInformation((int)LoggingEvent.Update, $"Successfully updated StockCore[{stockCoreId}] to use StockSupplierDetailId[{stockSupplierDetailId}]");
 
-				private StockCore LogError(string message, Exception e = null)
-				{
-						if (e == null)
-								_log.LogError((int)LoggingEvent.Update, message);
-						else
-								_log.LogError((int)LoggingEvent.Update, e, message);
+                ((StockTrackerContext)_db).SaveChanges();
+                return stockCore;
+            }
+            catch (Exception e)
+            {
+                return LogError($"There was an error changing StockCore[{stockCoreId}] to reference StockDetail[{stockSupplierDetailId}]", e);
+            }
+        }
 
-						return null;
-				}
+        private StockCore LogError(string message, Exception e = null)
+        {
+            if (e == null)
+                _log.LogError((int)LoggingEvent.Update, message);
+            else
+                _log.LogError((int)LoggingEvent.Update, e, message);
 
-				StockCore LogQuickError(string objectName, int objectId, Exception e = null)
-				{
-						return LogError($"Invalid {objectName}[{objectId}]");
-				}
+            return null;
+        }
 
-				private bool IsValidateStockCore(IStockCore stockCore)
-				{
-						if (IsValidStockType(stockCore.StockTypeId) || IsValidStockCategory(stockCore.StockCategoryId))
-								return true;
+        StockCore LogQuickError(string objectName, int objectId, Exception e = null)
+        {
+            return LogError($"Invalid {objectName}[{objectId}]");
+        }
 
-						return false;
-				}
+        private bool IsValidateStockCore(IStockCore stockCore)
+        {
+            if (IsValidStockType(stockCore.StockTypeId) || IsValidStockCategory(stockCore.StockCategoryId))
+                return true;
 
-				bool IsValidStockType(int stockTypeId) 
-				{
-						if (_stockTypeRepo.IsValid(stockTypeId))
-								return true;
-						
-						LogQuickError("StockTypeId", stockTypeId);
-						return false;
-				}
+            return false;
+        }
 
-				bool IsValidStockCategory(int stockCategoryId)
-				{
-						if (_stockCategoryRepo.IsValid(stockCategoryId))
-								return true;
+        bool IsValidStockType(int stockTypeId)
+        {
+            if (_stockTypeRepo.IsValid(stockTypeId))
+                return true;
 
-						LogQuickError("StockCategoryId", stockCategoryId);
-						return false;
-				}
-		}
+            LogQuickError("StockTypeId", stockTypeId);
+            return false;
+        }
+
+        bool IsValidStockCategory(int stockCategoryId)
+        {
+            if (_stockCategoryRepo.IsValid(stockCategoryId))
+                return true;
+
+            LogQuickError("StockCategoryId", stockCategoryId);
+            return false;
+        }
+    }
 }
