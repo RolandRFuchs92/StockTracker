@@ -70,12 +70,12 @@ namespace StockTracker.Repository.Stock
 				{
 						try
 						{
-								
 								if (!IsValidateStockCore(stockCore))
 										return null;
 
 								_db.StockCores.Add((StockCore)stockCore);
 								var newId = ((StockTrackerContext)_db).SaveChanges();
+
 								_log.LogInformation((int)LoggingEvent.Create, $"Created new StockCore[{newId}]");
 								return (StockCore)stockCore;
 						}
@@ -89,7 +89,8 @@ namespace StockTracker.Repository.Stock
 				{
 						try
 						{
-								
+								if (!IsValidStockCategory(stockCategoryId))
+										return null;
 
 								return new StockCore();
 						}
@@ -145,9 +146,9 @@ namespace StockTracker.Repository.Stock
 				private bool IsValidateStockCore(IStockCore stockCore)
 				{
 						if (IsValidStockType(stockCore.StockTypeId) || IsValidStockCategory(stockCore.StockCategoryId))
-								return false;
+								return true;
 
-						return true;
+						return false;
 				}
 
 				bool IsValidStockType(int stockTypeId) 

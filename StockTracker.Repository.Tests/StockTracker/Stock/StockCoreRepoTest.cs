@@ -269,7 +269,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         private void ChangeCategory_Test(Dictionary<string, string> newVals, bool isSuccess = true)
         {
 						//Arrange
-												var stockCategoryRepo = GetStockCategoryRepo(result: true);
+												var stockCategoryRepo = GetStockCategoryRepo(result: isSuccess);
 												var repo = GetRepo(null, stockCategoryRepo);
             var stockCore = ModifyStockCore(newVals);
             repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId, int.Parse(newVals["StockCategoryId"]));
@@ -279,14 +279,17 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Asserts(result, isSuccess);
-            repo._loggerCheck.Success();
-        }
+            if (isSuccess)
+														repo._loggerCheck.Success();
+												else
+														repo._loggerCheck.Error();
+				}
 
-        #endregion
+				#endregion
 
-        #region ChangeStockType Test
+				#region ChangeStockType Test
 
-        [TestMethod]
+				[TestMethod]
         public void ChangeStockType_PassValidStockCodeIdAndValidStockType_LogSuccessReturnNewStockCode()
         {
             //Arrange
