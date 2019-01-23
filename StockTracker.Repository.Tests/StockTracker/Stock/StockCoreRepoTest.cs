@@ -268,11 +268,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
         private void ChangeCategory_Test(Dictionary<string, string> newVals, bool isSuccess = true)
         {
-            //Arrange
-            var repo = GetRepo();
+						//Arrange
+												var stockCategoryRepo = GetStockCategoryRepo(result: true);
+												var repo = GetRepo(null, stockCategoryRepo);
             var stockCore = ModifyStockCore(newVals);
-            repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId,
-                int.Parse(newVals["StockCategoryId"]));
+            repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId, int.Parse(newVals["StockCategoryId"]));
 
             //Act
             var result = repo.Result;
@@ -393,16 +393,15 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
                 var isInt = int.TryParse(item.Value, out int itemInt);
 
                 if (isInt)
-                    stockCore.GetType().GetProperty(item.Key).SetValue(stockCore.GetType(), itemInt);
+                    stockCore.GetType().GetProperty(item.Key).SetValue(stockCore, itemInt);
                 else
-                    stockCore.GetType().GetProperty(item.Key).SetValue(stockCore.GetType(), item.Value);
+                    stockCore.GetType().GetProperty(item.Key).SetValue(stockCore, item.Value);
             }
 
             return stockCore;
         }
 
-        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null,
-            IStockCategoryRepo stockCategoryRepo = null)
+        private Repo<StockCoreRepo> GetRepo(IStockTypeRepo stockTypeRepo = null, IStockCategoryRepo stockCategoryRepo = null)
         {
             if (stockTypeRepo == null && stockCategoryRepo == null)
                 return new Repo<StockCoreRepo>();
