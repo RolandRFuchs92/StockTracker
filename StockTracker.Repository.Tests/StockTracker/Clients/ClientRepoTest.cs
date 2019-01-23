@@ -45,7 +45,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 				private void Trunc(string tableName)
 				{
-						//((StockTrackerContext) _db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
+						//((StockTrackerContext) db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
 						((StockTrackerContext)_db).Database.EnsureDeleted(); ;
 				}
 

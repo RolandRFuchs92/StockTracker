@@ -180,8 +180,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var repo = GetRepo();
             var stockItem = _genericStock.One();
 
-            _db.StockCores.Add(stockItem);
-            ((StockTrackerContext) _db).SaveChanges();
+            SeedStockCore(repo.db);
 
             //was gonna use a linq statement here to save lines of code, but this is easier to read.
             foreach (var item in stockPropertyChanges)
@@ -221,15 +220,16 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             //Arrange
             var repo = GetRepo();
             var stockItem = _genericStock.One();
+            SeedStockCore(repo.db);
 
             foreach (var item in propertyValues)
             {
                 var isInt = int.TryParse(item.Value, out int intVal);
 
                 if (isInt)
-                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), intVal);
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem, intVal);
                 else
-                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem.GetType(), item.Value);
+                    stockItem.GetType().GetProperty(item.Key).SetValue(stockItem, item.Value);
             }
 
             //Act
@@ -238,10 +238,10 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Asserts(result, false);
-            if (isExceptionCheck)
-                _check.ErrorException();
+            if(isExceptionCheck)
+                repo._loggerCheck.ErrorException();
             else
-                _check.Error();
+                repo._loggerCheck.Error();
         }
 
         #endregion
@@ -274,7 +274,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var stockCore = ModifyStockCore(newVals);
 
             if (isSuccess)
-                new GenericStockCore().SeedContext(repo._db);
+                new GenericStockCore().SeedContext(repo.db);
 
             repo.CreateResult(nameof(IStockCoreRepo.ChangeCategory), stockCore.StockCoreId,
                 int.Parse(newVals["StockCategoryId"]));
@@ -302,7 +302,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             var stockTypeRepo = GetStockTypeRepo(nameof(StockTypeRepo.IsValid), true);
             var repo = new Repo<StockCoreRepo>(parameter: stockTypeRepo);
-            new GenericStockCore().SeedContext(repo._db);
+            new GenericStockCore().SeedContext(repo.db);
 
             repo.CreateResult(_changeStockType, 1, newStockTypeId);
 
@@ -311,7 +311,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(StockCore));
-            Assert.AreEqual(((StockCore) result).StockCategoryId, newStockTypeId);
+            Assert.AreEqual(((StockCore) result).StockTypeId, newStockTypeId);
 
             repo._loggerCheck.Success();
         }
@@ -343,7 +343,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             var repo = new Repo<StockCoreRepo>();
             var originalResult = _genericStock.One();
 
-            new GenericStockCore().SeedContext(repo._db);
+            new GenericStockCore().SeedContext(repo.db);
             var stockCoreId = originalResult.StockCoreId;
             var stockDetailId = originalResult.StockSupplierDetailId;
             var newStockDetailId = 2;
@@ -472,6 +472,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
             }
 
             return mockCategoryRepo.Object;
+        }
+
+        private void SeedStockCore(IStockTrackerContext db)
+        {
+            new GenericStockCore().SeedContext(db);
         }
 
         #endregion
