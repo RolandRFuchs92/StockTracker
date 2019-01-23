@@ -62,7 +62,7 @@ namespace StockTracker.Repository.Stock
 						}
 						catch (Exception e)
 						{
-								return LogError($"An error occured when editing StockCore[{stockCore.StockCoreId}]");
+								return LogError($"An error occured when editing StockCore[{stockCore.StockCoreId}]", e);
 						}
 				}
 
@@ -102,7 +102,7 @@ namespace StockTracker.Repository.Stock
 						}
 						catch (Exception e)
 						{
-								return LogError($"There was an error Changing StockCore[{stockCoreId}] StockCategoryId to {stockCategoryId}");
+								return LogError($"There was an error Changing StockCore[{stockCoreId}] StockCategoryId to {stockCategoryId}", e);
 						}
 				}
 

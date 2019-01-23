@@ -29,25 +29,28 @@ namespace StockTracker.Seed.Stock
 						{
 																new StockCore
 																{
+																				StockCoreId = 1,
 																				CreatedOn = DateTime.Now,
-																				StockCategoryId = 1,
 																				StockCoreName = "Black Beans",
+																				StockCategoryId = 1,
 																				StockSupplierDetailId = 1,
 																				StockTypeId = 1
 																},
 																new StockCore
 																{
+																				StockCoreId = 2,
 																				CreatedOn = DateTime.Now,
-																				StockCategoryId = 1,
 																				StockCoreName = "Green Beans",
+																				StockCategoryId = 1,
 																				StockSupplierDetailId = 1,
 																				StockTypeId = 2
 																},
 																new StockCore
 																{
+																				StockCoreId = 3,
 																				CreatedOn = DateTime.Now,
-																				StockCategoryId = 1,
 																				StockCoreName = "Baked Beans",
+																				StockCategoryId = 1,
 																				StockSupplierDetailId = 2,
 																				StockTypeId = 3
 																},

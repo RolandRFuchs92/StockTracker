@@ -26,6 +26,6 @@ namespace StockTracker.Model.StockSupplier
 				public Supplier.Supplier Supplier { get; set; }
 				public UnitType UnitType { get; set; }
 
-				public StockCore StockCore { get; set; }
+				public ICollection<StockCore> StockCore { get; set; }
 		}
 }
