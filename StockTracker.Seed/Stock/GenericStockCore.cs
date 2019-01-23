@@ -13,44 +13,45 @@ using StockTracker.Seed.StockSupplier;
 
 namespace StockTracker.Seed.Stock
 {
-    public class GenericStockCore : GenericSeed<StockCore>
-    {
-        public override void SeedContext(IStockTrackerContext db)
-        {
-            db.StockSupplierDetails.AddRange(new GenericStockSupplier().All());
-            db.StockCores.AddRange(All());
-            ((StockTrackerContext)db).SaveChanges();
-        }
+		public class GenericStockCore : GenericSeed<StockCore>
+		{
+				public override void SeedContext(IStockTrackerContext db)
+				{
+						new GenericStockSupplier().SeedContext(db);
 
-        public override StockCore[] All()
-        {
-            return new[]
-            {
-                new StockCore
-                {
-                    CreatedOn = DateTime.Now,
-                    StockCategoryId = 1,
-                    StockCoreName = "Black Beans",
-                    StockSupplierDetailId = 1,
-                    StockTypeId = 1
-                },
-                new StockCore
-                {
-                    CreatedOn = DateTime.Now,
-                    StockCategoryId = 1,
-                    StockCoreName = "Green Beans",
-                    StockSupplierDetailId = 1,
-                    StockTypeId = 2
-                },
-                new StockCore
-                {
-                    CreatedOn = DateTime.Now,
-                    StockCategoryId = 1,
-                    StockCoreName = "Baked Beans",
-                    StockSupplierDetailId = 2,
-                    StockTypeId = 3
-                },
-            };
-        }
-    }
+						db.StockCores.AddRange(All());
+						((StockTrackerContext)db).SaveChanges();
+				}
+
+				public override StockCore[] All()
+				{
+						return new[]
+						{
+																new StockCore
+																{
+																				CreatedOn = DateTime.Now,
+																				StockCategoryId = 1,
+																				StockCoreName = "Black Beans",
+																				StockSupplierDetailId = 1,
+																				StockTypeId = 1
+																},
+																new StockCore
+																{
+																				CreatedOn = DateTime.Now,
+																				StockCategoryId = 1,
+																				StockCoreName = "Green Beans",
+																				StockSupplierDetailId = 1,
+																				StockTypeId = 2
+																},
+																new StockCore
+																{
+																				CreatedOn = DateTime.Now,
+																				StockCategoryId = 1,
+																				StockCoreName = "Baked Beans",
+																				StockSupplierDetailId = 2,
+																				StockTypeId = 3
+																},
+												};
+				}
+		}
 }

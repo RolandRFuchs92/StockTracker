@@ -92,7 +92,13 @@ namespace StockTracker.Repository.Stock
 								if (!IsValidStockCategory(stockCategoryId))
 										return null;
 
-								return new StockCore();
+								var stockCore = _db.StockCores.FirstOrDefault(i => i.StockCoreId == stockCoreId);
+								stockCore.StockCategoryId = stockCategoryId;
+
+								((StockTrackerContext)_db).SaveChanges();
+								_log.LogInformation((int)LoggingEvent.Update, $"Successfully changed StockCore[{stockCoreId}] to StockCategory[{stockCategoryId}]");
+
+								return stockCore;
 						}
 						catch (Exception e)
 						{
