@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using StockTracker.Interface.Models.Stock;
 
 namespace StockTracker.Model.Stock
@@ -9,6 +10,6 @@ namespace StockTracker.Model.Stock
 		public int StockTypeId { get; set; }
 		public string StockTypeName { get; set; }
 
-		public StockCore StockCore { get; set; }
+		public ICollection<StockCore> StockCore { get; set; }
 	}
 }

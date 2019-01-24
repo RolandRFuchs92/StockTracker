@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.1.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockTracker.Adapter.Interface\StockTracker.Adapter.Interface.csproj" />
+    <ProjectReference Include="..\StockTracker.Context\StockTracker.Context.csproj" />
+    <ProjectReference Include="..\StockTracker.Repository.Interface\StockTracker.Repository.Interface.csproj" />
+    <ProjectReference Include="..\StockTracker.Seed\StockTracker.Seed.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\..\.nuget\packages\moq\4.9.0\lib\netstandard1.3\Moq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

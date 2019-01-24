@@ -14,6 +14,8 @@ namespace StockTracker.Model.Stock.Config
 	    {
 		    builder.HasKey(i => i.StockTypeId);
 
+						builder.HasMany(i => i.StockCore).WithOne(i => i.StockType).OnDelete(DeleteBehavior.Restrict);
+
 		    builder.Property(i => i.StockTypeId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.StockTypeName).HasColumnType("NVARCHAR(200)").IsRequired();
 

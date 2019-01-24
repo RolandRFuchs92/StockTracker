@@ -1,12 +1,15 @@
 ﻿using System;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Clients;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Clients.Generic
 {
-	public class GenericClients : IGeneric<Client>
+	public class GenericClients : GenericSeed<Client>
 	{
-		public Client[] All()
+		public override Client[] All()
 		{
 			return new[]
 			{
@@ -38,16 +41,6 @@ namespace StockTracker.Seed.Clients.Generic
 					Email = "moo@111.111.111.111"
 				}
 			};
-		}
-
-		public Client One()
-		{
-			return All()[0];
-		}
-
-		public Client One(int index)
-		{
-			return All()[index];
 		}
 	}
 }

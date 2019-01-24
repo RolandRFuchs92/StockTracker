@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StockTracker.Context;
+using StockTracker.Context.Interface;
 using StockTracker.Model.Persons;
+using StockTracker.Seed.Abstract;
 using StockTracker.Seed.Interface;
 
 namespace StockTracker.Seed.Persons
 {
-    public class GenericPerson : IGeneric<Person>
+    public class GenericPerson : GenericSeed<Person>
     {
-        public Person[] All()
+        public override Person[] All()
         {
             return new[]
             {
@@ -42,16 +45,6 @@ namespace StockTracker.Seed.Persons
                     PersonSurname = "Jackson"
                 }
             };
-        }
-
-        public Person One()
-        {
-            return All()[0];
-        }
-
-        public Person One(int index)
-        {
-            return All()[index];
         }
     }
 }

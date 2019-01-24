@@ -19,7 +19,7 @@ namespace StockTracker.Model.Supplier.Config
 		    builder.Property(i => i.SupplierTypeId).UseSqlServerIdentityColumn();
 		    builder.Property(i => i.SupplierTypeName).IsRequired().HasColumnType("NVARCHAR(256)");
 
-		    builder.HasData();
+		    builder.HasData(GetSupplierType());
 	    }
 
 	    SupplierType[] GetSupplierType()

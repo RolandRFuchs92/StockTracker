@@ -20,6 +20,7 @@ using StockTracker.Repository.Member;
 using StockTracker.Seed.Member.Generate;
 using StockTracker.Seed.Member.Generic;
 using StockTracker.Seed.Persons;
+using StockTracker.Tests.Utils.Context;
 
 namespace StockTracker.Repository.Test.StockTracker.Member
 {

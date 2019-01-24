@@ -8,22 +8,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace StockTracker.Model.Stock.Config
 {
-	public class StockCategoryConfiguration : IEntityTypeConfiguration<StockCategory>
-	{
-		public void Configure(EntityTypeBuilder<StockCategory> builder)
+		public class StockCategoryConfiguration : IEntityTypeConfiguration<StockCategory>
 		{
-			builder.HasKey(i => i.StockCategoryId);
+				public void Configure(EntityTypeBuilder<StockCategory> builder)
+				{
+						builder.HasKey(i => i.StockCategoryId);
 
-			builder.Property(i => i.StockCategoryId).UseSqlServerIdentityColumn();
-			builder.Property(i => i.StockCategoryName).IsRequired().HasColumnType("NVARCHAR(250)");
+						builder.HasMany(i => i.StockCore).WithOne(i => i.StockCategory).OnDelete(DeleteBehavior.Restrict);
 
-			builder.HasData(GetStockCategorySeed());
-		}
+						builder.Property(i => i.StockCategoryId).UseSqlServerIdentityColumn();
+						builder.Property(i => i.StockCategoryName).IsRequired().HasColumnType("NVARCHAR(250)");
 
-		StockCategory[] GetStockCategorySeed()
-		{
-			var viewModel = new[]
-			{
+						builder.HasData(GetStockCategorySeed());
+				}
+
+				StockCategory[] GetStockCategorySeed()
+				{
+						var viewModel = new[]
+						{
 				new StockCategory
 				{
 					StockCategoryId = 1,
@@ -66,7 +68,7 @@ namespace StockTracker.Model.Stock.Config
 				},
 			};
 
-			return viewModel;
+						return viewModel;
+				}
 		}
-	}
 }

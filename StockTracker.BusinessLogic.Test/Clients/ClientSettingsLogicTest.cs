@@ -5,10 +5,10 @@ using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
-using StockTracker.BusinessLogic.Test.Utils;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients.Generic;
+using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {

@@ -13,7 +13,12 @@ using StockTracker.Model.Shopping;
 using StockTracker.Model.Shopping.Config;
 using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.Config;
+using StockTracker.Model.StockSupplier;
 using StockTracker.Model.StockSupplier.Config;
+using StockTracker.Model.Supplier;
+using StockTracker.Model.Supplier.Config;
+using StockTracker.Model.Unit;
+using StockTracker.Model.Unit.Config;
 
 namespace StockTracker.Context
 {
@@ -40,7 +45,10 @@ namespace StockTracker.Context
 	    public virtual DbSet<StockCategory> StockCategories { get; set; }
 	    public virtual DbSet<ClientSettings> ClientSettings { get; set; }
 	    public virtual DbSet<Client> Clients { get; set; }
-
+        public virtual DbSet<StockSupplierDetail> StockSupplierDetails { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<SupplierType> SupplierTypes { get; set; }
+        public virtual DbSet<UnitType> UnitTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,8 +78,10 @@ namespace StockTracker.Context
             modelBuilder.ApplyConfiguration(new StockTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new StockSupplierDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+            modelBuilder.ApplyConfiguration(new SupplierTypeConfiguration());
 
-
+            modelBuilder.ApplyConfiguration(new UnitTypeConfiguration());
         }
     }
 }

@@ -10,6 +10,7 @@ using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients;
 using StockTracker.Seed.Clients.Generic;
+using StockTracker.Tests.Utils.Context;
 
 namespace StockTracker.Repository.Test.StockTracker.Clients
 {
@@ -44,7 +45,7 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 
 				private void Trunc(string tableName)
 				{
-						//((StockTrackerContext) _db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
+						//((StockTrackerContext) db).Database.ExecuteSqlCommand($"TRUNCATE TABLE {tableName}");
 						((StockTrackerContext)_db).Database.EnsureDeleted(); ;
 				}
 

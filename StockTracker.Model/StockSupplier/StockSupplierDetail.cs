@@ -12,20 +12,20 @@ using StockTracker.Model.Unit;
 
 namespace StockTracker.Model.StockSupplier
 {
-    public class StockSupplierDetail : IStockStupplierDetail
-    {
-	    public int StockSupplierDetailId { get; set; }
-	    public int SupplierId { get; set; }
-	    public int MemberId { get; set; }
-	    public float Price { get; set; }
-	    public int UnitTypeId { get; set; }
-	    public int Unit { get; set; }
-	    public DateTime CreatedOn { get; set; }
+		public class StockSupplierDetail : IStockStupplierDetail
+		{
+				public int StockSupplierDetailId { get; set; }
+				public int SupplierId { get; set; }
+				public int MemberId { get; set; }
+				public decimal Price { get; set; }
+				public int UnitTypeId { get; set; }
+				public int Unit { get; set; }
+				public DateTime CreatedOn { get; set; }
 
-		public Member Member { get; set; }
-		public Supplier.Supplier Supplier { get; set; }
-		public UnitType UnitType { get; set; }
+				public Member Member { get; set; }
+				public Supplier.Supplier Supplier { get; set; }
+				public UnitType UnitType { get; set; }
 
-	    public StockCore StockCore { get; set; }
-    }
+				public ICollection<StockCore> StockCore { get; set; }
+		}
 }

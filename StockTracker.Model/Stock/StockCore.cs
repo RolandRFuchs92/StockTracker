@@ -12,19 +12,19 @@ using StockTracker.Model.StockSupplier;
 
 namespace StockTracker.Model.Stock
 {
-    public class StockCore : IStockCore
-	{
-	    public int StockCoreId { get; set; }
-	    public int StockCategoryId { get; set; }
-	    public int StockSupplierDetailId { get; set; }
-	    public int StockTypeId { get; set; }
-	    public string StockCoreName { get; set; }
-	    public DateTime CreatedOn { get; set; }
+		public class StockCore : IStockCore
+		{
+				public int StockCoreId { get; set; }
+				public int StockCategoryId { get; set; }
+				public int StockSupplierDetailId { get; set; }
+				public int StockTypeId { get; set; }
+				public string StockCoreName { get; set; }
+				public DateTime CreatedOn { get; set; }
 
-		public StockCategory StockCategory { get; set; }
-		public StockSupplierDetail StockSupplierDetail { get; set; }
-	    public StockType StockType { get; set; }
+				public StockCategory StockCategory { get; set; }
+				public StockSupplierDetail StockSupplierDetail { get; set; }
+				public StockType StockType { get; set; }
 
-		public ICollection<ShoppingListItem> ShoppingListItems { get; set; }
-    }
+				public ICollection<ShoppingListItem> ShoppingListItems { get; set; }
+		}
 }

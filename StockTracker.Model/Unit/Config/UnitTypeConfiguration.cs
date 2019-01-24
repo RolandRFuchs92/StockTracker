@@ -18,7 +18,7 @@ namespace StockTracker.Model.Unit.Config
 		    builder.Property(i => i.Name).IsRequired().HasColumnType("NVARCHAR(64)");
 		    builder.Property(i => i.Symbol).IsRequired().HasColumnType("NVARCHAR(8)");
 
-		    builder.HasData();
+		    builder.HasData(GetUnitTypes());
 	    }
 
 	    UnitType[] GetUnitTypes()
