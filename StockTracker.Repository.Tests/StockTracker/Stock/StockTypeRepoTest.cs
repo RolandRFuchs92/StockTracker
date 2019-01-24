@@ -32,7 +32,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 
 		#region Add
-
 		[TestMethod]
 		public void Add_NewObject_AddNewObjectLogSuccess()
 		{
