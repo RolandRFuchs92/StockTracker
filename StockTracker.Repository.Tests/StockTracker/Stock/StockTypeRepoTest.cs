@@ -15,126 +15,148 @@ using StockTracker.Tests.Utils.Context;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
-    [TestClass]
-    public class StockTypeRepoTest
-    {
-        private IStockTrackerContext _db;
-        private readonly StockCategory _category;
+		[TestClass]
+		public class StockTypeRepoTest
+		{
+				private IStockTrackerContext _db;
+				private readonly StockCategory _category;
+				private const string _isValid = nameof(IStockTypeRepo.IsValid);
+				private const string _edit = nameof(IStockTypeRepo.Edit);
+				private const string _add = nameof(IStockTypeRepo.Add);
+				private const string _list = nameof(IStockTypeRepo.List);
 
-        public StockTypeRepoTest()
-        {
-            _category = new StockCategory { StockCategoryName = "Shoes" };
-        }
+				public StockTypeRepoTest()
+				{
+						_category = new StockCategory { StockCategoryName = "Shoes" };
+				}
 
-        #region Add
-        [TestMethod]
-        public void Add_NewObject_AddNewObjectLogSuccess()
-        {
-            // Arrange 
-            var repo = GetRepo();
+				#region Add
+				[TestMethod]
+				public void Add_NewObject_AddNewObjectLogSuccess()
+				{
+						// Arrange 
+						var repo = GetRepo();
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.Add), _category);
-            var result = repo.Result as StockCategory;
+						//Act
+						repo.CreateResult(_add, _category);
+						var result = repo.Result as StockCategory;
 
-            //Assert
-            Assert.AreEqual(result.StockCategoryName, _category.StockCategoryName);
-            Assert.AreNotEqual(result.StockCategoryId, _category.StockCategoryId);
-            repo._loggerCheck.Success();
-        }
-        #endregion
+						//Assert
+						Assert.AreEqual(result.StockCategoryName, _category.StockCategoryName);
+						Assert.AreNotEqual(result.StockCategoryId, _category.StockCategoryId);
+						repo._loggerCheck.Success();
+				}
+				#endregion
 
-        #region Edit
-        [TestMethod]
-        public void Edit_PassInvalidId_ReturnNullLogError()
-        {
-            //Arrange
-            var repo = GetRepo();
-            var category = new StockCategory { StockCategoryId = 100, StockCategoryName = "failed" };
+				#region Edit
+				[TestMethod]
+				public void Edit_PassInvalidId_ReturnNullLogError()
+				{
+						//Arrange
+						var repo = GetRepo();
+						var category = new StockCategory { StockCategoryId = 100, StockCategoryName = "failed" };
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.Edit), category);
-            var result = repo.Result;
+						//Act
+						repo.CreateResult(_edit, category);
+						var result = repo.Result;
 
-            //Assert
-            Assert.IsNull(result);
-            repo._loggerCheck.Error();
-        }
+						//Assert
+						Assert.IsNull(result);
+						repo._loggerCheck.Error();
+				}
 
-        [TestMethod]
-        public void Edit_PassValidIdAndString_ReturnNewCategoryWithIdAndLogSuccess()
-        {
-            //Arrange
-            var repo = GetRepo();
+				[TestMethod]
+				public void Edit_PassValidIdAndString_ReturnNewCategoryWithIdAndLogSuccess()
+				{
+						//Arrange
+						var repo = GetRepo();
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.Edit), _category);
-            var result = repo.Result as StockCategory;
+						//Act
+						repo.CreateResult(_edit, _category);
+						var result = repo.Result as StockCategory;
 
-            //Assert
-            Assert.AreNotEqual(result.StockCategoryId, _category.StockCategoryId);
-            repo._loggerCheck.Success();
-        }
+						//Assert
+						Assert.AreNotEqual(result.StockCategoryId, _category.StockCategoryId);
+						repo._loggerCheck.Success();
+				}
 
-        [TestMethod]
-        public void Eidt_PassValidIdAndEmptyString_ReturnNullLogError()
-        {
-            //Arrange
-            var repo = GetRepo();
-            var category = _category;
-            category.StockCategoryName = "";
+				[TestMethod]
+				public void Eidt_PassValidIdAndEmptyString_ReturnNullLogError()
+				{
+						//Arrange
+						var repo = GetRepo();
+						var category = _category;
+						category.StockCategoryName = "";
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.Edit), category);
-            var result = repo.Result as StockCategory;
+						//Act
+						repo.CreateResult(_edit, category);
+						var result = repo.Result as StockCategory;
 
-            //Assert
-            Assert.IsNull(result);
-            repo._loggerCheck.Error();
-        }
-        #endregion
+						//Assert
+						Assert.IsNull(result);
+						repo._loggerCheck.Error();
+				}
+				#endregion
 
-        #region IsValid
+				#region IsValid
 
-        [TestMethod]
-        public void IsValid_PassValidId_LogSuccessReturnTrue()
-        {
-            //Arrange
-            var repo = GetRepo();
-            const int categoryId = 1;
+				[TestMethod]
+				public void IsValid_PassValidId_LogSuccessReturnTrue()
+				{
+						//Arrange
+						var repo = GetRepo();
+						const int categoryId = 1;
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.IsValid), categoryId);
-            var result = repo.Result;
+						//Act
+						repo.CreateResult(_isValid, categoryId);
+						var result = repo.Result;
 
-            //Assert
-            Assert.IsTrue(result);
-            repo._loggerCheck.Success();
-        }
+						//Assert
+						Assert.IsTrue(result);
+						repo._loggerCheck.Success();
+				}
 
-        [TestMethod]
-        public void IsValid_PassInvalidId_LogErrorReturnFalse()
-        {
-            //Arrange
-            var repo = GetRepo();
-            const int invalidCategoryId = 100;
+				[TestMethod]
+				public void IsValid_PassInvalidId_LogErrorReturnFalse()
+				{
+						//Arrange
+						var repo = GetRepo();
+						const int invalidCategoryId = 100;
 
-            //Act
-            repo.CreateResult(nameof(IStockCategoryRepo.IsValid), invalidCategoryId);
-            var result = repo.Result;
+						//Act
+						repo.CreateResult(_isValid, invalidCategoryId);
+						var result = repo.Result;
 
-            //Assert
-            Assert.IsFalse(result);
-            repo._loggerCheck.Error();
-        }
+						//Assert
+						Assert.IsFalse(result);
+						repo._loggerCheck.Error();
+				}
 
-        #endregion
+				#endregion
 
-        Repo<StockCategory> GetRepo()
-        {
-            var repo = new Repo<StockCategory>();
-            _db = repo.db;
-            return repo;
-        }
-    }
+				#region List
+
+				[TestMethod]
+				public void List_PassNothing_OnlyGetListOfStockTypes()
+				{
+						//Arrange
+						var repo = GetRepo();
+
+						//Act
+						repo.CreateResult(nameof(IStockTypeRepo.List));
+						var result = repo.Result as List<IStockType>;
+
+						//Assert
+						Assert.IsNotNull(result);
+						Assert.IsTrue(result.Count > 0);
+				}
+				#endregion
+
+				Repo<StockType> GetRepo()
+				{
+						var repo = new Repo<StockType>();
+						_db = repo.db;
+						return repo;
+				}
+		}
 }
