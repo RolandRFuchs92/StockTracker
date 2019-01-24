@@ -28,7 +28,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 		public StockTypeRepoTest()
 		{
-			_stockType = new StockType { StockTypeName = "Shoes" };
+			_stockType = new StockType { StockTypeId = 1, StockTypeName = "shoes" };
 		}
 
 		#region Add
@@ -37,6 +37,8 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			// Arrange 
 			var repo = GetRepo();
+			var stockType = _stockType;
+			stockType.StockTypeId = 0;
 
 			//Act
 			repo.CreateResult(_add, _stockType.StockTypeName);
@@ -55,10 +57,11 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			//Arrange
 			var repo = GetRepo();
-			var category = new StockCategory { StockCategoryId = 100, StockCategoryName = "failed" };
+			var stockType = _stockType;
+			stockType.StockTypeId = 100;
 
 			//Act
-			repo.CreateResult(_edit, category);
+			repo.CreateResult(_edit, stockType.StockTypeId, stockType.StockTypeName);
 			var result = repo.Result;
 
 			//Assert
@@ -67,17 +70,21 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 
 		[TestMethod]
-		public void Edit_PassValidIdAndString_ReturnNewCategoryWithIdAndLogSuccess()
+		public void Edit_PassValidIdAndString_ReturnEditedStockTypeWithIdAndLogSuccess()
 		{
 			//Arrange
 			var repo = GetRepo();
+			var stockType = _stockType;
+			var originalName = _stockType.StockTypeName;
+			stockType.StockTypeName = "Otter";
 
 			//Act
-			repo.CreateResult(_edit, _stockType);
+			repo.CreateResult(_edit, stockType.StockTypeId, stockType.StockTypeName);
 			var result = repo.Result as StockType;
 
 			//Assert
-			Assert.AreNotEqual(result.StockTypeId, _stockType.StockTypeId);
+			Assert.AreEqual(result.StockTypeId, stockType.StockTypeId);
+			Assert.AreNotEqual(result.StockTypeName, originalName);
 			repo._loggerCheck.Success();
 		}
 
@@ -90,7 +97,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			stockType.StockTypeName = "";
 
 			//Act
-			repo.CreateResult(_edit, stockType);
+			repo.CreateResult(_edit, stockType.StockTypeId, stockType.StockTypeName);
 			var result = repo.Result as StockType;
 
 			//Assert
@@ -114,7 +121,6 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Assert
 			Assert.IsTrue(result);
-			repo._loggerCheck.Success();
 		}
 
 		[TestMethod]
@@ -122,15 +128,14 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		{
 			//Arrange
 			var repo = GetRepo();
-			const int invalidCategoryId = 100;
+			const int invalidStockTypeId = 100;
 
 			//Act
-			repo.CreateResult(_isValid, invalidCategoryId);
+			repo.CreateResult(_isValid, invalidStockTypeId);
 			var result = repo.Result;
 
 			//Assert
 			Assert.IsFalse(result);
-			repo._loggerCheck.Error();
 		}
 
 		#endregion

@@ -20,133 +20,133 @@ using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Tests.Utils.Acts
 {
-    public class Repo<T>
-    {
-        private T _repo;
-        private bool isValidResult;
+	public class Repo<T>
+	{
+		private T _repo;
+		private bool isValidResult;
 
-        public dynamic Result { get; private set; }
-        public GenericLoggerCheck<T> _loggerCheck { get; private set; }
-        public object[] ParametersUsed { get; private set; }
-        public Dictionary<string, dynamic> ParameterDictionary { get; private set; }
-        public IStockTrackerContext db;
+		public dynamic Result { get; private set; }
+		public GenericLoggerCheck<T> _loggerCheck { get; private set; }
+		public object[] ParametersUsed { get; private set; }
+		public Dictionary<string, dynamic> ParameterDictionary { get; private set; }
+		public IStockTrackerContext db;
 
-        public Repo(string errorDbSetName = "")
-        {
-            Setup(errorDbSetName);
-            _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object);
-        }
-
-
-        public Repo(T repo)
-        {
-            _repo = repo;
-        }
-
-        public Repo(string errorDbSetName = "", params object[] parameters)
-        {
-            Setup(errorDbSetName);
-            InstanceFactory(parameters);
-        }
-
-        private void InstanceFactory(params object[] parameter)
-        {
-            var paramLen = parameter.Length;
+		public Repo(string errorDbSetName = "")
+		{
+			Setup(errorDbSetName);
+			_repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object);
+		}
 
 
-            switch (paramLen)
-            {
-                case 1:
-                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0]);
-                    break;
-                case 2:
-                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1]);
-                    break;
-                case 3:
-                    _repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1], parameter[2]);
-                    break;
-                default:
-                    break;
-            }
-        }
+		public Repo(T repo)
+		{
+			_repo = repo;
+		}
 
-        private void Setup(string errorDbSetName)
-        {
-            isValidResult = string.IsNullOrEmpty(errorDbSetName);
-            CreateDbInstance(errorDbSetName);
-            _loggerCheck = new GenericLoggerCheck<T>();
-        }
+		public Repo(string errorDbSetName = "", params object[] parameters)
+		{
+			Setup(errorDbSetName);
+			InstanceFactory(parameters);
+		}
 
-        private void CreateDbInstance(string errorDbSetName)
-        {
-            if (!string.IsNullOrEmpty(errorDbSetName))
-            {
-                var moq = new Mock<IStockTrackerContext>();
-                moq.Setup(i => i.GetType().GetProperty(errorDbSetName)).Throws(new Exception());
-                db = moq.Object;
-            }
-            else
-            {
-                db = new TestDbFactory().Db();
-            }
-        }
+		private void InstanceFactory(params object[] parameter)
+		{
+			var paramLen = parameter.Length;
 
-        public void CreateResult(string methodName)
-        {
-            var methodInfo = _repo.GetType().GetMethod(methodName);
-            var parameterInfo = methodInfo.GetParameters();
 
-            var methodParameters = new List<object>();
+			switch (paramLen)
+			{
+				case 1:
+					_repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0]);
+					break;
+				case 2:
+					_repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1]);
+					break;
+				case 3:
+					_repo = (T)Activator.CreateInstance(typeof(T), db, _loggerCheck.Mock.Object, parameter[0], parameter[1], parameter[2]);
+					break;
+				default:
+					break;
+			}
+		}
 
-            foreach (var parameter in parameterInfo)
-            {
-                var val = DefaultValue(parameter);
-                ParameterDictionary.Add(parameter.Name, val);
-                methodParameters.Add(val);
-            }
+		private void Setup(string errorDbSetName)
+		{
+			isValidResult = string.IsNullOrEmpty(errorDbSetName);
+			CreateDbInstance(errorDbSetName);
+			_loggerCheck = new GenericLoggerCheck<T>();
+		}
 
-            ParametersUsed = methodParameters.ToArray();
-            CreateResult(methodName, ParametersUsed);
-        }
+		private void CreateDbInstance(string errorDbSetName)
+		{
+			if (!string.IsNullOrEmpty(errorDbSetName))
+			{
+				var moq = new Mock<IStockTrackerContext>();
+				moq.Setup(i => i.GetType().GetProperty(errorDbSetName)).Throws(new Exception());
+				db = moq.Object;
+			}
+			else
+			{
+				db = new TestDbFactory().Db();
+			}
+		}
 
-        public void CreateResult(string methodName, params object[] methodParams)
-        {
-            ParametersUsed = methodParams;
-            Result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParams);
-        }
+		public void CreateResult(string methodName)
+		{
+			var methodInfo = _repo.GetType().GetMethod(methodName);
+			var parameterInfo = methodInfo.GetParameters();
 
-        private object DefaultValue(ParameterInfo parameter)
-        {
-            var paramType = parameter.ParameterType;
+			var methodParameters = new List<object>();
 
-            if (paramType == typeof(int))
-                return isValidResult ? 1 : 100;
+			foreach (var parameter in parameterInfo)
+			{
+				var val = DefaultValue(parameter);
+				ParameterDictionary.Add(parameter.Name, val);
+				methodParameters.Add(val);
+			}
 
-            if (paramType == typeof(string))
-                return isValidResult ? "Ragunaught" : "";
+			ParametersUsed = methodParameters.ToArray();
+			CreateResult(methodName, ParametersUsed);
+		}
 
-            if (paramType == typeof(double))
-                return isValidResult ? 1.23 : 100000.00000;
+		public void CreateResult(string methodName, params object[] methodParams)
+		{
+			ParametersUsed = methodParams;
+			Result = _repo.GetType().GetMethod(methodName).Invoke(_repo, methodParams);
+		}
 
-            if (!paramType.IsClass) throw new Exception("Unrecognised parameter type.");
+		private object DefaultValue(ParameterInfo parameter)
+		{
+			var paramType = parameter.ParameterType;
 
-            var assembly = Assembly.Load("StockTracker.Seed");
-            var types = (from classObj in assembly.GetTypes()
-                         let obj = classObj.BaseType
-                         where !classObj.IsAbstract
-                                                                                                                         && !classObj.IsInterface
-                                                                                                                         && obj != null
-                                                                                                                         && obj.IsGenericType
-                                                                                                                         && obj.GetGenericTypeDefinition() == typeof(IGeneric<>)
-                                                                                                                         && obj.GetGenericTypeDefinition() == paramType
-                         select classObj).FirstOrDefault();
+			if (paramType == typeof(int))
+				return isValidResult ? 1 : 100;
 
-            if (types == null)
-                throw new Exception("Unrecognised parameter type.");
+			if (paramType == typeof(string))
+				return isValidResult ? "Ragunaught" : "";
 
-            var newInstance = Activator.CreateInstance(types, true).GetType().GetMethod("One");
-            return newInstance.Invoke(newInstance, new object[] { });
+			if (paramType == typeof(double))
+				return isValidResult ? 1.23 : 100000.00000;
 
-        }
-    }
+			if (!paramType.IsClass) throw new Exception("Unrecognised parameter type.");
+
+			var assembly = Assembly.Load("StockTracker.Seed");
+			var types = (from classObj in assembly.GetTypes()
+									 let obj = classObj.BaseType
+									 where !classObj.IsAbstract
+										&& !classObj.IsInterface
+										&& obj != null
+										&& obj.IsGenericType
+										&& obj.GetGenericTypeDefinition() == typeof(IGeneric<>)
+										&& obj.GetGenericTypeDefinition() == paramType
+									 select classObj).FirstOrDefault();
+
+			if (types == null)
+				throw new Exception("Unrecognised parameter type.");
+
+			var newInstance = Activator.CreateInstance(types, true).GetType().GetMethod("One");
+			return newInstance.Invoke(newInstance, new object[] { });
+
+		}
+	}
 }

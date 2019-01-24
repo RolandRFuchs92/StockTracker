@@ -59,6 +59,12 @@ namespace StockTracker.Repository.Stock
 					return null;
 				}
 
+				if (!_db.StockTypes.Any(i => i.StockTypeId == stockTypeId))
+				{
+					LogError(LoggingEvent.Error, $"StockType[{stockTypeId}] is invalid.");
+					return null;
+				}
+
 				var stockType = _db.StockTypes.FirstOrDefault(i => i.StockTypeId == stockTypeId);
 				stockType.StockTypeName = stockTypeName;
 				_db.SaveChanges();
