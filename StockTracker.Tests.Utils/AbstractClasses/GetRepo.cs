@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTracker.Repository.Test.StockTracker.Unit
+namespace StockTracker.Tests.Utils.AbstractClasses
 {
-	public class UnitTypeRepoTest
-	{
-
-
-
-	}
+    public abstract class GetRepo
+    {
+        
+    }
 }

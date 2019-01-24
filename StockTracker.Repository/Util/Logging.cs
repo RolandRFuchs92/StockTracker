@@ -8,11 +8,11 @@ using StockTracker.Repository.Enums;
 
 namespace StockTracker.Repository.Util
 {
-		public class Logging<T>
+		public abstract class Logging<T>
 		{
 				public ILoggerAdapter<T> log { get; }
 
-				public Logging(ILoggerAdapter<T> log)
+				protected Logging(ILoggerAdapter<T> log)
 				{
 						this.log = log;
 				}
