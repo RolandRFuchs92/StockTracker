@@ -10,6 +10,7 @@ using Moq;
 using StockTracker.Interface.Models.Stock;
 using StockTracker.Model.Stock;
 using StockTracker.Repository.Interface.Stock;
+using StockTracker.Repository.Stock;
 using StockTracker.Tests.Utils.Acts;
 using StockTracker.Tests.Utils.Context;
 
@@ -31,6 +32,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 
 		#region Add
+
 		[TestMethod]
 		public void Add_NewObject_AddNewObjectLogSuccess()
 		{
@@ -38,7 +40,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			var repo = GetRepo();
 
 			//Act
-			repo.CreateResult(_add, _stockType);
+			repo.CreateResult(_add, _stockType.StockTypeName);
 			var result = repo.Result as StockType;
 
 			//Assert
@@ -90,7 +92,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 
 			//Act
 			repo.CreateResult(_edit, stockType);
-			var result = repo.Result as StockCategory;
+			var result = repo.Result as StockType;
 
 			//Assert
 			Assert.IsNull(result);
@@ -152,9 +154,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		}
 		#endregion
 
-		Repo<StockType> GetRepo()
+		Repo<StockTypeRepo> GetRepo()
 		{
-			var repo = new Repo<StockType>();
+			var repo = new Repo<StockTypeRepo>();
 			_db = repo.db;
 			return repo;
 		}

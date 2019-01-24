@@ -14,11 +14,11 @@ using StockTracker.Repository.Util;
 
 namespace StockTracker.Repository.Stock
 {
-	public class StockTypeRepo : Logging<IStockTypeRepo>
+	public class StockTypeRepo : Logging<StockTypeRepo>, IStockTypeRepo 
 	{
-		private IStockTrackerContext _db;
+		private readonly IStockTrackerContext _db;
 
-		public StockTypeRepo(IStockTrackerContext db, ILoggerAdapter<IStockTypeRepo> log) : base(log)
+		public StockTypeRepo(IStockTrackerContext db, ILoggerAdapter<StockTypeRepo> log) : base(log)
 		{
 			_db = db;
 		}
@@ -33,7 +33,7 @@ namespace StockTracker.Repository.Stock
 					return null;
 				}
 
-				var stockType = new StockType {StockTypeName = "StockTypeName"};
+				var stockType = new StockType {StockTypeName = stockTypeName };
 
 				_db.StockTypes.Add(stockType);
 				var stockTypeId = ((StockTrackerContext) _db).SaveChanges();
