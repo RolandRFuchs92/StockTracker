@@ -20,7 +20,7 @@ namespace StockTracker.Repository.Unit
 		    throw new NotImplementedException();
 	    }
 
-	    public IUnitType LIst()
+	    public IUnitType List()
 	    {
 		    throw new NotImplementedException();
 	    }

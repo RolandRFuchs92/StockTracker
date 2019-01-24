@@ -15,10 +15,12 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 	{
 		public GenericLoggerCheck<T> _log;
 		public IStockTrackerContext _db;
+		private Repo<T> _repo;
 
 		public virtual Repo<T> GetRepo()
 		{
 			var repo = new Repo<T>();
+			_repo = repo;
 			_db = repo.db;
 			_log = repo._loggerCheck;
 			return repo;
@@ -40,5 +42,12 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 		{
 			Assert.IsNotNull(result);
 		}
+
+		public virtual TK Result<TK>()
+		{
+			return (TK)_repo.Result;
+		}
+
 	}
 }
+
