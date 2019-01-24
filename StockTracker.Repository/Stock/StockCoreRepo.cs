@@ -165,6 +165,11 @@ namespace StockTracker.Repository.Stock
             return null;
         }
 
+        StockCore LogQuickError(string objectName, int objectId, Exception e = null)
+        {
+            return LogError($"Invalid {objectName}[{objectId}]");
+        }
+
         private bool IsValidateStockCore(IStockCore stockCore)
         {
             if (!IsValidStockType(stockCore.StockTypeId) || !IsValidStockCategory(stockCore.StockCategoryId))

@@ -8,21 +8,26 @@ using System.Threading.Tasks;
 
 namespace StockTracker.Repository.Stock
 {
-		public class StockTypeRepo : IStockTypeRepo
-		{
-				public IStockType Add(string stockTypeName)
-				{
-						throw new NotImplementedException();
-				}
+    public class StockTypeRepo : IStockTypeRepo
+    {
+        public IStockType Add(string stockTypeName)
+        {
+            throw new NotImplementedException();
+        }
 
-				public IStockType Edit(int stockTypeId, string stockTypeName)
-				{
-						throw new NotImplementedException();
-				}
+        public IStockType Edit(int stockTypeId, string stockTypeName)
+        {
+            throw new NotImplementedException();
+        }
 
-				public bool IsValid(int stockTypeId)
-				{
-						throw new NotImplementedException();
-				}
-		}
+        public List<IStockType> List()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsValid(int stockTypeId)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
