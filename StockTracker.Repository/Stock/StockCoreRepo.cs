@@ -158,9 +158,9 @@ namespace StockTracker.Repository.Stock
         private StockCore LogError(string message, Exception e = null)
         {
             if (e == null)
-                _log.LogError((int)LoggingEvent.Update, message);
+                _log.LogError((int)LoggingEvent.Error, message);
             else
-                _log.LogError((int)LoggingEvent.Update, e, message);
+                _log.LogError((int)LoggingEvent.Error, e, message);
 
             return null;
         }

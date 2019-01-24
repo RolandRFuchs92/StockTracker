@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockTracker.Adapter.Interface\StockTracker.Adapter.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.Interface\StockTracker.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.Model\StockTracker.Model.csproj" />
   </ItemGroup>
