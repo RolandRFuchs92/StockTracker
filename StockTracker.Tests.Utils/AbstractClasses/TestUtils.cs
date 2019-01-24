@@ -7,18 +7,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context.Interface;
 using StockTracker.Tests.Utils.Acts;
+using StockTracker.Tests.Utils.MockVerifiers;
 
 namespace StockTracker.Tests.Utils.AbstractClasses
 {
 	public abstract class TestUtils<T>
 	{
-		public ILoggerAdapter<T> _log;
+		public GenericLoggerCheck<T> _log;
 		public IStockTrackerContext _db;
 
 		public virtual Repo<T> GetRepo()
 		{
 			var repo = new Repo<T>();
 			_db = repo.db;
+			_log = repo._loggerCheck;
 			return repo;
 		}
 
