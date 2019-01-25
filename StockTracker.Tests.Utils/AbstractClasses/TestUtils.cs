@@ -15,6 +15,7 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 	{
 		public GenericLoggerCheck<T> _log;
 		public IStockTrackerContext _db;
+
 		private Repo<T> _repo;
 
 		public virtual Repo<T> GetRepo()
@@ -26,28 +27,78 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			return repo;
 		}
 
-		public virtual void AssertEdit<TK>(TK result, TK original, bool areSame = false)
+		public virtual void AssertSameLogSuccess<TK>(TK original)
 		{
+			AssertSame(original);
+			_log.Success();
+		}
+
+		public virtual void AssertSameLogError<TK>(TK original)
+		{
+			AssertSame(original);
+			_log.Error();
+		}
+
+		public virtual void AssertDiffLogError<TK>(TK original)
+		{
+			AssertDiff(original);
+			_log.Error();
+		}
+
+		public virtual void AssertDiffLogSuccess<TK>(TK original)
+		{
+			AssertDiff(original);
+			_log.Success();
+		}
+
+		void AssertSame<TK>(TK original)
+		{
+			var result = Result<TK>();
 			var idName = $"{result.GetType().Name}Id";
 			var resultId = result.GetType().GetProperty(idName).GetValue(result);
 			var originId = original.GetType().GetProperty(idName).GetValue(original);
 
-			if (areSame)
-				Assert.AreEqual(resultId, originId);
-			else
-				Assert.AreNotEqual(resultId, originId);
+			Assert.AreEqual(resultId, originId);
 		}
 
-		public virtual void AssertNull<TK>(TK result)
+		void AssertDiff<TK>(TK original)
 		{
-			Assert.IsNotNull(result);
+			var result = Result<TK>();
+			var idName = $"{result.GetType().Name}Id";
+			var resultId = result.GetType().GetProperty(idName).GetValue(result);
+			var originId = original.GetType().GetProperty(idName).GetValue(original);
+
+			Assert.AreNotEqual(resultId, originId);
+		}
+
+		public virtual void ResultIsNullLogError<TK>()
+		{
+			Assert.IsNull(Result<TK>());
+			_log.Error();
+		}
+
+		public virtual void ResultIsNotNullLogError<TK>()
+		{
+			Assert.IsNotNull(Result<TK>());
+			_log.Error();
+		}
+
+		public virtual void ResultIsNullLogSuccess<TK>()
+		{
+			Assert.IsNull(Result<TK>());
+			_log.Success();
+		}
+
+		public virtual void ResultIsNotNullLogSuccess<TK>()
+		{
+			Assert.IsNotNull(Result<TK>());
+			_log.Success();
 		}
 
 		public virtual TK Result<TK>()
 		{
 			return (TK)_repo.Result;
 		}
-
 	}
 }
 

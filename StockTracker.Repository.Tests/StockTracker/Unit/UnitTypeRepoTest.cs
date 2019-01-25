@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StockTracker.Interface.Models.Unit;
 using StockTracker.Model.Unit;
 using StockTracker.Repository.Interface.Unit;
 using StockTracker.Repository.Unit;
@@ -30,8 +31,9 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 			};
 		}
 
+		#region Add
 		[TestMethod]
-		public void Add_PassEmptyName_ReturnNull()
+		public void Add_PassEmptyName_ReturnNullLogError()
 		{
 			//Arrange
 			var repo = GetRepo();
@@ -44,6 +46,91 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 
 			//Assert
 			Assert.IsNull(result);
+			_log.Error();
 		}
+
+		[TestMethod]
+		public void Add_PassNewNameAndSymbol_ReturnResultLogSuccess()
+		{
+			//Arrange
+			var repo = GetRepo();
+			var unitType = _unitType;
+			_unitType.UnitTypeId = 0;
+
+			//Act
+			repo.CreateResult(_add, unitType.Name, unitType.Symbol);
+
+			//Assert
+			AssertSameLogSuccess(unitType);
+		}
+
+		[TestMethod]
+		public void Add_PassNewNameAndEmptySymbol_ReturnNullLogError()
+		{
+			//Arrange
+			var repo = GetRepo();
+			var unitType = _unitType;
+			_unitType.Symbol = "";
+
+			//Act
+			repo.CreateResult(_add, unitType.Name, unitType.Symbol);
+
+			//Assert
+			ResultIsNullLogError<IUnitType>();
+		}
+		#endregion
+
+
+		#region Edit
+		[TestMethod]
+		public void Edit_PassEmptyNameAndEmptySymbol_ReturnNullLogError()
+		{
+			//Arrange
+			var repo = GetRepo();
+			var unitType = _unitType;
+			unitType.UnitTypeId = 1;
+			unitType.Name = "";
+			unitType.Symbol = "";
+
+			//Act
+			repo.CreateResult(_edit, (IUnitType)unitType);
+
+			//Assert
+			ResultIsNullLogError<IUnitType>();
+		}
+
+		[TestMethod]
+		public void Edit_PassEmptySymbolAndNewName_ReturnNullLogError()
+		{
+			//Arrange
+			var repo = GetRepo();
+			var unitType = _unitType;
+			unitType.Symbol = "";
+			unitType.UnitTypeId = 1;
+
+			//Act
+			repo.CreateResult(_edit, unitType);
+
+			//Assert
+			ResultIsNullLogError<IUnitType>();
+		}
+
+
+		[TestMethod]
+		public void Edit_PassEmptyNameAndNewSumbol_ReturnNullLogError()
+		{
+			//Arrange
+			var repo= GetRepo();
+			var unitType = _unitType;
+			unitType.Name = "";
+			unitType.UnitTypeId = 1;
+
+			//Act
+			repo.CreateResult(_edit, unitType);
+
+			//Assert
+			ResultIsNullLogError<IUnitType>();
+		}
+		#endregion
 	}
 }
