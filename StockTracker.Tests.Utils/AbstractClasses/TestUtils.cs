@@ -51,7 +51,7 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			_log.Success();
 		}
 
-		void AssertSame<TK>(TK original)
+		void AssertSame<TK>(TK original, string propertyToCheck = "")
 		{
 			var result = Result<TK>();
 			var idName = $"{result.GetType().Name}Id";
@@ -59,9 +59,12 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			var originId = original.GetType().GetProperty(idName).GetValue(original);
 
 			Assert.AreEqual(resultId, originId);
+
+			if (!string.IsNullOrEmpty(propertyToCheck))
+				AssertSameProp(original, propertyToCheck);
 		}
 
-		void AssertDiff<TK>(TK original)
+		void AssertDiff<TK>(TK original, string propertyToCheck = "")
 		{
 			var result = Result<TK>();
 			var idName = $"{result.GetType().Name}Id";
@@ -69,6 +72,9 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			var originId = original.GetType().GetProperty(idName).GetValue(original);
 
 			Assert.AreNotEqual(resultId, originId);
+
+			if (!string.IsNullOrEmpty(propertyToCheck))
+				AssertDiffProp(original, propertyToCheck);
 		}
 
 		public virtual void ResultIsNullLogError<TK>()
@@ -98,6 +104,24 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 		public virtual TK Result<TK>()
 		{
 			return (TK)_repo.Result;
+		}
+
+		public virtual void AssertSameProp<TK>(TK original, string propertyToCheck)
+		{
+			var result = Result<TK>();
+			var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
+			var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
+
+			Assert.AreEqual(resultProp, originProp);
+		}
+
+		public virtual void AssertDiffProp<TK>(TK original, string propertyToCheck)
+		{
+			var result = Result<TK>();
+			var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
+			var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
+
+			Assert.AreNotEqual(resultProp, originProp);
 		}
 	}
 }

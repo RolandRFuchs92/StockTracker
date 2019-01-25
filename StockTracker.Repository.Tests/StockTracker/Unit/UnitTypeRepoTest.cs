@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -120,7 +121,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 		public void Edit_PassEmptyNameAndNewSumbol_ReturnNullLogError()
 		{
 			//Arrange
-			var repo= GetRepo();
+			var repo = GetRepo();
 			var unitType = _unitType;
 			unitType.Name = "";
 			unitType.UnitTypeId = 1;
@@ -130,6 +131,21 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 
 			//Assert
 			ResultIsNullLogError<IUnitType>();
+		}
+
+		[TestMethod]
+		public void Edit_PassNewNameNewSymbol_ReturnNewUnitLogSuccess()
+		{
+			//Arrange
+			var repo = GetRepo();
+			var unitType = _unitType;
+			unitType.UnitTypeId = 1;
+
+			//Act
+			repo.CreateResult(_edit, unitType);
+
+			//Assert
+			AssertDiffLogSuccess(unitType);
 		}
 		#endregion
 	}
