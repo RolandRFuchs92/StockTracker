@@ -124,6 +124,16 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			_log.Success();
 		}
 
+		public virtual void ResultIsNotNullNoLog<TK>()
+		{
+			Assert.IsNotNull(Result<TK>());
+		}
+
+		public virtual void ResultIsNullNoLog<TK>()
+		{
+			Assert.IsNull(Result<TK>());
+		}
+
 		public virtual TK Result<TK>()
 		{
 			return (TK)_repo.Result;

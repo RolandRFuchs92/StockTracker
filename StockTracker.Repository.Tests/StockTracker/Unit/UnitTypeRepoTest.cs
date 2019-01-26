@@ -42,7 +42,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 			unit.Name = "";
 
 			//Act
-			repo.CreateResult(_add, unit);
+			repo.CreateResult(_add, unit.Name, unit.Symbol);
 			var result = repo.Result;
 
 			//Assert
@@ -62,7 +62,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 			repo.CreateResult(_add, unitType.Name, unitType.Symbol);
 
 			//Assert
-			AssertSameLogSuccess(unitType);
+			AssertDiffLogSuccess(unitType);
 		}
 
 		[TestMethod]
@@ -168,7 +168,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 		{
 			//Arrange
 			var repo = GetRepo();
-			const int validId = 100;
+			const int validId = 1;
 
 			//Act
 			repo.CreateResult(_isValid, validId);
@@ -189,7 +189,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 			repo.CreateResult(_list);
 
 			//Assert
-			ResultIsNotNullLogSuccess<List<UnitType>>();
+			ResultIsNotNullNoLog<List<IUnitType>>();
 		}
 		#endregion
 

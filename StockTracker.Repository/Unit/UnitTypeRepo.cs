@@ -29,13 +29,12 @@ namespace StockTracker.Repository.Unit
 			{
 				var newUnit = EmptyFieldCheck(name, symbol);
 				if (newUnit == null)
-				{
-					LogError(LoggingEvent.Error, $"The name value was empty.");
 					return null;
-				}
 
 				_db.UnitTypes.Add(newUnit);
 				_db.SaveChanges();
+
+				LogInformation(LoggingEvent.Create, $"Added new UnitType[{newUnit.UnitTypeId}]");
 
 				return newUnit;
 			}
@@ -58,6 +57,8 @@ namespace StockTracker.Repository.Unit
 
 				_db.UnitTypes.Add((UnitType)unitType);
 				_db.SaveChanges();
+
+				LogInformation(LoggingEvent.Update, $"Edited UnitType[{unitType.UnitTypeId}]");
 
 				return unitType;
 			}
