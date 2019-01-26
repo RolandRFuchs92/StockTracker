@@ -81,7 +81,6 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 		}
 		#endregion
 
-
 		#region Edit
 		[TestMethod]
 		public void Edit_PassEmptyNameAndEmptySymbol_ReturnNullLogError()
@@ -118,7 +117,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 
 
 		[TestMethod]
-		public void Edit_PassEmptyNameAndNewSumbol_ReturnNullLogError()
+		public void Edit_PassEmptyNameAndNewSymbol_ReturnNullLogError()
 		{
 			//Arrange
 			var repo = GetRepo();
@@ -148,5 +147,51 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 			AssertDiffLogSuccess(unitType);
 		}
 		#endregion
+
+		#region IsValid
+		[TestMethod]
+		public void IsValid_PassInvalidTypeId_ReturnFalseNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+			const int invalidId = 100;
+
+			//Act
+			repo.CreateResult(_isValid, invalidId);
+
+			//Assert
+			ResultIsFalseNoLog();
+		}
+
+		[TestMethod]
+		public void IsValid_PassValidTypeId_ReturnTrueDontLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+			const int validId = 100;
+
+			//Act
+			repo.CreateResult(_isValid, validId);
+
+			//Assert
+			ResultIsTrueNoLog();
+		}
+		#endregion
+
+		#region List
+		[TestMethod]
+		public void List_NothingToPass_ReturnFullList()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_list);
+
+			//Assert
+			ResultIsNotNullLogSuccess<List<UnitType>>();
+		}
+		#endregion
+
 	}
 }

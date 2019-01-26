@@ -27,6 +27,29 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			return repo;
 		}
 
+		public virtual void ResultIsTrueLogSuccess()
+		{
+			Assert.IsTrue(Result<bool>());
+			_log.Success();
+		}
+
+		public virtual void ResultIsTrueNoLog()
+		{
+			Assert.IsTrue(Result<bool>());
+			_log.Success(0);
+			_log.Error(0);
+			_log.ErrorException(0);
+		}
+
+		public virtual void ResultIsFalseNoLog()
+		{
+			Assert.IsFalse(Result<bool>());
+			_log.Success(0);
+			_log.Error(0);
+			_log.ErrorException(0);
+		}
+
+
 		public virtual void AssertSameLogSuccess<TK>(TK original)
 		{
 			AssertSame(original);
