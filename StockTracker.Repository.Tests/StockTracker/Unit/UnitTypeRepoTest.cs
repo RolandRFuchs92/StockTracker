@@ -149,7 +149,18 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 				#endregion
 
 				#region List
+				[TestMethod]
+				public void List_PassNothing_ReturnAllWithNoLog()
+				{
+						//Arrange
+						var repo = GetRepo();
 
+						//Act
+						repo.CreateResult(_list);
+
+						//Assert
+						
+				}
 			
 				#endregion
 		}

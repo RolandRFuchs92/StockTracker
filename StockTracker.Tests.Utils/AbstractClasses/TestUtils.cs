@@ -83,6 +83,11 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						_log.Error();
 				}
 
+				public virtual void ResultIsNullNoLog<TK>() 
+				{
+						Assert.IsNull(Result<TK>());
+				}
+
 				public virtual void ResultIsNotNullLogError<TK>()
 				{
 						Assert.IsNotNull(Result<TK>());
