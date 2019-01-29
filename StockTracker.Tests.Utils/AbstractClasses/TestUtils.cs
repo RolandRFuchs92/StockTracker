@@ -27,6 +27,7 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						return repo;
 				}
 
+				#region Check Same
 				public virtual void AssertSameLogSuccess<TK>(TK original)
 				{
 						AssertSame(original);
@@ -38,7 +39,9 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						AssertSame(original);
 						_log.Error();
 				}
+				#endregion
 
+				#region Check Different
 				public virtual void AssertDiffLogError<TK>(TK original)
 				{
 						AssertDiff(original);
@@ -50,7 +53,74 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						AssertDiff(original);
 						_log.Success();
 				}
+				#endregion
 
+				#region IsNull
+				public virtual void ResultIsNullLogError<TK>()
+				{
+						Assert.IsNull(Result<TK>());
+						_log.Error();
+				}
+
+				public virtual void ResultIsNullLogSuccess<TK>()
+				{
+						Assert.IsNull(Result<TK>());
+						_log.Success();
+				}
+
+				public virtual void ResultIsNullNoLog<TK>()
+				{
+						Assert.IsNull(Result<TK>());
+						_log.Mock.VerifyNoOtherCalls();
+				}
+				#endregion
+
+				#region IsNotNull
+				public virtual void ResultIsNotNullLogError<TK>()
+				{
+						Assert.IsNotNull(Result<TK>());
+						_log.Error();
+				}
+
+				public virtual void ResultIsNotNullLogSuccess<TK>()
+				{
+						Assert.IsNotNull(Result<TK>());
+						_log.Success();
+				}
+
+				public virtual void ResultIsNotNullLogNoLog<TK>()
+				{
+						Assert.IsNotNull(Result<TK>());
+						_log.Mock.VerifyNoOtherCalls();
+				}
+				#endregion
+
+				public virtual TK Result<TK>()
+				{
+						return (TK)_repo.Result;
+				}
+
+				#region EqualityChecks
+				public virtual void AssertSameProp<TK>(TK original, string propertyToCheck)
+				{
+						var result = Result<TK>();
+						var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
+						var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
+
+						Assert.AreEqual(resultProp, originProp);
+				}
+
+				public virtual void AssertDiffProp<TK>(TK original, string propertyToCheck)
+				{
+						var result = Result<TK>();
+						var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
+						var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
+
+						Assert.AreNotEqual(resultProp, originProp);
+				}
+				#endregion
+
+				#region Private Code
 				void AssertSame<TK>(TK original, string propertyToCheck = "")
 				{
 						var result = Result<TK>();
@@ -76,58 +146,7 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						if (!string.IsNullOrEmpty(propertyToCheck))
 								AssertDiffProp(original, propertyToCheck);
 				}
-
-				public virtual void ResultIsNullLogError<TK>()
-				{
-						Assert.IsNull(Result<TK>());
-						_log.Error();
-				}
-
-				public virtual void ResultIsNullNoLog<TK>() 
-				{
-						Assert.IsNull(Result<TK>());
-				}
-
-				public virtual void ResultIsNotNullLogError<TK>()
-				{
-						Assert.IsNotNull(Result<TK>());
-						_log.Error();
-				}
-
-				public virtual void ResultIsNullLogSuccess<TK>()
-				{
-						Assert.IsNull(Result<TK>());
-						_log.Success();
-				}
-
-				public virtual void ResultIsNotNullLogSuccess<TK>()
-				{
-						Assert.IsNotNull(Result<TK>());
-						_log.Success();
-				}
-
-				public virtual TK Result<TK>()
-				{
-						return (TK)_repo.Result;
-				}
-
-				public virtual void AssertSameProp<TK>(TK original, string propertyToCheck)
-				{
-						var result = Result<TK>();
-						var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
-						var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
-
-						Assert.AreEqual(resultProp, originProp);
-				}
-
-				public virtual void AssertDiffProp<TK>(TK original, string propertyToCheck)
-				{
-						var result = Result<TK>();
-						var resultProp = result.GetType().GetProperty(propertyToCheck).GetValue(result);
-						var originProp = original.GetType().GetProperty(propertyToCheck).GetValue(original);
-
-						Assert.AreNotEqual(resultProp, originProp);
-				}
+				#endregion
 		}
 }
 
