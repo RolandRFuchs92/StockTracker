@@ -26,35 +26,36 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						_log = repo._loggerCheck;
 						return repo;
 				}
+				#region Result Is True
+				public virtual void ResultIsTrueLogSuccess()
+				{
+						Assert.IsTrue(Result<bool>());
+						_log.Success();
+				}
 
-		public virtual void ResultIsTrueLogSuccess()
-		{
-			Assert.IsTrue(Result<bool>());
-			_log.Success();
-		}
+				public virtual void ResultIsTrueNoLog()
+				{
+						Assert.IsTrue(Result<bool>());
+						_log.Success(0);
+						_log.Error(0);
+						_log.ErrorException(0);
+				}
 
-		public virtual void ResultIsTrueNoLog()
-		{
-			Assert.IsTrue(Result<bool>());
-			_log.Success(0);
-			_log.Error(0);
-			_log.ErrorException(0);
-		}
+				public virtual void ResultIsFalseNoLog()
+				{
+						Assert.IsFalse(Result<bool>());
+						_log.Success(0);
+						_log.Error(0);
+						_log.ErrorException(0);
+				}
+				#endregion
 
-		public virtual void ResultIsFalseNoLog()
-		{
-			Assert.IsFalse(Result<bool>());
-			_log.Success(0);
-			_log.Error(0);
-			_log.ErrorException(0);
-		}
-
-
-		public virtual void AssertSameLogSuccess<TK>(TK original)
-		{
-			AssertSame(original);
-			_log.Success();
-		}
+				#region AssertSame
+				public virtual void AssertSameLogSuccess<TK>(TK original)
+				{
+						AssertSame(original);
+						_log.Success();
+				}
 
 				public virtual void AssertSameLogError<TK>(TK original)
 				{
@@ -117,20 +118,10 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 				}
 				#endregion
 
-		public virtual void ResultIsNotNullNoLog<TK>()
-		{
-			Assert.IsNotNull(Result<TK>());
-		}
-
-		public virtual void ResultIsNullNoLog<TK>()
-		{
-			Assert.IsNull(Result<TK>());
-		}
-
-		public virtual TK Result<TK>()
-		{
-			return (TK)_repo.Result;
-		}
+				public virtual TK Result<TK>()
+				{
+						return (TK)_repo.Result;
+				}
 
 				#region EqualityChecks
 				public virtual void AssertSameProp<TK>(TK original, string propertyToCheck)
