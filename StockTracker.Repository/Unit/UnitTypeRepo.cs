@@ -12,7 +12,15 @@ namespace StockTracker.Repository.Unit
     {
 	    public IUnitType Add(string name, string symbol)
 	    {
-		    throw new NotImplementedException();
+						try
+						{
+
+						}
+						catch (Exception e)
+						{
+
+								throw;
+						}
 	    }
 
 	    public IUnitType Edit(IUnitType unitType)

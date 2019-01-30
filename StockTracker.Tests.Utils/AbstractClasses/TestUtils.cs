@@ -88,7 +88,7 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 						_log.Success();
 				}
 
-				public virtual void ResultIsNotNullLogNoLog<TK>()
+				public virtual void ResultIsNotNullNoLog<TK>()
 				{
 						Assert.IsNotNull(Result<TK>());
 						_log.Mock.VerifyNoOtherCalls();
