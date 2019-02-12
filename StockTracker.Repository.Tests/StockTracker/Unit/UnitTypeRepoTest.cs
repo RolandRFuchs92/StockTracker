@@ -77,7 +77,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_add, unitType.Name, unitType.Symbol);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 				#endregion
 
@@ -96,7 +96,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, (IUnitType)unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -112,7 +112,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 
@@ -129,7 +129,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -144,7 +144,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -191,7 +191,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						//Assert
 						ResultIsTrueNoLog();
 				}
-				#endregion
+		#endregion
 
 				#region List
 				[TestMethod]
@@ -204,7 +204,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_list);
 
 						//Assert
-						ResultIsNotNullNoLog<List<IUnitType>>();
+						AssertIsNotNullNoLog<List<IUnitType>>();
 				}
 				#endregion
 
