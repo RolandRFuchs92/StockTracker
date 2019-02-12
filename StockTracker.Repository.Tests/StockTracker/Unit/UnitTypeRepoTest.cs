@@ -77,7 +77,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_add, unitType.Name, unitType.Symbol);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 				#endregion
 
@@ -96,7 +96,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, (IUnitType)unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -112,7 +112,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 
@@ -129,7 +129,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -146,11 +146,22 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						//Assert
 						AssertDiffLogSuccess(unitType);
 				}
-				#endregion
+		#endregion
 
-				#region List
+		#region List
 
-			
+		[TestMethod]
+		public void List_PassNothing_GetDataNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_list);
+			var result = repo.Result;
+
+			//Assert
+		}
 				#endregion
 		}
 }
