@@ -42,7 +42,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						unit.Name = "";
 
 						//Act
-						repo.CreateResult(_add, unit);
+						repo.CreateResult(_add, unit.Name, unit.Symbol);
 						var result = repo.Result;
 
 						//Assert
@@ -62,7 +62,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_add, unitType.Name, unitType.Symbol);
 
 						//Assert
-						AssertSameLogSuccess(unitType);
+						AssertDiffLogSuccess(unitType);
 				}
 
 				[TestMethod]
@@ -133,6 +133,21 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 				}
 
 				[TestMethod]
+				public void Edit_PassInvalidId_ReturnNullLogError()
+				{
+						//Arrange
+						var repo = GetRepo();
+						var unitType = _unitType;
+						unitType.UnitTypeId = 0;
+
+						//Act
+						repo.CreateResult(_edit, unitType);
+
+						//Assert
+						ResultIsNullLogError<IUnitType>();
+				}
+
+				[TestMethod]
 				public void Edit_PassNewNameNewSymbol_ReturnNewUnitLogSuccess()
 				{
 						//Arrange
@@ -144,24 +159,54 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						AssertDiffLogSuccess(unitType);
+						AssertSameLogSuccess(unitType);
+				}
+				#endregion
+
+				#region IsValid
+				[TestMethod]
+				public void IsValid_PassInvalidTypeId_ReturnFalseNoLog()
+				{
+						//Arrange
+						var repo = GetRepo();
+						const int invalidId = 100;
+
+						//Act
+						repo.CreateResult(_isValid, invalidId);
+
+						//Assert
+						ResultIsFalseNoLog();
+				}
+
+				[TestMethod]
+				public void IsValid_PassValidTypeId_ReturnTrueDontLog()
+				{
+						//Arrange
+						var repo = GetRepo();
+						const int validId = 1;
+
+						//Act
+						repo.CreateResult(_isValid, validId);
+
+						//Assert
+						ResultIsTrueNoLog();
 				}
 		#endregion
 
-		#region List
+				#region List
+				[TestMethod]
+				public void List_NothingToPass_ReturnFullList()
+				{
+						//Arrange
+						var repo = GetRepo();
 
-		[TestMethod]
-		public void List_PassNothing_GetDataNoLog()
-		{
-			//Arrange
-			var repo = GetRepo();
+						//Act
+						repo.CreateResult(_list);
 
-			//Act
-			repo.CreateResult(_list);
-			var result = repo.Result;
-
-			//Assert
-		}
+						//Assert
+						ResultIsNotNullNoLog<List<IUnitType>>();
+				}
 				#endregion
+
 		}
 }
