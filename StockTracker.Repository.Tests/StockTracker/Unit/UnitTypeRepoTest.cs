@@ -144,7 +144,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_edit, unitType);
 
 						//Assert
-						ResultIsNullLogError<IUnitType>();
+						AssertIsNullLogError<IUnitType>();
 				}
 
 				[TestMethod]
@@ -204,7 +204,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_list);
 
 						//Assert
-						ResultIsNotNullNoLog<List<IUnitType>>();
+						AssertIsNotNullNoLog<List<IUnitType>>();
 				}
 				#endregion
 
