@@ -125,7 +125,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 		#region IsValid
 
 		[TestMethod]
-		public void IsValid_PassValidId_ReturnTrueLogSuccess()
+		public void IsValid_PassValidId_ReturnTrueNoLog()
 		{
 			//Arrange
 			var repo = GetRepo();
@@ -134,10 +134,22 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			repo.CreateResult(_isValid, 1);
 
 			//Assert
-			Assert
+			AssertIsTrueLogError();
 		}
 
-			#endregion
+		[TestMethod]
+		public void IsValid_PassInvalidId_ReturnTrueNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_isValid, 1000);
+
+			//Assert
+			AssertIsFalseNoLog();
+		}
+		#endregion
 
 		IStockCategory CreateStockCategory(int id = 0, string name = "Meat")
 		{

@@ -114,14 +114,51 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 		public virtual void AssertIsNotNullNoLog<TK>()
 		{
 			Assert.IsNotNull(Result<TK>());
-			_log.Mock.VerifyNoOtherCalls();
+			_log.NoLog();
 		}
 		#endregion
 
-		#region MyRegion
+		#region IsTrue
 
-		
+		public void AssertIsTrueLogSuccess()
+		{
+			Assert.IsTrue(_repo.Result);
+			_log.Success();
+		}
 
+		public void AssertIsTrueLogError()
+		{
+			Assert.IsTrue(_repo.Result);
+			_log.Error();
+		}
+
+		public void AssertIsTrueNoLog()
+		{
+			Assert.IsTrue(_repo.Result);
+			_log.NoLog();
+		}
+
+		#endregion
+
+		#region IsFalse
+
+		private void AssertIsFalseLogSuccess()
+		{
+			Assert.IsFalse(_repo.Result);
+			_log.Success();
+		}
+
+		public void AssertIsFalseLogError()
+		{
+			Assert.IsFalse(_repo.Result);
+			_log.Error();
+		}
+
+		public void AssertIsFalseNoLog()
+		{
+			Assert.IsFalse(_repo.Result);
+			_log.NoLog();
+		}
 		#endregion
 
 		public virtual TK Result<TK>()
