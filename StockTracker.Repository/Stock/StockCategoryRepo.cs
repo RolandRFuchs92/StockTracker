@@ -87,15 +87,32 @@ namespace StockTracker.Repository.Stock
 			}
 		}
 
-
 		public bool IsValid(int stockCategoryId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				return _db.StockCategories.Any(i => i .StockCategoryId == stockCategoryId);
+			}
+			catch (Exception e)
+			{
+				LogError(LoggingEvent.Error, $"There was an error checking if StockCategory[{stockCategoryId}] is valid.", e);
+				return false;
+			}
 		}
 
 		public List<IStockCategory> List()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var model = _db.StockCategories.ToList<IStockCategory>();
+
+				return model;
+			}
+			catch (Exception e)
+			{
+				LogError(LoggingEvent.Error, $"There was an error retrieving the List<StockCategory>.", e);
+				return null;
+			}
 		}
 	}
 }

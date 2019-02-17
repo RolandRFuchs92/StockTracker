@@ -135,7 +135,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
 			repo.CreateResult(_isValid, 1);
 
 			//Assert
-			AssertIsTrueLogError();
+			AssertIsTrueNoLog();
 		}
 
 		[TestMethod]
