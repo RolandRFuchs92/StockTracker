@@ -12,6 +12,7 @@ using StockTracker.Tests.Utils.AbstractClasses;
 
 namespace StockTracker.Repository.Test.StockTracker.Stock
 {
+	[TestClass]
 	public class StockCategoryRepoTest : TestUtils<StockCategoryRepo>
 	{
 		private const string _add = nameof(IStockCategoryRepo.Add);
