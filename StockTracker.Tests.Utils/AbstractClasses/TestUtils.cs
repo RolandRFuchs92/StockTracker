@@ -118,6 +118,12 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 		}
 		#endregion
 
+		#region MyRegion
+
+		
+
+		#endregion
+
 		public virtual TK Result<TK>()
 		{
 			return (TK)_repo.Result;

@@ -10,7 +10,7 @@ namespace StockTracker.Repository.Interface.Stock
 		public interface IStockCategoryRepo
 		{
 				IStockCategory Add(string categoryName);
-				IStockCategory Edit(int stockCategoryId, string categoryName);
+				IStockCategory Edit(IStockCategory stockCategory);
 				List<IStockCategory> List();
 				bool IsValid(int stockCategoryId);
 		}
