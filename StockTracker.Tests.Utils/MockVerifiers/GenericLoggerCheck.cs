@@ -44,6 +44,11 @@ namespace StockTracker.Tests.Utils.MockVerifiers
 
 		}
 
+		public void NoLog()
+		{
+			Mock.VerifyNoOtherCalls();
+		}
+
 		private Mock<ILoggerAdapter<T>> GetMockLogger()
 		{
 			var moq = new Mock<ILoggerAdapter<T>>();

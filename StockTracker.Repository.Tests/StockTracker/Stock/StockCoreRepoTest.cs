@@ -482,9 +482,9 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
                     break;
                 case nameof(IStockCategoryRepo.Edit):
                     if (throwsException)
-                        mockCategoryRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>())).Throws(excep);
+                        mockCategoryRepo.Setup(i => i.Edit(It.IsAny<IStockCategory>())).Throws(excep);
                     else
-                        mockCategoryRepo.Setup(i => i.Edit(It.IsAny<int>(), It.IsAny<string>())).Returns((IStockCategory)result);
+                        mockCategoryRepo.Setup(i => i.Edit(It.IsAny<IStockCategory>())).Returns((IStockCategory)result);
                     break;
                 case nameof(IStockCategoryRepo.IsValid):
                     if (throwsException)
