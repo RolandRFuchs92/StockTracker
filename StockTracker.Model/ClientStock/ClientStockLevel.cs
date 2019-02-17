@@ -10,16 +10,16 @@ using StockTracker.Model.Members;
 
 namespace StockTracker.Model.ClientStock
 {
-    public class ClientStockLevel : IClientStockLevel
-    {
-	    public int ClientStockLevelId { get; set; }
-	    public int ClientStockItemId { get; set; }
-	    public int MemberId { get; set; }
-	    public int Quantity { get; set; }
-	    public DateTime CreatedOn { get; set; }
-	    public bool IsActive { get; set; }
+	public class ClientStockLevel : IClientStockLevel
+	{
+		public int ClientStockLevelId { get; set; }
+		public int ClientStockItemId { get; set; }
+		public int MemberId { get; set; }
+		public int Quantity { get; set; }
+		public DateTime CreatedOn { get; set; }
+		public bool IsActive { get; set; }
 
 		public ClientStockItem ClientStockItem { get; set; }
 		public Member Member { get; set; }
-    }
+	}
 }

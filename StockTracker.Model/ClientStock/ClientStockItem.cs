@@ -11,17 +11,17 @@ using StockTracker.Model.Stock;
 
 namespace StockTracker.Model.ClientStock
 {
-    public class ClientStockItem : IClientStockItem
-    {
-	    public int ClientStockItemId { get; set; }
-	    public int StockCoreId { get; set; }
-	    public int ClientId { get; set; }
-	    public int StockMax { get; set; }
-	    public int StockMin { get; set; }
-	    public DateTime CreatedOn { get; set; }
-	    public bool IsActive { get; set; }
+	public class ClientStockItem : IClientStockItem
+	{
+		public int ClientStockItemId { get; set; }
+		public int StockCoreId { get; set; }
+		public int ClientId { get; set; }
+		public int StockMax { get; set; }
+		public int StockMin { get; set; }
+		public DateTime CreatedOn { get; set; }
+		public bool IsActive { get; set; }
 
 		public StockCore StockCore { get; set; }
 		public Client Client { get; set; }
-    }
+	}
 }
