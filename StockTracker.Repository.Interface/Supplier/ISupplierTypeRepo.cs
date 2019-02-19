@@ -11,7 +11,7 @@ namespace StockTracker.Repository.Interface.Supplier
     {
 	    ISupplierType Add(ISupplierType supplier);
 	    ISupplierType Edit(ISupplierType supplier);
-	    bool Delete(int supplierTypeId);
+	    bool IsValid(int supplierTypeId);
 	    List<ISupplierType> List();
     } 
 }
