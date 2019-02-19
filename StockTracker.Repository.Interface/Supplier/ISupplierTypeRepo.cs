@@ -9,8 +9,8 @@ namespace StockTracker.Repository.Interface.Supplier
 {
     public interface ISupplierTypeRepo
     {
-	    ISupplierType Add(ISupplierType supplier);
-	    ISupplierType Edit(ISupplierType supplier);
+	    ISupplierType Add(ISupplierType supplierType);
+	    ISupplierType Edit(ISupplierType supplierType);
 	    bool IsValid(int supplierTypeId);
 	    List<ISupplierType> List();
     } 
