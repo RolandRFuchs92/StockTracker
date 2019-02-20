@@ -168,11 +168,54 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 
 		#endregion
 
+		#region Delete
+
+		[TestMethod]
+		public void Delete_PassValidId_ReturnTrueLogSuccess()
+		{
+			//Arrange
+			var repo = GetRepo();
+			const int deleteId = 1;
+
+			//Act
+			repo.CreateResult(_delete, deleteId);
+
+			//Assert
+			AssertIsTrueLogSuccess();
+
+			var supplierDoesExsist = _db.Suppliers.Any(i => i.SupplierId == deleteId);
+			Assert.IsFalse(supplierDoesExsist);
+		}
+
+		[TestMethod]
+		public void Delete_PassInvalidId_ReturnFalseLogError()
+		{
+			//Arrange
+			var repo = GetRepo();
+			const int deleteId = 1;
+
+			//Act
+			repo.CreateResult(_edit, deleteId);
+
+			//Assert
+			AssertIsFalseLogError();
+
+			var supplierStillExists = _db.Suppliers.Any(i => i.SupplierId == deleteId);
+			Assert.IsTrue(supplierStillExists);
+		}
+		#endregion
+
+		#region Get
+
+		
+
+			#endregion
+
 		#region Dry
 		ISupplier GetSupplier(Dictionary<string, dynamic> replaceVals, Supplier originalModel = null)
 		{
-			return originalModel != null 
-				? originalModel.GetNewObject(replaceVals) 
+			return originalModel != null
+				? originalModel.GetNewObject(replaceVals)
 				: _defaultSupplier.One().GetNewObject(replaceVals);
 		}
 
