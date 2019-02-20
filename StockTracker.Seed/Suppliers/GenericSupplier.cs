@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
-using StockTracker.Model.Supplier;
+using StockTracker.Model.Suppliers;
 using StockTracker.Seed.Abstract;
 
 namespace StockTracker.Seed.Suppliers

@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Models.Supplier;
+using StockTracker.Interface.Models.Suppliers;
 using StockTracker.Model.StockSupplier;
 
-namespace StockTracker.Model.Supplier
+namespace StockTracker.Model.Suppliers
 {
 		public class Supplier : ISupplier
 		{
