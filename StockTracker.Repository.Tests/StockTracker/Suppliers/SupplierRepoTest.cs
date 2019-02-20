@@ -206,10 +206,78 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 		#endregion
 
 		#region Get
+		[TestMethod]
+		public void Get_PassValidId_ReturnSupplierWithSameIdNoLog()
+		{
+			//Arrange
+			const int supplierId = 1;
+			var repo = GetRepo();
+			var supplier = DbSupplier(supplierId);
 
-		
+			//Act
+			repo.CreateResult(_get, supplierId);
 
-			#endregion
+			//Assert
+			AssertSameNoLog(supplier);
+		}
+
+		[TestMethod]
+		public void Get_PassInvalidId_ReturnNullNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_get, 1);
+
+			//Assert
+			AssertIsNullLogError<ISupplier>();
+		}
+		#endregion
+
+		#region List
+		[TestMethod]
+		public void List_PassNothing_ReturnListOfSuppliersNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_list);
+
+			//Assert
+			AssertIsNotNullNoLog<List<ISupplier>>();
+		}
+		#endregion
+
+		#region ListBySupplier
+		[TestMethod]
+		public void ListBySupplier_PassValidSupplierTypeId_ReturnListOfSuppliersNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_listSuppliersByType, 1);
+
+			//Assert
+			AssertIsNotNullNoLog<List<ISupplier>>();
+		}
+
+		[TestMethod]
+		public void ListBySupplier_PassInvalidSupplierTypeId_ReturnNullNoLog()
+		{
+			//Arrange
+			var repo = GetRepo();
+
+			//Act
+			repo.CreateResult(_listSuppliersByType, 0);
+
+			//Assert
+			AssertIsNullLogError<List<ISupplier>>();
+		}
+
+		#endregion
 
 		#region Dry
 		ISupplier GetSupplier(Dictionary<string, dynamic> replaceVals, Supplier originalModel = null)
@@ -219,9 +287,12 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 				: _defaultSupplier.One().GetNewObject(replaceVals);
 		}
 
-		private Supplier DbSupplier()
+		private Supplier DbSupplier(int supplierId = 0)
 		{
-			return _db.Suppliers.FirstOrDefault();
+			if (supplierId == 0)
+				return _db.Suppliers.FirstOrDefault();
+
+			return _db.Suppliers.FirstOrDefault(i => i.SupplierId == supplierId);
 		}
 		#endregion
 	}

@@ -62,6 +62,12 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 			AssertSame(original);
 			_log.Error();
 		}
+
+		public virtual void AssertSameNoLog<TK>(TK original)
+		{
+			AssertSame(original);
+			_log.NoLog();
+		}
 		#endregion
 
 		#region Check Different
