@@ -17,11 +17,11 @@ namespace StockTracker.Repository.Stock
 {
     public class StockCoreRepo : IStockCoreRepo
     {
-        private IStockTypeRepo _stockTypeRepo;
-        private IStockTrackerContext _db;
-        private ILoggerAdapter<StockCoreRepo> _log;
-        private IStockCategoryRepo _stockCategoryRepo;
-        private ModelBinder _binder;
+        private readonly IStockTypeRepo _stockTypeRepo;
+        private readonly IStockTrackerContext _db;
+        private readonly ILoggerAdapter<StockCoreRepo> _log;
+        private readonly IStockCategoryRepo _stockCategoryRepo;
+        private readonly ModelBinder _binder;
 
         public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
         {
