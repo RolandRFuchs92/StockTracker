@@ -11,7 +11,7 @@ namespace StockTracker.Repository.Interface.Unit
     {
 	    IUnitType Add(string name, string symbol);
 	    IUnitType Edit(IUnitType unitType);
-	    IUnitType List();
-	    bool IsValid();
+	    List<IUnitType> List();
+	    bool IsValid(int unitTypeId);
     }
 }
