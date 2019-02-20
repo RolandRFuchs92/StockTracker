@@ -13,7 +13,7 @@ using StockTracker.Repository.Enums;
 using StockTracker.Repository.Interface.Suppliers;
 using StockTracker.Repository.Util;
 
-namespace StockTracker.Repository.Supplier
+namespace StockTracker.Repository.Suppliers
 {
 	public class SupplierTypeRepo : Logging<SupplierTypeRepo>, ISupplierTypeRepo
 	{

@@ -4,8 +4,11 @@ using StockTracker.Repository.Interface.Suppliers;
 using StockTracker.Repository.Suppliers;
 using StockTracker.Tests.Utils.AbstractClasses;
 using StockTracker.Model.Suppliers;
+using StockTracker.Seed.Suppliers;
+using System.Collections.Generic;
+using StockTracker.Tests.Utils.Extension;
 
-namespace StockTracker.Repository.Test.StockTracker.Supplier
+namespace StockTracker.Repository.Test.StockTracker.Suppliers
 {
 		[TestClass]
 		public class SupplierRepoTest : TestUtils<SupplierRepo>
@@ -16,25 +19,32 @@ namespace StockTracker.Repository.Test.StockTracker.Supplier
 				public const string _listSuppliersByType = nameof(ISupplierRepo.ListSuppliersByType);
 				public const string _get = nameof(ISupplierRepo.Get);
 				public const string _delete = nameof(ISupplierRepo.Delete);
+				private readonly GenericSupplier _defaultSupplier;
+
+				public SupplierRepoTest()
+				{
+						_defaultSupplier = new GenericSupplier();
+				}
 
 				[TestMethod]
 				public void Add_PassValidSupplierRepo_ReturnNewSupplierLogSuccess()
 				{
 						//Arrange
 						var repo = GetRepo();
+						var newSupplier = GetSupplier(new Dictionary<string, dynamic> { { nameof(ISupplier.SupplierId), 0 } });
 
 						//Act
-
+						repo.CreateResult(_add, newSupplier);
 
 						//Assert
-
+						AssertIsNotNullLogSuccess<ISupplier>();
 				}
 
 
 				#region Dry
-				ISupplier GetSupplier()
+				ISupplier GetSupplier(Dictionary<string, dynamic> replaceVals)
 				{
-						return (ISupplier)null;
+						return _defaultSupplier.One().GetNewObject(replaceVals);
 				}
 				#endregion
 		}
