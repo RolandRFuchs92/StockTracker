@@ -50,7 +50,27 @@ namespace StockTracker.Repository.Suppliers
 
 		public bool Delete(int supplierId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var model = _db.Suppliers.FirstOrDefault(i => i.SupplierId == supplierId);
+				if (model == null)
+				{
+					LogError(LoggingEvent.Error, $"Supplier[{supplierId}] was not found.");
+					return false;
+				}
+
+				_db.Suppliers.Remove(model);
+				_db.SaveChanges();
+
+				LogInformation(LoggingEvent.Delete, $"Successfully deleted Supplier[{supplierId}]");
+
+				return true;
+			}
+			catch (Exception e)
+			{
+				LogError(LoggingEvent.Error, $"There was an error while attempting to delete Supplier[{supplierId}]", e);
+				return false;
+			}
 		}
 
 		public ISupplier Edit(ISupplier supplier)
@@ -73,6 +93,7 @@ namespace StockTracker.Repository.Suppliers
 			throw new NotImplementedException();
 		}
 
+		#region Dry
 		bool IsValidSupplierModel(ISupplier supplier, bool isEdit = false)
 		{
 			if (string.IsNullOrEmpty(supplier.SupplierName))
@@ -114,5 +135,6 @@ namespace StockTracker.Repository.Suppliers
 
 			return true;
 		}
+		#endregion
 	}
 }
