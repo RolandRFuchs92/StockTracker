@@ -87,7 +87,11 @@ namespace StockTracker.Tests.Utils.AbstractClasses
 				#region IsNull
 				public virtual void AssertIsNullLogError<TK>()
 				{
-						Assert.IsNull(Result<TK>());
+						if (!(Result<TK>() is IList<TK>))
+								Assert.IsNull(Result<TK>());
+						else
+								Assert.AreEqual(((IList<TK>)Result<TK>()).Count, 0);
+
 						_log.Error();
 				}
 

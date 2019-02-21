@@ -218,6 +218,7 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 						//Arrange
 						const int supplierId = 1;
 						var repo = GetRepo();
+						PopulateSuppliers();
 						var supplier = DbSupplier(supplierId);
 
 						//Act
@@ -232,12 +233,13 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 				{
 						//Arrange
 						var repo = GetRepo();
+						PopulateSuppliers();
 
 						//Act
 						repo.CreateResult(_get, 1);
 
 						//Assert
-						AssertIsNullLogError<ISupplier>();
+						AssertIsNotNullNoLog<ISupplier>();
 				}
 				#endregion
 
@@ -247,6 +249,7 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 				{
 						//Arrange
 						var repo = GetRepo();
+						PopulateSuppliers();
 
 						//Act
 						repo.CreateResult(_list);
@@ -262,6 +265,7 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 				{
 						//Arrange
 						var repo = GetRepo();
+						PopulateSuppliers();
 
 						//Act
 						repo.CreateResult(_listSuppliersByType, 1);
@@ -275,12 +279,14 @@ namespace StockTracker.Repository.Test.StockTracker.Suppliers
 				{
 						//Arrange
 						var repo = GetRepo();
+						PopulateSuppliers();
 
 						//Act
 						repo.CreateResult(_listSuppliersByType, 0);
 
 						//Assert
-						AssertIsNullLogError<List<ISupplier>>();
+						Assert.IsTrue(Result<List<ISupplier>>().Count == 0);
+						_log.NoLog();
 				}
 
 				#endregion

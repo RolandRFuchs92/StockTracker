@@ -96,17 +96,42 @@ namespace StockTracker.Repository.Suppliers
 
 				public ISupplier Get(int supplierId)
 				{
-						throw new NotImplementedException();
+						try
+						{
+								return _db.Suppliers.FirstOrDefault<ISupplier>(i => i.SupplierId == supplierId);
+						}
+						catch (Exception e)
+						{
+								LogError(LoggingEvent.Error, $"There was an error trying to get Supplier[{supplierId}]", e);
+								return null;
+						}
+						
 				}
 
 				public List<ISupplier> List()
 				{
-						throw new NotImplementedException();
+						try
+						{
+								return _db.Suppliers.ToList<ISupplier>();
+						}
+						catch (Exception e)
+						{
+								LogError(LoggingEvent.Error, "There was an error retrieving a list of Suppliers.", e);
+								return null;
+						}
 				}
 
-				public List<ISupplier> ListSuppliersByType(int supplierType)
+				public List<ISupplier> ListSuppliersByType(int supplierTypeId)
 				{
-						throw new NotImplementedException();
+						try
+						{
+								return _db.Suppliers.Where(i => i.SupplierTypeId == supplierTypeId).ToList<ISupplier>();
+						}
+						catch(Exception e)
+						{
+								LogError(LoggingEvent.Error, $"There was an error retrieving a list of suppliers of type SupplierType[{supplierTypeId}]", e);
+								return null;
+						}
 				}
 
 				#region Dry
