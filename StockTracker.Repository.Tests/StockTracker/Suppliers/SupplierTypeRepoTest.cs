@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTracker.Context;
-using StockTracker.Interface.Models.Supplier;
-using StockTracker.Model.Supplier;
+using StockTracker.Interface.Models.Suppliers;
+using StockTracker.Model.Suppliers;
 using StockTracker.Repository.Interface.Stock;
-using StockTracker.Repository.Supplier;
+using StockTracker.Repository.Suppliers;
 using StockTracker.Tests.Utils.AbstractClasses;
 using StockTracker.Tests.Utils.Context;
 
-namespace StockTracker.Repository.Test.StockTracker.Supplier
+namespace StockTracker.Repository.Test.StockTracker.Suppliers
 {
 	[TestClass]
 	public class SupplierTypeRepoTest : TestUtils<SupplierTypeRepo>

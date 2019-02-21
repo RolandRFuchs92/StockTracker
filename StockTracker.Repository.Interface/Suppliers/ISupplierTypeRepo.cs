@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockTracker.Interface.Models.Supplier;
+using StockTracker.Interface.Models.Suppliers;
 
-namespace StockTracker.Repository.Interface.Supplier
+namespace StockTracker.Repository.Interface.Suppliers
 {
     public interface ISupplierTypeRepo
     {

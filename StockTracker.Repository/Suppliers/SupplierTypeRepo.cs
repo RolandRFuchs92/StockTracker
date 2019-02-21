@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
-using StockTracker.Interface.Models.Supplier;
-using StockTracker.Model.Supplier;
+using StockTracker.Interface.Models.Suppliers;
+using StockTracker.Model.Suppliers;
 using StockTracker.Repository.Enums;
-using StockTracker.Repository.Interface.Supplier;
+using StockTracker.Repository.Interface.Suppliers;
 using StockTracker.Repository.Util;
 
-namespace StockTracker.Repository.Supplier
+namespace StockTracker.Repository.Suppliers
 {
 	public class SupplierTypeRepo : Logging<SupplierTypeRepo>, ISupplierTypeRepo
 	{

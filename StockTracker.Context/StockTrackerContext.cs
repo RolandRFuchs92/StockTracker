@@ -15,8 +15,8 @@ using StockTracker.Model.Stock;
 using StockTracker.Model.Stock.Config;
 using StockTracker.Model.StockSupplier;
 using StockTracker.Model.StockSupplier.Config;
-using StockTracker.Model.Supplier;
-using StockTracker.Model.Supplier.Config;
+using StockTracker.Model.Suppliers;
+using StockTracker.Model.Suppliers.Config;
 using StockTracker.Model.Unit;
 using StockTracker.Model.Unit.Config;
 

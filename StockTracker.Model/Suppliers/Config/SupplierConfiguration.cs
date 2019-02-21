@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace StockTracker.Model.Supplier.Config
+namespace StockTracker.Model.Suppliers.Config
 {
     public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
     {

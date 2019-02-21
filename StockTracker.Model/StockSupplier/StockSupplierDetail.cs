@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StockTracker.Interface.Models.StockSupplier;
 using StockTracker.Model.Members;
 using StockTracker.Model.Stock;
+using StockTracker.Model.Suppliers;
 using StockTracker.Model.Unit;
 
 namespace StockTracker.Model.StockSupplier
@@ -23,7 +24,7 @@ namespace StockTracker.Model.StockSupplier
 				public DateTime CreatedOn { get; set; }
 
 				public Member Member { get; set; }
-				public Supplier.Supplier Supplier { get; set; }
+				public Supplier Supplier { get; set; }
 				public UnitType UnitType { get; set; }
 
 				public ICollection<StockCore> StockCore { get; set; }
