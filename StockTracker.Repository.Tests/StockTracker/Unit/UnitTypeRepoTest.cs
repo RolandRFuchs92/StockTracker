@@ -62,7 +62,7 @@ namespace StockTracker.Repository.Test.StockTracker.Unit
 						repo.CreateResult(_add, unitType.Name, unitType.Symbol);
 
 						//Assert
-						AssertDiffLogSuccess(unitType);
+						AssertIsNotNullLogSuccess<IUnitType>();
 				}
 
 				[TestMethod]
