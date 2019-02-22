@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Adapter.Logger;
 
 namespace StockTracker.API.Controllers
@@ -11,11 +12,11 @@ namespace StockTracker.API.Controllers
 		[Route("api/[controller]")]
 		public class LogController : ControllerBase
 		{
-				private readonly LoggerAdapter<LogController> _log;
+				private readonly ILoggerAdapter<LogController> _log;
 
-				public LogController(ILogger<LogController> logger)
+				public LogController(ILoggerAdapter<LogController> logger)
 				{
-						_log = new LoggerAdapter<LogController>(logger);
+						_log = logger;
 				}
 
 				[Route("Log")]

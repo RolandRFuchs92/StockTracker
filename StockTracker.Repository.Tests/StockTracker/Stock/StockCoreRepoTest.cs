@@ -31,7 +31,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         private IStockCoreRepo _repo;
         private IStockTrackerContext _db;
         private GenericLoggerCheck<StockCoreRepo> _check;
-        private Mock<ILogger<StockCoreRepo>> _log;
+        private Mock<ILoggerAdapter<StockCoreRepo>> _log;
         private GenericStockCore _genericStock;
 
         private const string _changeStockType = nameof(StockCoreRepo.ChangeStockType);

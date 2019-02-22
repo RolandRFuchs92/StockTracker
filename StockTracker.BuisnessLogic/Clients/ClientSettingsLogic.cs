@@ -20,10 +20,10 @@ namespace StockTracker.BuisnessLogic.Clients
 				private IClientSettingsRepo _repo;
 				private ILoggerAdapter<ClientSettingsLogic> _log;
 
-				public ClientSettingsLogic(IClientSettingsRepo repo, ILogger<ClientSettingsLogic> log)
+				public ClientSettingsLogic(IClientSettingsRepo repo, ILoggerAdapter<ClientSettingsLogic> log)
 				{
 						_repo = repo;
-						_log = new LoggerAdapter<ClientSettingsLogic>(log);
+						_log = log;
 				}
 
 				public IResult<IClientSettings> Add(IClientSettings clientSettings)

@@ -21,9 +21,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 				private IStockTrackerContext _db;
 				private IClientRepo _clientRepo;
 				private GenericClients _genClient;
-				private ILogger<ClientRepo> _logger;
+				private ILoggerAdapter<ClientRepo> _logger;
 
-				private Mock<ILogger<ClientRepo>> _mock;
+				private Mock<ILoggerAdapter<ClientRepo>> _mock;
 
 				public ClientsRepoTest()
 				{
@@ -33,9 +33,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 						_clientRepo = new ClientRepo(_db, _logger);
 				}
 
-				private ILogger<ClientRepo> MockLogger()
+				private ILoggerAdapter<ClientRepo> MockLogger()
 				{
-						_mock = new Mock<ILogger<ClientRepo>>();
+						_mock = new Mock<ILoggerAdapter<ClientRepo>>();
 
 						_mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
 						_mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));

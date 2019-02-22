@@ -21,10 +21,10 @@ namespace StockTracker.Repository.Clients
 				private IStockTrackerContext _db;
 				private ILoggerAdapter<ClientRepo> _log;
 
-				public ClientRepo(IStockTrackerContext db, ILogger<ClientRepo> log)
+				public ClientRepo(IStockTrackerContext db, ILoggerAdapter<ClientRepo> log)
 				{
 						_db = db;
-						_log = new LoggerAdapter<ClientRepo>(log);
+						_log = log;
 				}
 
 				public bool Add(IClient newClient)

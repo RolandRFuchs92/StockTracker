@@ -19,7 +19,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
         private IClientSettingsLogic _clientSettingsLogic;
         private GenericClientSettings _genericClientSettings;
         private GenericLoggerCheck<ClientSettingsLogic> _genericLog;
-        private ILogger<ClientSettingsLogic> _log;
+        private ILoggerAdapter<ClientSettingsLogic> _log;
 
         public ClientSettingsLogicTest()
         {

@@ -7,7 +7,7 @@ namespace StockTracker.Tests.Utils.MockVerifiers
 {
 	public class GenericLoggerCheck<T>
 	{
-		public Mock<ILogger<T>> Mock { get; }
+		public Mock<ILoggerAdapter<T>> Mock { get; }
 
 		public GenericLoggerCheck()
 		{
@@ -50,9 +50,9 @@ namespace StockTracker.Tests.Utils.MockVerifiers
 			Mock.VerifyNoOtherCalls();
 		}
 
-		private Mock<ILogger<T>> GetMockLogger()
+		private Mock<ILoggerAdapter<T>> GetMockLogger()
 		{
-			var moq = new Mock<ILogger<T>>();
+			var moq = new Mock<ILoggerAdapter<T>>();
 			moq.Setup(i => i.LogInformation(It.IsAny<int>(), It.IsAny<string>()));
 			moq.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
 			moq.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));

@@ -26,7 +26,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
     {
         private Mock<IClientRepo> _moqClientRepo;
         private GenericLoggerCheck<ClientLogic> _genericLogger;
-        private ILogger<ClientLogic> _logger;
+        private ILoggerAdapter<ClientLogic> _logger;
 
         public ClientLogicTest()
         {

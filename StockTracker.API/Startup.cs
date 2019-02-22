@@ -42,6 +42,7 @@ namespace StockTracker.API
 						services.AddTransient<IStockTrackerContext, StockTrackerContext>();
 						services.AddTransient<IClientRepo, ClientRepo>();
 						services.AddTransient<IClientLogic, ClientLogic>();
+						services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
 						services.AddLogging();
 				}
