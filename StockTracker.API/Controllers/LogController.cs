@@ -13,6 +13,7 @@ namespace StockTracker.API.Controllers
 		public class LogController : ControllerBase
 		{
 				private readonly ILoggerAdapter<LogController> _log;
+				private static int pagehits = 0;
 
 				public LogController(ILoggerAdapter<LogController> logger)
 				{
@@ -25,6 +26,14 @@ namespace StockTracker.API.Controllers
 				{
 						_log.LogInformation(1, "Hello world.");
 						return Ok(new { message = "moo." });
+				}
+
+				[Route("Hello")]
+				[HttpGet]
+				public IActionResult Hello() 
+				{
+						pagehits++;
+						return Ok(pagehits);
 				}
 		}
 }
