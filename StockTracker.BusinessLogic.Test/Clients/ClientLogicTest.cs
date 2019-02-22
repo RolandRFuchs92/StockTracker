@@ -17,6 +17,7 @@ using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients.Generic;
 using StockTracker.Tests.Utils.MockVerifiers;
+using Microsoft.Extensions.Logging;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {
