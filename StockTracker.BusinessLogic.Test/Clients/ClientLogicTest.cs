@@ -17,6 +17,7 @@ using StockTracker.Repository.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients.Generic;
 using StockTracker.Tests.Utils.MockVerifiers;
+using Microsoft.Extensions.Logging;
 
 namespace StockTracker.BusinessLogic.Test.Clients
 {
@@ -25,7 +26,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
     {
         private Mock<IClientRepo> _moqClientRepo;
         private GenericLoggerCheck<ClientLogic> _genericLogger;
-        private ILoggerAdapter<ClientLogic> _logger;
+        private ILogger<ClientLogic> _logger;
 
         public ClientLogicTest()
         {

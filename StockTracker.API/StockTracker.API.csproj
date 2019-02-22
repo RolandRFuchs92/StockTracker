@@ -11,9 +11,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+				<PackageReference Include="Serilog.Extensions.Logging.File" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockTracker.Adapter\StockTracker.Adapter.csproj" />
     <ProjectReference Include="..\StockTracker.API.Interface\StockTracker.API.Interface.csproj" />
     <ProjectReference Include="..\StockTracker.BuisnessLogic\StockTracker.BuisnessLogic.csproj" />
     <ProjectReference Include="..\StockTracker.BusinessLogic.Inteface\StockTracker.BusinessLogic.Interface.csproj" />

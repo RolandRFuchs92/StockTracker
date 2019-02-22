@@ -11,6 +11,8 @@ using StockTracker.Interface.Models.Clients;
 using StockTracker.Repository.Interface.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Repository.Enums;
+using Microsoft.Extensions.Logging;
+using StockTracker.Adapter.Logger;
 
 namespace StockTracker.BuisnessLogic.Clients
 {
@@ -19,10 +21,10 @@ namespace StockTracker.BuisnessLogic.Clients
         private readonly IClientRepo _clientRepo;
         private readonly ILoggerAdapter<ClientLogic> _log;
 
-        public ClientLogic(IClientRepo clientRepo, ILoggerAdapter<ClientLogic> log)
+        public ClientLogic(IClientRepo clientRepo, ILogger<ClientLogic> log)
         {
             _clientRepo = clientRepo;
-            _log = log;
+            _log = new LoggerAdapter<ClientLogic>(log);
         }
 
         public IResult<bool> AddClient(IClient newClient)

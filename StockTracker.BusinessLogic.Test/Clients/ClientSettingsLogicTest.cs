@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
@@ -18,7 +19,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
         private IClientSettingsLogic _clientSettingsLogic;
         private GenericClientSettings _genericClientSettings;
         private GenericLoggerCheck<ClientSettingsLogic> _genericLog;
-        private ILoggerAdapter<ClientSettingsLogic> _log;
+        private ILogger<ClientSettingsLogic> _log;
 
         public ClientSettingsLogicTest()
         {
