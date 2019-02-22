@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.Context;
 using StockTracker.Context.Interface;
@@ -19,28 +20,28 @@ namespace StockTracker.Repository.Stock
     {
         private readonly IStockTypeRepo _stockTypeRepo;
         private readonly IStockTrackerContext _db;
-        private readonly ILoggerAdapter<StockCoreRepo> _log;
+        private readonly ILogger<StockCoreRepo> _log;
         private readonly IStockCategoryRepo _stockCategoryRepo;
         private readonly ModelBinder _binder;
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log)
+        public StockCoreRepo(IStockTrackerContext db, ILogger<StockCoreRepo> log)
         {
             _binder = new ModelBinder();
             _db = db;
             _log = log;
         }
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockTypeRepo stockTypeRepo) : this(db, log)
+        public StockCoreRepo(IStockTrackerContext db, ILogger<StockCoreRepo> log, IStockTypeRepo stockTypeRepo) : this(db, log)
         {
             _stockTypeRepo = stockTypeRepo;
         }
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo) : this(db, log)
+        public StockCoreRepo(IStockTrackerContext db, ILogger<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo) : this(db, log)
         {
             _stockCategoryRepo = stockCategoryRepo;
         }
 
-        public StockCoreRepo(IStockTrackerContext db, ILoggerAdapter<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo) : this(db, log)
+        public StockCoreRepo(IStockTrackerContext db, ILogger<StockCoreRepo> log, IStockCategoryRepo stockCategoryRepo, IStockTypeRepo stockTypeRepo) : this(db, log)
         {
             _stockTypeRepo = stockTypeRepo;
             _stockCategoryRepo = stockCategoryRepo;

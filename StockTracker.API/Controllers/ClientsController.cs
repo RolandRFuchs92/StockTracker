@@ -19,19 +19,16 @@ namespace StockTracker.API.Controllers
 		public class ClientsController : ControllerBase, IClientsController
 		{
 				private IClientLogic _clientLogic;
-				private ILoggerAdapter<ClientsController> _log;
 
-				public ClientsController(IClientLogic clientLogic, ILogger<ClientsController> log)
+				public ClientsController(IClientLogic clientLogic)
 				{
 						_clientLogic = clientLogic;
-						_log = new LoggerAdapter<ClientsController>(log);
 				}
 
 				[Route("Log")]
 				[HttpGet]
 				public IActionResult Log() 
 				{
-						_log.LogInformation(1, "MOOOOOOOOOOOOOOOOOOOOOO");
 
 						return Ok(new { message = "Hello, World!"});
 				}

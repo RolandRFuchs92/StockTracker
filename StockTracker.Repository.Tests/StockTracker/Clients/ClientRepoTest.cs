@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.Adapter.Interface.Logger;
@@ -20,9 +21,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 				private IStockTrackerContext _db;
 				private IClientRepo _clientRepo;
 				private GenericClients _genClient;
-				private ILoggerAdapter<ClientRepo> _logger;
+				private ILogger<ClientRepo> _logger;
 
-				private Mock<ILoggerAdapter<ClientRepo>> _mock;
+				private Mock<ILogger<ClientRepo>> _mock;
 
 				public ClientsRepoTest()
 				{
@@ -32,9 +33,9 @@ namespace StockTracker.Repository.Test.StockTracker.Clients
 						_clientRepo = new ClientRepo(_db, _logger);
 				}
 
-				private ILoggerAdapter<ClientRepo> MockLogger()
+				private ILogger<ClientRepo> MockLogger()
 				{
-						_mock = new Mock<ILoggerAdapter<ClientRepo>>();
+						_mock = new Mock<ILogger<ClientRepo>>();
 
 						_mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<string>()));
 						_mock.Setup(i => i.LogError(It.IsAny<int>(), It.IsAny<Exception>(), It.IsAny<string>()));

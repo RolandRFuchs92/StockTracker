@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StockTracker.Adapter.Interface.Logger;
+using StockTracker.Adapter.Logger;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.BusinessLogic.Interface.Poco;
@@ -18,10 +20,10 @@ namespace StockTracker.BuisnessLogic.Clients
 				private IClientSettingsRepo _repo;
 				private ILoggerAdapter<ClientSettingsLogic> _log;
 
-				public ClientSettingsLogic(IClientSettingsRepo repo, ILoggerAdapter<ClientSettingsLogic> log)
+				public ClientSettingsLogic(IClientSettingsRepo repo, ILogger<ClientSettingsLogic> log)
 				{
 						_repo = repo;
-						_log = log;
+						_log = new LoggerAdapter<ClientSettingsLogic>(log);
 				}
 
 				public IResult<IClientSettings> Add(IClientSettings clientSettings)

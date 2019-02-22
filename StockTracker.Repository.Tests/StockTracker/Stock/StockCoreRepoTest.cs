@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -30,7 +31,7 @@ namespace StockTracker.Repository.Test.StockTracker.Stock
         private IStockCoreRepo _repo;
         private IStockTrackerContext _db;
         private GenericLoggerCheck<StockCoreRepo> _check;
-        private Mock<ILoggerAdapter<StockCoreRepo>> _log;
+        private Mock<ILogger<StockCoreRepo>> _log;
         private GenericStockCore _genericStock;
 
         private const string _changeStockType = nameof(StockCoreRepo.ChangeStockType);
