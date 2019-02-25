@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockTracker.Adapter.Interface.Logger;
@@ -22,6 +23,7 @@ namespace StockTracker.API.Controllers
 
 				[Route("Log")]
 				[HttpGet]
+				[DisableCors]
 				public IActionResult Index()
 				{
 						_log.LogInformation(1, "Hello world.");
