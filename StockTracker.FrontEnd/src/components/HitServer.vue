@@ -28,8 +28,8 @@
 				},
 				methods: {
 						greet: async function () {
-								var response = await axios.get('http://localhost:61751/api/log/hello');
-								this.info = response.data;
+								var response = await axios.get('http://localhost:61751/api/log/log');
+								this.info = response.data.message;
 						}
 				},
 				created() {
