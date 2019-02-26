@@ -59,8 +59,9 @@ namespace StockTracker.API
 						loggerFactory.AddFile("c:/temp/MOOOOOO-{Date}.txt");
 
 						app.UseCors(builder => builder
-								.WithOrigins("http://localhost:61751")
+								.WithOrigins("http://localhost:8080")
 								.AllowAnyHeader());
+
 						app.UseMvc();
 				}
 		}

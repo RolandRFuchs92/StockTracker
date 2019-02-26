@@ -6,7 +6,7 @@
 				<button v-on:click="counter += 1;">Submit</button>
 				<div>submit was clicked {{ counter }} time/s</div>
 				<br />
-				<button v-on:click="greet">Moooo!</button>
+				<button v-on:click="greet">Hit Sever.</button>
 				<br />
 				<label>This is the payload...</label>
 				<div id="payload">{{ info }}</div>
@@ -27,11 +27,9 @@
 						}
 				},
 				methods: {
-						greet: function (event) {
-								alert('Hello ' + this.name);
-								if (event) {
-										alert(event.target.tagName);
-								}
+						greet: async function () {
+								var response = await axios.get('http://localhost:61751/api/log/hello');
+								this.info = response.data;
 						}
 				},
 				created() {
