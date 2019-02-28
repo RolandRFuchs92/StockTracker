@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "vue": "2.5.17"
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.13",
+    "vue": "^2.5.17"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "3.0.4",
+    "@vue/cli-plugin-babel": "^3.4.1",
     "@vue/cli-plugin-eslint": "3.0.4",
     "@vue/cli-service": "3.0.4",
     "eslint": "5.6.0",

@@ -25,14 +25,6 @@ namespace StockTracker.API.Controllers
 			_clientLogic = clientLogic;
 		}
 
-		[Route("Log")]
-		[HttpGet]
-		public IActionResult Log()
-		{
-
-			return Ok(new { message = "Hello, World!" });
-		}
-
 		[Route("Add")]
 		[HttpPost]
 		public IActionResult Add(Client client)

@@ -37,5 +37,27 @@ namespace StockTracker.API.Controllers
 			pagehits++;
 			return Ok(pagehits);
 		}
+
+		[Route("List")]
+		[HttpGet]
+		public IActionResult List()
+		{
+			var list = new List<string>
+			{
+				"Roland",
+				"Is",
+				"the",
+				"Man",
+				"and",
+				"can",
+				"waste",
+				"time",
+				"making",
+				"string",
+				"lists"
+			};
+
+			return Ok(list);
+		}
 	}
 }
