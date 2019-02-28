@@ -1,14 +1,10 @@
 <template>
 		<div id="app">
-			<vue2-sidebar heading="Welcome back, Roland">
-			<b-container fluid>
-				<b-row>
-					<b-col xl="2" lg="4" md="5" style="background-color: lightblue;">col 1</b-col>
-					<b-col style="background-color: red;">col 2</b-col>
-				</b-row>
-			</b-container>
-				<router-view/>
-			</vue2-sidebar>
+			<sidebar-menu :menu="menu">
+				<b-container fluid>
+					<router-view/>
+				</b-container>
+			</sidebar-menu>
 		</div>
 </template>
 
@@ -16,8 +12,51 @@
 	import 'bootstrap/dist/css/bootstrap.css';
 	import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+
 		export default {
-				name: 'app'
+				name: 'app',
+				data() {
+					return {
+						   menu: [
+                    {
+                        header: true,
+                        title: 'Welcome back, Roland',
+                        // component: componentName
+                        // visibleOnCollapse: true
+                    },
+                    {
+                        title: 'Clients',
+												icon: 'fa fa-user',
+												child: [
+													{
+														href: '/clients/edit',
+														title: 'Edit'
+													},
+													{
+														href: '/clients/add',
+														title: 'Add'
+													},
+													{
+														title: 'Reports',
+														child: [
+																{
+																	href: '/clients/list',
+																	title: 'All Clients'
+																},
+																{
+																	href: '/clients/list?isActive=true',
+																	title: 'ActiveClients'
+																}
+														]
+													}
+												]
+                    },
+                    {
+                        title: 'Charts',
+                        icon: 'fa fa-chart-area',
+                    }]
+					}
+			},				
 		};
 </script>
 
