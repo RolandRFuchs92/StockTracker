@@ -14,5 +14,7 @@ namespace StockTracker.Repository.Interface.Clients
 	    bool Edit(IClient editClient);
 	    IClient Get(int clientId);
 	    IClient Get(string name);
-	}
+	    List<IClient> GetAll();
+	    List<IClient> GetActive();
+    }
 }
