@@ -10,102 +10,21 @@ using StockTracker.Context;
 namespace StockTracker.API.Migrations
 {
     [DbContext(typeof(StockTrackerContext))]
-    [Migration("20181115201115_initial")]
-    partial class initial
+    [Migration("20190303072934_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("StockTracker.Model.Clients.Client", b =>
-                {
-                    b.Property<int>("ClientId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("NVARCHAR(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(100)");
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DateTime")
-                        .HasDefaultValueSql("GetDate()");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("BIT");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("Bit");
-
-                    b.Property<DateTime?>("LastCheckup")
-                        .HasColumnType("DateTime");
-
-                    b.HasKey("ClientId");
-
-                    b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("StockTracker.Model.Clients.ClientSettings", b =>
-                {
-                    b.Property<int>("ClientSettingsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("CanAnyoneAddStock")
-                        .HasColumnType("Bit");
-
-                    b.Property<bool>("CanEmailManagers")
-                        .HasColumnType("Bit");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("Int");
-
-                    b.Property<DateTime>("CloseTime")
-                        .HasColumnType("DateTime");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<DateTime>("OpenTime")
-                        .HasColumnType("DateTime");
-
-                    b.Property<int>("TotalUsers")
-                        .HasColumnType("Int");
-
-                    b.HasKey("ClientSettingsId");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
-                    b.ToTable("ClientSettings");
-                });
 
             modelBuilder.Entity("StockTracker.Model.ClientStock.ClientStockItem", b =>
                 {
                     b.Property<int>("ClientStockItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ClientId")
@@ -143,7 +62,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("ClientStockLevelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ClientStockItemId")
@@ -174,11 +92,86 @@ namespace StockTracker.API.Migrations
                     b.ToTable("ClientStockLevel");
                 });
 
+            modelBuilder.Entity("StockTracker.Model.Clients.Client", b =>
+                {
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("NVARCHAR(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(100)");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTime?>("LastCheckup")
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("ClientId");
+
+                    b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("StockTracker.Model.Clients.ClientSettings", b =>
+                {
+                    b.Property<int>("ClientSettingsId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CanAnyoneAddStock")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("CanEmailManagers")
+                        .HasColumnType("Bit");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("Int");
+
+                    b.Property<DateTime>("CloseTime")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<DateTime>("OpenTime")
+                        .HasColumnType("DateTime");
+
+                    b.Property<int>("TotalUsers")
+                        .HasColumnType("Int");
+
+                    b.HasKey("ClientSettingsId");
+
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
+                    b.ToTable("ClientSettings");
+                });
+
             modelBuilder.Entity("StockTracker.Model.Comm.CommCore", b =>
                 {
                     b.Property<int>("CommCoreId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("ChangedOn")
@@ -213,41 +206,27 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("CommDetailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CommErrorId")
-                        .HasColumnType("INT");
+                    b.Property<int>("CommErrorId");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("INT");
+                    b.Property<int>("MemberId");
 
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                    b.Property<string>("Message");
 
-                    b.Property<string>("Recipients")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(2048)");
+                    b.Property<string>("Recipients");
 
-                    b.Property<string>("Response")
-                        .HasColumnType("NVARCHAR(2048)");
+                    b.Property<string>("Response");
 
-                    b.Property<string>("Sender")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(200)");
+                    b.Property<string>("Sender");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(256)");
+                    b.Property<string>("Subject");
 
                     b.HasKey("CommDetailId");
 
-                    b.HasIndex("CommErrorId")
-                        .IsUnique();
+                    b.HasIndex("CommErrorId");
 
-                    b.HasIndex("MemberId")
-                        .IsUnique();
+                    b.HasIndex("MemberId");
 
                     b.ToTable("CommDetail");
                 });
@@ -256,25 +235,15 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("CommErrorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedOn");
 
-                    b.Property<string>("Exception")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                    b.Property<string>("Exception");
 
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(2048)");
+                    b.Property<string>("Note");
 
-                    b.Property<string>("StackTrace")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                    b.Property<string>("StackTrace");
 
                     b.HasKey("CommErrorId");
 
@@ -285,7 +254,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("CommSendStatusTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CommSendStatusName")
@@ -297,19 +265,37 @@ namespace StockTracker.API.Migrations
                     b.ToTable("CommSendStatusType");
 
                     b.HasData(
-                        new { CommSendStatusTypeId = 1, CommSendStatusName = "Qued" },
-                        new { CommSendStatusTypeId = 2, CommSendStatusName = "Processing" },
-                        new { CommSendStatusTypeId = 3, CommSendStatusName = "Sent" },
-                        new { CommSendStatusTypeId = 4, CommSendStatusName = "Failed" },
-                        new { CommSendStatusTypeId = 5, CommSendStatusName = "Pending" }
-                    );
+                        new
+                        {
+                            CommSendStatusTypeId = 1,
+                            CommSendStatusName = "Qued"
+                        },
+                        new
+                        {
+                            CommSendStatusTypeId = 2,
+                            CommSendStatusName = "Processing"
+                        },
+                        new
+                        {
+                            CommSendStatusTypeId = 3,
+                            CommSendStatusName = "Sent"
+                        },
+                        new
+                        {
+                            CommSendStatusTypeId = 4,
+                            CommSendStatusName = "Failed"
+                        },
+                        new
+                        {
+                            CommSendStatusTypeId = 5,
+                            CommSendStatusName = "Pending"
+                        });
                 });
 
             modelBuilder.Entity("StockTracker.Model.Comm.CommType", b =>
                 {
                     b.Property<int>("CommTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CommName")
@@ -321,18 +307,32 @@ namespace StockTracker.API.Migrations
                     b.ToTable("CommType");
 
                     b.HasData(
-                        new { CommTypeId = 1, CommName = "SMS" },
-                        new { CommTypeId = 2, CommName = "Email" },
-                        new { CommTypeId = 3, CommName = "App" },
-                        new { CommTypeId = 4, CommName = "WhatsApp" }
-                    );
+                        new
+                        {
+                            CommTypeId = 1,
+                            CommName = "SMS"
+                        },
+                        new
+                        {
+                            CommTypeId = 2,
+                            CommName = "Email"
+                        },
+                        new
+                        {
+                            CommTypeId = 3,
+                            CommName = "App"
+                        },
+                        new
+                        {
+                            CommTypeId = 4,
+                            CommName = "WhatsApp"
+                        });
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Member.Member", b =>
+            modelBuilder.Entity("StockTracker.Model.Members.Member", b =>
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ClientId")
@@ -353,8 +353,7 @@ namespace StockTracker.API.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("MemberRoleId")
-                        .IsUnique();
+                    b.HasIndex("MemberRoleId");
 
                     b.HasIndex("PersonId")
                         .IsUnique();
@@ -362,12 +361,14 @@ namespace StockTracker.API.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Member.MemberRole", b =>
+            modelBuilder.Entity("StockTracker.Model.Members.MemberRole", b =>
                 {
                     b.Property<int>("MemberRoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
 
                     b.Property<string>("MemberRoleName")
                         .IsRequired()
@@ -378,22 +379,60 @@ namespace StockTracker.API.Migrations
                     b.ToTable("MemberRoles");
 
                     b.HasData(
-                        new { MemberRoleId = 1, MemberRoleName = "Managing Director" },
-                        new { MemberRoleId = 2, MemberRoleName = "Admin" },
-                        new { MemberRoleId = 3, MemberRoleName = "Team Leader" },
-                        new { MemberRoleId = 4, MemberRoleName = "Manager" },
-                        new { MemberRoleId = 5, MemberRoleName = "Waiter" },
-                        new { MemberRoleId = 6, MemberRoleName = "Chef" },
-                        new { MemberRoleId = 7, MemberRoleName = "Sculler" },
-                        new { MemberRoleId = 8, MemberRoleName = "Staff" }
-                    );
+                        new
+                        {
+                            MemberRoleId = 1,
+                            IsActive = true,
+                            MemberRoleName = "Managing Director"
+                        },
+                        new
+                        {
+                            MemberRoleId = 2,
+                            IsActive = true,
+                            MemberRoleName = "Admin"
+                        },
+                        new
+                        {
+                            MemberRoleId = 3,
+                            IsActive = true,
+                            MemberRoleName = "Team Leader"
+                        },
+                        new
+                        {
+                            MemberRoleId = 4,
+                            IsActive = true,
+                            MemberRoleName = "Manager"
+                        },
+                        new
+                        {
+                            MemberRoleId = 5,
+                            IsActive = true,
+                            MemberRoleName = "Waiter"
+                        },
+                        new
+                        {
+                            MemberRoleId = 6,
+                            IsActive = true,
+                            MemberRoleName = "Chef"
+                        },
+                        new
+                        {
+                            MemberRoleId = 7,
+                            IsActive = true,
+                            MemberRoleName = "Sculler"
+                        },
+                        new
+                        {
+                            MemberRoleId = 8,
+                            IsActive = true,
+                            MemberRoleName = "Staff"
+                        });
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Person.Person", b =>
+            modelBuilder.Entity("StockTracker.Model.Persons.Person", b =>
                 {
                     b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
@@ -425,7 +464,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("ShoppingListId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
@@ -450,7 +488,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("ShoppingListItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
@@ -483,7 +520,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("StockCategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StockCategoryName")
@@ -495,22 +531,52 @@ namespace StockTracker.API.Migrations
                     b.ToTable("StockCategories");
 
                     b.HasData(
-                        new { StockCategoryId = 1, StockCategoryName = "Meat" },
-                        new { StockCategoryId = 2, StockCategoryName = "Pasta" },
-                        new { StockCategoryId = 3, StockCategoryName = "Vegetable" },
-                        new { StockCategoryId = 4, StockCategoryName = "Powder" },
-                        new { StockCategoryId = 5, StockCategoryName = "Canned Good" },
-                        new { StockCategoryId = 6, StockCategoryName = "Fruit" },
-                        new { StockCategoryId = 7, StockCategoryName = "Oil" },
-                        new { StockCategoryId = 8, StockCategoryName = "Edible Liquid" }
-                    );
+                        new
+                        {
+                            StockCategoryId = 1,
+                            StockCategoryName = "Meat"
+                        },
+                        new
+                        {
+                            StockCategoryId = 2,
+                            StockCategoryName = "Pasta"
+                        },
+                        new
+                        {
+                            StockCategoryId = 3,
+                            StockCategoryName = "Vegetable"
+                        },
+                        new
+                        {
+                            StockCategoryId = 4,
+                            StockCategoryName = "Powder"
+                        },
+                        new
+                        {
+                            StockCategoryId = 5,
+                            StockCategoryName = "Canned Good"
+                        },
+                        new
+                        {
+                            StockCategoryId = 6,
+                            StockCategoryName = "Fruit"
+                        },
+                        new
+                        {
+                            StockCategoryId = 7,
+                            StockCategoryName = "Oil"
+                        },
+                        new
+                        {
+                            StockCategoryId = 8,
+                            StockCategoryName = "Edible Liquid"
+                        });
                 });
 
             modelBuilder.Entity("StockTracker.Model.Stock.StockCore", b =>
                 {
                     b.Property<int>("StockCoreId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
@@ -533,14 +599,11 @@ namespace StockTracker.API.Migrations
 
                     b.HasKey("StockCoreId");
 
-                    b.HasIndex("StockCategoryId")
-                        .IsUnique();
+                    b.HasIndex("StockCategoryId");
 
-                    b.HasIndex("StockSupplierDetailId")
-                        .IsUnique();
+                    b.HasIndex("StockSupplierDetailId");
 
-                    b.HasIndex("StockTypeId")
-                        .IsUnique();
+                    b.HasIndex("StockTypeId");
 
                     b.ToTable("StockCores");
                 });
@@ -549,7 +612,6 @@ namespace StockTracker.API.Migrations
                 {
                     b.Property<int>("StockTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StockTypeName")
@@ -561,35 +623,117 @@ namespace StockTracker.API.Migrations
                     b.ToTable("StockTypes");
 
                     b.HasData(
-                        new { StockTypeId = 1, StockTypeName = "Frozen Treat" },
-                        new { StockTypeId = 2, StockTypeName = "Raw Fruit" },
-                        new { StockTypeId = 3, StockTypeName = "Sugar" },
-                        new { StockTypeId = 4, StockTypeName = "Cooking Oil" },
-                        new { StockTypeId = 5, StockTypeName = "Chicken" },
-                        new { StockTypeId = 6, StockTypeName = "Fish" },
-                        new { StockTypeId = 7, StockTypeName = "Pork" },
-                        new { StockTypeId = 8, StockTypeName = "Beef" },
-                        new { StockTypeId = 9, StockTypeName = "Sauce" },
-                        new { StockTypeId = 10, StockTypeName = "Spice" },
-                        new { StockTypeId = 11, StockTypeName = "Canned Fruit" },
-                        new { StockTypeId = 12, StockTypeName = "Canned Vegetable" },
-                        new { StockTypeId = 13, StockTypeName = "Canned Meat" },
-                        new { StockTypeId = 14, StockTypeName = "Soda" },
-                        new { StockTypeId = 15, StockTypeName = "Fruit Juice" },
-                        new { StockTypeId = 16, StockTypeName = "Beer" },
-                        new { StockTypeId = 17, StockTypeName = "Wine" },
-                        new { StockTypeId = 18, StockTypeName = "Cider" },
-                        new { StockTypeId = 19, StockTypeName = "Water" },
-                        new { StockTypeId = 20, StockTypeName = "Yogurt" },
-                        new { StockTypeId = 21, StockTypeName = "Cream" }
-                    );
+                        new
+                        {
+                            StockTypeId = 1,
+                            StockTypeName = "Frozen Treat"
+                        },
+                        new
+                        {
+                            StockTypeId = 2,
+                            StockTypeName = "Raw Fruit"
+                        },
+                        new
+                        {
+                            StockTypeId = 3,
+                            StockTypeName = "Sugar"
+                        },
+                        new
+                        {
+                            StockTypeId = 4,
+                            StockTypeName = "Cooking Oil"
+                        },
+                        new
+                        {
+                            StockTypeId = 5,
+                            StockTypeName = "Chicken"
+                        },
+                        new
+                        {
+                            StockTypeId = 6,
+                            StockTypeName = "Fish"
+                        },
+                        new
+                        {
+                            StockTypeId = 7,
+                            StockTypeName = "Pork"
+                        },
+                        new
+                        {
+                            StockTypeId = 8,
+                            StockTypeName = "Beef"
+                        },
+                        new
+                        {
+                            StockTypeId = 9,
+                            StockTypeName = "Sauce"
+                        },
+                        new
+                        {
+                            StockTypeId = 10,
+                            StockTypeName = "Spice"
+                        },
+                        new
+                        {
+                            StockTypeId = 11,
+                            StockTypeName = "Canned Fruit"
+                        },
+                        new
+                        {
+                            StockTypeId = 12,
+                            StockTypeName = "Canned Vegetable"
+                        },
+                        new
+                        {
+                            StockTypeId = 13,
+                            StockTypeName = "Canned Meat"
+                        },
+                        new
+                        {
+                            StockTypeId = 14,
+                            StockTypeName = "Soda"
+                        },
+                        new
+                        {
+                            StockTypeId = 15,
+                            StockTypeName = "Fruit Juice"
+                        },
+                        new
+                        {
+                            StockTypeId = 16,
+                            StockTypeName = "Beer"
+                        },
+                        new
+                        {
+                            StockTypeId = 17,
+                            StockTypeName = "Wine"
+                        },
+                        new
+                        {
+                            StockTypeId = 18,
+                            StockTypeName = "Cider"
+                        },
+                        new
+                        {
+                            StockTypeId = 19,
+                            StockTypeName = "Water"
+                        },
+                        new
+                        {
+                            StockTypeId = 20,
+                            StockTypeName = "Yogurt"
+                        },
+                        new
+                        {
+                            StockTypeId = 21,
+                            StockTypeName = "Cream"
+                        });
                 });
 
             modelBuilder.Entity("StockTracker.Model.StockSupplier.StockSupplierDetail", b =>
                 {
                     b.Property<int>("StockSupplierDetailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
@@ -601,7 +745,6 @@ namespace StockTracker.API.Migrations
                         .HasColumnType("INT");
 
                     b.Property<decimal>("Price")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
                         .HasColumnType("DECIMAL");
 
                     b.Property<int>("SupplierId")
@@ -617,49 +760,86 @@ namespace StockTracker.API.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("SupplierId")
+                        .IsUnique();
 
                     b.HasIndex("UnitTypeId");
 
-                    b.ToTable("StockSupplierDetail");
+                    b.ToTable("StockSupplierDetails");
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Supplier.Supplier", b =>
+            modelBuilder.Entity("StockTracker.Model.Suppliers.Supplier", b =>
                 {
                     b.Property<int>("SupplierId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .HasColumnType("NVARCHAR(1024)");
 
-                    b.Property<string>("ContactNumber");
+                    b.Property<string>("ContactNumber")
+                        .HasColumnType("NVARCHAR(256)");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasColumnType("NVARCHAR(256)");
 
-                    b.Property<string>("SupplierLocation");
+                    b.Property<string>("SupplierLocation")
+                        .HasColumnType("NVARCHAR(256)");
 
-                    b.Property<string>("SupplierName");
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(256)");
 
-                    b.Property<int>("SupplierTypeId");
+                    b.Property<int>("SupplierTypeId")
+                        .HasColumnType("INT");
 
                     b.HasKey("SupplierId");
 
                     b.HasIndex("SupplierTypeId");
 
-                    b.ToTable("Supplier");
+                    b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Supplier.SupplierType", b =>
+            modelBuilder.Entity("StockTracker.Model.Suppliers.SupplierType", b =>
                 {
                     b.Property<int>("SupplierTypeId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("SupplierTypeName");
+                    b.Property<string>("SupplierTypeName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(256)");
 
                     b.HasKey("SupplierTypeId");
 
-                    b.ToTable("SupplierType");
+                    b.ToTable("SupplierTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            SupplierTypeId = 1,
+                            SupplierTypeName = "Grocer"
+                        },
+                        new
+                        {
+                            SupplierTypeId = 2,
+                            SupplierTypeName = "Butcher"
+                        },
+                        new
+                        {
+                            SupplierTypeId = 3,
+                            SupplierTypeName = "Caterer"
+                        },
+                        new
+                        {
+                            SupplierTypeId = 4,
+                            SupplierTypeName = "Super Market"
+                        },
+                        new
+                        {
+                            SupplierTypeId = 5,
+                            SupplierTypeName = "Farmer"
+                        });
                 });
 
             modelBuilder.Entity("StockTracker.Model.Unit.UnitType", b =>
@@ -668,21 +848,85 @@ namespace StockTracker.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(64)");
 
-                    b.Property<string>("Symbol");
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(8)");
 
                     b.HasKey("UnitTypeId");
 
-                    b.ToTable("UnitType");
-                });
+                    b.ToTable("UnitTypes");
 
-            modelBuilder.Entity("StockTracker.Model.Clients.ClientSettings", b =>
-                {
-                    b.HasOne("StockTracker.Model.Clients.Client", "Client")
-                        .WithOne("ClientSettings")
-                        .HasForeignKey("StockTracker.Model.Clients.ClientSettings", "ClientId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasData(
+                        new
+                        {
+                            UnitTypeId = 1,
+                            Name = "Kilo gram",
+                            Symbol = "Kg"
+                        },
+                        new
+                        {
+                            UnitTypeId = 2,
+                            Name = "Gram",
+                            Symbol = "g"
+                        },
+                        new
+                        {
+                            UnitTypeId = 3,
+                            Name = "Milligram",
+                            Symbol = "Mg"
+                        },
+                        new
+                        {
+                            UnitTypeId = 4,
+                            Name = "Unit",
+                            Symbol = "U"
+                        },
+                        new
+                        {
+                            UnitTypeId = 5,
+                            Name = "Liter",
+                            Symbol = "l"
+                        },
+                        new
+                        {
+                            UnitTypeId = 6,
+                            Name = "Milliliter",
+                            Symbol = "Ml"
+                        },
+                        new
+                        {
+                            UnitTypeId = 7,
+                            Name = "Ounce",
+                            Symbol = "Oz"
+                        },
+                        new
+                        {
+                            UnitTypeId = 8,
+                            Name = "Pint",
+                            Symbol = "pt"
+                        },
+                        new
+                        {
+                            UnitTypeId = 9,
+                            Name = "Quart",
+                            Symbol = "qt"
+                        },
+                        new
+                        {
+                            UnitTypeId = 10,
+                            Name = "Gallon",
+                            Symbol = "g"
+                        },
+                        new
+                        {
+                            UnitTypeId = 11,
+                            Name = "Pound",
+                            Symbol = "lb"
+                        });
                 });
 
             modelBuilder.Entity("StockTracker.Model.ClientStock.ClientStockItem", b =>
@@ -705,9 +949,17 @@ namespace StockTracker.API.Migrations
                         .HasForeignKey("StockTracker.Model.ClientStock.ClientStockLevel", "ClientStockItemId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("StockTracker.Model.Member.Member", "Member")
+                    b.HasOne("StockTracker.Model.Members.Member", "Member")
                         .WithOne()
                         .HasForeignKey("StockTracker.Model.ClientStock.ClientStockLevel", "MemberId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("StockTracker.Model.Clients.ClientSettings", b =>
+                {
+                    b.HasOne("StockTracker.Model.Clients.Client", "Client")
+                        .WithOne("ClientSettings")
+                        .HasForeignKey("StockTracker.Model.Clients.ClientSettings", "ClientId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -727,37 +979,37 @@ namespace StockTracker.API.Migrations
             modelBuilder.Entity("StockTracker.Model.Comm.CommDetail", b =>
                 {
                     b.HasOne("StockTracker.Model.Comm.CommError", "CommError")
-                        .WithOne()
-                        .HasForeignKey("StockTracker.Model.Comm.CommDetail", "CommErrorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("CommErrorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("StockTracker.Model.Member.Member", "Member")
-                        .WithOne()
-                        .HasForeignKey("StockTracker.Model.Comm.CommDetail", "MemberId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("StockTracker.Model.Members.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Member.Member", b =>
+            modelBuilder.Entity("StockTracker.Model.Members.Member", b =>
                 {
                     b.HasOne("StockTracker.Model.Clients.Client", "Client")
                         .WithMany("Member")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("StockTracker.Model.Member.MemberRole", "MemberRole")
-                        .WithOne()
-                        .HasForeignKey("StockTracker.Model.Member.Member", "MemberRoleId")
+                    b.HasOne("StockTracker.Model.Members.MemberRole", "MemberRole")
+                        .WithMany("Member")
+                        .HasForeignKey("MemberRoleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("StockTracker.Model.Person.Person", "Person")
-                        .WithOne()
-                        .HasForeignKey("StockTracker.Model.Member.Member", "PersonId")
+                    b.HasOne("StockTracker.Model.Persons.Person", "Person")
+                        .WithOne("Member")
+                        .HasForeignKey("StockTracker.Model.Members.Member", "PersonId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("StockTracker.Model.Shopping.ShoppingList", b =>
                 {
-                    b.HasOne("StockTracker.Model.Member.Member", "Member")
+                    b.HasOne("StockTracker.Model.Members.Member", "Member")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -779,42 +1031,42 @@ namespace StockTracker.API.Migrations
             modelBuilder.Entity("StockTracker.Model.Stock.StockCore", b =>
                 {
                     b.HasOne("StockTracker.Model.Stock.StockCategory", "StockCategory")
-                        .WithOne("StockCore")
-                        .HasForeignKey("StockTracker.Model.Stock.StockCore", "StockCategoryId")
+                        .WithMany("StockCore")
+                        .HasForeignKey("StockCategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("StockTracker.Model.StockSupplier.StockSupplierDetail", "StockSupplierDetail")
-                        .WithOne("StockCore")
-                        .HasForeignKey("StockTracker.Model.Stock.StockCore", "StockSupplierDetailId")
+                        .WithMany("StockCore")
+                        .HasForeignKey("StockSupplierDetailId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("StockTracker.Model.Stock.StockType", "StockType")
-                        .WithOne("StockCore")
-                        .HasForeignKey("StockTracker.Model.Stock.StockCore", "StockTypeId")
+                        .WithMany("StockCore")
+                        .HasForeignKey("StockTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("StockTracker.Model.StockSupplier.StockSupplierDetail", b =>
                 {
-                    b.HasOne("StockTracker.Model.Member.Member", "Member")
-                        .WithMany()
+                    b.HasOne("StockTracker.Model.Members.Member", "Member")
+                        .WithMany("StockSupplierDetails")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("StockTracker.Model.Supplier.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("StockTracker.Model.Suppliers.Supplier", "Supplier")
+                        .WithOne("StockSupplierDetail")
+                        .HasForeignKey("StockTracker.Model.StockSupplier.StockSupplierDetail", "SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("StockTracker.Model.Unit.UnitType", "UnitType")
-                        .WithMany()
+                        .WithMany("StockSupplierDetail")
                         .HasForeignKey("UnitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("StockTracker.Model.Supplier.Supplier", b =>
+            modelBuilder.Entity("StockTracker.Model.Suppliers.Supplier", b =>
                 {
-                    b.HasOne("StockTracker.Model.Supplier.SupplierType", "SupplierType")
+                    b.HasOne("StockTracker.Model.Suppliers.SupplierType", "SupplierType")
                         .WithMany("Suppliers")
                         .HasForeignKey("SupplierTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
