@@ -51,7 +51,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
             //Act
             foreach (var client in newClientList)
             {
-                result = (Result<bool>)addClient.AddClient(client);
+                result = (Result<bool>)addClient.Add(client);
                 if (!result.IsSuccess)
                 {
                     lastClient = client.ClientId;
@@ -82,7 +82,7 @@ namespace StockTracker.BusinessLogic.Test.Clients
             //Act
             foreach (var client in clientList)
             {
-                result = (Result<bool>)addClient.AddClient(client);
+                result = (Result<bool>)addClient.Add(client);
                 if (result.IsSuccess)
                 {
                     lastClient = client.ClientId;
@@ -169,7 +169,24 @@ namespace StockTracker.BusinessLogic.Test.Clients
         }
 
 
-        #endregion
+		#endregion
 
-    }
+		#region ListAll
+
+		[TestMethod]
+		public void ListAll_PassNothing_ReturnEverythingNoLog()
+		{
+			//Arrange
+
+
+			//Act
+
+
+			//Assert
+
+		}
+
+	    #endregion
+
+	}
 }

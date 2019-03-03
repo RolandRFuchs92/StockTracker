@@ -1,5 +1,6 @@
 ﻿using StockTracker.Context.Interface;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using StockTracker.Adapter.Interface.Logger;
 using StockTracker.BuisnessLogic.Poco;
@@ -27,7 +28,7 @@ namespace StockTracker.BuisnessLogic.Clients
 						_log = log;
 				}
 
-				public IResult<bool> AddClient(IClient newClient)
+				public IResult<bool> Add(IClient newClient)
 				{
 						var result = new FormulateResult<bool, ClientLogic>(_log);
 
@@ -43,7 +44,7 @@ namespace StockTracker.BuisnessLogic.Clients
 						return result.Result;
 				}
 
-				public IResult<bool> AddClient(string name, string email, string contactNumber)
+				public IResult<bool> Add(string name, string email, string contactNumber)
 				{
 						var client = new Client
 						{
@@ -53,7 +54,7 @@ namespace StockTracker.BuisnessLogic.Clients
 								CreatedOn = DateTime.Now
 						};
 
-						return AddClient(client);
+						return Add(client);
 				}
 
 				public IResult<IClient> GetClient(int clientId)
@@ -65,7 +66,16 @@ namespace StockTracker.BuisnessLogic.Clients
 						return result.Result;
 				}
 
-				public IResult<bool> EditClient(IClient editClient)
+			public IResult<List<IClient>> GetAll()
+			{
+				var result = new FormulateResult<List<IClient>, ClientLogic>(_log);
+				var body = _clientRepo.GetAll();
+
+				result.Check(body, "Successfully retrieved client!", "Unable to find client.");
+				return result.Result;
+			}
+
+			public IResult<bool> EditClient(IClient editClient)
 				{
 						var result = new FormulateResult<bool, ClientLogic>(_log);
 						var body = _clientRepo.Edit(editClient);

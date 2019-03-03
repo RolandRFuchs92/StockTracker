@@ -53,7 +53,7 @@ namespace StockTracker.API.Test.Clients
 		public void Add_PassValidClients_OK()
 		{
 			//Arrange
-			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
+			_moq.Setup(i => i.Add(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
 			var logic = _moq.Object;
 			var controller = new ClientsController(logic);
 
@@ -68,7 +68,7 @@ namespace StockTracker.API.Test.Clients
 		public void Add_PassInvalidClient_Badrequest()
 		{
 			//Arrange
-			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(false));
+			_moq.Setup(i => i.Add(It.IsAny<IClient>())).Returns(new Result<bool>(false));
 			var logic = _moq.Object;
 			var controller = new ClientsController(logic);
 
