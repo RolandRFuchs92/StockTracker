@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StockTracker.API.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,8 +19,6 @@ namespace StockTracker.API.Migrations
                     ContactNumber = table.Column<string>(type: "NVARCHAR(20)", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "NVARCHAR(250)", maxLength: 250, nullable: true),
                     LastCheckup = table.Column<DateTime>(type: "DateTime", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "Bit", nullable: true),
-                    IsActive = table.Column<bool>(type: "BIT", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "DateTime", nullable: false, defaultValueSql: "GetDate()")
                 },
                 constraints: table =>
@@ -32,12 +30,12 @@ namespace StockTracker.API.Migrations
                 name: "CommError",
                 columns: table => new
                 {
-                    CommErrorId = table.Column<int>(type: "INT", nullable: false)
+                    CommErrorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    StackTrace = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
-                    Exception = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
-                    Note = table.Column<string>(type: "NVARCHAR(2048)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()")
+                    StackTrace = table.Column<string>(nullable: true),
+                    Exception = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +46,7 @@ namespace StockTracker.API.Migrations
                 name: "CommSendStatusType",
                 columns: table => new
                 {
-                    CommSendStatusTypeId = table.Column<int>(type: "INT", nullable: false)
+                    CommSendStatusTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CommSendStatusName = table.Column<string>(type: "NVARCHAR(200)", nullable: false)
                 },
@@ -61,7 +59,7 @@ namespace StockTracker.API.Migrations
                 name: "CommType",
                 columns: table => new
                 {
-                    CommTypeId = table.Column<int>(type: "INT", nullable: false)
+                    CommTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CommName = table.Column<string>(type: "NVARCHAR(256)", nullable: false)
                 },
@@ -74,9 +72,10 @@ namespace StockTracker.API.Migrations
                 name: "MemberRoles",
                 columns: table => new
                 {
-                    MemberRoleId = table.Column<int>(type: "INT", nullable: false)
+                    MemberRoleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    MemberRoleName = table.Column<string>(type: "NVARCHAR(256)", nullable: false)
+                    MemberRoleName = table.Column<string>(type: "NVARCHAR(256)", nullable: false),
+                    IsActive = table.Column<bool>(type: "BIT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,7 +86,7 @@ namespace StockTracker.API.Migrations
                 name: "Persons",
                 columns: table => new
                 {
-                    PersonId = table.Column<int>(type: "INT", nullable: false)
+                    PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PersonName = table.Column<string>(type: "NVARCHAR(256)", nullable: false),
                     PersonSurname = table.Column<string>(type: "NVARCHAR(256)", nullable: false),
@@ -104,7 +103,7 @@ namespace StockTracker.API.Migrations
                 name: "StockCategories",
                 columns: table => new
                 {
-                    StockCategoryId = table.Column<int>(type: "INT", nullable: false)
+                    StockCategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StockCategoryName = table.Column<string>(type: "NVARCHAR(250)", nullable: false)
                 },
@@ -117,7 +116,7 @@ namespace StockTracker.API.Migrations
                 name: "StockTypes",
                 columns: table => new
                 {
-                    StockTypeId = table.Column<int>(type: "INT", nullable: false)
+                    StockTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StockTypeName = table.Column<string>(type: "NVARCHAR(200)", nullable: false)
                 },
@@ -127,37 +126,37 @@ namespace StockTracker.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SupplierType",
+                name: "SupplierTypes",
                 columns: table => new
                 {
                     SupplierTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SupplierTypeName = table.Column<string>(nullable: true)
+                    SupplierTypeName = table.Column<string>(type: "NVARCHAR(256)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SupplierType", x => x.SupplierTypeId);
+                    table.PrimaryKey("PK_SupplierTypes", x => x.SupplierTypeId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnitType",
+                name: "UnitTypes",
                 columns: table => new
                 {
                     UnitTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Symbol = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "NVARCHAR(64)", nullable: false),
+                    Symbol = table.Column<string>(type: "NVARCHAR(8)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UnitType", x => x.UnitTypeId);
+                    table.PrimaryKey("PK_UnitTypes", x => x.UnitTypeId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ClientSettings",
                 columns: table => new
                 {
-                    ClientSettingsId = table.Column<int>(type: "INT", nullable: false)
+                    ClientSettingsId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClientId = table.Column<int>(type: "Int", nullable: false),
                     CanAnyoneAddStock = table.Column<bool>(type: "Bit", nullable: false),
@@ -165,8 +164,9 @@ namespace StockTracker.API.Migrations
                     OpenTime = table.Column<DateTime>(type: "DateTime", nullable: false),
                     CloseTime = table.Column<DateTime>(type: "DateTime", nullable: false),
                     TotalUsers = table.Column<int>(type: "Int", nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: true)
+                    IsActive = table.Column<bool>(type: "BIT", nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,7 +183,7 @@ namespace StockTracker.API.Migrations
                 name: "Members",
                 columns: table => new
                 {
-                    MemberId = table.Column<int>(type: "INT", nullable: false)
+                    MemberId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PersonId = table.Column<int>(nullable: false),
                     ClientId = table.Column<int>(type: "INT", nullable: false),
@@ -215,25 +215,25 @@ namespace StockTracker.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Supplier",
+                name: "Suppliers",
                 columns: table => new
                 {
                     SupplierId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SupplierTypeId = table.Column<int>(nullable: false),
-                    SupplierName = table.Column<string>(nullable: true),
-                    SupplierLocation = table.Column<string>(nullable: true),
-                    ContactNumber = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    SupplierTypeId = table.Column<int>(type: "INT", nullable: false),
+                    SupplierName = table.Column<string>(type: "NVARCHAR(256)", nullable: false),
+                    SupplierLocation = table.Column<string>(type: "NVARCHAR(256)", nullable: true),
+                    ContactNumber = table.Column<string>(type: "NVARCHAR(256)", nullable: true),
+                    Email = table.Column<string>(type: "NVARCHAR(256)", nullable: true),
+                    Address = table.Column<string>(type: "NVARCHAR(1024)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supplier", x => x.SupplierId);
+                    table.PrimaryKey("PK_Suppliers", x => x.SupplierId);
                     table.ForeignKey(
-                        name: "FK_Supplier_SupplierType_SupplierTypeId",
+                        name: "FK_Suppliers_SupplierTypes_SupplierTypeId",
                         column: x => x.SupplierTypeId,
-                        principalTable: "SupplierType",
+                        principalTable: "SupplierTypes",
                         principalColumn: "SupplierTypeId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,15 +242,15 @@ namespace StockTracker.API.Migrations
                 name: "CommDetail",
                 columns: table => new
                 {
-                    CommDetailId = table.Column<int>(type: "INT", nullable: false)
+                    CommDetailId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CommErrorId = table.Column<int>(type: "INT", nullable: false),
-                    MemberId = table.Column<int>(type: "INT", nullable: false),
-                    Response = table.Column<string>(type: "NVARCHAR(2048)", nullable: true),
-                    Subject = table.Column<string>(type: "NVARCHAR(256)", nullable: false),
-                    Message = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
-                    Recipients = table.Column<string>(type: "NVARCHAR(2048)", nullable: false),
-                    Sender = table.Column<string>(type: "NVARCHAR(200)", nullable: false)
+                    CommErrorId = table.Column<int>(nullable: false),
+                    MemberId = table.Column<int>(nullable: false),
+                    Response = table.Column<string>(nullable: true),
+                    Subject = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    Recipients = table.Column<string>(nullable: true),
+                    Sender = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -260,20 +260,20 @@ namespace StockTracker.API.Migrations
                         column: x => x.CommErrorId,
                         principalTable: "CommError",
                         principalColumn: "CommErrorId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CommDetail_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
                         principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ShoppingLists",
                 columns: table => new
                 {
-                    ShoppingListId = table.Column<int>(type: "INT", nullable: false)
+                    ShoppingListId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MemberId = table.Column<int>(type: "INT", nullable: false),
                     HasNotified = table.Column<bool>(type: "BIT", nullable: false),
@@ -291,10 +291,10 @@ namespace StockTracker.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StockSupplierDetail",
+                name: "StockSupplierDetails",
                 columns: table => new
                 {
-                    StockSupplierDetailId = table.Column<int>(type: "INT", nullable: false)
+                    StockSupplierDetailId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SupplierId = table.Column<int>(type: "INT", nullable: false),
                     MemberId = table.Column<int>(type: "INT", nullable: false),
@@ -305,32 +305,32 @@ namespace StockTracker.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockSupplierDetail", x => x.StockSupplierDetailId);
+                    table.PrimaryKey("PK_StockSupplierDetails", x => x.StockSupplierDetailId);
                     table.ForeignKey(
-                        name: "FK_StockSupplierDetail_Members_MemberId",
+                        name: "FK_StockSupplierDetails_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
                         principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StockSupplierDetail_Supplier_SupplierId",
+                        name: "FK_StockSupplierDetails_Suppliers_SupplierId",
                         column: x => x.SupplierId,
-                        principalTable: "Supplier",
+                        principalTable: "Suppliers",
                         principalColumn: "SupplierId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StockSupplierDetail_UnitType_UnitTypeId",
+                        name: "FK_StockSupplierDetails_UnitTypes_UnitTypeId",
                         column: x => x.UnitTypeId,
-                        principalTable: "UnitType",
+                        principalTable: "UnitTypes",
                         principalColumn: "UnitTypeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CommCore",
                 columns: table => new
                 {
-                    CommCoreId = table.Column<int>(type: "Int", nullable: false)
+                    CommCoreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CommTypeId = table.Column<int>(type: "Int", nullable: false),
                     CommSendStatusTypeId = table.Column<int>(type: "Int", nullable: false),
@@ -359,7 +359,7 @@ namespace StockTracker.API.Migrations
                 name: "StockCores",
                 columns: table => new
                 {
-                    StockCoreId = table.Column<int>(type: "INT", nullable: false)
+                    StockCoreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StockCategoryId = table.Column<int>(type: "INT", nullable: false),
                     StockSupplierDetailId = table.Column<int>(type: "INT", nullable: false),
@@ -377,9 +377,9 @@ namespace StockTracker.API.Migrations
                         principalColumn: "StockCategoryId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StockCores_StockSupplierDetail_StockSupplierDetailId",
+                        name: "FK_StockCores_StockSupplierDetails_StockSupplierDetailId",
                         column: x => x.StockSupplierDetailId,
-                        principalTable: "StockSupplierDetail",
+                        principalTable: "StockSupplierDetails",
                         principalColumn: "StockSupplierDetailId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -394,7 +394,7 @@ namespace StockTracker.API.Migrations
                 name: "ClientStockItem",
                 columns: table => new
                 {
-                    ClientStockItemId = table.Column<int>(type: "INT", nullable: false)
+                    ClientStockItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StockCoreId = table.Column<int>(type: "Int", nullable: false),
                     ClientId = table.Column<int>(type: "Int", nullable: false),
@@ -424,7 +424,7 @@ namespace StockTracker.API.Migrations
                 name: "ShoppingListItems",
                 columns: table => new
                 {
-                    ShoppingListItemId = table.Column<int>(type: "INT", nullable: false)
+                    ShoppingListItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ShoppingListId = table.Column<int>(type: "INT", nullable: false),
                     StockCoreId = table.Column<int>(type: "INT", nullable: false),
@@ -453,7 +453,7 @@ namespace StockTracker.API.Migrations
                 name: "ClientStockLevel",
                 columns: table => new
                 {
-                    ClientStockLevelId = table.Column<int>(type: "INT", nullable: false)
+                    ClientStockLevelId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClientStockItemId = table.Column<int>(type: "Int", nullable: false),
                     MemberId = table.Column<int>(type: "Int", nullable: false),
@@ -503,17 +503,17 @@ namespace StockTracker.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "MemberRoles",
-                columns: new[] { "MemberRoleId", "MemberRoleName" },
+                columns: new[] { "MemberRoleId", "IsActive", "MemberRoleName" },
                 values: new object[,]
                 {
-                    { 8, "Staff" },
-                    { 7, "Sculler" },
-                    { 6, "Chef" },
-                    { 5, "Waiter" },
-                    { 1, "Managing Director" },
-                    { 3, "Team Leader" },
-                    { 2, "Admin" },
-                    { 4, "Manager" }
+                    { 8, true, "Staff" },
+                    { 7, true, "Sculler" },
+                    { 6, true, "Chef" },
+                    { 5, true, "Waiter" },
+                    { 2, true, "Admin" },
+                    { 3, true, "Team Leader" },
+                    { 1, true, "Managing Director" },
+                    { 4, true, "Manager" }
                 });
 
             migrationBuilder.InsertData(
@@ -521,13 +521,13 @@ namespace StockTracker.API.Migrations
                 columns: new[] { "StockCategoryId", "StockCategoryName" },
                 values: new object[,]
                 {
-                    { 7, "Oil" },
-                    { 8, "Edible Liquid" },
-                    { 5, "Canned Good" },
                     { 6, "Fruit" },
+                    { 8, "Edible Liquid" },
+                    { 7, "Oil" },
+                    { 5, "Canned Good" },
+                    { 1, "Meat" },
                     { 3, "Vegetable" },
                     { 2, "Pasta" },
-                    { 1, "Meat" },
                     { 4, "Powder" }
                 });
 
@@ -536,27 +536,57 @@ namespace StockTracker.API.Migrations
                 columns: new[] { "StockTypeId", "StockTypeName" },
                 values: new object[,]
                 {
+                    { 13, "Canned Meat" },
+                    { 21, "Cream" },
+                    { 20, "Yogurt" },
                     { 19, "Water" },
                     { 18, "Cider" },
                     { 17, "Wine" },
                     { 16, "Beer" },
                     { 15, "Fruit Juice" },
                     { 14, "Soda" },
-                    { 13, "Canned Meat" },
                     { 12, "Canned Vegetable" },
-                    { 11, "Canned Fruit" },
+                    { 6, "Fish" },
+                    { 10, "Spice" },
                     { 9, "Sauce" },
                     { 8, "Beef" },
                     { 7, "Pork" },
-                    { 6, "Fish" },
                     { 5, "Chicken" },
                     { 4, "Cooking Oil" },
                     { 3, "Sugar" },
                     { 2, "Raw Fruit" },
                     { 1, "Frozen Treat" },
-                    { 20, "Yogurt" },
-                    { 10, "Spice" },
-                    { 21, "Cream" }
+                    { 11, "Canned Fruit" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SupplierTypes",
+                columns: new[] { "SupplierTypeId", "SupplierTypeName" },
+                values: new object[,]
+                {
+                    { 5, "Farmer" },
+                    { 4, "Super Market" },
+                    { 3, "Caterer" },
+                    { 1, "Grocer" },
+                    { 2, "Butcher" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UnitTypes",
+                columns: new[] { "UnitTypeId", "Name", "Symbol" },
+                values: new object[,]
+                {
+                    { 10, "Gallon", "g" },
+                    { 1, "Kilo gram", "Kg" },
+                    { 2, "Gram", "g" },
+                    { 3, "Milligram", "Mg" },
+                    { 4, "Unit", "U" },
+                    { 5, "Liter", "l" },
+                    { 6, "Milliliter", "Ml" },
+                    { 7, "Ounce", "Oz" },
+                    { 8, "Pint", "pt" },
+                    { 9, "Quart", "qt" },
+                    { 11, "Pound", "lb" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -602,14 +632,12 @@ namespace StockTracker.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CommDetail_CommErrorId",
                 table: "CommDetail",
-                column: "CommErrorId",
-                unique: true);
+                column: "CommErrorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommDetail_MemberId",
                 table: "CommDetail",
-                column: "MemberId",
-                unique: true);
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Members_ClientId",
@@ -619,8 +647,7 @@ namespace StockTracker.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Members_MemberRoleId",
                 table: "Members",
-                column: "MemberRoleId",
-                unique: true);
+                column: "MemberRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Members_PersonId",
@@ -646,39 +673,37 @@ namespace StockTracker.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StockCores_StockCategoryId",
                 table: "StockCores",
-                column: "StockCategoryId",
-                unique: true);
+                column: "StockCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockCores_StockSupplierDetailId",
                 table: "StockCores",
-                column: "StockSupplierDetailId",
-                unique: true);
+                column: "StockSupplierDetailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockCores_StockTypeId",
                 table: "StockCores",
-                column: "StockTypeId",
-                unique: true);
+                column: "StockTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockSupplierDetail_MemberId",
-                table: "StockSupplierDetail",
+                name: "IX_StockSupplierDetails_MemberId",
+                table: "StockSupplierDetails",
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockSupplierDetail_SupplierId",
-                table: "StockSupplierDetail",
-                column: "SupplierId");
+                name: "IX_StockSupplierDetails_SupplierId",
+                table: "StockSupplierDetails",
+                column: "SupplierId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockSupplierDetail_UnitTypeId",
-                table: "StockSupplierDetail",
+                name: "IX_StockSupplierDetails_UnitTypeId",
+                table: "StockSupplierDetails",
                 column: "UnitTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Supplier_SupplierTypeId",
-                table: "Supplier",
+                name: "IX_Suppliers_SupplierTypeId",
+                table: "Suppliers",
                 column: "SupplierTypeId");
         }
 
@@ -721,7 +746,7 @@ namespace StockTracker.API.Migrations
                 name: "StockCategories");
 
             migrationBuilder.DropTable(
-                name: "StockSupplierDetail");
+                name: "StockSupplierDetails");
 
             migrationBuilder.DropTable(
                 name: "StockTypes");
@@ -730,10 +755,10 @@ namespace StockTracker.API.Migrations
                 name: "Members");
 
             migrationBuilder.DropTable(
-                name: "Supplier");
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "UnitType");
+                name: "UnitTypes");
 
             migrationBuilder.DropTable(
                 name: "Clients");
@@ -745,7 +770,7 @@ namespace StockTracker.API.Migrations
                 name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "SupplierType");
+                name: "SupplierTypes");
         }
     }
 }

@@ -14,159 +14,173 @@ using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
 using StockTracker.Seed.Clients.Generic;
 using StockTracker.Tests.Utils.Context;
+using StockTracker.ViewModel.Clients;
 
 namespace StockTracker.API.Test.Clients
 {
-		[TestClass]
-		public class AddClientsControllerTest
+	[TestClass]
+	public class AddClientsControllerTest
+	{
+		private Mock<IClientLogic> _moq;
+		private readonly ClientFormViewModel _client;
+		private GenericClients _genericClients;
+		private StockTrackerContext _db;
+
+		public AddClientsControllerTest()
 		{
-				private Mock<IClientLogic> _moq;
-				private Client _client;
-				private StockTrackerContext _db;
-
-				public AddClientsControllerTest()
-				{
-						_moq = new Mock<IClientLogic>();
-						_client = new GenericClients().One();
-						_db = new TestDbFactory().Db();
-				}
-
-
-				#region Add Client API
-				[TestMethod]
-				public void Add_PassValidClients_OK()
-				{
-						//Arrange
-						_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
-						var logic = _moq.Object;
-						var controller = new ClientsController(logic);
-
-						//Act
-						var result = controller.Add(_client);
-
-						//Assert
-						Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-				}
-
-				[TestMethod]
-				public void Add_PassInvalidClient_Badrequest()
-				{
-						//Arrange
-						_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(false));
-						var logic = _moq.Object;
-						var controller = new ClientsController(logic);
-
-						//Act
-						var result = controller.Add(_client);
-
-						//Assert
-						Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-				}
-				#endregion
-
-				#region GET Client API
-
-
-
-				[TestMethod]
-				public void Get_PassValidClientIdForGet_GetCorrectClient()
-				{
-						//Arrange
-						var moqLoic = new Mock<IClientLogic>();
-						var resultClient = new Result<IClient>()
-						{
-								Body = _client,
-								IsSuccess = true,
-								Message = "Wow look how cool you are!"
-						};
-						moqLoic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
-						var logic = moqLoic.Object;
-						var controller = new ClientsController(logic);
-
-
-						//Act
-						var result = controller.Get(_client.ClientId) as OkObjectResult;
-						var controllerResult = result.Value as Result<IClient>;
-
-						//Assert
-						Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-						Assert.IsTrue(controllerResult.IsSuccess);
-				}
-
-				[TestMethod]
-				public void Get_PassInvalidClientForGet_BadRequest()
-				{
-						//Arrange
-						var resultClient = new Result<IClient>()
-						{
-								Body = null,
-								IsSuccess = false,
-								Message = "Woops! Failed!"
-						};
-						var moqLogic = new Mock<IClientLogic>();
-						moqLogic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
-
-						var controller = new ClientsController(moqLogic.Object);
-
-						//Act
-						var result = controller.Get(0);
-
-						//Assert
-						Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-				}
-				#endregion
-
-				#region Edit Client API
-				[TestMethod]
-				public void Edit_PassValidClient_True()
-				{
-						//Arrange
-						var clientResult = new Result<bool>
-						{
-								Body = true,
-								IsSuccess = true,
-								Message = "Yay! We edited your client!"
-						};
-
-						var moqLogic = new Mock<IClientLogic>();
-						moqLogic.Setup(i => i.EditClient(It.IsAny<IClient>())).Returns(clientResult);
-
-						var controller = new ClientsController(moqLogic.Object);
-
-						//Act
-						var result = controller.Edit(_client) as OkObjectResult;
-						var controllerResult = result.Value as Result<bool>;
-
-						//Assert
-						Assert.IsInstanceOfType(controllerResult, typeof(Result<bool>));
-						Assert.IsTrue(controllerResult.Body);
-						Assert.IsTrue(controllerResult.IsSuccess);
-				}
-
-				[TestMethod]
-				public void Edit_PassInvalidClient_False()
-				{
-						//Arrange
-						var clientResult = new Result<bool>
-						{
-								Body = false,
-								IsSuccess = false,
-								Message = "Woops! Not saved!"
-						};
-
-						var moqLogic = new Mock<IClientLogic>();
-						moqLogic.Setup(i => i.EditClient(It.IsAny<IClient>())).Returns(clientResult);
-
-						var controller = new ClientsController(moqLogic.Object);
-
-
-						//Act
-						var result = controller.Edit(_client) as BadRequestObjectResult;
-
-						//Assert
-						Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-				}
-				#endregion
-
+			_moq = new Mock<IClientLogic>();
+			_genericClients = new GenericClients();
+			_client = CreateClientFormViewModle();
+			_db = new TestDbFactory().Db();
 		}
+
+		private ClientFormViewModel CreateClientFormViewModle()
+		{
+			var model = _genericClients.One();
+			return new ClientFormViewModel
+			{
+				Address = model.Address,
+				ClientId = model.ClientId,
+				ContactNumber = model.ContactNumber,
+				Email = model.Email,
+				Name = model.ClientName
+			};
+		}
+
+
+		#region Add Client API
+		[TestMethod]
+		public void Add_PassValidClients_OK()
+		{
+			//Arrange
+			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
+			var logic = _moq.Object;
+			var controller = new ClientsController(logic);
+
+			//Act
+			var result = controller.Add(_client);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+		}
+
+		[TestMethod]
+		public void Add_PassInvalidClient_Badrequest()
+		{
+			//Arrange
+			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(false));
+			var logic = _moq.Object;
+			var controller = new ClientsController(logic);
+
+			//Act
+			var result = controller.Add(_client);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+		}
+		#endregion
+
+		#region GET Client API
+
+		[TestMethod]
+		public void Get_PassValidClientIdForGet_GetCorrectClient()
+		{
+			//Arrange
+			var moqLoic = new Mock<IClientLogic>();
+			var resultClient = new Result<IClient>()
+			{
+				Body = _genericClients.One(),
+				IsSuccess = true,
+				Message = "Wow look how cool you are!"
+			};
+			moqLoic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
+			var logic = moqLoic.Object;
+			var controller = new ClientsController(logic);
+
+
+			//Act
+			var result = controller.Get(_client.ClientId) as OkObjectResult;
+			var controllerResult = result.Value as Result<IClient>;
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+			Assert.IsTrue(controllerResult.IsSuccess);
+		}
+
+		[TestMethod]
+		public void Get_PassInvalidClientForGet_BadRequest()
+		{
+			//Arrange
+			var resultClient = new Result<IClient>()
+			{
+				Body = null,
+				IsSuccess = false,
+				Message = "Woops! Failed!"
+			};
+			var moqLogic = new Mock<IClientLogic>();
+			moqLogic.Setup(i => i.GetClient(It.IsAny<int>())).Returns(resultClient);
+
+			var controller = new ClientsController(moqLogic.Object);
+
+			//Act
+			var result = controller.Get(0);
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+		}
+		#endregion
+
+		#region Edit Client API
+		[TestMethod]
+		public void Edit_PassValidClient_True()
+		{
+			//Arrange
+			var clientResult = new Result<bool>
+			{
+				Body = true,
+				IsSuccess = true,
+				Message = "Yay! We edited your client!"
+			};
+
+			var moqLogic = new Mock<IClientLogic>();
+			moqLogic.Setup(i => i.EditClient(It.IsAny<IClient>())).Returns(clientResult);
+
+			var controller = new ClientsController(moqLogic.Object);
+
+			//Act
+			var result = controller.Edit(_client) as OkObjectResult;
+			var controllerResult = result.Value as Result<bool>;
+
+			//Assert
+			Assert.IsInstanceOfType(controllerResult, typeof(Result<bool>));
+			Assert.IsTrue(controllerResult.Body);
+			Assert.IsTrue(controllerResult.IsSuccess);
+		}
+
+		[TestMethod]
+		public void Edit_PassInvalidClient_False()
+		{
+			//Arrange
+			var clientResult = new Result<bool>
+			{
+				Body = false,
+				IsSuccess = false,
+				Message = "Woops! Not saved!"
+			};
+
+			var moqLogic = new Mock<IClientLogic>();
+			moqLogic.Setup(i => i.EditClient(It.IsAny<IClient>())).Returns(clientResult);
+
+			var controller = new ClientsController(moqLogic.Object);
+
+
+			//Act
+			var result = controller.Edit(_client) as BadRequestObjectResult;
+
+			//Assert
+			Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+		}
+		#endregion
+
+	}
 }

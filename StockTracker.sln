@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Interface", "StockTracker.Interface\StockTracker.Interface.csproj", "{A8B6E0C9-78CC-42A6-B8BA-48E89E5C4AFF}"
 EndProject
@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Repository", "StockTracker.Repository\StockTracker.Repository.csproj", "{44CFEC9F-53D7-4235-AD4A-E6A81F65D785}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Tests.Utils", "StockTracker.Tests.Utils\StockTracker.Tests.Utils.csproj", "{D17C004F-5CB5-44E4-90F2-7E789D921C9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTracker.Tests.Utils", "StockTracker.Tests.Utils\StockTracker.Tests.Utils.csproj", "{D17C004F-5CB5-44E4-90F2-7E789D921C9D}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "StockTracker.FrontEnd", "StockTracker.FrontEnd\StockTracker.FrontEnd.njsproj", "{FE411D82-D31D-4510-8535-FC522D9B4A88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{D17C004F-5CB5-44E4-90F2-7E789D921C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17C004F-5CB5-44E4-90F2-7E789D921C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D17C004F-5CB5-44E4-90F2-7E789D921C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE411D82-D31D-4510-8535-FC522D9B4A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE411D82-D31D-4510-8535-FC522D9B4A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE411D82-D31D-4510-8535-FC522D9B4A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE411D82-D31D-4510-8535-FC522D9B4A88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

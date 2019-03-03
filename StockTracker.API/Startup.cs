@@ -44,6 +44,8 @@ namespace StockTracker.API
 						services.AddTransient<IClientLogic, ClientLogic>();
 						services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
+						services.AddCors();
+
 						services.AddLogging();
 				}
 
@@ -55,6 +57,11 @@ namespace StockTracker.API
 								app.UseDeveloperExceptionPage();
 						}
 						loggerFactory.AddFile("c:/temp/MOOOOOO-{Date}.txt");
+
+						app.UseCors(builder => builder
+								.WithOrigins("http://localhost:8080")
+								.AllowAnyHeader());
+
 						app.UseMvc();
 				}
 		}
