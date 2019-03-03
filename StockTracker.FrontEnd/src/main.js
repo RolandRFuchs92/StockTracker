@@ -5,7 +5,6 @@ import BootstrapVue from 'bootstrap-vue';
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
-
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faAngleDown, faUser, faChartArea } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
