@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '../components/Home';
 import ClientsForm from '../components/Clients/Form';
 
+const baseUrl = "http://localhost:61751/api"
 
 Vue.use(Router);
 
@@ -20,7 +21,8 @@ export default new Router({
       name: 'add',
       component: ClientsForm,
       props: {
-        name: 'Add'
+        name: 'Add',
+        postUrl: `${baseUrl}/clients/add`
       }
     },
     {
@@ -28,7 +30,8 @@ export default new Router({
       name: 'dogs',
       component: ClientsForm,
       props: { 
-        name: 'Edit' 
+        name: 'Edit' ,
+         postUrl: `${baseUrl}/clients/edit`
       }
     }
   ] 
