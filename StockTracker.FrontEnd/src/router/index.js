@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '../components/Home';
-import ClientsEdit from '../components/Clients/Edit';
-import ClientsAdd from '../components/Clients/Add';
+import ClientsForm from '../components/Clients/Form';
+
 
 Vue.use(Router);
 
@@ -18,7 +18,7 @@ export default new Router({
     {
       path: '/clients/add',
       name: 'add',
-      component: ClientsEdit,
+      component: ClientsForm,
       props: {
         name: 'Add'
       }
@@ -26,7 +26,7 @@ export default new Router({
     {
       path: '/clients/edit',
       name: 'dogs',
-      component: ClientsEdit,
+      component: ClientsForm,
       props: { 
         name: 'Edit' 
       }
