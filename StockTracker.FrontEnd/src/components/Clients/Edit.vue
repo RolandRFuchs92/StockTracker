@@ -1,6 +1,6 @@
 <template>
   <b-col sm="6">
-    <h4>Client Edit</h4>
+    <h4>Client {{ name }}</h4>
     <br>
     <b-form @submit="onSubmit" @reset="onReset">
       <b-form-group label="Client Name" label-for="client-name">
@@ -27,8 +27,10 @@
 <script>
 export default {
   name: 'client-edit',
+  props: ['name'],
   data() {
     return {
+      name: '',
       form: {
         name: '',
         email: '',
