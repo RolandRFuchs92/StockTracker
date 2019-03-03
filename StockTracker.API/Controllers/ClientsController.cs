@@ -10,7 +10,9 @@ using StockTracker.Adapter.Logger;
 using StockTracker.API.Interface;
 using StockTracker.API.Interface.Clients;
 using StockTracker.BusinessLogic.Interface.Client;
+using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
+using StockTracker.ViewModel.Clients;
 
 namespace StockTracker.API.Controllers
 {
@@ -27,9 +29,9 @@ namespace StockTracker.API.Controllers
 
 		[Route("Add")]
 		[HttpPost]
-		public IActionResult Add(Client client)
+		public IActionResult Add(ClientFormViewModel client)
 		{
-			var result = _clientLogic.AddClient(client);
+			var result = _clientLogic.AddClient(ViewModelToModel(client));
 			if (result.IsSuccess)
 				return Ok(result);
 
@@ -49,13 +51,25 @@ namespace StockTracker.API.Controllers
 
 		[Route("Edit")]
 		[HttpPost]
-		public IActionResult Edit(Client client)
+		public IActionResult Edit(ClientFormViewModel client)
 		{
-			var result = _clientLogic.EditClient(client);
+			var result = _clientLogic.EditClient(ViewModelToModel(client));
 			if (result.IsSuccess)
 				return Ok(result);
 
 			return BadRequest(result);
+		}
+
+		IClient ViewModelToModel(ClientFormViewModel client)
+		{
+			return new Client
+			{
+				Address = client.Address,
+				ClientId = client.ClientId,
+				ClientName = client.Name,
+				ContactNumber = client.ContactNumber,
+				Email = client.Email
+			};
 		}
 	}
 }
