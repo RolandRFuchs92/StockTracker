@@ -60,6 +60,15 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
+		public IActionResult GetAll()
+		{
+			var result = _clientLogic.GetAll();
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
+		}
+
 		IClient ViewModelToModel(ClientFormViewModel client)
 		{
 			return new Client
