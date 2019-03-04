@@ -31,7 +31,7 @@ namespace StockTracker.API.Controllers
 		[HttpPost]
 		public IActionResult Add(ClientFormViewModel client)
 		{
-			var result = _clientLogic.AddClient(ViewModelToModel(client));
+			var result = _clientLogic.Add(ViewModelToModel(client));
 			if (result.IsSuccess)
 				return Ok(result);
 
@@ -54,6 +54,17 @@ namespace StockTracker.API.Controllers
 		public IActionResult Edit(ClientFormViewModel client)
 		{
 			var result = _clientLogic.EditClient(ViewModelToModel(client));
+			if (result.IsSuccess)
+				return Ok(result);
+
+			return BadRequest(result);
+		}
+
+		[Route("getall")]
+		[HttpGet]
+		public IActionResult GetAll()
+		{
+			var result = _clientLogic.GetAll();
 			if (result.IsSuccess)
 				return Ok(result);
 

@@ -7,24 +7,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StockTracker.API.Controllers;
+using StockTracker.BuisnessLogic.Clients;
 using StockTracker.BuisnessLogic.Poco;
 using StockTracker.BusinessLogic.Interface.Client;
 using StockTracker.Context;
 using StockTracker.Interface.Models.Clients;
 using StockTracker.Model.Clients;
+using StockTracker.Repository.Clients;
+using StockTracker.Repository.Interface.Clients;
 using StockTracker.Seed.Clients.Generic;
+using StockTracker.Tests.Utils.AbstractClasses;
 using StockTracker.Tests.Utils.Context;
 using StockTracker.ViewModel.Clients;
 
 namespace StockTracker.API.Test.Clients
 {
 	[TestClass]
-	public class AddClientsControllerTest
+	public class AddClientsControllerTest : APITestUtils<IClientLogic>
 	{
 		private Mock<IClientLogic> _moq;
 		private readonly ClientFormViewModel _client;
 		private GenericClients _genericClients;
 		private StockTrackerContext _db;
+
+		private const string _getAll = nameof(IClientLogic.GetAll);
 
 		public AddClientsControllerTest()
 		{
@@ -53,7 +59,7 @@ namespace StockTracker.API.Test.Clients
 		public void Add_PassValidClients_OK()
 		{
 			//Arrange
-			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
+			_moq.Setup(i => i.Add(It.IsAny<IClient>())).Returns(new Result<bool>(true, "Added Successfully", "Failed..."));
 			var logic = _moq.Object;
 			var controller = new ClientsController(logic);
 
@@ -68,7 +74,7 @@ namespace StockTracker.API.Test.Clients
 		public void Add_PassInvalidClient_Badrequest()
 		{
 			//Arrange
-			_moq.Setup(i => i.AddClient(It.IsAny<IClient>())).Returns(new Result<bool>(false));
+			_moq.Setup(i => i.Add(It.IsAny<IClient>())).Returns(new Result<bool>(false));
 			var logic = _moq.Object;
 			var controller = new ClientsController(logic);
 
@@ -182,5 +188,43 @@ namespace StockTracker.API.Test.Clients
 		}
 		#endregion
 
+		#region GetAll API
+
+		[TestMethod]
+		public void GetAll_PassNothing_ReturnListOfClients()
+		{
+			//Arrange
+			CreateService();
+
+			//Act
+			CreateResult(_getAll);
+
+			//Assert
+			Assert.AreEqual(GetAllListResult().Body.Count, Result<Result<List<IClient>>>().Body.Count);
+		}
+
+		#endregion
+
+		#region Dry
+		public override void CreateService()
+		{
+			var moq = new Mock<IClientLogic>();
+
+			moq.Setup(i => i.GetAll()).Returns(GetAllListResult());
+			
+			_service = moq.Object;
+		}
+
+		Result<List<IClient>> GetAllListResult(bool isSuccess = false, string message = "Successfully retrieved Client LIst")
+		{
+			return new Result<List<IClient>>
+			{
+				Body = new GenericClients().All().ToList<IClient>(),
+				IsSuccess = isSuccess,
+				Message = message
+			};
+		}
+
+		#endregion
 	}
 }

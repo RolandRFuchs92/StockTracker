@@ -9,5 +9,6 @@ namespace StockTracker.API.Interface.Clients
 	    IActionResult Add(ClientFormViewModel client);
 	    IActionResult Get(int clientId);
 	    IActionResult Edit(ClientFormViewModel client);
+	    IActionResult GetAll();
     }
 }

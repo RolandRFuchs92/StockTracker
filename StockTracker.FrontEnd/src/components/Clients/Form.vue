@@ -1,7 +1,6 @@
 <template>
   <b-col sm="6">
     <h4>Client {{ name }}</h4>
-    {{ postUrl }}
     <br>
     <b-form @submit="onSubmit" @reset="onReset">
       <b-form-group label="Client Name" label-for="client-name">
@@ -30,7 +29,10 @@ import axios from 'axios';
 
 export default {
   name: 'client-edit',
-  props: ['name', 'postUrl'],
+  props: {
+    name: String, 
+    postUrl: String
+  },
   data() {
     return {
       form: {
@@ -45,8 +47,8 @@ export default {
   methods: {
     async onSubmit(event) {
       event.preventDefault();
-      var result = await axios.post(this.postUrl, this.form);
-      console.log(result);
+      await axios.post(this.postUrl, this.form);
+
     },
     onReset() {
       this.form.ClientId = 0;

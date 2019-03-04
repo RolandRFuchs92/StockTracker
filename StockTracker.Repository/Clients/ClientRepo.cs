@@ -90,7 +90,24 @@ namespace StockTracker.Repository.Clients
 						return _db.Clients.FirstOrDefault(i => name.Contains(i.ClientName));
 				}
 
-				public bool Toggle(int clientId, bool isActive)
+			public List<IClient> GetAll()
+			{
+				try
+				{
+					return _db.Clients.ToList<IClient>();
+				}
+				catch (Exception e)
+				{
+					return null;
+				}
+			}
+
+			public List<IClient> GetActive()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Toggle(int clientId, bool isActive)
 				{
 						try
 						{
