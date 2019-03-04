@@ -45,7 +45,7 @@
 										title: 'Reports',
 										child: [
 												{
-													href: '/clients/list',
+													href: '/clients/all',
 													title: 'All Clients'
 												},
 												{

@@ -60,6 +60,8 @@ namespace StockTracker.API.Controllers
 			return BadRequest(result);
 		}
 
+		[Route("getall")]
+		[HttpGet]
 		public IActionResult GetAll()
 		{
 			var result = _clientLogic.GetAll();
