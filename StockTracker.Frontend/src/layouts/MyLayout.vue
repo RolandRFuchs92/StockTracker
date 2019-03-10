@@ -1,0 +1,50 @@
+<template>
+  <q-layout>
+    <q-layout-header>
+      <q-toolbar color="primary" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
+          <q-icon name="menu"/>
+        </q-btn>
+
+        <q-toolbar-title>
+          {{ appName }}
+          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-layout-header>
+
+    <q-layout-drawer
+      v-model="leftDrawerOpen"
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+    >
+      <q-list no-border link inset-delimiter>
+        <q-list-header>Welcome back, {{ userFullname }}</q-list-header>
+        <layout-list></layout-list>
+      </q-list>
+    </q-layout-drawer>
+
+    <q-page-container>
+      <q-page style="padding:15px;" class="q-my-form">
+        <router-view/>
+      </q-page>
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script>
+export default {
+  name: 'MyLayout',
+  props: {
+    appName: String,
+    userFullname: String,
+  },
+  data() {
+    return {
+      leftDrawerOpen: this.$q.platform.is.desktop,
+    };
+  },
+};
+</script>
+
+<style>
+</style>
