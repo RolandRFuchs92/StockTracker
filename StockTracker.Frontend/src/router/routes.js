@@ -8,6 +8,19 @@ const applicationSettings = {
   userFullname: 'Roland',
 };
 
+const apiPort = '61751';
+const baseUri = `http://localhost:${apiPort}/api/`;
+
+const uris = {
+  clients: {
+    getAll: 'clients/getall',
+    edit: 'clients/edit',
+    add: 'clients/add',
+  },
+};
+
+const uri = val => `${baseUri}${val}`;
+
 const routes = [
   {
     path: '/',
@@ -19,8 +32,13 @@ const routes = [
         component: () => import('pages/Index.vue'),
       },
       {
-        path: '/client/add',
-        component: () => import('../pages/clients/Configure'),
+        path: '/client/View',
+        props: {
+          uriFetch: uri(uris.clients.getAll),
+          uriEdit: uri(uris.clients.edit),
+          uriAdd: uri(uris.clients.add),
+        },
+        component: () => import('../pages/clients/View'),
       },
     ],
   },
