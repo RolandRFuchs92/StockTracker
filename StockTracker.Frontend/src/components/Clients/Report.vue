@@ -7,12 +7,12 @@
         </q-td>
       </q-tr>
       <q-td slot="body-cell-test" slot-scope="props" :props="props">
+        <q-btn flat icon="settings"  v-on:click="emitSettings"></q-btn>
         <q-btn
           name="create"
           v-on:click="emitEdit(props)"
           flat
           icon="create"
-          size="xs"
           :props="props"
         />
       </q-td>
@@ -88,6 +88,9 @@ export default {
     },
     emitAdd() {
       this.$emit('add');
+    },
+    emitSettings() {
+      this.$emit('settings');
     },
   },
 };

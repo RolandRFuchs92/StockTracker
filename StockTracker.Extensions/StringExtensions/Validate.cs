@@ -17,7 +17,7 @@ namespace StockTracker.Extensions.StringExtensions
 			if (email.EndsWith(".web"))
 				return false;
 
-			if (!rx.IsMatch(email))
+			if (!rx.IsMatch(email.ToLower()))
 				return false;
 
 			var domain = email.Split("@")[1].Split(".");

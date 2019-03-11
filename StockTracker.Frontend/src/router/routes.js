@@ -8,8 +8,9 @@ const applicationSettings = {
   userFullname: 'Roland',
 };
 
+const domain = 'localhost';
 const apiPort = '61751';
-const baseUri = `http://localhost:${apiPort}/api/`;
+const baseUri = `http://${domain}:${apiPort}/api/`;
 
 const uris = {
   clients: {
